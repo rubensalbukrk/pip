@@ -11,6 +11,7 @@ import {
 } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 import { Alert } from "react-native";
+
 export const Cadastro = () => {
   const [formData, setData] = React.useState({});
   const navigation = useNavigation();
@@ -35,13 +36,13 @@ export const Cadastro = () => {
 
       <ScrollView showsVerticalScrollIndicator={false} marginTop="12%">
         <Box alignItems={"center"} alignSelf={"center"} h="100%" w="100%">
-          <FormControl isRequired>
+          <FormControl mt="5" isRequired>
             <FormControl.Label
               _text={{
                 bold: true,
               }}
             >
-              Nome
+              Nome completo
             </FormControl.Label>
             <Input
               placeholder="Maria"
@@ -63,7 +64,7 @@ export const Cadastro = () => {
             </FormControl.ErrorMessage>
           </FormControl>
 
-          <FormControl isRequired>
+          <FormControl mt="5" isRequired>
             <FormControl.Label
               _text={{
                 bold: true,
@@ -91,7 +92,7 @@ export const Cadastro = () => {
             </FormControl.ErrorMessage>
           </FormControl>
 
-          <FormControl isRequired>
+          <FormControl mt="5" isRequired>
             <FormControl.Label
               _text={{
                 bold: true,
@@ -117,7 +118,7 @@ export const Cadastro = () => {
             </FormControl.ErrorMessage>
           </FormControl>
 
-          <FormControl isRequired>
+          <FormControl mt="5" isRequired>
             <FormControl.Label
               _text={{
                 bold: true,
@@ -145,7 +146,7 @@ export const Cadastro = () => {
             </FormControl.ErrorMessage>
           </FormControl>
 
-          <FormControl isRequired>
+          <FormControl mt="5" isRequired>
             <FormControl.Label
               _text={{
                 bold: true,
@@ -167,11 +168,11 @@ export const Cadastro = () => {
                 fontSize: "xs",
               }}
             >
-              Error Name
+              Endereço inválido
             </FormControl.ErrorMessage>
           </FormControl>
 
-          <FormControl isRequired>
+          <FormControl mt="5" isRequired>
             <FormControl.Label
               _text={{
                 bold: true,
@@ -199,7 +200,7 @@ export const Cadastro = () => {
             </FormControl.ErrorMessage>
           </FormControl>
 
-          <FormControl isRequired>
+          <FormControl mt="5" isRequired>
             <FormControl.Label
               _text={{
                 bold: true,
@@ -223,9 +224,66 @@ export const Cadastro = () => {
                 fontSize: "xs",
               }}
             >
-              Error Name
+              Inválido
             </FormControl.ErrorMessage>
           </FormControl>
+          
+          <FormControl mt="5" isRequired>
+            <FormControl.Label
+              _text={{
+                bold: true,
+              }}
+            >
+              Senha
+            </FormControl.Label>
+            <Input
+              placeholder="*******"
+              onChangeText={(value) => setData({ ...formData, password: value })}
+            />
+            <FormControl.HelperText
+              _text={{
+                fontSize: "xs",
+              }}
+            >
+              Deve conter letras e números
+            </FormControl.HelperText>
+            <FormControl.ErrorMessage
+              _text={{
+                fontSize: "xs",
+              }}
+            >
+              Insira uma senha válida!
+            </FormControl.ErrorMessage>
+          </FormControl>
+
+          <FormControl mt="5" isRequired>
+            <FormControl.Label
+              _text={{
+                bold: true,
+              }}
+            >
+              Confirmar
+            </FormControl.Label>
+            <Input
+              placeholder="*******"
+              onChangeText={(value) => setData({ ...formData, password: value })}
+            />
+            <FormControl.HelperText
+              _text={{
+                fontSize: "xs",
+              }}
+            >
+              Deve conter letras e números
+            </FormControl.HelperText>
+            <FormControl.ErrorMessage
+              _text={{
+                fontSize: "xs",
+              }}
+            >
+              Senha diferente
+            </FormControl.ErrorMessage>
+          </FormControl>
+
 
           <Button
             variant={"solid"}

@@ -1,14 +1,18 @@
-import React from 'react';
-import { TouchableOpacity, View, Text } from 'react-native';
+import React from "react";
+import { Box, Text, Button, Center, HStack } from "native-base";
+import { useNavigation } from "@react-navigation/native";
 
-export default function User() {
- return (
-   <View style={{flex: 2, backgroundColor: 'black'}}>
-    
-    <Text>PAGINA DO USUARIO</Text>
-    <TouchableOpacity style={{width: 70, height: 70, borderRadius: 50, backgroundColor: 'blue'}} onPress={() => alert('Deseja continuar ?')}>
-    <Text>ADD</Text>
-    </TouchableOpacity>
-   </View>
+export const User = () => {
+  const navigation = useNavigation()
+  return (
+
+
+      <Box flex="1" justifyContent="center" alignItems="center">
+        <Text fontSize={"2xl"}>PAGINA USUARIO</Text>
+        <Button onPress={() => navigation.goBack() }>VOLTAR</Button>
+      </Box>
+ 
+
+
   );
-}
+};
