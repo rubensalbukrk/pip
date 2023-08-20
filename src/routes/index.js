@@ -2,12 +2,8 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import Home from '../pages/Home';
-import User from '../pages/User';
-import Admin from '../pages/Admin'
-import { HomeApp } from '../pages/HomeApp';
-import cord_Administrativo from '../pages/Services/cord-administrativo'
-import cord_Voluntarios from '../pages/Services/cord-voluntarios'
+import cord_administrativo from '../pages/Services/cord-administrativo'
+import cord_voluntarios from '../pages/Services/cord-voluntarios'
 import pip_autistas from '../pages/Services/pip-autistas'
 import pip_cidadania from '../pages/Services/pip-cidadania'
 import pip_cursos from '../pages/Services/pip-cursos'
@@ -17,7 +13,7 @@ import pip_optometria from '../pages/Services/pip-optometria'
 import pip_protagonismo from '../pages/Services/pip-protagonismo'
 import pip_reforcoescolar from '../pages/Services/pip-reforcoescolar'
 import pip_saudemental from '../pages/Services/pip-saudemental'
-import pip_sgralimentar from '../pages/Services/pip-sgralimentar'
+import pip_sgralimentar from '../pages/Services/pip-sgralimentar';
 
 const Stack = createNativeStackNavigator()
 
@@ -34,8 +30,8 @@ export default function Routes() {
         <Stack.Group screenOptions={{
           presentation: 'fullScreenModal'
         }}>
-            <Stack.Screen name="cord-adminstrativo" component={cord_Administrativo} />
-            <Stack.Screen name="cord-voluntarios" component={cord_Voluntarios} />
+            <Stack.Screen name="cord-adminstrativo" component={cord_administrativo} />
+            <Stack.Screen name="cord-voluntarios" component={cord_voluntarios} />
             <Stack.Screen name="pip-autistas" component={pip_autistas} />
             <Stack.Screen name="pip-cidadania" component={pip_cidadania} />
             <Stack.Screen name="pip-cursos" component={pip_cursos} />

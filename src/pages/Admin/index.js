@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
-import { FlatList } from "react-native";
-import { Box, Text } from "native-base";
+import { FlatList, View } from "react-native";
+import { Box, Button, Text } from "native-base";
 import { UserContext } from "../../contexts/UserContext";
+import { newUser, deleteUser, updateUser } from "../../requisitions/api";
 
 export default function Admin() {
   const { users } = useContext(UserContext);
@@ -35,19 +36,24 @@ export default function Admin() {
             <View
               style={{
                 justifyContent: "center",
-                width: "50%",
-                height: 50,
+                width: "100%",
+                height: 90,
                 borderRadius: 20,
                 marginTop: 10,
               }}
             >
               <Text>Name: {item.nome}</Text>
               <Text>CPF: {item.cpf}</Text>
+              <Text>Idade: {item.idade}</Text>
+              <Text>Email: {item.email}</Text>
             </View>
           );
         }}
         keyExtractor={(item) => item.id}
       />
+      <Button onPress={() => newUser()}>ADICIONAR</Button>
+      <Button onPress={() => deleteUser(2)}>REMOVER</Button>
+      <Button onPress={() => updateUser(1)}>ALTERAR</Button>
     </Box>
   );
 }

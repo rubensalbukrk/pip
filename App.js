@@ -9,6 +9,7 @@ import MainStack from './src/stacks/mainStack';
 import AuthProvider from './src/contexts/AuthContext';
 import UserProvider from './src/contexts/UserContext';
 import { NativeBaseProvider, extendTheme } from 'native-base';
+import { User } from './src/pages/User';
 
 const theme = extendTheme({
   fontConfig: {
@@ -48,7 +49,7 @@ export default function App() {
     <UserProvider>
     <AuthProvider>
       <NavigationContainer>
-        {!auth ? <MainStack /> : <Login />}
+        <User />
       </NavigationContainer>
     </AuthProvider>
     </UserProvider>

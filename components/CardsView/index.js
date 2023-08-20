@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Image, AspectRatio, Center, HStack, Stack, Text, Heading } from 'native-base';
 
-export default function CardsView() {
+export default function CardView() {
  return (
     <Box maxW="80" shadow={3} rounded="lg" mt="9" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
         borderColor: "coolGray.600",

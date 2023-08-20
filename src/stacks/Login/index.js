@@ -1,19 +1,27 @@
 import React, { useContext, useState } from "react";
 import * as Animatable from "react-native-animatable";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { GlobalStyles } from "../../../components/GlobalStyles";
 import { Box, Image, Text, Input, Button, Pressable, Icon } from "native-base";
 import { UserContext } from "../../contexts/UserContext";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, Feather } from "@expo/vector-icons";
 import { TextInputMask } from "react-native-masked-text";
+import { AuthContext } from "../../contexts/AuthContext";
+
 
 export const Login = () => {
-  const [cpf, setCpf] = useState();
+  const { auth , Authentication } = useContext(AuthContext)
+  const [cpf, setCpf] = useState(String);
+  const [password, setPassword] = useState(String)
   const [show, setShow] = React.useState(false);
   const navigation = useNavigation();
-  const { ObterDados } = useContext(UserContext);
+
+  if(auth){
+        navigation.navigate('HomeApp')
+      }
   return (
+    
     <Box
       style={{
         flex: 1,
@@ -62,19 +70,19 @@ export const Login = () => {
         <Box
           w="90%"
           h="12"
+          flexDir="row"
           alignItems={"center"}
-          justifyContent="center"
+          justifyContent="space-between"
           borderWidth="1"
           borderColor={"#d9d9d9"}
-          rounded="4"
-        >
+          rounded="2xl"        >
+          <Feather name="user" size={32} color="#d9d9d9" />
           <TextInputMask
-            style={{ width: "100%", height: 40, textAlign: "center" }}
-            type={"cpf"}
+            style={{ width: "100%",marginLeft: '5%', height: 50, textAlign: "left", fontSize: 24 }}
+            type="cpf"
             value={cpf}
-            onChangeText={(text) => {
-              setCpf(...[cpf], { cpf: text });
-            }}
+            placeholder="000.000.000-00"
+            onChangeText={(text) => setCpf(text)}
           />
         </Box>
 
@@ -89,8 +97,10 @@ export const Login = () => {
           SENHA
         </Text>
         <Input
+          onChangeText={(pass) => setPassword(pass)}
           fontSize="2xl"
           w="90%"
+          rounded="2xl"
           textAlign={"center"}
           type={show ? "text" : "password"}
           InputRightElement={
@@ -105,16 +115,19 @@ export const Login = () => {
               />
             </Pressable>
           }
+          InputLeftElement={<Feather name="lock" size={32} color="#d9d9d9" />}
           placeholder="*******"
         />
-        <Button
+          <Button
           size={"lg"}
           w="80%"
           mt="10"
-          onPress={() => navigation.navigate("HomeApp")}
-        >
+          rounded="2xl"
+          onPress={() => Authentication(cpf, password)}>
           ENTRAR
         </Button>
+        
+       
       </Box>
       </Animatable.View>
       <Button
@@ -127,6 +140,7 @@ export const Login = () => {
       >
         FAZER MEU CADASTRO
       </Button>
+      
     </Box>
   );
 };

@@ -30,13 +30,18 @@ import {
 import { AntDesign, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { CarouselHome } from "../../components/Carousel";
-import CardsView from "../../components/cardsView";
+import CardView from "../../components/CardsView";
+import { AuthContext } from "../contexts/AuthContext";
 
 
 export const HomeApp = () => {
   const { users } = useContext(UserContext);
+  const { logged } = useContext(AuthContext)
   const [selected, setSelected] = React.useState(1);
   const navigation = useNavigation();
+  const nome = logged?.nome;
+  const primeiro_nome = nome?.split(" ").shift();
+
   return (
     <>
       <Box
@@ -46,12 +51,12 @@ export const HomeApp = () => {
         flexDir={"row"}
         bg="darkBlue.500"
         roundedBottom="md"
-        shadow={3}
+        shadow={5}
       >
         <Box flexDir={"row"} alignItems="center" paddingTop="3">
-          <Animatable.View delay={200} duration={2000} animation="bounceInDown">
 
-            <Avatar ml="3" size={"lg"} shadow={2} bg={"light.200"} source={{uri : 'https://instagram.fjpa9-1.fna.fbcdn.net/v/t51.2885-19/363793891_247920134771958_5616203686962323957_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.fjpa9-1.fna.fbcdn.net&_nc_cat=106&_nc_ohc=L-3hRGhKI_UAX-infiw&edm=ACWDqb8BAAAA&ccb=7-5&oh=00_AfB22-UT7-XxdEociaPSqsamn9je_VPO1IdffcPSOVc6Lg&oe=64E2A5D1&_nc_sid=ee9879'}}>
+          <Animatable.View delay={200} duration={2000} animation="bounceInDown">
+            <Avatar ml="3" size={"lg"} shadow={2} bg={"light.200"} source={{uri : logged?.avatar }}>
               <TouchableOpacity
                 onPress={() => navigation.navigate("User")}
                 style={{
@@ -59,27 +64,22 @@ export const HomeApp = () => {
                   height: "100%",
                   justifyContent: "center",
                   alignItems: "center",
-                }}
-                
-              >
+                }}>
                 <AntDesign name="user" size={42} color="black" />
               </TouchableOpacity>
             </Avatar>
-
           </Animatable.View>
 
           <Animatable.Text
             style={{
-              fontFamily: "Doppio One",
-              fontSize: 28,
-              color: "white",
-              marginLeft: "5%",
+              fontFamily: "Doppio One", fontSize: 28, color: "white", marginLeft: "5%"
             }}
+            
             delay={800}
             duration={2000}
             animation="bounceInLeft"
           >
-            Olá usuário
+            Olá {primeiro_nome}
           </Animatable.Text>
         </Box>
 
@@ -91,14 +91,15 @@ export const HomeApp = () => {
             justifyContent="center"
             alignItems="center"
             flexDir={"column"}
-          >
-            <Image
+          > 
+            <Animatable.Image
               alt="pip-icon"
               w="16"
-              mt="5"
+              animation="tada"
+              iterationCount="infinite"
               h="16"
-              resizeMode="contain"
-              source={require("../../assets/pip-icon.png")}
+              resizeMode="center"
+              source={require("../../assets/pip-icon-small.png")}
             />
           </Box>
         </Animatable.View>
@@ -125,10 +126,8 @@ export const HomeApp = () => {
 
 
         <Center>
-          <CardsView />
-          <CardsView />
-          <CardsView />
-          <CardsView />
+          <CardView />
+          <CardView />
         </Center>
       </ScrollView>
       
