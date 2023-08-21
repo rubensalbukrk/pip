@@ -10,6 +10,7 @@ import AuthProvider from './src/contexts/AuthContext';
 import UserProvider from './src/contexts/UserContext';
 import { NativeBaseProvider, extendTheme } from 'native-base';
 import { User } from './src/pages/User';
+import { Main } from '@expo/html-elements';
 
 const theme = extendTheme({
   fontConfig: {
@@ -49,7 +50,7 @@ export default function App() {
     <UserProvider>
     <AuthProvider>
       <NavigationContainer>
-        <User />
+        {!auth ? <MainStack /> : <Login />}
       </NavigationContainer>
     </AuthProvider>
     </UserProvider>

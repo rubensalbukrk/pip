@@ -15,6 +15,7 @@ import {
   Heading,
   useDisclose,
   Divider,
+  Container,
 } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 import Admin from "../Admin";
@@ -27,16 +28,20 @@ import {
   Ionicons,
 } from "@expo/vector-icons";
 import { UserContext } from "../../contexts/UserContext";
+import InputInfoUser from "../../../components/UserLayout/inputUser";
+import MyParents from "../../../components/UserLayout/userParents";
 
 export const User = () => {
   const { auth, setAuth, logged, setLogged } = useContext(AuthContext);
   const { users, setUsers } = useContext(UserContext);
   const navigation = useNavigation();
   const { isOpen, onOpen, onClose } = useDisclose();
+
   var nome = logged?.nome;
   var primeiro_nome = nome?.split(" ").shift();
 
   return (
+  
     <Box flex="1" w="100%" alignItems="center">
       <Box
         w="100%"
@@ -88,11 +93,15 @@ export const User = () => {
             size="2xl"
             shadow={6}
           />
-          <Badge style={{position: 'absolute', right: '-5%', top: '20%'}} colorScheme="info" alignSelf="center" variant="subtle">
+          <Badge
+            style={{ position: "absolute", right: "-5%", top: "20%" }}
+            colorScheme="info"
+            alignSelf="center"
+            variant="subtle"
+          >
             {logged?.isAdmin == true ? "Admin" : "Membro"}
           </Badge>
         </Box>
-        
 
         <Text color="light.100" fontSize="2xl">
           Olá {primeiro_nome}
@@ -100,32 +109,45 @@ export const User = () => {
       </Box>
 
       <ScrollView w="100%" mb="4%" horizontal={false}>
-        <VStack space={5} alignItems="center">
+        <Box alignItems="center">
+          <VStack
+            space={5}
+            w="100%"
+            rounded="md"
+            justifyContent="space-around"
+            alignItems="center"
+          >
+            <Text fontSize="3xl">Meu perfil</Text>
 
-          <Center boxSize="300" bg="indigo.300" rounded="md" shadow={3}>
-            <Text fontSize="3xl">Informações</Text>
             <Divider />
-            <Text>Nome civil: {logged.nome} </Text>
-            <Text>CPF: {logged.cpf} </Text>
-            <Text>NIS: {logged.nis} </Text>
-            <Text>Idade: {logged.idade} </Text>
-            <Text>Endereço: {logged.address} </Text>
-            <Text>Celular: {logged.phone} </Text>
-            <Text>Email: {logged.email} </Text>
-            <Text>Membro PIP: {logged.status ? "Ativado" : "Aguardando..."} </Text>
-          </Center>
+            
+              <Container w="90%"px="6" py="6" rounded="lg" bg="light.200">
+                <InputInfoUser infoLabel="Data de inscrição" infoValue={logged.date} />
+                <InputInfoUser infoLabel="Genêro" infoValue={logged.genero} />
+                <InputInfoUser infoLabel="Nome Civil" infoValue={logged.nome} />
+                <InputInfoUser infoLabel="Idade" infoValue={logged.idade} />
+                <InputInfoUser infoLabel="Endereço" infoValue={logged.address} />
+                <InputInfoUser infoLabel="CPF" infoValue={logged.cpf} />
+                <InputInfoUser infoLabel="NIS" infoValue={logged.nis} />
+                <InputInfoUser infoLabel="Email" infoValue={logged.email} />
+                <InputInfoUser infoLabel="Celular" infoValue={logged.phone} />
+                <InputInfoUser infoLabel="Membro PIP" infoValue={logged.question1 ? "SIM" : "NÃO"} />
+                <InputInfoUser infoLabel="Filhos" infoValue={logged.parentsName.length}/>
+                <MyParents />
+              </Container>
+              
+           
 
-          <Center boxSize="300" bg="indigo.500" rounded="md" shadow={3}>
-            <Heading>Meus benéficios</Heading>
-          </Center>
-          
-          <Center boxSize="300" bg="indigo.700" rounded="md" shadow={3}>
-            <Heading>Histórico</Heading>
-          </Center>
-
-        </VStack>
-      </ScrollView> 
-
+            <Center boxSize="300" bg="indigo.500" rounded="md" shadow={3}>
+              <Heading>Meus benéficios</Heading>
+             
+            </Center>
+            <Center boxSize="300" bg="indigo.700" rounded="md" shadow={3}>
+              <Heading>Histórico</Heading>
+            </Center>
+          </VStack>
+        </Box>
+      </ScrollView>
 
       <Center>
         <Actionsheet isOpen={isOpen} onClose={onClose} size="full">
