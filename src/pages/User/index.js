@@ -150,7 +150,7 @@ export const User = () => {
       </ScrollView>
 
       <Center>
-        <Actionsheet isOpen={isOpen} onClose={onClose} size="full">
+        <Actionsheet isOpen={isOpen} onClose={onClose} size="md">
           <Actionsheet.Content>
             <Box w="100%" h={60} px={4} justifyContent="center">
               <Text

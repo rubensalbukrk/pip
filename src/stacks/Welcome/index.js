@@ -39,7 +39,7 @@ export const Welcome = () => {
                 backgroundColor: "#26B7FF",
                 borderRadius: 50,
                 }}
-                onPress={() => navigation.navigate("Login") & ObterDados()}
+                onPress={() => navigation.navigate("Login")}
             >
                 <AntDesign name="arrowright" size={32} color="white" />
             </TouchableOpacity>

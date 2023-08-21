@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import * as Animatable from "react-native-animatable";
 import { Alert, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -11,15 +11,16 @@ import { AuthContext } from "../../contexts/AuthContext";
 
 
 export const Login = () => {
-  const { auth , Authentication } = useContext(AuthContext)
+  const { auth , logged, Authentication } = useContext(AuthContext)
   const [cpf, setCpf] = useState(String);
   const [password, setPassword] = useState(String)
   const [show, setShow] = React.useState(false);
   const navigation = useNavigation();
 
-  if(auth){
-        navigation.navigate('HomeApp')
-      }
+  useEffect(() => {
+   auth ? navigation.navigate('HomeApp') : null
+  },[auth]);
+
   return (
     
     <Box
