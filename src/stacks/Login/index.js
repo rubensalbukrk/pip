@@ -15,6 +15,7 @@ export const Login = () => {
   const [cpf, setCpf] = useState(String);
   const [password, setPassword] = useState(String)
   const [show, setShow] = React.useState(false);
+  
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -82,6 +83,7 @@ export const Login = () => {
             style={{ width: "100%",marginLeft: '5%', height: 50, textAlign: "left", fontSize: 24 }}
             type="cpf"
             value={cpf}
+            defaultValue="111-222-333-44"
             placeholder="000.000.000-00"
             onChangeText={(text) => setCpf(text)}
           />
@@ -117,7 +119,8 @@ export const Login = () => {
             </Pressable>
           }
           InputLeftElement={<Feather name="lock" size={32} color="#d9d9d9" />}
-          placeholder="*******"
+          placeholder="654321"
+          defaultValue="654321"
         />
           <Button
           size={"lg"}

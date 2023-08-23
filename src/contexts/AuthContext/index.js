@@ -10,7 +10,7 @@ export const AuthContext = createContext();
 export default function AuthProvider({children}){
     const { users } = useContext(UserContext)
     const [auth , setAuth] = useState(false)
-    const [logged, setLogged ] = useState({ nome: 'Rubens'});
+    const [logged, setLogged ] = useState({});
 
 
     function Authentication(cpf, password) {

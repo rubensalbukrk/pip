@@ -11,6 +11,8 @@ import UserProvider from './src/contexts/UserContext';
 import { NativeBaseProvider, extendTheme } from 'native-base';
 import { User } from './src/pages/User';
 import { Main } from '@expo/html-elements';
+import { HomeApp } from './src/pages/HomeApp';
+import Admin from './src/pages/Admin';
 
 const theme = extendTheme({
   fontConfig: {

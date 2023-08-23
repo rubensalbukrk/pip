@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Pressable, TouchableOpacity } from "react-native";
-
+import { Pressable, TouchableOpacity, ActionSheetIOS, Platform } from "react-native";
 import {
   Box,
   Text,
@@ -9,36 +8,60 @@ import {
   VStack,
   Actionsheet,
   Avatar,
-  Spacer,
   Badge,
   ScrollView,
   Heading,
   useDisclose,
   Divider,
   Container,
+  Icon,
 } from "native-base";
 import { useNavigation } from "@react-navigation/native";
-import Admin from "../Admin";
 import { AuthContext } from "../../contexts/AuthContext";
 import {
   Feather,
   Entypo,
+  Octicons,
   MaterialCommunityIcons,
   MaterialIcons,
   Ionicons,
 } from "@expo/vector-icons";
 import { UserContext } from "../../contexts/UserContext";
+
 import InputInfoUser from "../../../components/UserLayout/inputUser";
 import MyParents from "../../../components/UserLayout/userParents";
+
+
 
 export const User = () => {
   const { auth, setAuth, logged, setLogged } = useContext(AuthContext);
   const { users, setUsers } = useContext(UserContext);
   const navigation = useNavigation();
   const { isOpen, onOpen, onClose } = useDisclose();
-
   var nome = logged?.nome;
   var primeiro_nome = nome?.split(" ").shift();
+
+  const openSheetIOS = () =>
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        options: ['Sair', 'Painel do Administrador', 'Alterar dados'],
+        destructiveButtonIndex: 1,
+        cancelButtonIndex: 0,
+        userInterfaceStyle: 'light',
+      },
+      buttonIndex => {
+        if (buttonIndex === 0) {
+          navigation.navigate('Login')
+          setAuth(false)
+          setLogged(false)
+        } else if (buttonIndex === 1) {
+          navigation.navigate('Admin')
+        } else if (buttonIndex === 2) {
+          alert('excluindo conta')
+        }
+      },
+    );
+
 
   return (
   
@@ -79,7 +102,7 @@ export const User = () => {
               width: 38,
               height: 38,
             }}
-            onPress={() => onOpen()}
+            onPress={() => Platform.OS === 'ios' ? openSheetIOS() : onOpen()}
           >
             <Feather size={38} color="white" name="settings" />
           </TouchableOpacity>
@@ -121,7 +144,7 @@ export const User = () => {
 
             <Divider />
             
-              <Container w="90%"px="6" py="6" rounded="lg" bg="light.200">
+              <Container w="90%"px="6" py="6" rounded="lg" bg="indigo.500">
                 <InputInfoUser infoLabel="Data de inscrição" infoValue={logged.date} />
                 <InputInfoUser infoLabel="Genêro" infoValue={logged.genero} />
                 <InputInfoUser infoLabel="Nome Civil" infoValue={logged.nome} />
@@ -132,25 +155,28 @@ export const User = () => {
                 <InputInfoUser infoLabel="Email" infoValue={logged.email} />
                 <InputInfoUser infoLabel="Celular" infoValue={logged.phone} />
                 <InputInfoUser infoLabel="Membro PIP" infoValue={logged.question1 ? "SIM" : "NÃO"} />
-                <InputInfoUser infoLabel="Filhos" infoValue={logged.parentsName.length}/>
-                <MyParents />
+                <InputInfoUser infoLabel="Filhos" infoValue={logged.parentsName == "0" ? "Não" : logged.parentsName.length}/>
+                {logged.parentsName == 0 ? null : <MyParents />}
               </Container>
               
            
 
-            <Center boxSize="300" bg="indigo.500" rounded="md" shadow={3}>
-              <Heading>Meus benéficios</Heading>
-             
-            </Center>
-            <Center boxSize="300" bg="indigo.700" rounded="md" shadow={3}>
-              <Heading>Histórico</Heading>
-            </Center>
+            <Container w="80%" h="300" space={4} bg="indigo.500" rounded="md" shadow={3}>
+              <Box pl="5" h="15%" flexDir="row" justifyContent="center" alignItems="center">
+                <Icon as={<Octicons name="checklist" size={32} color="white" />} size="xl" color="white" />
+                <Heading ml="4" color="light.100">Status </Heading>
+              </Box>
+
+             <Divider />
+
+            </Container>
+
           </VStack>
         </Box>
       </ScrollView>
 
       <Center>
-        <Actionsheet isOpen={isOpen} onClose={onClose} size="md">
+        <Actionsheet isOpen={isOpen} onClose={onClose} size="100%">
           <Actionsheet.Content>
             <Box w="100%" h={60} px={4} justifyContent="center">
               <Text
@@ -188,11 +214,7 @@ export const User = () => {
             >
               Alterar dados
             </Actionsheet.Item>
-            <Actionsheet.Item
-              startIcon={<Entypo size={32} color="black" name="remove-user" />}
-            >
-              Excluir minha conta
-            </Actionsheet.Item>
+ 
             <Actionsheet.Item
               startIcon={
                 <Ionicons size={32} color="black" name="md-close-circle" />
@@ -214,6 +236,7 @@ export const User = () => {
           </Actionsheet.Content>
         </Actionsheet>
       </Center>
+
     </Box>
   );
 };

@@ -118,7 +118,7 @@ export const Cadastro = () => {
             </FormControl.ErrorMessage>
           </FormControl>
 
-          <FormControl mt="5" isRequired>
+          <FormControl mt="5">
             <FormControl.Label
               _text={{
                 bold: true,

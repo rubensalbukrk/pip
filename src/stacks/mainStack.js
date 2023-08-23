@@ -6,6 +6,7 @@ import { Welcome } from "./Welcome";
 import { HomeApp } from "../pages/HomeApp";
 import { User } from "../pages/User";
 
+
 import cord_Administrativo from '../pages/Services/cord-administrativo'
 import cord_Voluntarios from '../pages/Services/cord-voluntarios'
 import pip_autistas from '../pages/Services/pip-autistas'
@@ -18,6 +19,8 @@ import pip_protagonismo from '../pages/Services/pip-protagonismo'
 import pip_reforcoescolar from '../pages/Services/pip-reforcoescolar'
 import pip_saudemental from '../pages/Services/pip-saudemental'
 import pip_sgralimentar from '../pages/Services/pip-sgralimentar'
+import Admin from "../pages/Admin";
+import EditUser from "../pages/Admin/editUser";
 
 const Stack = createNativeStackNavigator();
 
@@ -34,13 +37,10 @@ export default function MainStack(){
                 <Stack.Screen name="HomeApp" component={HomeApp} /> 
             </Stack.Group>
             <Stack.Group screenOptions={{
-                presentation: 'fullScreenModal'
-                
-            }}>
-            </Stack.Group>
-            <Stack.Group screenOptions={{
           presentation: 'fullScreenModal'
         }}>
+            <Stack.Screen name="EditUser" component={EditUser} />
+            <Stack.Screen name="Admin" component={Admin} />
             <Stack.Screen name="User" component={User} />
             <Stack.Screen name="cord-adminstrativo" component={cord_Administrativo} />
             <Stack.Screen name="cord-voluntarios" component={cord_Voluntarios} />
