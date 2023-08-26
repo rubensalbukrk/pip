@@ -1,26 +1,23 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import * as Animatable from "react-native-animatable";
-import { Alert, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { GlobalStyles } from "../../../components/GlobalStyles";
 import { Box, Image, Text, Input, Button, Pressable, Icon } from "native-base";
-import { UserContext } from "../../contexts/UserContext";
 import { Ionicons, Feather } from "@expo/vector-icons";
 import { TextInputMask } from "react-native-masked-text";
 import { AuthContext } from "../../contexts/AuthContext";
+import { Alert } from "react-native";
+import { UserContext } from "../../contexts/UserContext";
 
 
 export const Login = () => {
-  const { auth , logged, Authentication } = useContext(AuthContext)
-  const [cpf, setCpf] = useState(String);
+  const {users} = useContext(UserContext)
+  const { submit, setSubmit, auth, Authentication, logged } = useContext(AuthContext)
+  const [cpf, setCpf] = useState(String)
   const [password, setPassword] = useState(String)
-  const [show, setShow] = React.useState(false);
-  
-  const navigation = useNavigation();
+  const [show, setShow] = useState(false)
+  const navigation = useNavigation()
 
-  useEffect(() => {
-   auth ? navigation.navigate('HomeApp') : null
-  },[auth]);
+  const accessPage = () => navigation.navigate('HomeApp')
 
   return (
     
@@ -122,14 +119,27 @@ export const Login = () => {
           placeholder="654321"
           defaultValue="654321"
         />
-          <Button
-          size={"lg"}
-          w="80%"
-          mt="10"
-          rounded="2xl"
-          onPress={() => Authentication(cpf, password)}>
-          ENTRAR
-        </Button>
+        
+        {!submit ? 
+        <Button  
+        size={"lg"}
+        w="80%"
+        mt="10"
+        rounded="2xl"
+        onPress={() => {Authentication(cpf, password) & setSubmit(true) & accessPage()}} 
+        >
+        ENTRAR
+      </Button> 
+      :
+      <Button isLoading 
+      isLoadingText="Aguarde..."
+      variant="outline"
+      size={"lg"}
+      w="80%"
+      mt="10"
+      rounded="2xl"></Button>
+      }
+        
         
        
       </Box>

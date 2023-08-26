@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Dimensions } from "react-native";
 import {
   Box,
@@ -16,8 +16,9 @@ import {
 } from "native-base";
 import PieGraphic from "../../Graphics/PieGraphic";
 
-
 export default function TabCadastros() {
+
+ 
   return (
     <Box flex={1} w="100%">
       <ScrollView h="100%" horizontal={false}>
