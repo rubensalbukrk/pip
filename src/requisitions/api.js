@@ -1,25 +1,13 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import axios from "axios";
 import { Alert } from "react-native";
 import { UserContext } from '../contexts/UserContext';
-const api = "https://script.googleusercontent.com/macros/echo?user_content_key=qbvanCjMX_TK-yGnd150ftu29HGJtUEJJm48NeaPfaP3LCjR-NwK3e5zfqfaSfxr-kBEG6euAQUdQBdu9QRgRrHYqeKd2rf7m5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnLM0I2KPhc0DF7ELxEvXmAd5emsO4bMC30fTI4reEJDgsiPkH5wjdZnFDKd7QLSjlmQhPnDjWZ1Qvu_vFmhBsSvGmztKOAlBAQ&lib=MZ_wAQjsbj4hQOzsbjD4eksicp6k4geWO"
-const test = "https://9202-45-183-25-107.ngrok-free.app/requisition/users"
+import { AuthContext } from '../contexts/AuthContext';
+
+export const api = "https://c34e-45-183-26-73.ngrok-free.app/require/users"
+export const apiNotice = "https://c34e-45-183-26-73.ngrok-free.app/require/notices"
 
 const dataAtual = new Date();
-
-export const getUsers = () => {
-    const { setUsers } = useContext(UserContext)
-    axios.get(test, {
-        method: "get",
-        headers: new Headers({
-          "ngrok-skip-browser-warning": "69420",
-        })})
-    .then(response => {
-        const getUsers = response.data.users
-        setUsers(getUsers)
-        })
-        .catch(error => console.log(error))
-}
 
 const NovoUsuario = {
     status: true,
@@ -47,14 +35,8 @@ const NovoUsuario = {
     question1: true,
     question2: "Um projeto que ajuda muita gente!"    
 }
-const updateUse = {
-    nome: "alterado",
-    cpf: "cancelado",
-
-}
-
 export function newUser(){
-    axios.post(test, NovoUsuario, {
+    axios.post(api, NovoUsuario, {
         method: 'post',
         headers: new Headers({
             "ngrok-skip-browser-warning" : "69421"
@@ -66,17 +48,32 @@ export function newUser(){
     .catch(error => console.error(error));
 }
 
-export function updateUser(id){
-    axios.put(`${test}/${id}`, updateUse, {
-        method: 'put',
+export function addNotice(){
+    axios.post(apiNotice, newNotice, {
+        method: 'post',
         headers: new Headers({
             "ngrok-skip-browser-warning" : "69421"
         })
-    } )
+    })
+    .then(response => {
+      alert(JSON.stringify(response.data))
+    })
+    .catch(error => console.error(error));
 }
-
 export function deleteUser(id){
-    axios.delete(`${test}/${id}`, {
+    axios.delete(`${api}/${id}`, {
+        method: 'delete',
+        headers: new Headers({
+            "ngrok-skip-browser-warning" : "69421"
+        })
+    })
+    .then(response => {
+        alert(JSON.stringify(response.data))
+      })
+      .catch(error => console.error(error));
+}
+export function deleteNotice(id){
+    axios.delete(`${apiNotice}/${id}`, {
         method: 'delete',
         headers: new Headers({
             "ngrok-skip-browser-warning" : "69421"

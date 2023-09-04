@@ -10,35 +10,38 @@ import {
   Input,
   Heading,
   Divider,
-  Container,
-  useNativeBase,
+  Container
 } from "native-base";
-import { View, FlatList,  TouchableOpacity } from "react-native";
+import { View, FlatList, TouchableOpacity } from "react-native";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 
 import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../../../src/contexts/UserContext';
-
-
+import axios from 'axios';
+import { api } from '../../../src/requisitions/api';
 
 export default function TabSearch() {
-  const { users } = useContext(UserContext)
+  const { users, setUsers } = useContext(UserContext)
   const [search, setSearch] = useState(''); 
   const [filteredData, setFilteredData] = useState([]); 
   const [masterData, setMasterData] = useState([]);
   const navigation = useNavigation()
 
-
+ 
   useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/todos')
-      .then((response) => response.json())
-      .then((responseJson) => {
+    axios.get(api, {
+      method: "get",
+      headers: new Headers({
+        "ngrok-skip-browser-warning": "69420",
+      })})
+      .then(response => {
+        const users = response.data.users
+        setUsers(users)
         setFilteredData(users);
         setMasterData(users);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+        })
+        .catch(error => console.log(error))
+
   }, []);
   
   const searchFilter = (text) => {
@@ -67,26 +70,28 @@ export default function TabSearch() {
         onChangeText={(text) => searchFilter(text)}
         value={search}
           placeholder="Search"
-          variant="filled"
+        
+          variant="outline"
           width="100%"
           h="50px"
+          colorScheme={"lightBlue"}
+          focusOutlineColor={"lightBlue.300"}
           borderRadius="10"
-          py="1"
-          mt="2%"
+          borderColor={'lightBlue.300'}
           mb="4%"
           px="2"
           InputLeftElement={
             <Icon
               ml="2"
-              size="4"
-              color="gray.400"
+              size="5"
+              color="lightBlue.400"
               as={<Ionicons name="ios-search" />}
             />
           }
         />
 
       </VStack>
-          <Divider my="2%" />
+          <Divider color={'lightBlue.300'} my="2%" />
       <FlatList
         data={filteredData}
         horizontal={false}
@@ -95,12 +100,13 @@ export default function TabSearch() {
           flex: 1,
           width: "100%",
           height: 300,
-          borderRadius: 20,
-          backgroundColor: '#',
+          marginBottom: '9%',
+          borderRadius: 20
         }}
         renderItem={({ item, index }) => {
           return (
             <View
+            key={item => `${index}-${item}`}
               style={{
                 justifyContent: "center",
                 width: "100%",
@@ -134,7 +140,23 @@ export default function TabSearch() {
 
                 <TouchableOpacity
                   style={{ position: "absolute", opacity: 0.8, bottom: "50%", right: 10 }}
-                  onPress={() => navigation.navigate('EditUser', { avatar: item.avatar, status: item.status, isVolt: item?.isVolt, nome: item.nome, cpf: item.cpf, email: item.email})}
+                  onPress={() => navigation.navigate('EditUser',
+                  { id: item.id,
+                    status: item.status,
+                    isAutist: item.isAutist,
+                    isVolt: item.isVolt,
+                    isEtg: item.isEtg,
+                    isCoord: item.isCoord,
+                    nome: item.nome,
+                    idade: item.idade,
+                    address: item.address,
+                    phone: item.phone,
+                    cpf: item.cpf,
+                    nis: item.nis,
+                    email: item.email,
+                    password: item.password,
+                    question1: item.question1
+                  })}
                 >
                   <FontAwesome5 name="user-edit" size={24} color="white" />
                 </TouchableOpacity>

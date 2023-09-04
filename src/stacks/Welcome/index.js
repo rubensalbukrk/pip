@@ -1,14 +1,50 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import * as Animatable from 'react-native-animatable';
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../contexts/UserContext";
-import { Box, Button, Text, Image } from "native-base";
-import { View, TouchableOpacity } from "react-native";
+import { Box, Text, Image } from "native-base";
+import { TouchableOpacity } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+import axios from "axios";
+import { api, apiNotice } from "../../requisitions/api";
 
 export const Welcome = () => {
   const navigation = useNavigation();
-  const { users, ObterDados } = useContext(UserContext);
+  const {setUsers, setNotices} = useContext(UserContext)
+
+  useEffect(() => {
+      getData()
+      getNotices()
+  },[api, apiNotice]);
+
+  const getData = () => {
+    axios
+    .get(api, {
+      method: "get",
+      headers: new Headers({
+        "ngrok-skip-browser-warning": "69420",
+      }),
+    })
+    .then((response) => {
+      const users = response.data.users;
+      setUsers(users);
+    })
+    .catch((error) => console.log(error));
+  }
+  const getNotices = () => {
+    axios
+    .get(apiNotice, {
+      method: "get",
+      headers: new Headers({
+        "ngrok-skip-browser-warning": "69420",
+      }),
+    })
+    .then((response) => {
+      const notices = response.data.notices;
+      setNotices(notices);
+    })
+    .catch((error) => console.log(error));
+  }
 
   return (
     <Box flex="1" bg={"white"} alignItems="center">
@@ -24,7 +60,7 @@ export const Welcome = () => {
         </Text>
         </Animatable.View>  
       
-      <Box w="100%" shadow={6} borderTopRadius="full" h="50%" bg="#537bfb" mt="10" t="0" alignItems="center" >
+      <Box w="100%" shadow={6} borderTopRadius="full" h="50%" bg="lightBlue.500" mt="10" t="0" alignItems="center" >
       <Animatable.View style={{width: 100, height: 100, justifyContent: 'center', alignItems: 'center'}} animation="rubberBand" iterationDelay={2} iterationCount="infinite" >
             <TouchableOpacity
                 style={{
@@ -44,7 +80,7 @@ export const Welcome = () => {
                 shadowRadius: 6.65,
                 elevation: 9
                               }}
-                onPress={() => navigation.navigate("Login") & ObterDados()}
+                onPress={() => navigation.navigate("Login")}
             >
                 <AntDesign name="arrowright" size={32} color="white" />
             </TouchableOpacity>

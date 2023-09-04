@@ -8,8 +8,8 @@ export default function InputInfoUser(props) {
       <Text ml="2" color="light.100" fontSize="lg">
         {props.infoLabel}
       </Text>
-      <Box h="10" bg="indigo.400" rounded="md" justifyContent="center">
-        <Text paddingX="4" color="light.50" mr="3" fontSize="lg" >
+      <Box opacity={0.5} h="10" bg="light.50" rounded="md" justifyContent="center">
+        <Text paddingX="4" color="black" mr="3" fontSize="lg" >
           {props.infoValue}
         </Text>
       </Box>

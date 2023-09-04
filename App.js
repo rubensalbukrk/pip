@@ -1,4 +1,5 @@
 import 'react-native-gesture-handler'
+import { useContext } from 'react';
 import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native'
@@ -13,6 +14,7 @@ import { User } from './src/pages/User';
 import { Main } from '@expo/html-elements';
 import { HomeApp } from './src/pages/HomeApp';
 import Admin from './src/pages/Admin';
+
 
 const theme = extendTheme({
   fontConfig: {
@@ -37,6 +39,8 @@ const theme = extendTheme({
 });
 
 export default function App() {
+
+
   const [fontsLoaded] = useFonts({
     'Doppio One': require('./assets/fonts/DoppioOne.ttf'),
   });

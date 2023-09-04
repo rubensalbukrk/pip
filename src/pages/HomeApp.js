@@ -39,9 +39,8 @@ import CardView from "../../components/CardsView";
 import { AuthContext } from "../contexts/AuthContext";
 
 export const HomeApp = () => {
-  const { users } = useContext(UserContext);
-  const { logged } = useContext(AuthContext);
-  const [selected, setSelected] = React.useState(1);
+  const { users, logged } = useContext(UserContext);
+  const [selected, setSelected] = React.useState(0);
   const navigation = useNavigation();
   const nome = logged?.nome;
   const primeiro_nome = nome?.split(" ").shift();
@@ -56,7 +55,7 @@ export const HomeApp = () => {
         justifyContent="space-between"
         px="4"
         alignItems="center"
-        bg="indigo.600"
+        bg={"lightBlue.500"}
         roundedBottom="50"
         shadow={5}
       >
@@ -117,7 +116,7 @@ export const HomeApp = () => {
         </Animatable.View>
       </Box>
 
-      <ScrollView w="100%" pb="20" h="50%" t="0" horizontal={false}>
+      <ScrollView mt="4%" mb="2%" w="100%" pb="20" h="50%" t="0" horizontal={false}>
         <Animatable.Text
           duration={1000}
           delay={1000}
@@ -142,7 +141,7 @@ export const HomeApp = () => {
         </Center>
       </ScrollView>
 
-      <HStack bg="indigo.600" alignItems="center" safeAreaBottom shadow={9}>
+      <HStack bg={'lightBlue.500'} alignItems="center" safeAreaBottom shadow={9}>
         <Pressable
           cursor="pointer"
           opacity={selected === 0 ? 1 : 0.5}

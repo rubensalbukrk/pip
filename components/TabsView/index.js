@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { View, StyleSheet, Dimensions, StatusBar, TouchableOpacity, Animated, Pressable } from 'react-native';
+import { View, ScrollView, StyleSheet, Dimensions, StatusBar, TouchableOpacity, Animated, Pressable } from 'react-native';
 import { TabView, SceneMap } from 'react-native-tab-view';
 import { Box, Text, Center, Presable, useColorModeValue } from 'native-base';
 import TabCadastros from './pages/cadastros';
 import TabSearch from './pages/pesquisar';
-
+import TabManager from './pages/manager';
 
 const FirstRoute = () => <Center flex={1} h="100%" mx="2" my="4">
     <TabCadastros />
@@ -16,13 +16,11 @@ const SecondRoute = () => <Center flex={1} h="100%" mx="2" my="4">
   </Center>;
 
 const ThirdRoute = () => <Center flex={1} h="100%" mx="2" my="4">
-   
+   <TabManager />
   </Center>;
 
 const FourthRoute = () => <Center flex={1} my="2">
-  <View style={{flex: 1, justifyContent: 'center'}}>
-   
-  </View>
+ 
     
   </Center>;
 
@@ -51,6 +49,7 @@ export function TabViewAdmin() {
     key: 'fourth',
     title: 'Outros'
   }]);
+
 
   const renderTabBar = props => {
     const inputRange = props.navigationState.routes.map((x, i) => i);
