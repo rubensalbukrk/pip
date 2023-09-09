@@ -3,35 +3,23 @@ import * as Animatable from "react-native-animatable";
 import { StatusBar } from "react-native";
 import {
   View,
-  TouchableOpacity,
-  FlatList,
-  SafeAreaView,
-  Alert,
-  Dimensions,
+  TouchableOpacity
 } from "react-native";
 import { UserContext } from "../contexts/UserContext";
 import {
   Box,
   Text,
-  VStack,
   HStack,
   Center,
-  FormControl,
-  Modal,
-  Input,
-  Icon,
   Avatar,
+  Icon,
   Pressable,
-  Button,
   ScrollView,
-  Image,
-  Divider,
+  Image
 } from "native-base";
 import {
   AntDesign,
-  Ionicons,
-  MaterialCommunityIcons,
-  FontAwesome5,
+  MaterialCommunityIcons
 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { CarouselHome } from "../../components/Carousel";

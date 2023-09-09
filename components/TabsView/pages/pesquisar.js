@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext } from "react";
 import {
   Icon,
   HStack,
@@ -15,6 +15,7 @@ import {
 import { View, FlatList, TouchableOpacity } from "react-native";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 
+<<<<<<< HEAD
 import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../../../src/contexts/UserContext';
 import axios from 'axios';
@@ -37,22 +38,37 @@ export default function TabSearch() {
       .then(response => {
         const users = response.data.users
         setUsers(users)
+=======
+import { useNavigation } from "@react-navigation/native";
+import { UserContext } from "../../../src/contexts/UserContext";
+
+export default function TabSearch() {
+  const { users } = useContext(UserContext);
+  const [search, setSearch] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
+  const [masterData, setMasterData] = useState([]);
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/todos")
+      .then((response) => response.json())
+      .then((responseJson) => {
+>>>>>>> 869decbc3ff84259de59ca5c9b7c8f4dc337303d
         setFilteredData(users);
         setMasterData(users);
         })
         .catch(error => console.log(error))
 
   }, []);
-  
+
   const searchFilter = (text) => {
     if (text) {
-      const newData = masterData.filter(
-        function (item) {
-          if (item.nome) {
-            const itemData = item.nome.toUpperCase();
-            const textData = text.toUpperCase();
-            return itemData.indexOf(textData) > -1;
-          }
+      const newData = masterData.filter(function (item) {
+        if (item.nome) {
+          const itemData = item.nome.toUpperCase();
+          const textData = text.toUpperCase();
+          return itemData.indexOf(textData) > -1;
+        }
       });
       setFilteredData(newData);
     } else {
@@ -60,15 +76,16 @@ export default function TabSearch() {
     }
     setSearch(text);
   };
-  
-  return (
 
+  return (
     <Center flex={1} w="100%" px="5">
-     <VStack w="100%" space={5} alignSelf="center">
-        <Heading color="lightBlue.500" fontSize="lg">Procurar por nome</Heading>
+      <VStack w="100%" space={5} alignSelf="center">
+        <Heading color="lightBlue.500" fontSize="lg">
+          Procurar por nome
+        </Heading>
         <Input
-        onChangeText={(text) => searchFilter(text)}
-        value={search}
+          onChangeText={(text) => searchFilter(text)}
+          value={search}
           placeholder="Search"
         
           variant="outline"
@@ -89,9 +106,12 @@ export default function TabSearch() {
             />
           }
         />
-
       </VStack>
+<<<<<<< HEAD
           <Divider color={'lightBlue.300'} my="2%" />
+=======
+      <Divider my="2%" />
+>>>>>>> 869decbc3ff84259de59ca5c9b7c8f4dc337303d
       <FlatList
         data={filteredData}
         horizontal={false}
@@ -100,10 +120,15 @@ export default function TabSearch() {
           flex: 1,
           width: "100%",
           height: 300,
+<<<<<<< HEAD
           marginBottom: '9%',
           borderRadius: 20
+=======
+          borderRadius: 20,
+          backgroundColor: "#",
+>>>>>>> 869decbc3ff84259de59ca5c9b7c8f4dc337303d
         }}
-        renderItem={({ item, index }) => {
+        renderItem={({item}) => {
           return (
             <View
             key={item => `${index}-${item}`}
@@ -120,13 +145,12 @@ export default function TabSearch() {
               <HStack space={4} alignItems="center">
                 <Avatar ml="4%" source={{ uri: item.avatar }} />
                 <VStack flex="1">
-                  <Text color="white">{item.nome}</Text>
-                  <Box
-                    rounded="lg"
-                    flex="1"
-                    mr="18%"
-                    bg="#38b6ff"
-                  >
+                <Box rounded="lg" flex="1" mr="18%">
+                  <Text numberOfLines={1} ellipsizeMode="tail" color="white">
+                    {item.nome}
+                  </Text>
+                  </Box>
+                  <Box rounded="lg" flex="1" mr="18%" bg="#38b6ff">
                     <Text
                       numberOfLines={1}
                       ellipsizeMode="tail"
@@ -139,6 +163,7 @@ export default function TabSearch() {
                 </VStack>
 
                 <TouchableOpacity
+<<<<<<< HEAD
                   style={{ position: "absolute", opacity: 0.8, bottom: "50%", right: 10 }}
                   onPress={() => navigation.navigate('EditUser',
                   { id: item.id,
@@ -157,6 +182,17 @@ export default function TabSearch() {
                     password: item.password,
                     question1: item.question1
                   })}
+=======
+                  style={{
+                    position: "absolute",
+                    opacity: 0.8,
+                    bottom: "50%",
+                    right: 10,
+                  }}
+                  onPress={() =>
+                    navigation.navigate("EditUser", { nome: item.nome, address: item.address, cpf: item.cpf, nis: item.nis })
+                  }
+>>>>>>> 869decbc3ff84259de59ca5c9b7c8f4dc337303d
                 >
                   <FontAwesome5 name="user-edit" size={24} color="white" />
                 </TouchableOpacity>
