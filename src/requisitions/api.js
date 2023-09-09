@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export const api = "https://21a9-45-183-25-97.ngrok-free.app/require/users"
-export const apiNotice = "https://21a9-45-183-25-97.ngrok-free.app/require/notices"
+export const api = "https://1621-45-183-25-97.ngrok-free.app/require/users"
+export const apiNotice = "https://1621-45-183-25-97.ngrok-free.app/require/notices"
 
 export function addNotice(){
     axios.post(apiNotice, newNotice, {

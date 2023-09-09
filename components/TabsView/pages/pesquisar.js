@@ -15,7 +15,6 @@ import {
 import { View, FlatList, TouchableOpacity } from "react-native";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 
-<<<<<<< HEAD
 import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../../../src/contexts/UserContext';
 import axios from 'axios';
@@ -38,22 +37,6 @@ export default function TabSearch() {
       .then(response => {
         const users = response.data.users
         setUsers(users)
-=======
-import { useNavigation } from "@react-navigation/native";
-import { UserContext } from "../../../src/contexts/UserContext";
-
-export default function TabSearch() {
-  const { users } = useContext(UserContext);
-  const [search, setSearch] = useState("");
-  const [filteredData, setFilteredData] = useState([]);
-  const [masterData, setMasterData] = useState([]);
-  const navigation = useNavigation();
-
-  useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/todos")
-      .then((response) => response.json())
-      .then((responseJson) => {
->>>>>>> 869decbc3ff84259de59ca5c9b7c8f4dc337303d
         setFilteredData(users);
         setMasterData(users);
         })
@@ -107,11 +90,7 @@ export default function TabSearch() {
           }
         />
       </VStack>
-<<<<<<< HEAD
           <Divider color={'lightBlue.300'} my="2%" />
-=======
-      <Divider my="2%" />
->>>>>>> 869decbc3ff84259de59ca5c9b7c8f4dc337303d
       <FlatList
         data={filteredData}
         horizontal={false}
@@ -120,13 +99,8 @@ export default function TabSearch() {
           flex: 1,
           width: "100%",
           height: 300,
-<<<<<<< HEAD
           marginBottom: '9%',
           borderRadius: 20
-=======
-          borderRadius: 20,
-          backgroundColor: "#",
->>>>>>> 869decbc3ff84259de59ca5c9b7c8f4dc337303d
         }}
         renderItem={({item}) => {
           return (
@@ -163,7 +137,6 @@ export default function TabSearch() {
                 </VStack>
 
                 <TouchableOpacity
-<<<<<<< HEAD
                   style={{ position: "absolute", opacity: 0.8, bottom: "50%", right: 10 }}
                   onPress={() => navigation.navigate('EditUser',
                   { id: item.id,
@@ -182,17 +155,6 @@ export default function TabSearch() {
                     password: item.password,
                     question1: item.question1
                   })}
-=======
-                  style={{
-                    position: "absolute",
-                    opacity: 0.8,
-                    bottom: "50%",
-                    right: 10,
-                  }}
-                  onPress={() =>
-                    navigation.navigate("EditUser", { nome: item.nome, address: item.address, cpf: item.cpf, nis: item.nis })
-                  }
->>>>>>> 869decbc3ff84259de59ca5c9b7c8f4dc337303d
                 >
                   <FontAwesome5 name="user-edit" size={24} color="white" />
                 </TouchableOpacity>

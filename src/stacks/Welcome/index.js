@@ -5,16 +5,15 @@ import { UserContext } from "../../contexts/UserContext";
 import { Box, Text, Image, Button } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import axios from "axios";
-import { api, apiNotice } from "../../requisitions/api";
+import { api } from "../../requisitions/api";
 
 export const Welcome = () => {
   const navigation = useNavigation();
-  const { setUsers, setNotices } = useContext(UserContext);
+  const { setUsers } = useContext(UserContext);
 
   useEffect(() => {
     getData();
-    getNotices();
-  }, [api, apiNotice]);
+  }, [api]);
 
   const getData = () => {
     axios
@@ -30,20 +29,7 @@ export const Welcome = () => {
       })
       .catch((error) => console.log(error));
   };
-  const getNotices = () => {
-    axios
-      .get(apiNotice, {
-        method: "get",
-        headers: new Headers({
-          "ngrok-skip-browser-warning": "69420",
-        }),
-      })
-      .then((response) => {
-        const notices = response.data.notices;
-        setNotices(notices);
-      })
-      .catch((error) => console.log(error));
-  };
+
 
   return (
     <Box flex="1" bg={"white"} alignItems="center">
@@ -62,7 +48,7 @@ export const Welcome = () => {
       </Animatable.View>
       <Animatable.View animation="fadeInRight" delay={1000}>
         <Text my="1" mx="2" fontFamily="Doppio One" fontSize="2xl">
-          Aqui você tem acesso a todos os nossos serviços sociais!
+          Aqui você tem acesso a todos os nossos serviços!
         </Text>
       </Animatable.View>
 

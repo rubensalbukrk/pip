@@ -1,14 +1,10 @@
 import React, { useContext, useState } from "react";
-<<<<<<< HEAD
 import {
   Pressable,
   TouchableOpacity,
   ActionSheetIOS,
   Platform,
 } from "react-native";
-=======
-import { View, Pressable, TouchableOpacity, ActionSheetIOS, Platform } from "react-native";
->>>>>>> 869decbc3ff84259de59ca5c9b7c8f4dc337303d
 import {
   Box,
   Text,
@@ -36,13 +32,9 @@ import {
   Ionicons,
 } from "@expo/vector-icons";
 import { UserContext } from "../../contexts/UserContext";
-<<<<<<< HEAD
-=======
-
-import BackButton from "../../../components/BackButton";
->>>>>>> 869decbc3ff84259de59ca5c9b7c8f4dc337303d
 import InputInfoUser from "../../../components/UserLayout/inputUser";
 import MyParents from "../../../components/UserLayout/userParents";
+import BackButton from "../../../components/BackButton";
 
 export const User = () => {
   const { auth, setAuth, setSubmit } = useContext(AuthContext);
@@ -50,7 +42,7 @@ export const User = () => {
   const navigation = useNavigation();
   const { isOpen, onOpen, onClose } = useDisclose();
   var nome = logged?.nome;
-  var parentsCount = logged.parentsName?.length;
+  var parentsCount = logged.filhos?.length;
   var primeiro_nome = nome?.split(" ").shift();
 
   const openSheetIOS = () =>
@@ -157,27 +149,6 @@ export const User = () => {
             <Text fontSize="3xl">Meu perfil</Text>
 
             <Divider />
-<<<<<<< HEAD
-=======
-            
-              <Container w="90%"px="6" py="6" rounded="lg" bg="indigo.500">
-                <InputInfoUser infoLabel="Data de inscrição" infoValue={logged.date} />
-                <InputInfoUser infoLabel="Genêro" infoValue={logged.genero ? "Homem" : "Mulher"} />
-                <InputInfoUser infoLabel="Nome Civil" infoValue={logged.nome} />
-                <InputInfoUser infoLabel="Idade" infoValue={logged.idade} />
-                <InputInfoUser infoLabel="Endereço" infoValue={logged.address} />
-                <InputInfoUser infoLabel="CPF" infoValue={logged.cpf} />
-                <InputInfoUser infoLabel="NIS" infoValue={logged.nis} />
-                <InputInfoUser infoLabel="Email" infoValue={logged.email} />
-                <InputInfoUser infoLabel="Celular" infoValue={logged.phone} />
-                <InputInfoUser infoLabel="Autista" infoValue={logged.isAutist ? "SIM" : "NÃO"} />
-                <InputInfoUser infoLabel="Membro PIP" infoValue={logged.question1 ? "SIM" : "NÃO"} />
-                <InputInfoUser infoLabel="Filhos" infoValue={logged.parentsName == "0" ? "Não" : logged.parentsName.length}/>
-                {logged.parentsName == 0 ? null : <MyParents />}
-              </Container>
-              
-           
->>>>>>> 869decbc3ff84259de59ca5c9b7c8f4dc337303d
 
             <Container w="90%" px="6" py="6" rounded="lg" bg="darkBlue.300">
               <InputInfoUser

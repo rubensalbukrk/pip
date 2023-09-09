@@ -9,19 +9,6 @@ import { Alert } from "react-native";
 import { UserContext } from "../../contexts/UserContext";
 
 export const Login = () => {
-<<<<<<< HEAD
-  const { auth, logged, Authentication } = useContext(AuthContext);
-  const [cpf, setCpf] = useState(String);
-  const [password, setPassword] = useState(String);
-  const [show, setShow] = React.useState(false);
-  const [submit, setSubmit] = useState(false);
-
-  const navigation = useNavigation();
-
-  useEffect(() => {
-    auth ? navigation.navigate("HomeApp") : null;
-  }, [auth]);
-=======
   const {users} = useContext(UserContext)
   const { submit, setSubmit, auth, Authentication, logged } = useContext(AuthContext)
   const [cpf, setCpf] = useState(String)
@@ -30,9 +17,9 @@ export const Login = () => {
   const navigation = useNavigation()
 
   const accessPage = () => navigation.navigate('HomeApp')
->>>>>>> 869decbc3ff84259de59ca5c9b7c8f4dc337303d
 
   return (
+  
     <Box
       flex={1}
       justifyContent={"center"}
@@ -52,219 +39,85 @@ export const Login = () => {
             alignSelf: "center",
           }}
           alt="pip-logo"
-          source={require("../../../assets/imgs/pip-logoTESTE.png")}
-        />
+          source={require("../../../assets/imgs/pip-logoTESTE.png")} />
       </Animatable.View>
-      <Animatable.View
-        style={{ width: "80%", height: "50%" }}
-        animation="bounceIn"
-        delay={500}
-      >
-        <Box
-<<<<<<< HEAD
-          w="100%"
-          h="80%"
-          mt="10"
-          justifyContent={"center"}
-          alignItems="center"
-          px="1"
-          shadow={9}
-          bgColor={"light.100"}
-          rounded="2xl"
-        >
-          <Text
-            color={"lightBlue.400"}
-            style={{
-              width: "100%",
-              textAlign: "left",
-              marginTop: 10,
-              marginLeft: "12%",
-            }}
-          >
-            CPF
-          </Text>
-          <Box
-            w="90%"
-            h="12"
-            flexDir="row"
-            alignItems={"center"}
-            justifyContent="space-between"
-            borderWidth="1"
-            borderColor={"lightBlue.300"}
-            rounded="2xl"
-          >
-            <Feather
-              name="user"
-              size={32}
-              style={{ marginHorizontal: "3%" }}
-              color="#30b8ff"
-            />
-            <TextInputMask
-              style={{
-                width: "100%",
-                color: "#30b8ff",
-                marginLeft: "5%",
-                height: 50,
-                textAlign: "left",
-                fontSize: 24,
-              }}
-              type="cpf"
-              value={cpf}
-              defaultValue="111-222-333-44"
-              placeholder="000.000.000-00"
-              placeholderTextColor={"#D2D2D2"}
-              onChangeText={(text) => setCpf(text)}
-            />
-          </Box>
-
-          <Text
-            color={"lightBlue.400"}
-            style={{
-              width: "100%",
-              textAlign: "left",
-              marginTop: 20,
-              marginLeft: "12%",
-            }}
-          >
-            SENHA
-          </Text>
-          <Input
-            color={"lightBlue.400"}
-            borderColor={"lightBlue.300"}
-            fontSize="2xl"
-            w="90%"
-            rounded="2xl"
-            textAlign={"center"}
-            onChangeText={(pass) => setPassword(pass)}
-            type={show ? "text" : "password"}
-            InputRightElement={
-              <Pressable onPress={() => setShow(!show)}>
-                <Icon
-                  as={
-                    <Ionicons name={show ? "eye-outline" : "eye-off-outline"} />
-                  }
-                  size={5}
-                  mr="2"
-                  color="lightBlue.300"
-                />
-              </Pressable>
-            }
-            InputLeftElement={
-              <Feather
-                name="lock"
-                style={{ marginHorizontal: "3%" }}
-                size={28}
-                color="#38b6ff"
-              />
-            }
-          />
-
-          <Button
-            size={"lg"}
-            w="80%"
-            mt="5"
-            bg="darkBlue.400"
-            rounded="2xl"
-            isLoading={submit ? true : false}
-            isLoadingText="Aguarde..."
-            onPress={() => {
-              setSubmit(!submit) & Authentication(cpf, password);
-            }}
-          >
-            ENTRAR
-          </Button>
-        </Box>
-=======
-          w="90%"
-          h="12"
-          flexDir="row"
-          alignItems={"center"}
-          justifyContent="space-between"
-          borderWidth="1"
-          borderColor={"#d9d9d9"}
-          rounded="2xl"        >
-          <Feather name="user" size={32} color="#d9d9d9" />
-          <TextInputMask
-            style={{ width: "100%",marginLeft: '5%', height: 50, textAlign: "left", fontSize: 24 }}
-            type="cpf"
-            value={cpf}
-            defaultValue="111-222-333-44"
-            placeholder="000.000.000-00"
-            onChangeText={(text) => setCpf(text)}
-          />
-        </Box>
-
-        <Text
-          style={{
-            width: "100%",
-            textAlign: "left",
-            marginTop: 20,
-            marginLeft: "12%",
-          }}
-        >
-          SENHA
-        </Text>
-        <Input
-          onChangeText={(pass) => setPassword(pass)}
-          fontSize="2xl"
-          w="90%"
-          rounded="2xl"
-          textAlign={"center"}
-          type={show ? "text" : "password"}
-          InputRightElement={
-            <Pressable onPress={() => setShow(!show)}>
-              <Icon
-                as={
-                  <Ionicons name={show ? "eye-outline" : "eye-off-outline"} />
-                }
-                size={5}
-                mr="2"
-                color="muted.400"
-              />
-            </Pressable>
-          }
-          InputLeftElement={<Feather name="lock" size={32} color="#d9d9d9" />}
-          placeholder="654321"
-          defaultValue="654321"
-        />
-        
-        {!submit ? 
-        <Button  
-        size={"lg"}
-        w="80%"
-        mt="10"
-        rounded="2xl"
-        onPress={() => {Authentication(cpf, password) & setSubmit(true) & accessPage()}} 
-        >
-        ENTRAR
-      </Button> 
-      :
-      <Button isLoading 
-      isLoadingText="Aguarde..."
-      variant="outline"
-      size={"lg"}
-      w="80%"
-      mt="10"
-      rounded="2xl"></Button>
-      }
-        
-        
-       
+      <Box bg="light.100" h="44%" shadow={6} mb="5%" rounded={"2xl"} w="80%" alignItems={"center"} justifyContent="center">
+      <Box
+        w="90%"
+        h="12"
+        mb="5%"
+        flexDir="row"
+        alignItems={"center"}
+        justifyContent="space-between"
+        borderWidth="1"
+        borderColor={"lightBlue.300"}
+        rounded="2xl">
+         
+        <Feather name="user" size={32} color="#23B5D3" />
+        <TextInputMask
+          style={{ width: "100%", borderColor: '#23B5D3', color: '#23B5D3', marginLeft: '15%', height: 50, textAlign: "left", fontSize: 24 }}
+          type="cpf"
+          
+          placeholderTextColor={"#23B5D3"}
+          value={cpf}
+          
+          defaultValue="111-222-333-44"
+          placeholder="000.000.000-00"
+          onChangeText={(text) => setCpf(text)} />
       </Box>
->>>>>>> 869decbc3ff84259de59ca5c9b7c8f4dc337303d
-      </Animatable.View>
-      <Text
-      fontSize="lg" 
+
+      <Input
+        onChangeText={(pass) => setPassword(pass)}
+        fontSize="2xl"
+        w="90%"
+        style={{color: '#23B5D3'}}
+        borderColor={"lightBlue.300"}
+        rounded="2xl"
+        textAlign={"center"}
+        type={show ? "text" : "password"}
+        InputRightElement={<Pressable onPress={() => setShow(!show)}>
+          <Icon
+            as={<Ionicons name={show ? "eye-outline" : "eye-off-outline"} />}
+            size={5}
+            mr="2"
+            color="#23B5D3" />
+        </Pressable>}
+        InputLeftElement={<Feather name="lock" size={32} color="#23B5D3" />}
+        placeholder="******"
+        defaultValue="123456" />
+
+      {!submit ?
+        <Button
+          size={"lg"}
+          w="80%"
+          mt="10"
+          bg={"lightBlue.300"}
+          rounded="2xl"
+          onPress={() => { Authentication(cpf, password) & setSubmit(true) & accessPage(); } }
+        >
+          ENTRAR
+        </Button>
+        :
+        <Button isLoading
+          isLoadingText="Aguarde..."
+          variant="outline"
+          size={"lg"}
+          w="80%"
+          mt="10"
+          rounded="2xl"></Button>}
+    </Box>
+    <Text
+      fontSize="lg"
       textDecorationLine={'underline'}
       textDecorationColor={"lightBlue.400"}
       color={"darkBlue.600"}
-      
-      >
+
+    >
         Esqueci minha senha
       </Text>
       <Button
         variant={"subtle"}
-            color="lightBlue.800"
+        color="lightBlue.800"
         size={"lg"}
         w="200"
         mt="10"
@@ -275,5 +128,6 @@ export const Login = () => {
         FAZER MEU CADASTRO
       </Button>
     </Box>
-  );
+    
+  )
 };

@@ -18,9 +18,10 @@ import axios from "axios";
 
 import { MaterialIcons, AntDesign,FontAwesome } from "@expo/vector-icons";
 import { UserContext } from "../../../src/contexts/UserContext";
-import { deleteNotice, addNotice } from "../../../src/requisitions/api";
+import { deleteNotice, addNotice, apiNotice} from "../../../src/requisitions/api";
 
 const dateNow = new Date("Mar 25 2015")
+
 const NewNotice = {
     title: String,
     date: dateNow,
@@ -29,6 +30,25 @@ const NewNotice = {
 }
 
 export default function TabManager() {
+  const {setNotices} = useContext(UserContext) 
+  useEffect(() => {
+    getNotices();
+  },[apiNotice])
+
+  const getNotices = () => {
+    axios
+      .get(apiNotice, {
+        method: "get",
+        headers: new Headers({
+          "ngrok-skip-browser-warning": "69420",
+        }),
+      })
+      .then((response) => {
+        const notices = response.data.notices;
+        setNotices(notices);
+      })
+      .catch((error) => console.log(error));
+  };
   const { notices } = useContext(UserContext);
 
   return (
