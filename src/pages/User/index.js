@@ -1,5 +1,10 @@
 import React, { useContext, useState } from "react";
-import { Pressable, TouchableOpacity, ActionSheetIOS, Platform } from "react-native";
+import {
+  Pressable,
+  TouchableOpacity,
+  ActionSheetIOS,
+  Platform,
+} from "react-native";
 import {
   Box,
   Text,
@@ -29,41 +34,45 @@ import {
 import { UserContext } from "../../contexts/UserContext";
 import InputInfoUser from "../../../components/UserLayout/inputUser";
 import MyParents from "../../../components/UserLayout/userParents";
-import { FlatList } from "react-native-gesture-handler";
 
 export const User = () => {
   const { auth, setAuth, setSubmit } = useContext(AuthContext);
-  const { users, setUsers,logged, setLogged } = useContext(UserContext);
+  const { users, setUsers, logged, setLogged } = useContext(UserContext);
   const navigation = useNavigation();
   const { isOpen, onOpen, onClose } = useDisclose();
   var nome = logged?.nome;
-  var parentsCount = logged.parentsName?.length
+  var parentsCount = logged.parentsName?.length;
   var primeiro_nome = nome?.split(" ").shift();
 
   const openSheetIOS = () =>
     ActionSheetIOS.showActionSheetWithOptions(
       {
-        options: [`${logged?.isAdmin == true ? "Painel de Administração" : "Opções" }`, 'Alterar dados', 'Sair'],
+        options: [
+          `${logged?.isAdmin == true ? "Painel de Administração" : "Opções"}`,
+          "Alterar dados",
+          "Sair",
+        ],
         destructiveButtonIndex: 2,
         cancelButtonIndex: 2,
-        userInterfaceStyle: 'light',
+        userInterfaceStyle: "light",
       },
-      buttonIndex => {
+      (buttonIndex) => {
         if (buttonIndex === 0) {
-          {logged?.isAdmin == true ? navigation.navigate('Admin') : null }
+          {
+            logged?.isAdmin == true ? navigation.navigate("Admin") : null;
+          }
         } else if (buttonIndex === 1) {
-          alert('Alterar dados')
+          alert("Alterar dados");
         } else if (buttonIndex === 2) {
-          navigation.navigate('Welcome')
-          setAuth(false)
-          setLogged(false)
-          setSubmit(false)
+          navigation.navigate("Welcome");
+          setAuth(false);
+          setLogged(false);
+          setSubmit(false);
         }
-      },
+      }
     );
 
   return (
-  
     <Box flex="1" w="100%" alignItems="center">
       <Box
         w="100%"
@@ -101,7 +110,7 @@ export const User = () => {
               width: 38,
               height: 38,
             }}
-            onPress={() => Platform.OS === 'ios' ? openSheetIOS() : onOpen()}
+            onPress={() => (Platform.OS === "ios" ? openSheetIOS() : onOpen())}
           >
             <Feather size={38} color="white" name="settings" />
           </TouchableOpacity>
@@ -121,8 +130,11 @@ export const User = () => {
             alignSelf="center"
             variant="subtle"
           >
-            {logged?.isAdmin == true ? "Admin" : "Membro" && logged?.isEtg == true ? "Estágiario" : "Membro"}
-            
+            {logged?.isAdmin == true
+              ? "Admin"
+              : "Membro" && logged?.isEtg == true
+              ? "Estágiario"
+              : "Membro"}
           </Badge>
         </Box>
 
@@ -143,33 +155,70 @@ export const User = () => {
             <Text fontSize="3xl">Meu perfil</Text>
 
             <Divider />
-            
-              <Container w="90%"px="6" py="6" rounded="lg" bg="darkBlue.300">
-                <InputInfoUser infoLabel="Data de inscrição" infoValue={logged.date} />
-                <InputInfoUser infoLabel="Nome Civil" infoValue={logged.nome} />
-                <InputInfoUser infoLabel="Idade" infoValue={logged.idade} />
-                <InputInfoUser infoLabel="Endereço" infoValue={logged.address} />
-                <InputInfoUser infoLabel="CPF" infoValue={logged.cpf} />
-                <InputInfoUser infoLabel="NIS" infoValue={logged.nis} />
-                <InputInfoUser infoLabel="Email" infoValue={logged.email} />
-                <InputInfoUser infoLabel="Celular" infoValue={logged?.phone} />
-                <InputInfoUser infoLabel="Membro PIP" infoValue={logged.question1 ? "SIM" : "NÃO"} />
-                <InputInfoUser infoLabel="Filhos" infoValue={logged.parentsName === "undefined" ? "Não" : `${parentsCount}`} />
-                {logged?.parentsName == 0 ? "NÃO" : <MyParents />}
-              </Container>
-              
-           
 
-            <Container w="80%" h="300" space={4} bg="darkBlue.500" rounded="md" shadow={3}>
-              <Box pl="5" h="15%" flexDir="row" justifyContent="center" alignItems="center">
-                <Icon as={<Octicons name="checklist" size={32} color="white" />} size="xl" color="white" />
-                <Heading ml="4" color="light.100">Meus benefícios</Heading>
+            <Container w="90%" px="6" py="6" rounded="lg" bg="darkBlue.300">
+              <InputInfoUser
+                infoLabel="Data de inscrição"
+                infoValue={logged.date}
+              />
+              <InputInfoUser infoLabel="Nome Civil" infoValue={logged.nome} />
+              <InputInfoUser infoLabel="Idade" infoValue={logged.idade} />
+              <InputInfoUser infoLabel="Endereço" infoValue={logged.address} />
+              <InputInfoUser infoLabel="CPF" infoValue={logged.cpf} />
+              <InputInfoUser infoLabel="NIS" infoValue={logged.nis} />
+              <InputInfoUser infoLabel="Email" infoValue={logged.email} />
+              <InputInfoUser infoLabel="Celular" infoValue={logged?.phone} />
+              <InputInfoUser
+                infoLabel="Membro PIP"
+                infoValue={logged.question1 ? "SIM" : "NÃO"}
+              />
+              <Box
+                w="100%"
+                mt="6%"
+                bg="lightBlue.400"
+                rounded="2xl"
+                px="3"
+                py="2"
+              >
+                <InputInfoUser
+                  infoLabel="Filhos"
+                  infoValue={
+                    logged.filhos?.length === "0"
+                      ? "Não"
+                      : `${logged.filhos?.length}`
+                  }
+                />
+                {logged?.filhos?.length === 0 ? "NÃO" : <MyParents />}
               </Box>
-
-             <Divider />
-       
             </Container>
 
+            <Container
+              w="80%"
+              h="300"
+              space={4}
+              bg="darkBlue.400"
+              rounded="md"
+              shadow={3}
+            >
+              <Box
+                pl="5"
+                h="15%"
+                flexDir="row"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Icon
+                  as={<Octicons name="checklist" size={32} color="white" />}
+                  size="xl"
+                  color="white"
+                />
+                <Heading ml="4" color="light.100">
+                  Meus benefícios
+                </Heading>
+              </Box>
+
+              <Divider />
+            </Container>
           </VStack>
         </Box>
       </ScrollView>
@@ -200,15 +249,13 @@ export const User = () => {
                 }
               >
                 <Pressable
-                style={{ width: "100%" }}
-                w="100%"
-                h="100%"
-                onPress={() =>
-                  navigation.navigate("EditUser")
-                }
-              >
-                <Text>Painel de Administração</Text>
-              </Pressable>
+                  style={{ width: "100%" }}
+                  w="100%"
+                  h="100%"
+                  onPress={() => navigation.navigate("Admin")}
+                >
+                  <Text>Painel de Administração</Text>
+                </Pressable>
               </Actionsheet.Item>
             )}
             <Actionsheet.Item
@@ -222,7 +269,7 @@ export const User = () => {
             >
               Alterar dados
             </Actionsheet.Item>
- 
+
             <Actionsheet.Item
               startIcon={
                 <Ionicons size={32} color="black" name="md-close-circle" />
@@ -244,7 +291,6 @@ export const User = () => {
           </Actionsheet.Content>
         </Actionsheet>
       </Center>
-
     </Box>
   );
 };

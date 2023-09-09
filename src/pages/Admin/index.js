@@ -15,14 +15,14 @@ export default function Admin() {
 
   return (
 
-    <Box flex={1} flexDir="column" justifyContent="center">
+    <Box w="100%" flex={1} flexDir="column" justifyContent="center">
       <Animatable.View
         animation="slideInDown"
         duration={1000}
         delay={200}
       >
         <Box w="100%" h="130" bg="lightBlue.500" alignItems="center" justifyContent="center" shadow={3} roundedBottom="20">
-          <Box bottom="-2%" left="-1%" position="absolute">
+          <Box  bottom="-2%" left="-1%" position="absolute">
             <BackButton />
           </Box>
           
@@ -31,12 +31,11 @@ export default function Admin() {
         </Box>
       </Animatable.View>
       
-      <Box w="100%" h="600" maxH="800" >
+      <Box w="100%" h="600" maxH="900" >
         <TabViewAdmin />
       </Box>
     
     </Box>
 
-    
   );
 }

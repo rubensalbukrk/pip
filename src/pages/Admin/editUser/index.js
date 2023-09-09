@@ -46,6 +46,8 @@ export default function EditUser({ route }) {
   const [pass, setPass] = useState(route?.params?.password);
   const navigation = useNavigation();
 
+
+  
   let UserUpdate = {
     isVolt: voluntario,
     isEtg: estagiario,
@@ -75,7 +77,7 @@ export default function EditUser({ route }) {
   }
 
   const toggleEstagio = () => {
-    setEstagiario((previousState) => !previousState & console.log(estagiario));
+    setEstagiario((previousState) => !previousState);
   };
   const toggleVoluntario = () => {
     setVoluntario((previousState) => !previousState);
@@ -120,7 +122,7 @@ export default function EditUser({ route }) {
             size={"lg"}
             shadow={2}
             bg={"light.200"}
-            source={{ uri: route?.params?.avatar }}
+            source={{ uri: avatar }}
           >
             <AntDesign name="user" size={42} color="black" />
           </Avatar>
@@ -144,7 +146,7 @@ export default function EditUser({ route }) {
                 Estagiário
               </Text>
               <Switch
-                value={route?.params.isEtg}
+                value={estagiario}
                 onValueChange={toggleEstagio}
                 colorScheme="darkBlue"
               />
@@ -186,8 +188,8 @@ export default function EditUser({ route }) {
               size="xl"
               value={nome}
               onChangeText={(text) => setNome(text)}
-              placeholder={route.params.nome}
-              placeholderTextColor="#fff"
+              placeholder={`${nome ? nome : ""}`}
+              placeholderTextColor="#000"
             />
 
             <Text color="white">Idade</Text>
@@ -197,8 +199,8 @@ export default function EditUser({ route }) {
               size="xl"
               value={idade}
               onChangeText={(text) => setIdade(text)}
-              placeholder={route.params.idade}
-              placeholderTextColor="#fff"
+              placeholder={`${idade ? idade : ""}`}
+              placeholderTextColor="#000"
             />
 
             <Text color="white">Endereço</Text>
@@ -208,8 +210,8 @@ export default function EditUser({ route }) {
               size="xl"
               value={address}
               onChangeText={(text) => setAddress(text)}
-              placeholder={route.params.address}
-              placeholderTextColor="#fff"
+              placeholder={`${idade ? idade : ""}`}
+              placeholderTextColor="000"
             />
 
             <Text color="white">NIS</Text>
@@ -219,8 +221,8 @@ export default function EditUser({ route }) {
               size="xl"
               value={nis}
               onChangeText={(text) => setNis(text)}
-              placeholder={route.params.nis}
-              placeholderTextColor="#fff"
+              placeholder={`${nis ? nis : ""}`}
+              placeholderTextColor="#000"
             />
 
             <Text color="white">CPF</Text>
@@ -230,8 +232,8 @@ export default function EditUser({ route }) {
               size="xl"
               value={cpf}
               onChangeText={(text) => setCpf(text)}
-              placeholder={route.params.cpf}
-              placeholderTextColor="#fff"
+              placeholder={`${idade ? idade : ""}`}
+              placeholderTextColor="#000"
             />
 
             <Text color="white">Filhos: </Text>
@@ -239,14 +241,13 @@ export default function EditUser({ route }) {
               variant="filled"
               style={{ color: "light.100" }}
               size="xl"
-              value={parents}
+              value={parents.length}
               onChangeText={(text) => setParents(text)}
-              placeholder={route.params.parentsName}
-              placeholderTextColor="#fff"
+              placeholder={`${parents ? parents.length : ""}`}
+              placeholderTextColor="#000"
             />
-
-            <VStack my="4" space={2}>
-              <Text color="light.100" fontSize="xs">
+            <Box w="20%" h="50" justifyContent={"start"}>
+              <Text mb="10%" color="light.100" fontSize="xs">
                 Autista
               </Text>
               <Switch
@@ -254,7 +255,8 @@ export default function EditUser({ route }) {
                 onValueChange={toggleAutista}
                 colorScheme="darkBlue"
               />
-            </VStack>
+            </Box>
+
             <Text color="white">Contato</Text>
             <Input
               variant="filled"
@@ -262,8 +264,8 @@ export default function EditUser({ route }) {
               size="xl"
               value={phone}
               onChangeText={(text) => setPhone(text)}
-              placeholder={route.params.phone}
-              placeholderTextColor="#fff"
+              placeholder={`${phone ? phone : ""}`}
+              placeholderTextColor="#000"
             />
 
             <Text color="white">Email</Text>
@@ -273,8 +275,8 @@ export default function EditUser({ route }) {
               size="xl"
               value={email}
               onChangeText={(text) => setEmail(text)}
-              placeholder={route.params.email}
-              placeholderTextColor="#fff"
+              placeholder={`${email ? email : ""}`}
+              placeholderTextColor="#000"
             />
 
             <Text color="white" bold>
@@ -286,8 +288,8 @@ export default function EditUser({ route }) {
               size="xl"
               value={pass}
               onChangeText={(text) => setPass(text)}
-              placeholder={route.params.password}
-              placeholderTextColor="#fff"
+              placeholder={`${pass ? pass : ""}`}
+              placeholderTextColor="#000"
             />
           </VStack>
 
@@ -296,18 +298,10 @@ export default function EditUser({ route }) {
             w="70%"
             bg="darkBlue.400"
             onPress={() => {
-              updateUser();
+              updateUser() && navigation.goBack()
             }}
           >
             SALVAR
-          </Button>
-          <Button
-            w="70%"
-            mb="5%"
-            bg="darkBlue.400"
-            onPress={() => navigation.goBack()}
-          >
-            VOLTAR
           </Button>
         </Center>
       </ScrollView>

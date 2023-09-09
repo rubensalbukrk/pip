@@ -13,7 +13,7 @@ function PieGraphic() {
         }
     })
     let autistas = users.filter((item) =>{
-      if (item.isAutist ==true){
+      if (item.isAutist == true){
         return item
       }
     })
@@ -22,17 +22,17 @@ function PieGraphic() {
     let pessoasCount = users.length
     let autistasCount = autistas.length
 
-    const colors = ['#0005ff','#c6ceff','#65cdfc', '#9555ff',]
-    const data = [pessoasCount, autistasCount, voluntariosCount, 1]
+    const colors = ['#0005ff','#9555ff','#41bb']
+    const data = [pessoasCount, autistasCount, voluntariosCount]
 
     const pieData = data
         .filter((value) => value > 0)
         .map((value, index) => ({
-            value,
+            value: value,
+        
             svg: {
                 fill: colors[index]
             },
-            arc: { outerRadius: '100%' },
             key: `pie-${index}`,
         }))
 
@@ -49,7 +49,7 @@ function PieGraphic() {
             alignmentBaseline='middle'
             fontSize={22}
             >
-                {data.value}<Text fontSize={18}>%</Text>
+                {data.value}
             </Text>
         )
        })
@@ -59,9 +59,10 @@ function PieGraphic() {
             <View style={{flex: 1, width: '100%', justifyContent: 'center'}}>
                 <PieChart style={{ height: 250 }} 
                 data={pieData}
-               
+               animate={true}
+               animationDuration={300}
                 outerRadius={'85%'}
-                
+                pa
                 innerRadius={'45%'}
                  >
                     <Label />

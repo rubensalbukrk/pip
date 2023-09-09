@@ -37,7 +37,8 @@ export default function MainStack(){
                 <Stack.Screen name="HomeApp" component={HomeApp} /> 
             </Stack.Group>
             <Stack.Group screenOptions={{
-          presentation: 'fullScreenModal'
+          presentation: 'fullScreenModal',
+          headerShown: false
         }}>
             <Stack.Screen name="EditUser" component={EditUser} />
             <Stack.Screen name="Admin" component={Admin} />
