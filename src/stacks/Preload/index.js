@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import { View, ActivityIndicator, Image } from "react-native";
 
 export default function Preload() {

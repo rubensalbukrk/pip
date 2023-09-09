@@ -1,19 +1,20 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import * as Animatable from "react-native-animatable";
 import { useNavigation } from "@react-navigation/native";
 import { Box, Image, Text, Input, Button, Pressable, Icon } from "native-base";
 import { Ionicons, Feather } from "@expo/vector-icons";
 import { TextInputMask } from "react-native-masked-text";
 import { AuthContext } from "../../contexts/AuthContext";
-import { Alert } from "react-native";
+
 import { UserContext } from "../../contexts/UserContext";
 
 export const Login = () => {
   const {users} = useContext(UserContext)
-  const { submit, setSubmit, auth, Authentication, logged } = useContext(AuthContext)
+  const { auth, Authentication, logged } = useContext(AuthContext)
   const [cpf, setCpf] = useState(String)
   const [password, setPassword] = useState(String)
   const [show, setShow] = useState(false)
+  const [submit, setSubmit] = useState(false)
   const navigation = useNavigation()
 
   const accessPage = () => navigation.navigate('HomeApp')
@@ -91,9 +92,9 @@ export const Login = () => {
           size={"lg"}
           w="80%"
           mt="10"
-          bg={"lightBlue.300"}
+          bg={"lightBlue.400"}
           rounded="2xl"
-          onPress={() => { Authentication(cpf, password) & setSubmit(true) & accessPage(); } }
+          onPress={() => { setSubmit(true) & Authentication(cpf, password) & accessPage()} }
         >
           ENTRAR
         </Button>
