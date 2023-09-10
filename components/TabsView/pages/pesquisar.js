@@ -150,6 +150,7 @@ export default function TabSearch() {
                       isAutist: item.isAutist,
                       isVolt: item.isVolt,
                       isEtg: item.isEtg,
+                      avatar: item.avatar,
                       isCoord: item.isCoord,
                       nome: item.nome,
                       idade: item.idade,

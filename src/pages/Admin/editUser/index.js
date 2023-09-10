@@ -1,4 +1,7 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext} from "react";
+import axios from "axios";
+import { api } from "../../../requisitions/api";
+import { UserContext } from "../../../contexts/UserContext";
 import * as Animatable from "react-native-animatable";
 import {
   Box,
@@ -18,10 +21,8 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import { Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import axios from "axios";
 import BackButton from "../../../../components/BackButton";
-import { api } from "../../../requisitions/api";
-import { UserContext } from "../../../contexts/UserContext";
+import MyParents from "../../../../components/UserLayout/userParents";
 
 export default function EditUser({ route }) {
   const { logged } = useContext(UserContext);
@@ -35,10 +36,7 @@ export default function EditUser({ route }) {
   const [address, setAddress] = useState(route?.params?.address);
   const [cpf, setCpf] = useState(route?.params?.cpf);
   const [nis, setNis] = useState(route?.params?.nis);
-  const [parents, setParents] = useState([
-    { id: 1, nome: String },
-    { id: 2, nome: String },
-  ]);
+  const [parents, setParents] = useState(route?.params?.filhos);
   const [phone, setPhone] = useState(route?.params?.phone);
   const [email, setEmail] = useState(route?.params?.email);
   const [member, setMember] = useState(route?.params?.question1);
@@ -60,7 +58,7 @@ export default function EditUser({ route }) {
     cpf: cpf,
     phone: phone,
     email: email,
-    parentsName: parents,
+    filhos: parents,
     question1: member,
     question2: opnion,
     password: pass,
@@ -108,7 +106,6 @@ export default function EditUser({ route }) {
           bg="lightBlue.500"
           alignItems="center"
           justifyContent="center"
-          shadow={3}
           roundedBottom="20"
         >
           <Box bottom="-2%" left="-1%" position="absolute">
@@ -122,10 +119,8 @@ export default function EditUser({ route }) {
             size={"lg"}
             shadow={2}
             bg={"light.200"}
-            source={{ uri: avatar }}
-          >
-            <AntDesign name="user" size={42} color="black" />
-          </Avatar>
+            source={{ uri: route?.params?.avatar }}
+          />
         </Box>
       </Animatable.View>
       <ScrollView flex={1} w="100%">
@@ -241,11 +236,12 @@ export default function EditUser({ route }) {
               variant="filled"
               style={{ color: "light.100" }}
               size="xl"
-              value={parents.length}
+              value={parents}
               onChangeText={(text) => setParents(text)}
               placeholder={`${parents ? parents.length : ""}`}
               placeholderTextColor="#000"
             />
+            {parents ? <MyParents /> : null }
             <Box w="20%" h="50" justifyContent={"start"}>
               <Text mb="10%" color="light.100" fontSize="xs">
                 Autista

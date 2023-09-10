@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native'
-import Routes from './src/routes';
+
 import Preload from './src/stacks/Preload';
 import { Login } from './src/stacks/Login';
 import MainStack from './src/stacks/mainStack';

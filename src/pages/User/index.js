@@ -37,7 +37,7 @@ import MyParents from "../../../components/UserLayout/userParents";
 import BackButton from "../../../components/BackButton";
 
 export const User = () => {
-  const { auth, setAuth, setSubmit } = useContext(AuthContext);
+  const { auth, setAuth } = useContext(AuthContext);
   const { users, setUsers, logged, setLogged } = useContext(UserContext);
   const navigation = useNavigation();
   const { isOpen, onOpen, onClose } = useDisclose();
@@ -49,7 +49,10 @@ export const User = () => {
     ActionSheetIOS.showActionSheetWithOptions(
       {
         options: [
-          `${logged?.isAdmin == true ? "Painel de Administração" : "Opções"}`,
+          `${logged?.isAdmin == true ? "Painel da Administração" : "Opções" 
+          &&
+          logged?.isCoord == true ? "Painel da Coodernação" : "Opções"
+          }`,
           "Alterar dados",
           "Sair",
         ],
@@ -62,13 +65,15 @@ export const User = () => {
           {
             logged?.isAdmin == true ? navigation.navigate("Admin") : null;
           }
+          {
+            logged?.isCoord == true ? navigation.navigate("Admin") : null;
+          }
         } else if (buttonIndex === 1) {
           alert("Alterar dados");
         } else if (buttonIndex === 2) {
           navigation.navigate("Welcome");
           setAuth(false);
           setLogged(false);
-          setSubmit(false);
         }
       }
     );
@@ -82,8 +87,8 @@ export const User = () => {
         h="30%"
         alignItems="center"
         justifyContent="center"
-        roundedBottom="80"
-        shadow={6}
+        roundedBottom="90"
+        shadow={1}
       >
         <Box
           top="15%"
@@ -95,14 +100,14 @@ export const User = () => {
           alignItems="center"
         >
           <BackButton />
-        
+
           <TouchableOpacity
             style={{
               opacity: 0.8,
               width: 70,
               height: 70,
-              justifyContent: 'center',
-              alignItems: 'center'
+              justifyContent: "center",
+              alignItems: "center",
             }}
             onPress={() => (Platform.OS === "ios" ? openSheetIOS() : onOpen())}
           >
@@ -116,7 +121,7 @@ export const User = () => {
             mt="5"
             source={{ uri: logged.avatar }}
             size="2xl"
-            shadow={6}
+            shadow={1}
           />
           <Badge
             style={{ position: "absolute", right: "-5%", top: "20%" }}
@@ -128,6 +133,10 @@ export const User = () => {
               ? "Admin"
               : "Membro" && logged?.isEtg == true
               ? "Estágiario"
+              : "Membro" && logged?.isVolt == true
+              ? "Voluntário"
+              : "Membro" && logged?.isCoord == true
+              ? "Coordenador"
               : "Membro"}
           </Badge>
         </Box>

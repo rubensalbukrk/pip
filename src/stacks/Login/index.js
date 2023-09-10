@@ -58,11 +58,8 @@ export const Login = () => {
         <TextInputMask
           style={{ width: "100%", borderColor: '#23B5D3', color: '#23B5D3', marginLeft: '15%', height: 50, textAlign: "left", fontSize: 24 }}
           type="cpf"
-          
           placeholderTextColor={"#23B5D3"}
           value={cpf}
-          
-          defaultValue="111-222-333-44"
           placeholder="000.000.000-00"
           onChangeText={(text) => setCpf(text)} />
       </Box>

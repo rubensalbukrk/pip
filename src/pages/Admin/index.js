@@ -13,7 +13,6 @@ import {
   VStack,
 } from "native-base";
 import { UserContext } from "../../contexts/UserContext";
-import { newUser, deleteUser, updateUser } from "../../requisitions/api";
 import { useNavigation } from "@react-navigation/native";
 import { TabViewAdmin } from "../../../components/TabsView";
 import BackButton from "../../../components/BackButton";
@@ -29,9 +28,8 @@ export default function Admin() {
       <Animatable.View
         animation="slideInDown"
         duration={1000}
-        delay={200}
       >
-        <Box w="100%" h="130" bg="lightBlue.500" alignItems="center" justifyContent="center" shadow={3} roundedBottom="20">
+        <Box w="100%" h="130" bg="lightBlue.500" alignItems="center" justifyContent="center" roundedBottom="20">
           <Box  bottom="-2%" left="-1%" position="absolute">
             <BackButton />
           </Box>

@@ -13,7 +13,7 @@ export const Welcome = () => {
 
   useEffect(() => {
     getData();
-  }, [api]);
+  }, []);
 
   const getData = () => {
     axios
