@@ -9,11 +9,10 @@ import { api, apiSolicitations } from "../../requisitions/api";
 
 export const Welcome = () => {
   const navigation = useNavigation();
-  const { setUsers, setSolicitations } = useContext(UserContext);
+  const { setUsers } = useContext(UserContext);
 
   useEffect(() => {
     getData();
-    getSolicitation();
   },[api]);
 
   const getData = () => {
@@ -30,22 +29,6 @@ export const Welcome = () => {
       })
       .catch((error) => console.log(error));
   };
-
-  const getSolicitation = () => {
-    axios
-      .get(apiSolicitations, {
-        method: "get",
-        headers: new Headers({
-          "ngrok-skip-browser-warning": "69420",
-        }),
-      })
-      .then((response) => {
-        const solicitations = response.data.solicitations;
-        setSolicitations(solicitations);
-      })
-      .catch((error) => console.log(error));
-  };
-
 
   return (
     <Box flex="1" bg={"white"} alignItems="center">

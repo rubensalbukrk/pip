@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import {
   ScrollView,
@@ -18,14 +18,13 @@ import { apiSolicitations } from "../../../requisitions/api";
 
 export default function ViewService({ route }) {
   const {logged} = useContext(UserContext)
-  
 
   function handleSolicitation(service){
-
     let newSolicitation = {
         nome: logged?.nome,
         cpf: logged?.cpf,
         service: service,
+        pasta: `${route?.params?.pasta}`,
         status: "Aguardando analise..."
       }
     axios

@@ -2,9 +2,9 @@ import React, {useContext} from 'react'
 import axios from "axios";
 import { UserContext } from '../contexts/UserContext';
 
-export const api = "https://e32e-45-183-25-97.ngrok-free.app/require/users"
-export const apiNotice = "https://e32e-45-183-25-97.ngrok-free.app/require/notices"
-export const apiSolicitations = "https://e32e-45-183-25-97.ngrok-free.app/require/solicitations"
+export const api = "https://ade7-45-183-25-97.ngrok-free.app/require/users"
+export const apiNotice = "https://ade7-45-183-25-97.ngrok-free.app/require/notices"
+export const apiSolicitations = "https://ade7-45-183-25-97.ngrok-free.app/require/solicitations"
 
 export function getNotices(){
     const {setNotices} = useContext(UserContext)

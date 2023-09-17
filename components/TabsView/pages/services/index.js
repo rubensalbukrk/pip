@@ -83,6 +83,7 @@ export default function Solicitation() {
                     <Text>Nome: {item.nome} </Text>
                     <Text>CPF: {item.cpf} </Text>
                     <Text>Serviço: {item.service} </Text>
+                    <Text>Pasta: {item.pasta} </Text>
                     <Text>STATUS: {item.status} </Text>
                     <Text>Data: {item.date} </Text>
                     <TouchableOpacity

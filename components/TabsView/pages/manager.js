@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from "react";
+import axios from "axios";
 import { View, FlatList, TouchableOpacity, Dimensions } from "react-native";
 import {
   Box,
@@ -21,9 +22,33 @@ import {
   FontAwesome,
 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { UserContext } from "../../../src/contexts/UserContext";
+import { apiSolicitations } from "../../../src/requisitions/api";
 
 export default function TabManager() {
   const navigation = useNavigation();
+  const {setSolicitations} = useContext(UserContext)
+
+  useEffect(() => (
+    getSolicitation()
+  ),[])
+
+  const getSolicitation = () => {
+    axios
+      .get(apiSolicitations, {
+        method: "get",
+        headers: new Headers({
+          "ngrok-skip-browser-warning": "69420",
+        }),
+      })
+      .then((response) => {
+        const solicitations = response.data.solicitations;
+        setSolicitations(solicitations);
+      })
+      .catch((error) => console.log(error));
+  };
+
+
   return (
     <ScrollView mb="5%" flex={1} w="100%">
       <Center flex={1} w="100%" px="5">
