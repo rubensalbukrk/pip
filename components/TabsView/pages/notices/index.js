@@ -95,7 +95,7 @@ function addNotice(){
                   
                 >
                   <Text>Titulo: {item.title} </Text>
-                  <Text>Descrição: {item.mensagem} </Text>
+                  <Text numberOfLines="1" ellipsizeMode="tail" >Descrição: {item.mensagem} </Text>
                   <Text>Data: {item.date} </Text>
                   <TouchableOpacity
                     style={{

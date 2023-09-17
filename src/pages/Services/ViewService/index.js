@@ -21,6 +21,7 @@ export default function ViewService({ route }) {
 
   function handleSolicitation(service){
     let newSolicitation = {
+        userInfo: logged,
         nome: logged?.nome,
         cpf: logged?.cpf,
         service: service,

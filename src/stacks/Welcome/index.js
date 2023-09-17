@@ -4,31 +4,10 @@ import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../contexts/UserContext";
 import { Box, Text, Image, Button } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
-import axios from "axios";
-import { api, apiSolicitations } from "../../requisitions/api";
 
 export const Welcome = () => {
   const navigation = useNavigation();
-  const { setUsers } = useContext(UserContext);
 
-  useEffect(() => {
-    getData();
-  },[api]);
-
-  const getData = () => {
-    axios
-      .get(api, {
-        method: "get",
-        headers: new Headers({
-          "ngrok-skip-browser-warning": "69420",
-        }),
-      })
-      .then((response) => {
-        const users = response.data.users;
-        setUsers(users);
-      })
-      .catch((error) => console.log(error));
-  };
 
   return (
     <Box flex="1" bg={"white"} alignItems="center">

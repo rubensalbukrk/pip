@@ -1,15 +1,16 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import axios from "axios";
 import * as Animatable from "react-native-animatable";
 import { useNavigation } from "@react-navigation/native";
 import { Box, Image, Text, Input, Button, Pressable, Icon } from "native-base";
 import { Ionicons, Feather } from "@expo/vector-icons";
 import { TextInputMask } from "react-native-masked-text";
 import { AuthContext } from "../../contexts/AuthContext";
-
+import { api } from "../../requisitions/api";
 import { UserContext } from "../../contexts/UserContext";
 
 export const Login = () => {
-  const {users} = useContext(UserContext)
+  const {users, setUsers} = useContext(UserContext)
   const { auth, Authentication, logged } = useContext(AuthContext)
   const [cpf, setCpf] = useState(String)
   const [password, setPassword] = useState(String)
@@ -19,6 +20,24 @@ export const Login = () => {
 
   const accessPage = () => navigation.navigate('HomeApp')
 
+  useEffect(() => {
+    getData();
+  },[]);
+
+  const getData = () => {
+    axios
+      .get(api, {
+        method: "get",
+        headers: new Headers({
+          "ngrok-skip-browser-warning": "69420",
+        }),
+      })
+      .then((response) => {
+        const users = response.data.users;
+        setUsers(users);
+      })
+      .catch((error) => console.log(error));
+  };
   return (
   
     <Box
