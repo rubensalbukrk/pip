@@ -79,16 +79,16 @@ export const User = () => {
     );
 
   return (
-    <Box flex="1" w="100%" alignItems="center">
+    <Box flex="1" w="100%" bg="light.100" alignItems="center">
       <Box
         w="100%"
-        mb="8"
+        mb="3"
         bg="lightBlue.500"
         h="30%"
         alignItems="center"
         justifyContent="center"
         roundedBottom="90"
-        shadow={1}
+        
       >
         <Box
           top="15%"
@@ -121,7 +121,6 @@ export const User = () => {
             mt="5"
             source={{ uri: logged.avatar }}
             size="2xl"
-            shadow={1}
           />
           <Badge
             style={{ position: "absolute", right: "-5%", top: "20%" }}
@@ -149,17 +148,16 @@ export const User = () => {
       <ScrollView w="100%" mb="4%" horizontal={false}>
         <Box alignItems="center">
           <VStack
-            space={5}
+            space={3}
             w="100%"
             rounded="md"
             justifyContent="space-around"
             alignItems="center"
           >
-            <Text fontSize="3xl">Meu perfil</Text>
+            <Text color="lightBlue.400" fontSize="3xl">Meu perfil</Text>
 
-            <Divider />
-
-            <Container w="90%" px="6" py="6" rounded="lg" bg="darkBlue.300">
+            <Container w="90%" px="6" py="6" rounded="lg"  bg="darkBlue.200">
+             
               <InputInfoUser
                 infoLabel="Data de inscrição"
                 infoValue={logged.date}
@@ -198,10 +196,10 @@ export const User = () => {
             <Container
               w="80%"
               h="300"
+              my="7   "
               space={4}
-              bg="darkBlue.400"
+              bg="lightBlue.300"
               rounded="md"
-              shadow={3}
             >
               <Box
                 pl="5"

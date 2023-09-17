@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import axios from "axios";
 import {
   ScrollView,
@@ -13,8 +13,34 @@ import {
   VStack,
 } from "native-base";
 import BackButton from "../../../../components/BackButton";
+import { UserContext } from "../../../contexts/UserContext";
+import { apiSolicitations } from "../../../requisitions/api";
 
 export default function ViewService({ route }) {
+  const {logged} = useContext(UserContext)
+  
+
+  function handleSolicitation(service){
+
+    let newSolicitation = {
+        nome: logged?.nome,
+        cpf: logged?.cpf,
+        service: service,
+        status: "Aguardando analise..."
+      }
+    axios
+      .post(apiSolicitations, newSolicitation, {
+        method: "post",
+        headers: new Headers({
+          "ngrok-skip-browser-warning": "69421",
+        }),
+      })
+      .then((response) => {
+        alert(JSON.stringify(response.data));
+      })
+      .catch((error) => console.error(error));
+  }
+
   return (
     <ScrollView flex={1} bg="lightBlue.400" w="100%">
       <Box
@@ -57,7 +83,7 @@ export default function ViewService({ route }) {
             </Heading>
           </VStack>
           <Text alignSelf="right" color="#fff" mt="2%" fontSize="2xl">
-            Requerimentos
+            Serviços disponíveis
           </Text>
           <VStack
             px="2"
@@ -66,23 +92,16 @@ export default function ViewService({ route }) {
             bg="lightBlue.300"
             rounded="lg"
             space={1}
+            maxH="800"
           >
-            <Text textDecorationLine={"underline"}>
-              {route?.params?.requisite[0]}
-            </Text>
-            <Text textDecorationLine={"underline"}>
-              {route?.params?.requisite[1]}
-            </Text>
-            <Text textDecorationLine={"underline"}>
-              {route?.params?.requisite[2]}
-            </Text>
-            <Text textDecorationLine={"underline"}>
-              {route?.params?.requisite[4]}
-            </Text>
+            
+            {route?.params?.requisite[0] ? <Button onPress={() => handleSolicitation(route?.params?.requisite[0])} colorScheme={'darkBlue'}>{route?.params?.requisite[0]}</Button> : null }
+            {route?.params?.requisite[1] ? <Button onPress={() => handleSolicitation(route?.params?.requisite[1])} colorScheme={'darkBlue'}>{route?.params?.requisite[1]}</Button> : null }
+            {route?.params?.requisite[2] ? <Button onPress={() => handleSolicitation(route?.params?.requisite[2])} colorScheme={'darkBlue'}>{route?.params?.requisite[2]}</Button> : null }
+            {route?.params?.requisite[3] ? <Button onPress={() => handleSolicitation(route?.params?.requisite[3])} colorScheme={'darkBlue'}>{route?.params?.requisite[3]}</Button> : null }
+         
           </VStack>
-          <Button mt="9%" w="70%" alignSelf="center" colorScheme={"darkBlue"}>
-            SOLICITAR
-          </Button>
+
         </Box>
       </Box>
     </ScrollView>

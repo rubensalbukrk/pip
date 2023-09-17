@@ -1,4 +1,4 @@
-import React, { useContext} from "react";
+import React, { useContext } from "react";
 import { View, FlatList, TouchableOpacity, Dimensions } from "react-native";
 import {
   Box,
@@ -14,25 +14,39 @@ import {
   Divider,
   Button,
 } from "native-base";
-import { MaterialIcons, Feather, AntDesign,FontAwesome } from "@expo/vector-icons";
+import {
+  MaterialIcons,
+  Feather,
+  AntDesign,
+  FontAwesome,
+} from "@expo/vector-icons";
 import BackButton from "../../../BackButton";
 import { UserContext } from "../../../../src/contexts/UserContext";
 import { useNavigation } from "@react-navigation/native";
+import {
+  apiSolicitations,
+  deleteSolicitation,
+} from "../../../../src/requisitions/api";
+
 export default function Solicitation() {
-const {notices} = useContext(UserContext)
-const navigation = useNavigation();
- return (
+  const { solicitations } = useContext(UserContext);
+  const navigation = useNavigation();
+
+  return (
     <Box flex={1} w="100%" bg="darkBlue.400" py="10" px="5">
-         <Box flexDir="row" top="2%">
-          <FontAwesome name="exception1" size={40} color="white" />
-          <Heading mx="3" color="light.100">Solicitações</Heading>
-        </Box>
-        
-        <Divider my="4" />
+      <Box flexDir="row" top="2%">
+        <FontAwesome name="exception1" size={40} color="white" />
+        <Heading mx="3" color="light.100">
+          Solicitações
+        </Heading>
+      </Box>
+
+      <Divider my="4" />
       <VStack
         mt="4%"
         py="2"
         w="100%"
+        h="300"
         alignSelf="center"
         shadow={2}
         bg="darkBlue.300"
@@ -40,12 +54,11 @@ const navigation = useNavigation();
         alignItems="center"
         justifyContent="center"
       >
-    
         <Heading color={"light.100"}>Atuais</Heading>
         <Divider ml="12%" my="2" w="70%" />
- 
+
         <FlatList
-          data={notices}
+          data={solicitations}
           horizontal={false}
           keyExtractor={(item) => item.id}
           style={{
@@ -67,8 +80,10 @@ const navigation = useNavigation();
                     w="88%"
                     h="100%"
                   >
-                    <Text>Titulo: {item.title} </Text>
-                    <Text>Descrição: {item.mensagem} </Text>
+                    <Text>Nome: {item.nome} </Text>
+                    <Text>CPF: {item.cpf} </Text>
+                    <Text>Serviço: {item.service} </Text>
+                    <Text>STATUS: {item.status} </Text>
                     <Text>Data: {item.date} </Text>
                     <TouchableOpacity
                       style={{
@@ -79,7 +94,7 @@ const navigation = useNavigation();
                         height: 40,
                         opacity: 0.8,
                       }}
-                      onPress={() => deleteNotice(item.id)}
+                      onPress={() => deleteSolicitation(item.id)}
                     >
                       <MaterialIcons
                         name="delete-forever"
@@ -95,12 +110,19 @@ const navigation = useNavigation();
         />
         <Button colorScheme={"darkBlue"}>Adicionar</Button>
       </VStack>
-      <TouchableOpacity 
-          style={{width: 70, height: 70, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', marginTop: '10%'}}
-          onPress={() => navigation.goBack() }
-          >
-          <Feather name="arrow-left-circle" size={40} color="white" />
-          </TouchableOpacity>
+      <TouchableOpacity
+        style={{
+          width: 70,
+          height: 70,
+          justifyContent: "center",
+          alignItems: "center",
+          alignSelf: "center",
+          marginTop: "10%",
+        }}
+        onPress={() => navigation.goBack()}
+      >
+        <Feather name="arrow-left-circle" size={40} color="white" />
+      </TouchableOpacity>
     </Box>
   );
 }

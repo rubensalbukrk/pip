@@ -24,7 +24,7 @@ export default function Admin() {
 
   return (
 
-    <Box w="100%" flex={1} flexDir="column" justifyContent="center">
+    <Box flex={1} flexDir="column">
       <Animatable.View
         animation="slideInDown"
         duration={1000}
@@ -39,7 +39,7 @@ export default function Admin() {
         </Box>
       </Animatable.View>
       
-      <Box w="100%" h="600" maxH="900" >
+      <Box flex={1} w="100%">
         <TabViewAdmin />
       </Box>
     

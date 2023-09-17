@@ -5,15 +5,16 @@ import { UserContext } from "../../contexts/UserContext";
 import { Box, Text, Image, Button } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import axios from "axios";
-import { api } from "../../requisitions/api";
+import { api, apiSolicitations } from "../../requisitions/api";
 
 export const Welcome = () => {
   const navigation = useNavigation();
-  const { setUsers } = useContext(UserContext);
+  const { setUsers, setSolicitations } = useContext(UserContext);
 
   useEffect(() => {
     getData();
-  }, []);
+    getSolicitation();
+  },[api]);
 
   const getData = () => {
     axios
@@ -26,6 +27,21 @@ export const Welcome = () => {
       .then((response) => {
         const users = response.data.users;
         setUsers(users);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const getSolicitation = () => {
+    axios
+      .get(apiSolicitations, {
+        method: "get",
+        headers: new Headers({
+          "ngrok-skip-browser-warning": "69420",
+        }),
+      })
+      .then((response) => {
+        const solicitations = response.data.solicitations;
+        setSolicitations(solicitations);
       })
       .catch((error) => console.log(error));
   };
