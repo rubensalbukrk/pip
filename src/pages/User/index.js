@@ -156,7 +156,7 @@ export const User = () => {
           >
             <Text color="lightBlue.400" fontSize="3xl">Meu perfil</Text>
 
-            <Container w="90%" px="6" py="6" rounded="lg"  bg="darkBlue.200">
+            <Container w="90%" px="6" py="6" rounded="lg"  bg="darkBlue.300">
              
               <InputInfoUser
                 infoLabel="Data de inscrição"
@@ -176,7 +176,7 @@ export const User = () => {
               <Box
                 w="100%"
                 mt="6%"
-                bg="lightBlue.400"
+                bg="darkBlue.300"
                 rounded="2xl"
                 px="3"
                 py="2"
@@ -198,7 +198,7 @@ export const User = () => {
               h="300"
               my="7   "
               space={4}
-              bg="lightBlue.300"
+              bg="darkBlue.300"
               rounded="md"
             >
               <Box

@@ -2,9 +2,7 @@ import React, {useContext} from 'react'
 import axios from "axios";
 import { UserContext } from '../contexts/UserContext';
 
-export const api = "https://ade7-45-183-25-97.ngrok-free.app/require/users"
-export const apiNotice = "https://ade7-45-183-25-97.ngrok-free.app/require/notices"
-export const apiSolicitations = "https://ade7-45-183-25-97.ngrok-free.app/require/solicitations"
+export const api = "https://c2e7-45-183-25-97.ngrok-free.app/require"
 
 export function getNotices(){
     const {setNotices} = useContext(UserContext)
@@ -22,7 +20,7 @@ export function getNotices(){
       .catch((error) => console.log(error));
   };
 export function deleteUser(id){
-    axios.delete(`${api}/${id}`, {
+    axios.delete(`${api}/users/${id}`, {
         method: 'delete',
         headers: new Headers({
             "ngrok-skip-browser-warning" : "69421"
@@ -34,7 +32,7 @@ export function deleteUser(id){
       .catch(error => console.error(error));
 }
 export function deleteNotice(id){
-    axios.delete(`${apiNotice}/${id}`, {
+    axios.delete(`${api}/notices/${id}`, {
         method: 'delete',
         headers: new Headers({
             "ngrok-skip-browser-warning" : "69421"
@@ -46,7 +44,7 @@ export function deleteNotice(id){
       .catch(error => console.error(error));
 }
 export function deleteSolicitation(id){
-  axios.delete(`${apiSolicitations}/${id}`, {
+  axios.delete(`${api}/solicitations/${id}`, {
       method: 'delete',
       headers: new Headers({
           "ngrok-skip-browser-warning" : "69421"

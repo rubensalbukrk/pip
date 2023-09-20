@@ -40,11 +40,11 @@ export default function TabCadastros() {
 
             <VStack  my="10" w="40%" space={3}>
               <HStack>
-                <Circle size="20px" bg="#41bb" />
+                <Circle size="20px" bg="#FF3100"/>
                 <Text> VOLUNTÁRIOS</Text>
               </HStack>
               <HStack>
-                <Circle size="20px" bg="#FF3100" />
+                <Circle size="20px" bg="#41bb" />
                 <Text> COORDENADORES</Text>
               </HStack>
             </VStack>

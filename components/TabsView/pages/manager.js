@@ -23,19 +23,35 @@ import {
 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../../src/contexts/UserContext";
-import { apiSolicitations } from "../../../src/requisitions/api";
+import { api, apiAprovados, apiSolicitations } from "../../../src/requisitions/api";
 
 export default function TabManager() {
   const navigation = useNavigation();
-  const {setSolicitations} = useContext(UserContext)
+  const {setSolicitations, setAprovados} = useContext(UserContext)
 
   useEffect(() => (
-    getSolicitation()
+    getSolicitation(),
+    getAprovados()
   ),[])
 
+  const getAprovados = () => {
+    axios
+      .get(`${api}/aprovados`, {
+        method: "get",
+        headers: new Headers({
+          "ngrok-skip-browser-warning": "69420",
+        }),
+      })
+      .then((response) => {
+        const aprovados = response.data.aprovados;
+        setAprovados(aprovados);
+      })
+  
+      .catch((error) => console.log(error));
+  };
   const getSolicitation = () => {
     axios
-      .get(apiSolicitations, {
+      .get(`${api}/solicitations`, {
         method: "get",
         headers: new Headers({
           "ngrok-skip-browser-warning": "69420",
@@ -45,12 +61,14 @@ export default function TabManager() {
         const solicitations = response.data.solicitations;
         setSolicitations(solicitations);
       })
+  
       .catch((error) => console.log(error));
   };
 
 
+
   return (
-    <ScrollView mb="5%" flex={1} w="100%">
+    <ScrollView  flex={1} w="100%">
       <Center flex={1} w="100%" px="5">
         <VStack
           mt="4%"

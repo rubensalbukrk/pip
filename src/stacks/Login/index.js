@@ -21,12 +21,12 @@ export const Login = () => {
   const accessPage = () => navigation.navigate('HomeApp')
 
   useEffect(() => {
-    getData();
+    getUsers();
   },[]);
 
-  const getData = () => {
+  const getUsers = () => {
     axios
-      .get(api, {
+      .get(`${api}/users`, {
         method: "get",
         headers: new Headers({
           "ngrok-skip-browser-warning": "69420",
@@ -108,7 +108,7 @@ export const Login = () => {
           size={"lg"}
           w="80%"
           mt="10"
-          bg={"lightBlue.400"}
+          colorScheme={"lightBlue"}
           rounded="2xl"
           onPress={() => { setSubmit(true) & Authentication(cpf, password) & accessPage()} }
         >

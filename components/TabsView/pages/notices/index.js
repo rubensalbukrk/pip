@@ -20,6 +20,7 @@ import {
   Feather,
   AntDesign,
   FontAwesome,
+  FontAwesome5,
 } from "@expo/vector-icons";
 import BackButton from "../../../BackButton";
 import { useNavigation } from "@react-navigation/native";
@@ -148,10 +149,13 @@ function addNotice(){
           <Button variant={"ghost"}>
           <Feather name="image" size={32} color="white" />
           </Button>
-          <Button colorScheme={"lightBlue"} w="50%" alignSelf="center"
+          <Button colorScheme={"info"}
           onPress={() => addNotice() & console.log(dataNotice)}
           >
-            Adicionar
+            <HStack space={3}>
+                <FontAwesome5 name="check" size={24} color="white" />
+            <Text color="white">Adicionar</Text>
+            </HStack>
           </Button>
         </HStack>
       </VStack>

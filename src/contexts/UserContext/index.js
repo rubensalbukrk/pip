@@ -7,12 +7,15 @@ export default function UserProvider({children}) {
     const [users, setUsers] = useState([])
     const [logged, setLogged ] = useState({});
     const [solicitations, setSolicitations] = useState()
+    const [aprovados, setAprovados] = useState()
 
     const getting = {
         notices,
         users,
         logged,
+        aprovados,
         solicitations,
+        setAprovados,
         setSolicitations,
         setNotices,
         setUsers,
