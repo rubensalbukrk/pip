@@ -29,7 +29,7 @@ export default function TabSearch() {
 
   useEffect(() => {
     axios
-      .get(api, {
+      .get(`${api}/users`, {
         method: "get",
         headers: new Headers({
           "ngrok-skip-browser-warning": "69420",

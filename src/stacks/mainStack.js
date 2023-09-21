@@ -9,10 +9,11 @@ import { User } from "../pages/User";
 import Admin from "../pages/Admin";
 import EditUser from "../pages/Admin/editUser";
 import NewNotice from "../../components/TabsView/pages/notices";
-import Solicitation from "../../components/TabsView/pages/services";
+import Solicitation from "../../components/TabsView/pages/solicitations";
 import Services from "../pages/Services";
 import ViewService from "../pages/Services/ViewService";
-import SolicitationInfoUser from "../../components/TabsView/pages/services/userSolicitation";
+import SolicitationInfoUser from "../../components/TabsView/pages/solicitations/userSolicitation";
+
 const Stack = createNativeStackNavigator();
 
 export default function MainStack() {

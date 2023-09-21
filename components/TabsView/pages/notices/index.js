@@ -13,7 +13,7 @@ import {
   HStack,
 } from "native-base";
 import { TouchableOpacity } from "react-native";
-import { apiNotice, deleteNotice } from "../../../../src/requisitions/api";
+import { api, deleteNotice } from "../../../../src/requisitions/api";
 import { UserContext } from "../../../../src/contexts/UserContext";
 import {
   MaterialIcons,
@@ -34,7 +34,7 @@ export default function NewNotice() {
 
   useEffect(() => {
     axios
-      .get(apiNotice, {
+      .get(`${api}/notices`, {
         method: "get",
         headers: new Headers({
           "ngrok-skip-browser-warning": "69420",

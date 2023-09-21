@@ -17,7 +17,6 @@ import {
 import PieGraphic from "../../Graphics/PieGraphic";
 
 export default function TabCadastros() {
-
  
   return (
       <ScrollView mb="5%" flex={1} w="100%" horizontal={false}>

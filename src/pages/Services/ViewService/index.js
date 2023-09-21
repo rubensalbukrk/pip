@@ -14,7 +14,7 @@ import {
 } from "native-base";
 import BackButton from "../../../../components/BackButton";
 import { UserContext } from "../../../contexts/UserContext";
-import { apiSolicitations } from "../../../requisitions/api";
+import { api } from "../../../requisitions/api";
 
 export default function ViewService({ route }) {
   const {logged} = useContext(UserContext)
@@ -29,7 +29,7 @@ export default function ViewService({ route }) {
         status: "Aguardando analise..."
       }
     axios
-      .post(apiSolicitations, newSolicitation, {
+      .post(`${api}/solicitations`, newSolicitation, {
         method: "post",
         headers: new Headers({
           "ngrok-skip-browser-warning": "69421",

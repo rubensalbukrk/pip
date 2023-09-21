@@ -1,4 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect} from "react";
+import axios from "axios";
 import {
   Pressable,
   TouchableOpacity,
@@ -11,6 +12,8 @@ import {
   Button,
   Center,
   VStack,
+  FlatList,
+  HStack,
   Actionsheet,
   Avatar,
   Badge,
@@ -29,21 +32,58 @@ import {
   Octicons,
   MaterialCommunityIcons,
   MaterialIcons,
+  FontAwesome,
   Ionicons,
 } from "@expo/vector-icons";
 import { UserContext } from "../../contexts/UserContext";
 import InputInfoUser from "../../../components/UserLayout/inputUser";
 import MyParents from "../../../components/UserLayout/userParents";
 import BackButton from "../../../components/BackButton";
+import { api } from "../../requisitions/api";
 
 export const User = () => {
   const { auth, setAuth } = useContext(AuthContext);
-  const { users, setUsers, logged, setLogged } = useContext(UserContext);
+  const { users, setUsers, logged, setLogged, solicitations, setSolicitations, setAprovados, aprovados } = useContext(UserContext);
   const navigation = useNavigation();
   const { isOpen, onOpen, onClose } = useDisclose();
   var nome = logged?.nome;
   var parentsCount = logged.filhos?.length;
   var primeiro_nome = nome?.split(" ").shift();
+  useEffect(() => (
+    getSolicitation(),
+    getAprovados()
+  ),[])
+
+  const getAprovados = () => {
+    axios
+      .get(`${api}/aprovados`, {
+        method: "get",
+        headers: new Headers({
+          "ngrok-skip-browser-warning": "69420",
+        }),
+      })
+      .then((response) => {
+        const aprovados = response.data.aprovados;
+        setAprovados(aprovados);
+      })
+  
+      .catch((error) => console.log(error));
+  };
+  const getSolicitation = () => {
+    axios
+      .get(`${api}/solicitations`, {
+        method: "get",
+        headers: new Headers({
+          "ngrok-skip-browser-warning": "69420",
+        }),
+      })
+      .then((response) => {
+        const solicitations = response.data.solicitations;
+        setSolicitations(solicitations);
+      })
+  
+      .catch((error) => console.log(error));
+  };
 
   const openSheetIOS = () =>
     ActionSheetIOS.showActionSheetWithOptions(
@@ -82,12 +122,10 @@ export const User = () => {
     <Box flex="1" w="100%" bg="light.100" alignItems="center">
       <Box
         w="100%"
-        mb="3"
-        bg="lightBlue.500"
+        bg="lightBlue.400"
         h="30%"
         alignItems="center"
         justifyContent="center"
-        roundedBottom="90"
         
       >
         <Box
@@ -145,7 +183,7 @@ export const User = () => {
         </Text>
       </Box>
 
-      <ScrollView w="100%" mb="4%" horizontal={false}>
+      <ScrollView w="100%" horizontal={false} bg="lightBlue.400">
         <Box alignItems="center">
           <VStack
             space={3}
@@ -154,10 +192,24 @@ export const User = () => {
             justifyContent="space-around"
             alignItems="center"
           >
-            <Text color="lightBlue.400" fontSize="3xl">Meu perfil</Text>
-
-            <Container w="90%" px="6" py="6" rounded="lg"  bg="darkBlue.300">
-             
+    
+            <Container w="90%" px="4" py="3" rounded="lg"  bg="lightBlue.500">
+            <Box
+                h="30"
+                flexDir="row"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Icon
+                  as={<MaterialIcons name="info-outline" size={32} color="white" />}
+                  size="xl"
+                  color="white"
+                />
+                <Heading ml="4" color="light.100">
+                  Meus dados
+                </Heading>
+              </Box>
+              <Divider />
               <InputInfoUser
                 infoLabel="Data de inscrição"
                 infoValue={logged.date}
@@ -176,7 +228,7 @@ export const User = () => {
               <Box
                 w="100%"
                 mt="6%"
-                bg="darkBlue.300"
+                bg="lightBlue.500"
                 rounded="2xl"
                 px="3"
                 py="2"
@@ -196,14 +248,16 @@ export const User = () => {
             <Container
               w="80%"
               h="300"
-              my="7   "
+            py="3"
+              mb="20"
               space={4}
-              bg="darkBlue.300"
+              bg="rgba(200, 255, 254, 0.15)"
               rounded="md"
             >
               <Box
                 pl="5"
-                h="15%"
+                h="30"
+
                 flexDir="row"
                 justifyContent="center"
                 alignItems="center"
@@ -213,12 +267,58 @@ export const User = () => {
                   size="xl"
                   color="white"
                 />
-                <Heading ml="4" color="light.100">
+                <Heading ml="3" color="light.100">
                   Meus benefícios
                 </Heading>
               </Box>
 
-              <Divider />
+              <Divider alignSelf="center" w="90%" />
+
+              <FlatList
+        data={solicitations}
+        horizontal={false}
+        keyExtractor={item => item.id}
+        style={{
+          flex: 1,
+          width: "100%",
+          height: "40%",
+          borderRadius: 40,
+        }}
+        my="3"
+        renderItem={({ item, index}) => {
+          const userSolicitations = solicitations.find(user => String(user.cpf) === String(logged.cpf))
+          return (
+            <Center my="3" w="100%">
+              <HStack w="100%" justifyContent="center" h="100px">
+                <VStack bg="lightBlue.500" rounded="xl" py="5%" px="2" w="85%">
+    
+                  <Text color={"light.100"}>Serviço: {userSolicitations?.service} </Text>
+                  <Text color={"light.100"}>STATUS: {userSolicitations?.status} </Text>
+                  <Text color={"light.100"}>Data: {userSolicitations?.date} </Text>
+                  <TouchableOpacity
+                    style={{
+                      position: "absolute",
+                      right: 1,
+                      top: 5,
+                      width: 40,
+                      height: 40,
+                      opacity: 0.8,
+                    }}
+                    onPress={() => deleteAprovado(item.id)}
+                  >
+                    <FontAwesome
+                      name="remove"
+                      size={36}
+                      color="white"
+                    />
+                  </TouchableOpacity>
+                  
+                </VStack>
+              </HStack>
+            </Center>
+          );
+        }}
+      />
             </Container>
           </VStack>
         </Box>

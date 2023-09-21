@@ -44,7 +44,7 @@ export const Login = () => {
       flex={1}
       justifyContent={"center"}
       alignItems={"center"}
-      bg={"darkBlue.400"}
+      bg={"lightBlue.500"}
     >
       <Animatable.View
         style={{ flex: 1, width: "100%", height: "20%" }}

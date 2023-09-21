@@ -27,7 +27,7 @@ export const Cadastro = () => {
 
   function newUser() {
     axios
-      .post(api, formData, {
+      .post(`${api}/users`, formData, {
         method: "post",
         headers: new Headers({
           "ngrok-skip-browser-warning": "69421",

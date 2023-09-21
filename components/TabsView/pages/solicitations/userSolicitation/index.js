@@ -17,7 +17,8 @@ import InputInfoUser from "../../../../UserLayout/inputUser";
 import MyParents from "../../../../UserLayout/userParents";
 import { TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
-import { api, apiSolicitations, apiAprovados } from "../../../../../src/requisitions/api";
+import { api} from "../../../../../src/requisitions/api";
+
 export default function SolicitationInfoUser({ route }) {
   const [status, setStatus] = useState()
 
@@ -27,30 +28,30 @@ const handleConfirmSolicitation = () => {
         nome: route?.params?.userInfo.nome,
         service: route?.params?.service,
         date: route?.params?.date,
-        status: route?.params?.status
+        status: status
     }
-    axios.post(apiAprovados, userApproved, {
+    axios.post(`${api}/aprovados`, userApproved, {
         method: 'post',
         headers: new Headers({
             "ngrok-skip-browser-warning" : "69421"
         })
     })
     .then(response => {
-      alert(JSON.stringify(response.data.aprovados))
+      alert(JSON.stringify(response.data))
     })
     .catch(error => console.error(error));
 }
-const handleUpdateStatus = () => {
+function handleUpdateStatus(id){
   let updateStatus = {
     status: status,
   }
-    axios.put(`${apiSolicitations}/${route.params.id}`, updateStatus, {
+    axios.put(`${api}/solicitations/${id}`, updateStatus, {
       method: "put",
       headers: new Headers({
         "ngrok-skip-browser-warning": "69421",
       }),
     });
-    return Alert.alert("Usuário", "Atualizado com sucesso!");
+    return alert("Atualizado com sucesso!");
 }
   return (
     <ScrollView flex={1} w="100%" h="100%" bg="lightBlue.400">
@@ -73,15 +74,15 @@ const handleUpdateStatus = () => {
           />
           <InputInfoUser
             infoLabel="Nome"
-            infoValue={route?.params?.userInfo.nome}
+            infoValue={route?.params?.userInfo?.nome}
           />
           <InputInfoUser
             infoLabel="CPF"
-            infoValue={route?.params?.userInfo.cpf}
+            infoValue={route?.params?.userInfo?.cpf}
           />
           <InputInfoUser
             infoLabel="NIS"
-            infoValue={route?.params?.userInfo.nis}
+            infoValue={route?.params?.userInfo?.nis}
           />
 
           <InputInfoUser
@@ -100,7 +101,7 @@ const handleUpdateStatus = () => {
           placeholder={route?.params?.status}
           />
          <TouchableOpacity
-         onPress={() => handleUpdateStatus(route.params.id)}
+         onPress={() => handleUpdateStatus(route?.params?.id)}
          >
          <FontAwesome name="edit" size={28} color="white" />
          </TouchableOpacity>

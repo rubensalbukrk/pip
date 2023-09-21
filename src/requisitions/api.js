@@ -2,7 +2,7 @@ import React, {useContext} from 'react'
 import axios from "axios";
 import { UserContext } from '../contexts/UserContext';
 
-export const api = "https://c2e7-45-183-25-97.ngrok-free.app/require"
+export const api = "https://9429-45-183-25-97.ngrok-free.app/require"
 
 export function getNotices(){
     const {setNotices} = useContext(UserContext)
@@ -45,6 +45,18 @@ export function deleteNotice(id){
 }
 export function deleteSolicitation(id){
   axios.delete(`${api}/solicitations/${id}`, {
+      method: 'delete',
+      headers: new Headers({
+          "ngrok-skip-browser-warning" : "69421"
+      })
+  })
+  .then(response => {
+      alert(JSON.stringify(response.data))
+    })
+    .catch(error => console.error(error));
+}
+export function deleteAprovado(id){
+  axios.delete(`${api}/aprovados/${id}`, {
       method: 'delete',
       headers: new Headers({
           "ngrok-skip-browser-warning" : "69421"
