@@ -17,11 +17,10 @@ import InputInfoUser from "../../../../UserLayout/inputUser";
 import MyParents from "../../../../UserLayout/userParents";
 import { TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
-import { api} from "../../../../../src/requisitions/api";
+import { api, deleteSolicitation} from "../../../../../src/requisitions/api";
 
 export default function SolicitationInfoUser({ route }) {
   const [status, setStatus] = useState()
-
 
 const handleConfirmSolicitation = () => {
     let userApproved = {
@@ -37,15 +36,16 @@ const handleConfirmSolicitation = () => {
         })
     })
     .then(response => {
+      deleteSolicitation(route?.params?.id)
       alert(JSON.stringify(response.data))
     })
     .catch(error => console.error(error));
 }
-function handleUpdateStatus(id){
+function handleUpdateStatus(){
   let updateStatus = {
     status: status,
   }
-    axios.put(`${api}/solicitations/${id}`, updateStatus, {
+    axios.put(`${api}/solicitations/${route?.params?.id}`, updateStatus, {
       method: "put",
       headers: new Headers({
         "ngrok-skip-browser-warning": "69421",
@@ -101,7 +101,7 @@ function handleUpdateStatus(id){
           placeholder={route?.params?.status}
           />
          <TouchableOpacity
-         onPress={() => handleUpdateStatus(route?.params?.id)}
+         onPress={() => handleUpdateStatus()}
          >
          <FontAwesome name="edit" size={28} color="white" />
          </TouchableOpacity>

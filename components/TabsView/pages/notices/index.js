@@ -47,7 +47,7 @@ export default function NewNotice() {
       .catch((error) => console.log(error));
   }, []);
 function addNotice(){
-    axios.post(apiNotice, dataNotice, {
+    axios.post(`${api}/notices`, dataNotice, {
         method: 'post',
         headers: new Headers({
             "ngrok-skip-browser-warning" : "69421"

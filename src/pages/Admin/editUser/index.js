@@ -65,7 +65,7 @@ export default function EditUser({ route }) {
   };
 
   function updateUser() {
-    axios.put(`${api}/${route.params.id}`, UserUpdate, {
+    axios.put(`${api}/users/${route.params.id}`, UserUpdate, {
       method: "put",
       headers: new Headers({
         "ngrok-skip-browser-warning": "69421",

@@ -87,7 +87,7 @@ export default function Solicitation() {
       <FlatList
         data={solicitations}
         horizontal={false}
-        keyExtractor={item => item.id}
+        keyExtractor={(item) => item.id}
         style={{
           flex: 1,
           width: "100%",
@@ -100,7 +100,6 @@ export default function Solicitation() {
             <Center my="3" w="100%">
               <HStack w="100%" mt="4%" h="160">
                 <VStack bg="lightBlue.400" rounded="xl" py="5%" px="3" w="100%">
-            
                   <Text color={"light.100"}>Nome: {item.nome} </Text>
                   <Text color={"light.100"}>CPF: {item.cpf} </Text>
                   <Text color={"light.100"}>Serviço: {item.service} </Text>
@@ -162,7 +161,7 @@ export default function Solicitation() {
       <FlatList
         data={aprovados}
         horizontal={false}
-        keyExtractor={item => item.id}
+        keyExtractor={(item) => item.id}
         style={{
           flex: 1,
           width: "100%",
