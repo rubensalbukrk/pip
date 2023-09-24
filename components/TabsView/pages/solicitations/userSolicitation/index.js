@@ -41,6 +41,9 @@ const handleConfirmSolicitation = () => {
     })
     .catch(error => console.error(error));
 }
+const handleCancelSolicitation = (id) => {
+  axios.delete(`${api}/solicitations/${id}`)
+}
 function handleUpdateStatus(){
   let updateStatus = {
     status: status,
@@ -54,12 +57,15 @@ function handleUpdateStatus(){
     return alert("Atualizado com sucesso!");
 }
   return (
-    <ScrollView flex={1} w="100%" h="100%" bg="lightBlue.400">
-      <Heading w="100%" my="3" color={"light.100"} textAlign={"center"}>
+    <ScrollView flex={1} w="100%" h="100%" bg="lightBlue.500">
+   <HStack>
+   <BackButton />
+       <Heading w="100%" shadow={4} my="3" color={"light.100"} textAlign={"center"}>
         Informações de Solicitação
       </Heading>
+   </HStack>
     <Divider  />
-      <VStack w="100%" bg="lightBlue.400" rounded="lg" h="100%">
+      <VStack w="100%" bg="lightBlue.500" rounded="lg" h="100%">
         <Container
           my="2"
           mx="3"
@@ -90,12 +96,12 @@ function handleUpdateStatus(){
             infoValue={route?.params?.date}
           />
           <Text mt="3" ml="2" fontSize={"lg"} color="#fff">Status</Text>
-          <HStack space={3} alignItems="center" w="100%">
+          <HStack shadow={3} space={3} alignItems="center" w="100%">
           <Input
           value={status}
           onChangeText={(text) => setStatus(text)}
           w="70%"
-          bg="lightBlue.500"
+          bg="lightBlue.400"
           placeholderTextColor={"#fff"}
           borderColor={"lightBlue.500"}
           placeholder={route?.params?.status}
@@ -125,14 +131,14 @@ function handleUpdateStatus(){
             )}
           </Box>
         </Container>
-        <HStack my="4" mb="10%" space={9} alignItems="center" justifyContent={"center"} w="100%">
+        <HStack my="4" mb="10%"  shadow={6} space={9} alignItems="center" justifyContent={"center"} w="100%">
           <TouchableOpacity
           onPress={() => handleConfirmSolicitation()}
           >
             <FontAwesome name="check-circle" size={72} color="white" />
           </TouchableOpacity>
           <TouchableOpacity
-          onPress={() => alert('Solicitação reprovada!')}>
+          onPress={() => deleteSolicitation(route?.params?.id)}>
             <FontAwesome name="times-circle" size={72} color="white" />
           </TouchableOpacity>
         </HStack>

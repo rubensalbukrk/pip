@@ -55,7 +55,7 @@ export default function Services() {
       labelDesc:
         "O acesso à documentação básica é de extrema importância para que a população consiga acessar outros serviços públicos. Dessa forma, essa pasta viabiliza o agendamento de RG, CPF e Carteira De Trabalho Digital.",
       labelRequisite: ["Agendar emissão de RG"],
-      pasta: "Mulher"
+      pasta: "Cidadania"
     },
     {
       id: 4,
@@ -88,7 +88,7 @@ export default function Services() {
       labelDesc:
         "Em parceria com o Centro de Integração Empresa Escola - CIEE, encaminhamos jovens de 14 á 23 anos para o cadastro de prioridade por estarem em situação de vulnerabilidade social.",
       labelRequisite: ["Solicitar encaminhamento ao CIEE"],
-      pasta: "Protagonismo Juvenil"
+      pasta: "Protagonistas"
     },
     {
       id: 7,

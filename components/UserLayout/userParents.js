@@ -11,6 +11,8 @@ export default function MyParents() {
         key={item.cpf}
         w="100%"
         mt="4%"
+        px="2"
+        py="3"
         bg="lightBlue.400"
         rounded="lg"
         opacity={0.5}

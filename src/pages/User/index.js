@@ -103,8 +103,20 @@ if(solicitations){
           `${
             logged?.isAdmin == true
               ? "Painel da Administração"
-              : "Opções" && logged?.isCoord == true
-              ? "Painel da Coodernação"
+              : "Opções" && logged?.isCoordAutist == true
+              ? "Coodernação dos Autistas"
+              : "Opções" && logged?.isCoordMulher == true
+              ? "Coodernação das Mulheres"
+              : "Opções" && logged?.isCoordSaude == true
+              ? "Coodernação da Saúde"
+              : "Opções" && logged?.isCoordAlimentar == true
+              ? "Coodernação da Alimentação"
+              : "Opções" && logged?.isCoordPasse == true
+              ? "Coodernação Passe Livre" 
+              : "Opções" && logged?.isCoordCidadania == true
+              ? "Coodernação da Cidadania"
+              : "Opções" && logged?.isCoordProtagonista == true
+              ? "Coodernação Protagonistas"
               : "Opções"
           }`,
           "Alterar dados",
@@ -120,8 +132,27 @@ if(solicitations){
             logged?.isAdmin == true ? navigation.navigate("Admin") : null;
           }
           {
-            logged?.isCoord == true ? navigation.navigate("Admin") : null;
+            logged?.isCoordAutist == true ? navigation.navigate("PageCoordenador") : null;
           }
+          {
+            logged?.isCoordMulher == true ? navigation.navigate("PageCoordenador") : null;
+          }
+          {
+            logged?.isCoordSaude == true ? navigation.navigate("PageCoordenador") : null;
+          }
+          {
+            logged?.isCoordAlimentar == true ? navigation.navigate("PageCoordenador") : null;
+          }
+          {
+            logged?.isCoordPasse == true ? navigation.navigate("PageCoordenador") : null;
+          }
+          {
+            logged?.isCoordCidadania == true ? navigation.navigate("PageCoordenador") : null;
+          }
+          {
+            logged?.isCoordProtagonista == true ? navigation.navigate("PageCoordenador") : null;
+          }
+
         } else if (buttonIndex === 1) {
           alert("Alterar dados");
         } else if (buttonIndex === 2) {
@@ -138,6 +169,7 @@ if(solicitations){
         w="100%"
         bg="lightBlue.400"
         h="30%"
+        shadow={2}
         alignItems="center"
         justifyContent="center"
       >
@@ -147,6 +179,7 @@ if(solicitations){
           w="100%"
           flexDir="row"
           h="10"
+          shadow={6}
           justifyContent="space-between"
           alignItems="center"
         >
@@ -173,6 +206,7 @@ if(solicitations){
             colorScheme="info"
             alignSelf="center"
             variant="subtle"
+            shadow={3}
           >
             {logged?.isAdmin == true
               ? "Admin"
@@ -180,9 +214,22 @@ if(solicitations){
               ? "Estágiario"
               : "Membro" && logged?.isVolt == true
               ? "Voluntário"
-              : "Membro" && logged?.isCoord == true
-              ? "Coordenador"
-              : "Membro"}
+              : "Membro" && logged?.isCoordCidadania == true
+              ? "Coord Cidadania"
+              : "Membro" && logged?.isCoordAutist == true
+              ? "Coord Autistas"
+              : "Membro" && logged?.isCoordMulher == true
+              ? "Coord Mulher"
+              : "Membro" && logged?.isCoordSaude == true
+              ? "Coord Saúde"
+              : "Membro" && logged?.isCoordAlimentar == true
+              ? "Coord Alimentar"
+              : "Membro" && logged?.isCoordProtagonista == true
+              ? "Coord Protagonista"
+              : "Membro" && logged?.isCoordPasse == true
+              ? "Coord Passe"
+              : "Membro"
+              }
           </Badge>
         </Box>
 
@@ -245,8 +292,11 @@ if(solicitations){
                 rounded="2xl"
                 px="3"
                 py="2"
+
               >
-                <InputInfoUser
+                <Box w="70px">
+
+                  <InputInfoUser
                   infoLabel="Filhos"
                   infoValue={
                     logged.filhos?.length === "0"
@@ -254,16 +304,20 @@ if(solicitations){
                       : `${logged.filhos?.length}`
                   }
                 />
+                </Box>
+                
                 {logged?.filhos?.length === 0 ? "NÃO" : <MyParents />}
               </Box>
             </Container>
 
             <Container
-              w="80%"
-              h="300"
-              py="3"
+              w="95%"
+              h="350"
+              py="4"
               mb="20"
               space={4}
+              shadow={4}
+              
               bg="rgba(200, 255, 254, 0.15)"
               rounded="md"
             >
@@ -300,7 +354,7 @@ if(solicitations){
                 renderItem={({ item }) => {
                   return (
                     <Center my="3" w="100%">
-                      <HStack w="100%" justifyContent="center" h="100px">
+                      <HStack w="100%" justifyContent="center" h="130px">
                         <VStack
                           bg="lightBlue.500"
                           rounded="xl"

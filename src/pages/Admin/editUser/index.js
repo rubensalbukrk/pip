@@ -1,4 +1,4 @@
-import React, { useState, useContext} from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { api } from "../../../requisitions/api";
 import { UserContext } from "../../../contexts/UserContext";
@@ -16,7 +16,9 @@ import {
   Switch,
   Heading,
   Divider,
+  CheckIcon,
   ScrollView,
+  Select,
 } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import { Alert } from "react-native";
@@ -26,10 +28,19 @@ import MyParents from "../../../../components/UserLayout/userParents";
 
 export default function EditUser({ route }) {
   const { logged } = useContext(UserContext);
-  const [autista, setAutista] = useState(route?.params?.isAutist);
+  
   const [voluntario, setVoluntario] = useState(route?.params?.isVolt);
   const [estagiario, setEstagiario] = useState(route?.params?.isEtg);
-  const [coordena, setCoordenar] = useState(route?.params?.isCoord);
+  const [isCoord, setIsCoord] = React.useState("");
+  const [isCoordAutist, setIsCoordAutist] = useState(route?.params?.isCoordAutist);
+  const [isCoordMulher, setIsCoordMulher] = useState(route?.params?.isCoordMulher);
+  const [isCoordCidadania, setIsCoordCidadania] = useState(route?.params?.isCoordCidadania);
+  const [isCoordAlimentar, setIsCoordAlimentar] = useState(route?.params?.isCoordAlimentar);
+  const [isCoordSaude, setIsCoordSaude] = useState(route?.params?.isCoordSaude);
+  const [isCoordProtagonista, setIsCoordProtagonista] = useState(route?.params?.isCoordProtagonista)
+  const [isCoordPasse, setIsCoordPasse] = useState(route?.params?.isCoordPasse);
+  
+  const [autista, setAutista] = useState(route?.params?.isAutist);
   const [nome, setNome] = useState(route?.params?.nome);
   const [avatar, setAvatar] = useState(route?.params?.avatar);
   const [idade, setIdade] = useState(route?.params?.idade);
@@ -44,12 +55,16 @@ export default function EditUser({ route }) {
   const [pass, setPass] = useState(route?.params?.password);
   const navigation = useNavigation();
 
-
-  
   let UserUpdate = {
     isVolt: voluntario,
     isEtg: estagiario,
-    isCoord: coordena,
+    isCoordMulher: isCoordMulher,
+    isCoordAutist: isCoordAutist,
+    isCoordSaude: isCoordSaude,
+    isCoordAlimentar: isCoordAlimentar,
+    isCoordPasse: isCoordPasse,
+    isCoordCidadania: isCoordCidadania,
+    isCoordProtagonista: isCoordProtagonista,
     isAutist: autista,
     nome: nome,
     idade: idade,
@@ -80,12 +95,31 @@ export default function EditUser({ route }) {
   const toggleVoluntario = () => {
     setVoluntario((previousState) => !previousState);
   };
-  const toggleCoordenador = () => {
-    setCoordenar((previousState) => !previousState);
-  };
   const toggleAutista = () => {
     setAutista((previousState) => !previousState);
   };
+  const toggleCidadania = () => {
+    setIsCoordCidadania((previousState) => !previousState);
+  };
+  const toggleAutist = () => {
+    setIsCoordAutist((previousState) => !previousState);
+  };
+  const toggleMulher = () => {
+    setIsCoordMulher((previousState) => !previousState);
+  };
+  const toggleSaude = () => {
+    setIsCoordSaude((previousState) => !previousState);
+  };
+  const toggleAlimentar = () => {
+    setIsCoordAlimentar((previousState) => !previousState);
+  };
+  const togglePasse = () => {
+    setIsCoordPasse((previousState) => !previousState);
+  };
+  const toggleProtagonista = () => {
+    setIsCoordProtagonista((previousState) => !previousState);
+  };
+
   return (
     <Box
       flex={1}
@@ -126,7 +160,7 @@ export default function EditUser({ route }) {
       <ScrollView flex={1} w="100%">
         <Center py="10%">
           <HStack
-            w="90%"
+            w="60%"
             h="100px"
             space={2}
             my="1%"
@@ -142,7 +176,9 @@ export default function EditUser({ route }) {
               </Text>
               <Switch
                 value={estagiario}
-                onToggle={() => {toggleEstagio()}}
+                onToggle={() => {
+                  toggleEstagio();
+                }}
                 colorScheme="darkBlue"
               />
             </VStack>
@@ -156,17 +192,119 @@ export default function EditUser({ route }) {
                 colorScheme="darkBlue"
               />
             </VStack>
-            <VStack h="100%" my="4" alignItems="center" space={2}>
-              <Text color="light.100" fontSize="xs">
-                Coordenador
-              </Text>
-              <Switch
-                value={coordena}
-                onToggle={toggleCoordenador}
-                colorScheme="danger"
-              />
-            </VStack>
           </HStack>
+          <VStack
+            py="2"
+            px="4"
+            bg="darkBlue.400"
+            h="200px"
+            w="80%"
+            my="3"
+            rounded="2xl"
+            alignItems="left"
+          >
+            <Heading color="light.100">Coordenador</Heading>
+            <Divider w="100%" />
+
+            <HStack
+              w="100%"
+              space={3}
+              alignItems="left"
+              justifyContent="center"
+            >
+              <VStack h="14px" my="4" alignItems="center" space={2}>
+                <Text color="light.100" fontSize="xs">
+                  Autistas
+                </Text>
+                <Switch
+                  size="sm"
+                  value={isCoordAutist}
+                  onToggle={toggleAutist}
+                  colorScheme="darkBlue"
+                />
+              </VStack>
+
+              <VStack h="14px" my="4" alignItems="center" space={2}>
+                <Text color="light.100" fontSize="xs">
+                  Mulher
+                </Text>
+                <Switch
+                  size="sm"
+                  value={isCoordMulher}
+                  onToggle={toggleMulher}
+                  colorScheme="darkBlue"
+                />
+              </VStack>
+
+              <VStack h="14px" my="4" alignItems="center" space={2}>
+                <Text color="light.100" fontSize="xs">
+                  Protagonistas
+                </Text>
+                <Switch
+                  size="sm"
+                  value={isCoordProtagonista}
+                  onToggle={toggleProtagonista}
+                  colorScheme="darkBlue"
+                />
+              </VStack>
+            </HStack>
+
+            <HStack
+              w="100%"
+              my="5"
+              space={3}
+              alignItems="center"
+              justifyContent="center"
+            >
+              <VStack h="14px" my="4" alignItems="center" space={2}>
+                <Text color="light.100" fontSize="xs">
+                  Passe Livre
+                </Text>
+                <Switch
+                  size="sm"
+                  value={isCoordPasse}
+                  onToggle={togglePasse}
+                  colorScheme="darkBlue"
+                />
+              </VStack>
+              <VStack h="14px" my="4" alignItems="center" space={2}>
+                <Text color="light.100" fontSize="xs">
+                  Alimentar
+                </Text>
+                <Switch
+                  size="sm"
+                  value={isCoordAlimentar}
+                  onToggle={toggleAlimentar}
+                  colorScheme="darkBlue"
+                />
+              </VStack>
+              <VStack h="14px" my="4" alignItems="center" space={2}>
+                <Text color="light.100" fontSize="xs">
+                  Saúde
+                </Text>
+                <Switch
+                  size="sm"
+                  value={isCoordSaude}
+                  onToggle={toggleSaude}
+                  colorScheme="darkBlue"
+                />
+              </VStack>
+              <VStack h="14px" my="4" alignItems="center" space={2}>
+                <Text color="light.100" fontSize="xs">
+                  Cidadania
+                </Text>
+                <Switch
+                  size="sm"
+                  value={isCoordCidadania}
+                  onToggle={toggleCidadania}
+                  colorScheme="darkBlue"
+                />
+              </VStack>
+            </HStack>
+            
+   
+      </VStack> 
+  
           <VStack
             w="80%"
             space={4}
@@ -241,7 +379,7 @@ export default function EditUser({ route }) {
               placeholder={`${parents ? parents.length : ""}`}
               placeholderTextColor="#000"
             />
-            {parents ? <MyParents /> : null }
+            {parents ? <MyParents /> : null}
             <Box w="20%" h="50" justifyContent={"start"}>
               <Text mb="10%" color="light.100" fontSize="xs">
                 Autista
@@ -288,13 +426,13 @@ export default function EditUser({ route }) {
               placeholderTextColor="#000"
             />
           </VStack>
-
+            
           <Button
             mb="15"
             w="70%"
             bg="darkBlue.400"
             onPress={() => {
-              updateUser() && navigation.goBack()
+              updateUser() && navigation.goBack();
             }}
           >
             SALVAR

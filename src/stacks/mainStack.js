@@ -13,6 +13,7 @@ import Solicitation from "../../components/TabsView/pages/solicitations";
 import Services from "../pages/Services";
 import ViewService from "../pages/Services/ViewService";
 import SolicitationInfoUser from "../../components/TabsView/pages/solicitations/userSolicitation";
+import PageCoordenador from "../pages/Coordenador"
 
 const Stack = createNativeStackNavigator();
 
@@ -37,6 +38,7 @@ export default function MainStack() {
           headerShown: false,
         }}
       >
+        <Stack.Screen name="PageCoordenador" component={PageCoordenador} />
         <Stack.Screen name="ViewService" component={ViewService} />
         <Stack.Screen name="Services" component={Services} />
         <Stack.Screen name="NewNotices" component={NewNotice} />
