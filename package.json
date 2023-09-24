@@ -36,7 +36,8 @@
     "react-native-svg-charts": "^5.4.0",
     "react-native-svg-transformer": "^1.1.0",
     "react-native-tab-view": "^3.5.2",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "expo-linear-gradient": "~12.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

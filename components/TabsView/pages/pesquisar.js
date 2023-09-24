@@ -161,6 +161,7 @@ export default function TabSearch() {
                       isCoord: item.isCoord,
                       nome: item.nome,
                       idade: item.idade,
+                      filhos: item.filhos,
                       address: item.address,
                       phone: item.phone,
                       cpf: item.cpf,

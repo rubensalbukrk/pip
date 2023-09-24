@@ -11,6 +11,7 @@ import {
   Button,
   Avatar,
   Center,
+  Container,
   VStack,
   HStack,
   Switch,
@@ -26,20 +27,37 @@ import { useNavigation } from "@react-navigation/native";
 import BackButton from "../../../../components/BackButton";
 import MyParents from "../../../../components/UserLayout/userParents";
 
+const hoje = new Date()
+const data = hoje.getDate().toString().padStart(2,0) + "/" + String(hoje.getMonth() + 1).padStart(2,'0') + "/" + hoje.getFullYear() + ` as ` + hoje.toLocaleTimeString()
+
 export default function EditUser({ route }) {
+
   const { logged } = useContext(UserContext);
-  
+  const [formData, setData] = React.useState({
+    date: data,
+  });
+  const [dataFilho, setDataFilho] = React.useState({});
   const [voluntario, setVoluntario] = useState(route?.params?.isVolt);
   const [estagiario, setEstagiario] = useState(route?.params?.isEtg);
   const [isCoord, setIsCoord] = React.useState("");
-  const [isCoordAutist, setIsCoordAutist] = useState(route?.params?.isCoordAutist);
-  const [isCoordMulher, setIsCoordMulher] = useState(route?.params?.isCoordMulher);
-  const [isCoordCidadania, setIsCoordCidadania] = useState(route?.params?.isCoordCidadania);
-  const [isCoordAlimentar, setIsCoordAlimentar] = useState(route?.params?.isCoordAlimentar);
+  const [isCoordAutist, setIsCoordAutist] = useState(
+    route?.params?.isCoordAutist
+  );
+  const [isCoordMulher, setIsCoordMulher] = useState(
+    route?.params?.isCoordMulher
+  );
+  const [isCoordCidadania, setIsCoordCidadania] = useState(
+    route?.params?.isCoordCidadania
+  );
+  const [isCoordAlimentar, setIsCoordAlimentar] = useState(
+    route?.params?.isCoordAlimentar
+  );
   const [isCoordSaude, setIsCoordSaude] = useState(route?.params?.isCoordSaude);
-  const [isCoordProtagonista, setIsCoordProtagonista] = useState(route?.params?.isCoordProtagonista)
+  const [isCoordProtagonista, setIsCoordProtagonista] = useState(
+    route?.params?.isCoordProtagonista
+  );
   const [isCoordPasse, setIsCoordPasse] = useState(route?.params?.isCoordPasse);
-  
+
   const [autista, setAutista] = useState(route?.params?.isAutist);
   const [nome, setNome] = useState(route?.params?.nome);
   const [avatar, setAvatar] = useState(route?.params?.avatar);
@@ -47,7 +65,8 @@ export default function EditUser({ route }) {
   const [address, setAddress] = useState(route?.params?.address);
   const [cpf, setCpf] = useState(route?.params?.cpf);
   const [nis, setNis] = useState(route?.params?.nis);
-  const [parents, setParents] = useState(route?.params?.filhos);
+  const [filho, setFilhos] = useState(route?.params?.filhos);
+  const[addFilho, setAddFilhos] = useState({})
   const [phone, setPhone] = useState(route?.params?.phone);
   const [email, setEmail] = useState(route?.params?.email);
   const [member, setMember] = useState(route?.params?.question1);
@@ -73,7 +92,7 @@ export default function EditUser({ route }) {
     cpf: cpf,
     phone: phone,
     email: email,
-    filhos: parents,
+    filho: filho,
     question1: member,
     question2: opnion,
     password: pass,
@@ -86,7 +105,34 @@ export default function EditUser({ route }) {
         "ngrok-skip-browser-warning": "69421",
       }),
     });
-    return Alert.alert("Usuário", "Atualizado com sucesso!");
+    return Alert.alert("Atualização", "O usuário foi alterado!");
+  }
+  const UserFilhos = () => {
+
+    return (
+      <Box>
+        <Text color="light.100">Filhos</Text>
+        { filho?.map((item) => {
+          return (
+            <Box bg="darkBlue.500" rounded="2xl" py="2" my="2" px="2" space={2}>
+            <Text>Nome: {item.nome}</Text>
+            <Text>CPF: {item.cpf}</Text>
+            <Text>Idade: {item.idade}</Text>
+            </Box>
+          )
+        })}
+
+      </Box>
+    )
+  }
+  function addFilhos() {
+    filho.push({
+      nome: dataFilho.nome,
+      idade: dataFilho.idade,
+      cpf: dataFilho.cpf,
+    });
+    setFilhos(filho)
+    alert('Adicionado')
   }
 
   const toggleEstagio = () => {
@@ -127,6 +173,7 @@ export default function EditUser({ route }) {
       flexGrow={"20"}
       alignItems={"center"}
       justifyContent={"center"}
+      bg="darkBlue.400"
     >
       <Animatable.View
         style={{ width: "100%" }}
@@ -137,7 +184,8 @@ export default function EditUser({ route }) {
         <Box
           w="100%"
           h="100px"
-          bg="lightBlue.500"
+          bg="darkBlue.500"
+          shadow={1}
           alignItems="center"
           justifyContent="center"
           roundedBottom="20"
@@ -166,6 +214,7 @@ export default function EditUser({ route }) {
             my="1%"
             rounded="xl"
             py="5"
+            shadow={6}
             alignItems="center"
             justifyContent="space-evenly"
             bg="darkBlue.400"
@@ -196,10 +245,11 @@ export default function EditUser({ route }) {
           <VStack
             py="2"
             px="4"
-            bg="darkBlue.400"
             h="200px"
             w="80%"
             my="3"
+            bg="darkBlue.400"
+            shadow={8}
             rounded="2xl"
             alignItems="left"
           >
@@ -301,17 +351,16 @@ export default function EditUser({ route }) {
                 />
               </VStack>
             </HStack>
-            
-   
-      </VStack> 
-  
+          </VStack>
+
           <VStack
             w="80%"
             space={4}
             my="5%"
             px="5"
             py="7"
-            bg="darkBlue.300"
+            shadow={8}
+            bg="darkBlue.400"
             rounded="xl"
           >
             <Text color="white">Nome</Text>
@@ -369,17 +418,45 @@ export default function EditUser({ route }) {
               placeholderTextColor="#000"
             />
 
-            <Text color="white">Filhos: </Text>
-            <Input
-              variant="filled"
-              style={{ color: "light.100" }}
-              size="xl"
-              value={parents}
-              onChangeText={(text) => setParents(text)}
-              placeholder={`${parents ? parents.length : ""}`}
-              placeholderTextColor="#000"
-            />
-            {parents ? <MyParents /> : null}
+            {route?.params?.filhos?.length === 0 ? "NÃO" : <UserFilhos />}
+            <Container
+              space={3}
+              px="3"
+              py="2"
+              bg="darkBlue.500"
+              w="80%"
+              rounded="2xl"
+            >
+              <Text color="light.100">Adicionar filho</Text>
+              <Text>Nome</Text>
+              <Input
+                onChangeText={(value) =>
+                  setDataFilho({ ...dataFilho, nome: value })
+                }
+              />
+           
+              <Text>CPF</Text>
+              <Input
+                onChangeText={(value) =>
+                  setDataFilho({ ...dataFilho, cpf: value })
+                }
+              />
+              <HStack justifyContent="space-between" w="100%" alignItems="center">
+                <VStack w="50%" mb="2">
+                  <Text>Idade</Text>
+                <Input
+                w="30%"
+                m
+                  onChangeText={(value) =>
+                    setDataFilho({ ...dataFilho, idade: value })
+                  }
+                />
+                </VStack>
+              <Button colorScheme="darkBlue" size="sm" alignSelf="center" onPress={() => addFilhos()}>
+                Adicionar
+              </Button>
+              </HStack>
+            </Container>
             <Box w="20%" h="50" justifyContent={"start"}>
               <Text mb="10%" color="light.100" fontSize="xs">
                 Autista
@@ -426,11 +503,13 @@ export default function EditUser({ route }) {
               placeholderTextColor="#000"
             />
           </VStack>
-            
+
           <Button
             mb="15"
             w="70%"
-            bg="darkBlue.400"
+            shadow={5}
+            rounded="2xl"
+            colorScheme={"darkBlue"}
             onPress={() => {
               updateUser() && navigation.goBack();
             }}

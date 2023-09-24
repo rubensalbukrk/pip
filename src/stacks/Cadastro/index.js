@@ -45,7 +45,7 @@ export const Cadastro = () => {
       cpf: dataFilho.cpf,
     });
     setData({ ...formData, filho });
-    console.log(formData);
+    alert('Adicionado')
   }
 
   const toggleEstagio = () => {

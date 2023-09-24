@@ -2,14 +2,32 @@ import React, { useContext, useEffect } from "react";
 import * as Animatable from "react-native-animatable";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../contexts/UserContext";
-import { Box, Container, Text, Image, Button, Heading } from "native-base";
+import { Box, Container, Text, Image, Button, Heading, NativeBaseProvider } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
+import { LinearGradient } from 'expo-linear-gradient';
 
 export const Welcome = () => {
   const navigation = useNavigation();
 
+  const config = {
+    dependencies: {
+      'linear-gradient': LinearGradient
+    }
+  };
   return (
-    <Box flex="1" bg={"lightBlue.500"} alignItems="center">
+    <NativeBaseProvider config={config}>
+    <Box flex="1" bg={{
+      linearGradient: {
+        colors: ['lightBlue.600', 'lightBlue.400'],
+        start: [0, 0],
+        end: [1, 0]
+      }
+    }}  rounded="xl" _text={{
+      fontSize: 'md',
+      fontWeight: 'medium',
+      color: 'warmGray.50',
+      textAlign: 'center'
+    }} alignItems="center">
       <Animatable.View
         style={{ width: "100%", height: "50%" }}
         delay={800}
@@ -32,23 +50,23 @@ export const Welcome = () => {
           animation="fadeInRight"
           delay={1000}
         >
-          <Heading my="1" mx="2" color="light.100" fontSize="5xl">
+          <Heading my="1" shadow={7} mx="2" color="light.100" fontSize="5xl">
             Olá,
           </Heading>
         </Animatable.View>
 
-        <Animatable.View
+        <Animatable.View 
           animation="fadeInRight"
           delay={1000}
         >
-          <Heading my="1" mx="2" color="light.100" fontSize="4xl">
+          <Heading my="1" mx="2" color="light.100" shadow={4} fontSize="4xl">
             Bem vindo(a)!
           </Heading>
         </Animatable.View>
       </Container>
-      <Box w="100%" h="20%" justifyContent="center" bgColor="rgba(148, 240, 255, 0.42)">
+      <Box w="100%" rounded={"xl"} h="20%" justifyContent="center" bgColor="rgba(255, 255, 255, 0.12)">
         <Animatable.View animation="fadeInLeft" delay={1000}>
-          <Text mx="4" alignSelf="center" color="light.100" fontSize="2xl">
+          <Text mx="3" alignSelf="center" color="light.100" fontSize="2xl">
             Somos o projeto inclusão popular e aqui você vai encontrar serviços,
             notícias e muito mais...
           </Text>
@@ -75,7 +93,7 @@ export const Welcome = () => {
             w="50%"
             variant="solid"
             rounded="2xl"
-            bgColor="rgba(148, 240, 255, 0.42)"
+            bgColor="rgba(255, 255, 255, 0.12)"
             mt="30"
             onPress={() => navigation.navigate("Login")}
           >
@@ -89,5 +107,6 @@ export const Welcome = () => {
         </Animatable.View>
       </Animatable.View>
     </Box>
+    </NativeBaseProvider>
   );
 };

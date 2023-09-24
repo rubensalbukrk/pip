@@ -18,7 +18,25 @@ function PieGraphic() {
       }
     })
     let coordenadores = users.filter((item) => {
-        if (item.isCoord == true){
+        if (item.isCoordAutist == true){
+            return item
+        }
+        if (item.isCoordMulher == true){
+            return item
+        }
+        if (item.isCoordCidadania == true){
+            return item
+        }
+        if (item.isCoordSaude == true){
+            return item
+        }
+        if (item.isCoordAlimentar == true){
+            return item
+        }
+        if (item.isCoordProtagonista == true){
+            return item
+        }
+        if (item.isCoordPasse == true){
             return item
         }
     })
