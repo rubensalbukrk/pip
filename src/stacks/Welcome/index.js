@@ -1,19 +1,24 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import axios from "axios";
 import * as Animatable from "react-native-animatable";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../contexts/UserContext";
-import { Box, Container, Text, Image, Button, Heading, NativeBaseProvider } from "native-base";
+import { Box, Avatar, Container, Text, Image, Button, Heading, NativeBaseProvider } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import { LinearGradient } from 'expo-linear-gradient';
 
+
 export const Welcome = () => {
+ 
   const navigation = useNavigation();
+
 
   const config = {
     dependencies: {
       'linear-gradient': LinearGradient
     }
   };
+
   return (
     <NativeBaseProvider config={config}>
     <Box flex="1" bg={{
@@ -45,6 +50,7 @@ export const Welcome = () => {
           source={require("../../../assets/pip-icon.png")}
         />
       </Animatable.View>
+
       <Container position="absolute" top="30%" left="4%" w="80%" h="100" space={3}>
         <Animatable.View
           animation="fadeInRight"

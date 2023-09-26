@@ -23,6 +23,8 @@ import {
   Divider,
   Container,
   Icon,
+  Circle,
+  CircleIcon,
 } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -40,9 +42,14 @@ import InputInfoUser from "../../../components/UserLayout/inputUser";
 import MyParents from "../../../components/UserLayout/userParents";
 import BackButton from "../../../components/BackButton";
 import { api, deleteAprovado } from "../../requisitions/api";
+import * as ImagePicker from "expo-image-picker";
+
+const apiUpload = `${api}/upload`;
 
 export const User = () => {
+  const [image, setImage] = useState();
   const { auth, setAuth } = useContext(AuthContext);
+  const { isOpen, onOpen, onClose } = useDisclose();
   const {
     users,
     setUsers,
@@ -54,16 +61,57 @@ export const User = () => {
     aprovados,
   } = useContext(UserContext);
   const navigation = useNavigation();
-  const { isOpen, onOpen, onClose } = useDisclose();
+
   var nome = logged?.nome;
   var parentsCount = logged.filhos?.length;
   var primeiro_nome = nome?.split(" ").shift();
-
-if(solicitations){
-  var userSolicitations = solicitations.filter(item => String(item.cpf) === String(logged.cpf))
-}
-
   useEffect(() => (getSolicitation(), getAprovados()), []);
+
+  if (solicitations) {
+    var userSolicitations = solicitations.filter(
+      (item) => String(item.cpf) === String(logged.cpf)
+    );
+  }
+
+  const pickImageAsync = async () => {
+    const { assets, canceled } = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!canceled) {
+      const filename = assets[0].uri.substring(
+        assets[0].uri.lastIndexOf("/") + 1,
+        assets[0].uri.length
+      );
+      const extend = filename.split(".")[1];
+      const formData = new FormData();
+      formData.append(
+        "file",
+        JSON.parse(
+          JSON.stringify({
+            name: filename,
+            uri: assets[0].uri,
+            type: "image/" + extend,
+          })
+        )
+      );
+      axios.post(`${api}/upload`, formData, {
+        headers: new Headers({
+          "ngrok-skip-browser-warning": "69421",
+        }),
+      });
+      setImage(assets[0].uri);
+      console.log(assets);
+      console.log(filename);
+      console.log(extend);
+    } else {
+      alert("Você não escolheu uma imagem!");
+    }
+  };
+  function sendImage() {
+    axios.post(apiUpload, formData);
+  }
 
   const getAprovados = () => {
     axios
@@ -95,7 +143,6 @@ if(solicitations){
 
       .catch((error) => console.log(error));
   };
-
   const openSheetIOS = () =>
     ActionSheetIOS.showActionSheetWithOptions(
       {
@@ -112,7 +159,7 @@ if(solicitations){
               : "Opções" && logged?.isCoordAlimentar == true
               ? "Coodernação da Alimentação"
               : "Opções" && logged?.isCoordPasse == true
-              ? "Coodernação Passe Livre" 
+              ? "Coodernação Passe Livre"
               : "Opções" && logged?.isCoordCidadania == true
               ? "Coodernação da Cidadania"
               : "Opções" && logged?.isCoordProtagonista == true
@@ -132,27 +179,40 @@ if(solicitations){
             logged?.isAdmin == true ? navigation.navigate("Admin") : null;
           }
           {
-            logged?.isCoordAutist == true ? navigation.navigate("PageCoordenador") : null;
+            logged?.isCoordAutist == true
+              ? navigation.navigate("PageCoordenador")
+              : null;
           }
           {
-            logged?.isCoordMulher == true ? navigation.navigate("PageCoordenador") : null;
+            logged?.isCoordMulher == true
+              ? navigation.navigate("PageCoordenador")
+              : null;
           }
           {
-            logged?.isCoordSaude == true ? navigation.navigate("PageCoordenador") : null;
+            logged?.isCoordSaude == true
+              ? navigation.navigate("PageCoordenador")
+              : null;
           }
           {
-            logged?.isCoordAlimentar == true ? navigation.navigate("PageCoordenador") : null;
+            logged?.isCoordAlimentar == true
+              ? navigation.navigate("PageCoordenador")
+              : null;
           }
           {
-            logged?.isCoordPasse == true ? navigation.navigate("PageCoordenador") : null;
+            logged?.isCoordPasse == true
+              ? navigation.navigate("PageCoordenador")
+              : null;
           }
           {
-            logged?.isCoordCidadania == true ? navigation.navigate("PageCoordenador") : null;
+            logged?.isCoordCidadania == true
+              ? navigation.navigate("PageCoordenador")
+              : null;
           }
           {
-            logged?.isCoordProtagonista == true ? navigation.navigate("PageCoordenador") : null;
+            logged?.isCoordProtagonista == true
+              ? navigation.navigate("PageCoordenador")
+              : null;
           }
-
         } else if (buttonIndex === 1) {
           alert("Alterar dados");
         } else if (buttonIndex === 2) {
@@ -199,8 +259,9 @@ if(solicitations){
           </TouchableOpacity>
         </Box>
 
-        <Box flexDir="row">
-          <Avatar mb="2" mt="5" source={{ uri: logged.avatar }} size="2xl" />
+        <Box bottom="10%" flexDir="row">
+          <Avatar position={"absolute"} mb="2" source={{ uri: image }} size="2xl" />
+      
           <Badge
             style={{ position: "absolute", right: "-5%", top: "20%" }}
             colorScheme="info"
@@ -228,14 +289,23 @@ if(solicitations){
               ? "Coord Protagonista"
               : "Membro" && logged?.isCoordPasse == true
               ? "Coord Passe"
-              : "Membro"
-              }
+              : "Membro"}
           </Badge>
-        </Box>
-
-        <Text color="light.100" fontSize="2xl">
+          <Box left="5%" bottom="-25%" position={"abslute"}>
+            <Button w="60" h="7" size={"xs"} bg="lightBlue.500" variant={"solid"}
+            onPress={() => pickImageAsync() }
+            >
+              <Text fontSize="10" textDecorationLine={"underline"} color="lightBlue.800">
+                Alterar
+              </Text>
+            </Button>
+            <Text color="light.100" mt="4%" fontSize="2xl">
           Olá {primeiro_nome}
         </Text>
+          </Box>
+          
+        </Box>
+    
       </Box>
 
       <ScrollView w="100%" horizontal={false} bg="lightBlue.400">
@@ -292,20 +362,18 @@ if(solicitations){
                 rounded="2xl"
                 px="3"
                 py="2"
-
               >
                 <Box w="70px">
-
                   <InputInfoUser
-                  infoLabel="Filhos"
-                  infoValue={
-                    logged.filhos?.length === "0"
-                      ? "Não"
-                      : `${logged.filhos?.length}`
-                  }
-                />
+                    infoLabel="Filhos"
+                    infoValue={
+                      logged.filhos?.length === "0"
+                        ? "Não"
+                        : `${logged.filhos?.length}`
+                    }
+                  />
                 </Box>
-                
+
                 {logged?.filhos?.length === 0 ? "NÃO" : <MyParents />}
               </Box>
             </Container>
@@ -317,7 +385,6 @@ if(solicitations){
               mb="20"
               space={4}
               shadow={4}
-              
               bg="rgba(200, 255, 254, 0.15)"
               rounded="md"
             >
@@ -365,12 +432,8 @@ if(solicitations){
                           <Text color={"light.100"}>
                             Serviço: {item.service}
                           </Text>
-                          <Text color={"light.100"}>
-                            STATUS: {item.status}
-                          </Text>
-                          <Text color={"light.100"}>
-                            Data: {item.date}
-                          </Text>
+                          <Text color={"light.100"}>STATUS: {item.status}</Text>
+                          <Text color={"light.100"}>Data: {item.date}</Text>
                           <TouchableOpacity
                             style={{
                               position: "absolute",
