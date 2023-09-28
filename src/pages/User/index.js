@@ -73,6 +73,19 @@ export const User = () => {
     );
   }
 
+  function saveMyProfile(fileName){
+    let userUpdate = {
+      ...logged,
+      avatar: `${api}/files/${fileName}`
+    }
+    axios.put(`${api}/users/${logged.id}`, userUpdate ,
+    {
+      headers: new Headers({
+        "ngrok-skip-browser-warning": "69421",
+      }),
+    } )
+  }
+
   const pickImageAsync = async () => {
     const { assets, canceled } = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
@@ -102,9 +115,8 @@ export const User = () => {
         }),
       });
       setImage(assets[0].uri);
-      console.log(assets);
-      console.log(filename);
-      console.log(extend);
+
+      saveMyProfile(filename)
     } else {
       alert("Você não escolheu uma imagem!");
     }
@@ -260,7 +272,7 @@ export const User = () => {
         </Box>
 
         <Box bottom="10%" flexDir="row">
-          <Avatar position={"absolute"} mb="2" source={{ uri: image }} size="2xl" />
+          <Avatar position={"absolute"} mb="2" source={{ uri: logged.avatar }} size="2xl" />
       
           <Badge
             style={{ position: "absolute", right: "-5%", top: "20%" }}
