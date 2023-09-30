@@ -65,6 +65,7 @@ export const User = () => {
   var nome = logged?.nome;
   var parentsCount = logged.filhos?.length;
   var primeiro_nome = nome?.split(" ").shift();
+
   useEffect(() => (
     getSolicitation(),
     getAprovados()
@@ -76,18 +77,7 @@ export const User = () => {
     );
   }
 
-  function saveProfilePicture(fileName) {
-    let userUpdate = {
-      ...logged,
-      avatar: `${api}/files/${fileName}`,
-    };
-    axios.put(`${api}/users/${logged.id}`, userUpdate, {
-      headers: new Headers({
-        "ngrok-skip-browser-warning": "69421",
-      }),
-    });
-  }
-
+ 
   const pickImageAsync = async () => {
     const { assets, canceled } = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
@@ -125,6 +115,17 @@ export const User = () => {
   };
   function sendImage() {
     axios.post(apiUpload, formData);
+  }
+  function saveProfilePicture(fileName) {
+    let userUpdate = {
+      ...logged,
+      avatar: `${api}/files/${fileName}`,
+    };
+    axios.put(`${api}/users/${logged.id}`, userUpdate, {
+      headers: new Headers({
+        "ngrok-skip-browser-warning": "69421",
+      }),
+    });
   }
 
   function getUserData() {
@@ -251,6 +252,8 @@ export const User = () => {
         }
       }
     );
+
+    
 
   return (
     <Box flex="1" w="100%" bg="light.100" alignItems="center">
@@ -388,6 +391,8 @@ export const User = () => {
               <InputInfoUser infoLabel="Nome Civil" infoValue={logged.nome} />
               <InputInfoUser infoLabel="Idade" infoValue={logged.idade} />
               <InputInfoUser infoLabel="Endereço" infoValue={logged.address} />
+              <InputInfoUser infoLabel="Bairro" infoValue={logged.bairro} />
+             
               <InputInfoUser infoLabel="CPF" infoValue={logged.cpf} />
               <InputInfoUser infoLabel="NIS" infoValue={logged.nis} />
               <InputInfoUser infoLabel="Email" infoValue={logged.email} />

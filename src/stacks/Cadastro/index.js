@@ -7,19 +7,31 @@ import {
   Text,
   Button,
   Container,
+  Center,
+  Select,
+  CheckIcon,
   ScrollView,
   Heading,
   FormControl,
+  NativeBaseProvider,
 } from "native-base";
+import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { api } from "../../requisitions/api";
 
 const dataAtual = new Date();
 
+const config = {
+  dependencies: {
+    "linear-gradient": LinearGradient,
+  },
+};
+
 export const Cadastro = () => {
   const [formData, setData] = React.useState({
     date: dataAtual,
   });
+  const [service, setService] = React.useState("");
   const [dataFilho, setDataFilho] = React.useState({});
   const [autista, setAutista] = useState(false);
   const [filho, setFilhos] = useState([]);
@@ -39,7 +51,7 @@ export const Cadastro = () => {
       .catch((error) => console.error(error));
   }
   function addFilhos() {
-    filho.push({
+    filho?.push({
       nome: dataFilho.nome,
       idade: dataFilho.idade,
       cpf: dataFilho.cpf,
@@ -47,6 +59,46 @@ export const Cadastro = () => {
     setData({ ...formData, filho });
     alert('Adicionado')
   }
+  useEffect(() => {
+    service && setData({ ...formData, bairro: service })
+  },[service])
+
+  const SeletorBairro = () => {
+  
+   
+    return <Center w="100%">
+        <Box alignSelf="left" rounded="lg" h="50" _text={{color: "#fff"}} maxW="300">
+          
+          <Select 
+          fontFamily="Doppio One"
+          fontSize="lg"
+          selectedValue={service} 
+          minWidth="250"
+          h="40px"
+          rounded="2xl"
+          color={"light.100"}
+          bg="rgba(255, 255, 255, 0.1)"
+         borderColor="rgba(255, 255, 255, 0.18)"
+          outlineColor={"light.100"}
+          dropdownIcon={<CheckIcon size="6" color="light.100" />}
+          
+          placeholder="Selecionar bairro"
+          placeholderTextColor={"light.100"} 
+          _selectedItem={{
+          bg: "lightBlue.400",
+          colorScheme: "lightBlue",
+          endIcon: <CheckIcon size="6" color="#fff" />,
+          rounded: "3xl"
+        }} mt={1} onValueChange={(value) => setService(value)}>
+            <Select.Item label="Santa Rita" value="Santa Rita" />
+            <Select.Item label="Varzea Nova" value="Varzea Nova" />
+            <Select.Item label="Tibiri" value="Tibiri" />
+            <Select.Item label="Marcos Moura" value="Marcos Moura" />
+            <Select.Item label="Cruz do Espirito Santo" value="Cruz do Espirito Santo" />
+          </Select>
+        </Box>
+      </Center>;
+  };
 
   const toggleEstagio = () => {
     setEstagiario((previousState) => !previousState);
@@ -62,11 +114,24 @@ export const Cadastro = () => {
   };
 
   return (
-    <Box flex="1" justifyContent={"center"} pt="20" pb="3" px="5" h="100%">
-      <Heading textAlign={"left"} fontSize={"4xl"}>
+    <NativeBaseProvider config={config}>
+    <Box flex="1" justifyContent={"center"} 
+    pt="20" 
+    pb="3" 
+    px="5" 
+    h="100%"
+    bg={{
+      linearGradient: {
+        colors: ["lightBlue.400", "lightBlue.600"],
+        start: [1, 1],
+        end: [0, 1],
+      },
+    }}
+    >
+      <Heading  fontFamily="Doppio One" textAlign={"left"} color="light.100" shadow={6} fontSize={"4xl"}>
         Bem vindo,
       </Heading>
-      <Heading textAlign={"left"}>Faça seu cadastro</Heading>
+      <Heading color="light.100" fontFamily="Doppio One" shadow={6} textAlign={"left"}>Faça seu cadastro</Heading>
 
       <Image
         position={"absolute"}
@@ -80,25 +145,38 @@ export const Cadastro = () => {
       />
 
       <ScrollView showsVerticalScrollIndicator={false} marginTop="12%">
-        <Box alignItems={"center"} alignSelf={"center"} h="100%" w="100%">
+        <Box alignItems={"center"} alignSelf={"center"} h="100%" w="100%"
+        >
+
           <FormControl mt="5" isRequired>
             <FormControl.Label
               _text={{
+                color:'light.100',
+                fontSize: 22,
+                fontFamily: "Doppio One",
                 bold: true,
+                color:'light.100',
+                fontSize: 22,
+                fontFamily: "Doppio One"
+
               }}
+              shadow={6}
             >
               Nome completo
             </FormControl.Label>
             <Input
+              bg="rgba(255, 255, 255, 0.1)"
+              clearTextOnFocus={true}
+              rounded="2xl"
+              size="2xl"
+              showSoftInputOnFocus={true}
+              focusOutlineColor="rgba(255, 255, 255, 0.50)"
+              selectionColor="rgba(255, 255, 255, 0.58)"
+              borderColor="rgba(255, 255, 255, 0.18)"
+              color={"light.100"}
               onChangeText={(value) => setData({ ...formData, nome: value })}
             />
-            <FormControl.HelperText
-              _text={{
-                fontSize: "xs",
-              }}
-            >
-              O nome deve conter pelo menos 3 caracteres.
-            </FormControl.HelperText>
+            
             <FormControl.ErrorMessage
               _text={{
                 fontSize: "xs",
@@ -111,12 +189,24 @@ export const Cadastro = () => {
           <FormControl mt="5" isRequired>
             <FormControl.Label
               _text={{
+                color:'light.100',
+                fontSize: 22,
+                fontFamily: "Doppio One",
                 bold: true,
               }}
             >
               Idade
             </FormControl.Label>
-            <Input
+            <Input 
+            bg="rgba(255, 255, 255, 0.1)"
+              clearTextOnFocus={true}
+              rounded="2xl"
+              size="2xl"
+              showSoftInputOnFocus={true}
+              focusOutlineColor="rgba(255, 255, 255, 0.50)"
+              selectionColor="rgba(255, 255, 255, 0.58)"
+              borderColor="rgba(255, 255, 255, 0.18)"
+              color={"light.100"}
               w="20%"
               onChangeText={(value) => setData({ ...formData, idade: value })}
             />
@@ -125,41 +215,53 @@ export const Cadastro = () => {
           <FormControl mt="5" isRequired>
             <FormControl.Label
               _text={{
+                color:'light.100',
+                fontSize: 22,
+                fontFamily: "Doppio One",
                 bold: true,
               }}
             >
               CPF
             </FormControl.Label>
-            <Input
+            <Input 
+            bg="rgba(255, 255, 255, 0.1)"
+              clearTextOnFocus={true}
+              rounded="2xl"
+              size="2xl"
+              showSoftInputOnFocus={true}
+              focusOutlineColor="rgba(255, 255, 255, 0.50)"
+              selectionColor="rgba(255, 255, 255, 0.58)"
+              borderColor="rgba(255, 255, 255, 0.18)"
+              color={"light.100"}
               w="50%"
               placeholder="000.000.000-00"
+              placeholderTextColor="light.100"
               onChangeText={(value) => setData({ ...formData, cpf: value })}
             />
-            <FormControl.HelperText
-              _text={{
-                fontSize: "xs",
-              }}
-            >
-              Números com pontuação
-            </FormControl.HelperText>
-            <FormControl.ErrorMessage
-              _text={{
-                fontSize: "xs",
-              }}
-            >
-              Insira um número válido
-            </FormControl.ErrorMessage>
+
           </FormControl>
 
           <FormControl mt="5" isRequired>
             <FormControl.Label
               _text={{
+                color:'light.100',
+                fontSize: 22,
+                fontFamily: "Doppio One",
                 bold: true,
               }}
             >
               Número NIS
             </FormControl.Label>
-            <Input
+            <Input 
+            bg="rgba(255, 255, 255, 0.1)"
+              clearTextOnFocus={true}
+              rounded="2xl"
+              size="2xl"
+              showSoftInputOnFocus={true}
+              focusOutlineColor="rgba(255, 255, 255, 0.50)"
+              selectionColor="rgba(255, 255, 255, 0.58)"
+              borderColor="rgba(255, 255, 255, 0.18)"
+              color={"light.100"}
               w="50%"
               onChangeText={(value) => setData({ ...formData, nis: value })}
             />
@@ -180,19 +282,34 @@ export const Cadastro = () => {
           <FormControl mt="5">
             <FormControl.Label
               _text={{
+                color:'light.100',
+                fontSize: 22,
+                fontFamily: "Doppio One",
                 bold: true,
               }}
             >
               Email
             </FormControl.Label>
-            <Input
+            <Input 
+            bg="rgba(255, 255, 255, 0.1)"
+              clearTextOnFocus={true}
+              rounded="2xl"
+              size="2xl"
+              showSoftInputOnFocus={true}
+              focusOutlineColor="rgba(255, 255, 255, 0.50)"
+              selectionColor="rgba(255, 255, 255, 0.58)"
+              borderColor="rgba(255, 255, 255, 0.18)"
+              color={"light.100"}
               w="80%"
               placeholder="Ex: meu-email@gmail.com"
+              placeholderTextColor="light.100"
               onChangeText={(value) => setData({ ...formData, email: value })}
             />
             <FormControl.HelperText
+              shadow={4}
               _text={{
                 fontSize: "xs",
+                color: "light.100"
               }}
             >
               Insira um e-mail válido!
@@ -209,70 +326,110 @@ export const Cadastro = () => {
           <FormControl mt="5" isRequired>
             <FormControl.Label
               _text={{
+                color:'light.100',
+                fontSize: 22,
+                fontFamily: "Doppio One",
                 bold: true,
               }}
             >
               Endereço
             </FormControl.Label>
-            <Input
+            <Input 
+            bg="rgba(255, 255, 255, 0.1)"
+              clearTextOnFocus={true}
+              rounded="2xl"
+              size="2xl"
+              showSoftInputOnFocus={true}
+              focusOutlineColor="rgba(255, 255, 255, 0.50)"
+              selectionColor="rgba(255, 255, 255, 0.58)"
+              borderColor="rgba(255, 255, 255, 0.18)"
+              color={"light.100"}
               w="80%"
               placeholder="Rua Severo Rodrigues, 457"
+              placeholderTextColor="light.100"
               onChangeText={(value) => setData({ ...formData, address: value })}
             />
             <FormControl.HelperText
               _text={{
                 fontSize: "xs",
+                color: "light.100"
               }}
             ></FormControl.HelperText>
-            <FormControl.ErrorMessage
+
+          </FormControl>
+          <FormControl.Label
+          alignSelf="left"
               _text={{
-                fontSize: "xs",
+                color:'light.100',
+                fontSize: 22,
+                fontFamily: "Doppio One",
+                bold: true,
               }}
             >
-              Endereço inválido
-            </FormControl.ErrorMessage>
-          </FormControl>
+              Bairro
+            </FormControl.Label>
+          <SeletorBairro />
 
           <FormControl mt="5" isRequired>
             <FormControl.Label
               _text={{
+                color:'light.100',
+                fontSize: 22,
+                fontFamily: "Doppio One",
                 bold: true,
               }}
             >
               Celular
             </FormControl.Label>
-            <Input
+            <Input 
+            bg="rgba(255, 255, 255, 0.1)"
+              clearTextOnFocus={true}
+              rounded="2xl"
+              size="2xl"
+              showSoftInputOnFocus={true}
+              focusOutlineColor="rgba(255, 255, 255, 0.50)"
+              selectionColor="rgba(255, 255, 255, 0.58)"
+              borderColor="rgba(255, 255, 255, 0.18)"
+              color={"light.100"}
               w="60%"
               placeholder="(083) xxxx-xxxx"
+              placeholderTextColor="light.100"
               onChangeText={(value) => setData({ ...formData, phone: value })}
             />
             <FormControl.HelperText
+            shadow={4}
               _text={{
                 fontSize: "xs",
+                color: "light.100"
               }}
             >
               Seu contato atual
             </FormControl.HelperText>
-            <FormControl.ErrorMessage
-              _text={{
-                fontSize: "xs",
-              }}
-            >
-              Número inválido
-            </FormControl.ErrorMessage>
           </FormControl>
 
           <FormControl mt="5" isRequired>
             <FormControl.Label
               _text={{
+                color:'light.100',
+                fontSize: 22,
+                fontFamily: "Doppio One",
                 bold: true,
               }}
             >
               Quantos filhos você tem?
             </FormControl.Label>
-            <Input
+            <Input 
+            bg="rgba(255, 255, 255, 0.1)"
+              clearTextOnFocus={true}
+              rounded="2xl"
+              size="2xl"
+              showSoftInputOnFocus={true}
+              focusOutlineColor="rgba(255, 255, 255, 0.50)"
+              selectionColor="rgba(255, 255, 255, 0.58)"
+              borderColor="rgba(255, 255, 255, 0.18)"
+              color={"light.100"}
               w="20%"
-              placeholder="1 ou 2"
+              mb="4"
               onChangeText={(value) =>
                 setData({ ...formData, parentsCount: value })
               }
@@ -281,29 +438,56 @@ export const Cadastro = () => {
               space={3}
               px="3"
               py="2"
-              bg="lightBlue.300"
+              bg="rgba(255, 255, 255, 0.18)"
               w="50%"
               rounded="2xl"
             >
-              <Text>Nome</Text>
-              <Input
+              <Text color="light.100">Nome</Text>
+              <Input 
+              bg="rgba(255, 255, 255, 0.1)"
+              clearTextOnFocus={true}
+              rounded="2xl"
+              size="2xl"
+              showSoftInputOnFocus={true}
+              focusOutlineColor="rgba(255, 255, 255, 0.50)"
+              selectionColor="rgba(255, 255, 255, 0.58)"
+              borderColor="rgba(255, 255, 255, 0.18)"
+              color={"light.100"}
                 onChangeText={(value) =>
                   setDataFilho({ ...dataFilho, nome: value })
                 }
               />
-              <Text>Idade</Text>
-              <Input
+              <Text color="light.100">Idade</Text>
+              <Input 
+              bg="rgba(255, 255, 255, 0.1)"
+              clearTextOnFocus={true}
+              rounded="2xl"
+              size="2xl"
+              showSoftInputOnFocus={true}
+              focusOutlineColor="rgba(255, 255, 255, 0.50)"
+              selectionColor="rgba(255, 255, 255, 0.58)"
+              borderColor="rgba(255, 255, 255, 0.18)"
+              color={"light.100"}
                 onChangeText={(value) =>
                   setDataFilho({ ...dataFilho, idade: value })
                 }
               />
-              <Text>CPF</Text>
-              <Input
+              <Text color="light.100">CPF</Text>
+              <Input 
+              bg="rgba(255, 255, 255, 0.1)"
+              clearTextOnFocus={true}
+              rounded="2xl"
+              size="2xl"
+              showSoftInputOnFocus={true}
+              focusOutlineColor="rgba(255, 255, 255, 0.50)"
+              selectionColor="rgba(255, 255, 255, 0.58)"
+              borderColor="rgba(255, 255, 255, 0.18)"
+              color={"light.100"}
                 onChangeText={(value) =>
                   setDataFilho({ ...dataFilho, cpf: value })
                 }
               />
-              <Button size="sm" onPress={() => addFilhos()}>
+              <Button my="2" size="sm" bg="rgba(255, 255, 255, 0.18)" onPress={() => addFilhos()}>
                 Adicionar
               </Button>
             </Container>
@@ -324,81 +508,106 @@ export const Cadastro = () => {
           <FormControl mt="5" isRequired>
             <FormControl.Label
               _text={{
+                color:'light.100',
+                fontSize: 22,
+                fontFamily: "Doppio One",
                 bold: true,
               }}
             >
               Senha
             </FormControl.Label>
-            <Input
+            <Input 
+            bg="rgba(255, 255, 255, 0.1)"
+              clearTextOnFocus={true}
+              rounded="2xl"
+              size="2xl"
+              showSoftInputOnFocus={true}
+              focusOutlineColor="rgba(255, 255, 255, 0.50)"
+              selectionColor="rgba(255, 255, 255, 0.58)"
+              borderColor="rgba(255, 255, 255, 0.18)"
+              color={"light.100"}
               w="60%"
               placeholder="*******"
+              placeholderTextColor="light.100"
               onChangeText={(value) =>
                 setData({ ...formData, password: value })
               }
             />
             <FormControl.HelperText
+            shadow={4}
               _text={{
                 fontSize: "xs",
+                color: "light.100"
               }}
             >
               Deve conter letras e números
             </FormControl.HelperText>
-            <FormControl.ErrorMessage
-              _text={{
-                fontSize: "xs",
-              }}
-            >
-              Insira uma senha válida!
-            </FormControl.ErrorMessage>
+
           </FormControl>
 
           <FormControl mt="5" isRequired>
             <FormControl.Label
               _text={{
+                color:'light.100',
+                fontSize: 22,
+                fontFamily: "Doppio One",
                 bold: true,
               }}
             >
               Confirmar
             </FormControl.Label>
-            <Input
+            <Input 
+            bg="rgba(255, 255, 255, 0.1)"
+              clearTextOnFocus={true}
+              rounded="2xl"
+              size="2xl"
+              showSoftInputOnFocus={true}
+              focusOutlineColor="rgba(255, 255, 255, 0.50)"
+              selectionColor="rgba(255, 255, 255, 0.58)"
+              borderColor="rgba(255, 255, 255, 0.18)"
+              color={"light.100"}
               w="60%"
               placeholder="*******"
+              placeholderTextColor="light.100"
               onChangeText={(value) =>
                 setData({ ...formData, password: value })
               }
             />
             <FormControl.HelperText
+            shadow={4}
               _text={{
                 fontSize: "xs",
+                color: "light.100"
               }}
             >
               Deve conter letras e números
             </FormControl.HelperText>
-            <FormControl.ErrorMessage
-              _text={{
-                fontSize: "xs",
-              }}
-            >
-              Senha diferente
-            </FormControl.ErrorMessage>
+      
           </FormControl>
 
           <Button
+          shadow={6}
             variant={"solid"}
             w="70%"
             h="65"
             mx="5"
             my="5"
+            bg="blue.700"
+            rounded="full"
             onPress={() => newUser() & navigation.navigate("Login")}
           >
-            CADASTRAR
+           <Text color="light.100" shadow={3} fontSize="2xl" bold>ENVIAR</Text> 
           </Button>
           <Button
-            variant={"outline"}
+          opacity={0.6}
+          mb="5"
+            variant={"solid"}
             w="70%"
             h="50"
             mx="5"
             my="2"
+            bg="blue.600"
+            rounded="full"
             onPress={() => navigation.goBack()}
           >
             VOLTAR
@@ -406,5 +615,6 @@ export const Cadastro = () => {
         </Box>
       </ScrollView>
     </Box>
+    </NativeBaseProvider>
   );
 };

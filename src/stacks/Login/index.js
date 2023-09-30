@@ -62,8 +62,8 @@ export const Login = () => {
         bg={{
           linearGradient: {
             colors: ["lightBlue.400", "lightBlue.600"],
-            start: [1, 1],
-            end: [0, 1],
+            start: [0, 0],
+            end: [1, 0],
           },
         }}
         p="12"
@@ -205,7 +205,8 @@ export const Login = () => {
         </Text>
         <Button
           variant={"subtle"}
-          color="lightBlue.800"
+          bg="blue.700"
+  
           size={"lg"}
           w="200"
           mt="10"
@@ -213,7 +214,7 @@ export const Login = () => {
           mb="10"
           onPress={() => navigation.navigate("Cadastrar")}
         >
-          FAZER MEU CADASTRO
+          <Text fontSize="xl" color="light.100" fontFamily="Doppio One" shadow={8} bold>REGISTRAR</Text>
         </Button>
       </Box>
     </NativeBaseProvider>
