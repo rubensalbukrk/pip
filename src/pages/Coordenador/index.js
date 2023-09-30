@@ -307,7 +307,7 @@ var IsPasse = () => {
         <Box
           w="95%"
           h="300px"
-          bg="lightBlue.300"
+          bg="darkBlue.400"
           my="4"
           rounded="xl"
           shadow={5}

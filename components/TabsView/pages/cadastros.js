@@ -51,8 +51,8 @@ export default function TabCadastros() {
             </HStack>
           </VStack>
           <HStack mt="5" h="200px" space={2} alignSelf="center" shadow={2} w="90%" bg="lightBlue.300" rounded="lg" alignItems="center" justifyContent="center">
-            <Heading color="light.100" shadow={1} fontSize="xl">Familias por Bairro</Heading>
-
+            <Heading color="light.100" shadow={1} fontSize="xl">BAIRROS</Heading>
+              
           </HStack>
      
       </ScrollView>

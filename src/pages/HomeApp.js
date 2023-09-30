@@ -33,6 +33,9 @@ export const HomeApp = () => {
   const nome = logged?.nome;
   const primeiro_nome = nome?.split(" ").shift();
 
+ 
+console.log(logged.avatar)
+
   return (
     <>
       <Box
@@ -135,7 +138,7 @@ export const HomeApp = () => {
           opacity={selected === 0 ? 1 : 0.5}
           py="3"
           flex={1}
-          onPress={() => setSelected(0)}
+          onPress={({focused}) => setSelected(0) & focused && setSelected(0)}
         >
           <Center>
             <Icon
@@ -158,7 +161,7 @@ export const HomeApp = () => {
           opacity={selected === 1 ? 1 : 0.5}
           py="2"
           flex={1}
-          onPress={() => setSelected(1)}
+          onPress={() => setSelected(1) & navigation.navigate('Sobre')}
         >
           <Center>
             <Icon

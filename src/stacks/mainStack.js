@@ -5,6 +5,7 @@ import { Cadastro } from "./Cadastro";
 import { Welcome } from "./Welcome";
 import { HomeApp } from "../pages/HomeApp";
 import { User } from "../pages/User";
+import Sobre from "../pages/Sobre";
 
 import Admin from "../pages/Admin";
 import EditUser from "../pages/Admin/editUser";
@@ -38,6 +39,7 @@ export default function MainStack() {
           headerShown: false,
         }}
       >
+        <Stack.Screen name="Sobre" component={Sobre} />
         <Stack.Screen name="PageCoordenador" component={PageCoordenador} />
         <Stack.Screen name="ViewService" component={ViewService} />
         <Stack.Screen name="Services" component={Services} />

@@ -17,14 +17,14 @@ export default function Sobre() {
   return (
     <ScrollView flex={1} w="100%" px="3" bg="lightBlue.400">
       
+      <Center mt="3%" w="100%">
       <Box
         position="absolute"
         left="2%"
-        top="4%"
+        top="8%"
       >
         <BackButton />
       </Box>
-      <Center mt="3%" w="100%">
       <Image
           w="80%"
           h="120"

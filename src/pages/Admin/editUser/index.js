@@ -126,7 +126,7 @@ export default function EditUser({ route }) {
     )
   }
   function addFilhos() {
-    filho.push({
+    filho?.push({
       nome: dataFilho.nome,
       idade: dataFilho.idade,
       cpf: dataFilho.cpf,

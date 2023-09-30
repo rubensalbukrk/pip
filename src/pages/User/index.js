@@ -65,7 +65,10 @@ export const User = () => {
   var nome = logged?.nome;
   var parentsCount = logged.filhos?.length;
   var primeiro_nome = nome?.split(" ").shift();
-  useEffect(() => (getSolicitation(), getAprovados()), []);
+  useEffect(() => (
+    getSolicitation(),
+    getAprovados()
+    ), [api]);
 
   if (solicitations) {
     var userSolicitations = solicitations.filter(
@@ -73,17 +76,16 @@ export const User = () => {
     );
   }
 
-  function saveMyProfile(fileName){
+  function saveProfilePicture(fileName) {
     let userUpdate = {
       ...logged,
-      avatar: `${api}/files/${fileName}`
-    }
-    axios.put(`${api}/users/${logged.id}`, userUpdate ,
-    {
+      avatar: `${api}/files/${fileName}`,
+    };
+    axios.put(`${api}/users/${logged.id}`, userUpdate, {
       headers: new Headers({
         "ngrok-skip-browser-warning": "69421",
       }),
-    } )
+    });
   }
 
   const pickImageAsync = async () => {
@@ -115,14 +117,29 @@ export const User = () => {
         }),
       });
       setImage(assets[0].uri);
-
-      saveMyProfile(filename)
+      saveProfilePicture(filename);
+      getUserData()
     } else {
       alert("Você não escolheu uma imagem!");
     }
   };
   function sendImage() {
     axios.post(apiUpload, formData);
+  }
+
+  function getUserData() {
+    axios
+      .get(`${api}/users/${logged.id}`, {
+        method: "get",
+        headers: new Headers({
+          "ngrok-skip-browser-warning": "69420",
+        }),
+      })
+      .then((response) => {
+        const user = response.data;
+        setLogged(user);
+      })
+      .catch((error) => console.error(error));
   }
 
   const getAprovados = () => {
@@ -272,8 +289,13 @@ export const User = () => {
         </Box>
 
         <Box bottom="10%" flexDir="row">
-          <Avatar position={"absolute"} mb="2" source={{ uri: logged.avatar }} size="2xl" />
-      
+          <Avatar
+            position={"absolute"}
+            mb="2"
+            source={{ uri: logged?.avatar }}
+            size="2xl"
+          />
+
           <Badge
             style={{ position: "absolute", right: "-5%", top: "20%" }}
             colorScheme="info"
@@ -304,20 +326,27 @@ export const User = () => {
               : "Membro"}
           </Badge>
           <Box left="5%" bottom="-25%" position={"abslute"}>
-            <Button w="60" h="7" size={"xs"} bg="lightBlue.500" variant={"solid"}
-            onPress={() => pickImageAsync() }
+            <Button
+              w="60"
+              h="7"
+              size={"xs"}
+              bg="lightBlue.500"
+              variant={"solid"}
+              onPress={() => pickImageAsync()}
             >
-              <Text fontSize="10" textDecorationLine={"underline"} color="lightBlue.800">
+              <Text
+                fontSize="10"
+                textDecorationLine={"underline"}
+                color="lightBlue.800"
+              >
                 Alterar
               </Text>
             </Button>
             <Text color="light.100" mt="4%" fontSize="2xl">
-          Olá {primeiro_nome}
-        </Text>
+              Olá {primeiro_nome}
+            </Text>
           </Box>
-          
         </Box>
-    
       </Box>
 
       <ScrollView w="100%" horizontal={false} bg="lightBlue.400">
