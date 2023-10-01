@@ -13,7 +13,7 @@ import {
   HStack,
 } from "native-base";
 import { TouchableOpacity } from "react-native";
-import { api, deleteNotice } from "../../../../src/requisitions/api";
+import { api, deleteNotice, getNotices } from "../../../../src/requisitions/api";
 import { UserContext } from "../../../../src/contexts/UserContext";
 import {
   MaterialIcons,
@@ -24,13 +24,14 @@ import {
 } from "@expo/vector-icons";
 import BackButton from "../../../BackButton";
 import { useNavigation } from "@react-navigation/native";
+import * as ImagePicker from "expo-image-picker";
+const apiUpload = `${api}/upload`;
 
 export default function NewNotice() {
   const [dataNotice, setData] = useState({
   })  
   const { setNotices, notices } = useContext(UserContext);
   const navigation = useNavigation();
-  const dateNow = new Date("Mar 25 2015");
 
   useEffect(() => {
     axios
@@ -46,6 +47,44 @@ export default function NewNotice() {
       })
       .catch((error) => console.log(error));
   }, []);
+  const pickImageAsync = async () => {
+    const { assets, canceled } = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!canceled) {
+      const filename = assets[0].uri.substring(
+        assets[0].uri.lastIndexOf("/") + 1,
+        assets[0].uri.length
+      );
+      const extend = filename.split(".")[1];
+      const formData = new FormData();
+      formData.append(
+        "file",
+        JSON.parse(
+          JSON.stringify({
+            name: filename,
+            uri: assets[0].uri,
+            type: "image/" + extend,
+          })
+        )
+      );
+      axios
+        .post(`${api}/upload`, formData, {
+          headers: new Headers({
+            "ngrok-skip-browser-warning": "69421",
+          }),
+        })
+        .then(() => {
+          setData({ ...dataNotice, img: `${api}/files/${filename}` })
+        })
+
+    } else {
+      alert("Você não escolheu uma imagem!");
+    }
+  };
+
 function addNotice(){
     axios.post(`${api}/notices`, dataNotice, {
         method: 'post',
@@ -146,10 +185,14 @@ function addNotice(){
           onChangeText={(value) => setData({...dataNotice, mensagem: value})}
         />
         <HStack justifyContent="space-between">
-          <Button variant={"ghost"}>
-          <Feather name="image" size={32} color="white" />
+          <Button variant={"ghost"}
+          onPress={() => pickImageAsync()}
+          >
+            <Feather name="image" size={32} color="white" />
           </Button>
-          <Button colorScheme={"info"}
+
+          <Button 
+          colorScheme={"info"}
           onPress={() => addNotice() & console.log(dataNotice)}
           >
             <HStack space={3}>

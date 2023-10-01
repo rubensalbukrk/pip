@@ -10,15 +10,17 @@ import {
   HStack,
   Stack,
   Heading,
+  Pressable,
   AspectRatio,
 } from "native-base";
 import { UserContext } from "../../src/contexts/UserContext";
 import { apiNotice } from "../../src/requisitions/api";
+import { useNavigation } from "@react-navigation/native";
 const ITEM_WIDTH = Dimensions.get("window").width;
 
 export const CarouselHome = () => {
   const { setNotices, notices } = useContext(UserContext)
-
+  const navigation = useNavigation()
   useEffect(() => {
     axios
       .get(apiNotice, {
@@ -32,7 +34,7 @@ export const CarouselHome = () => {
         setNotices(notices)
       })
       .catch((error) => console.log(error));
-  }, []);
+  }, [notices]);
   return (
     <View style={{ flex: 1, marginTop: '3%'}}>
       <Carousel
@@ -63,16 +65,22 @@ export const CarouselHome = () => {
                 backgroundColor: "gray.50",
               }}
             >
-               
+              <Pressable 
+              onPress={() => navigation.navigate('ViewNotice', {
+                title: item.title,
+                mensagem: item.mensagem,
+                img: item.img,
+                date: item.date
+              })}
+              >
+                
               <Box w="80%" h="170">
              
                   <Image
                   w="100%"
                   h="100"
-                  
                     source={{
-                      uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkhxRxBcjI7Cv5iBG-AyaUkFFqMuNrCm7a2hRS_Xy1fBxAzWJxFACUUhlPKWDOhATSHGI&usqp=CAU",
-                    }}
+                      uri: item.img }}
                     alt={`${item.mensagem}`}
                   />
                 <Text>{item.mensagem}</Text>
@@ -98,6 +106,7 @@ export const CarouselHome = () => {
                   {item.title}
                 </Center>
               </Box>
+              </Pressable> 
             </Box>
           </Box>
         )}

@@ -3,6 +3,7 @@ import React, { createContext, useState} from 'react'
 export const UserContext = createContext({});
 
 export default function UserProvider({children}) {
+    const [avatar, setAvatar] = useState()
     const [notices, setNotices] = useState([])
     const [users, setUsers] = useState([])
     const [logged, setLogged ] = useState({});
@@ -12,9 +13,11 @@ export default function UserProvider({children}) {
     const getting = {
         notices,
         users,
+        avatar,
         logged,
         aprovados,
         solicitations,
+        setAvatar,
         setAprovados,
         setSolicitations,
         setNotices,

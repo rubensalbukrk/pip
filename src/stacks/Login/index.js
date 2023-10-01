@@ -18,17 +18,25 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { api } from "../../requisitions/api";
 import { UserContext } from "../../contexts/UserContext";
 import { LinearGradient } from "expo-linear-gradient";
+ 
 
 export const Login = () => {
-  const { users, setUsers } = useContext(UserContext);
-  const { auth, Authentication, logged } = useContext(AuthContext);
+  const { users, setUsers, logged, setNotices } = useContext(UserContext);
+  const { Authentication, submit, setSubmit } = useContext(AuthContext);
   const [cpf, setCpf] = useState(String);
   const [password, setPassword] = useState(String);
   const [show, setShow] = useState(false);
-  const [submit, setSubmit] = useState(false);
   const navigation = useNavigation();
-  const accessPage = () => navigation.navigate("HomeApp");
-  const getUsers = () => {
+
+  useEffect(() => {
+   
+    if (logged.id){
+      navigation.navigate('HomeApp')
+    }
+    
+  },[logged])
+
+  const getUsers = async () => {
     axios
       .get(`${api}/users`, {
         method: "get",
@@ -36,16 +44,30 @@ export const Login = () => {
           "ngrok-skip-browser-warning": "69420",
         }),
       })
-      .then((response) => {
-        const users = response.data.users;
+      .then( async (response) => {
+        const users = await response.data.users;
         setUsers(users);
       })
       .catch((error) => console.log(error));
   };
-
+ function getNotices(){
+    axios
+      .get(`${api}/notices`, {
+        method: "get",
+        headers: new Headers({
+          "ngrok-skip-browser-warning": "69420",
+        }),
+      })
+      .then((response) => {
+        const notices = response.data.notices;
+        setNotices(notices);
+      })
+      .catch((error) => console.log(error));
+  };
   useEffect(() => {
-    getUsers();
-  }, []);
+    getUsers()
+    getNotices()
+  },[]);
 
   const config = {
     dependencies: {
@@ -161,7 +183,7 @@ export const Login = () => {
             defaultValue="123456"
           />
 
-          {!submit ? (
+          {!submit ?
             <Button
               size={"lg"}
               w="80%"
@@ -170,7 +192,7 @@ export const Login = () => {
               bg={"rgba(255, 255, 255, 0.22)"}
               rounded="2xl"
               onPress={() => {
-                setSubmit(true) & Authentication(cpf, password) & accessPage();
+                Authentication(cpf, password)
               }}
             >
               <Text
@@ -181,18 +203,20 @@ export const Login = () => {
                 Entrar
               </Text>
             </Button>
-          ) : (
+            :
             <Button
             fontFamily={"Doppio One"}
               isLoading
               isLoadingText="Aguarde..."
-              variant="outline"
+              variant="solid"
+              bg="darkBlue.500"
+              color={"light.400"}
               size={"lg"}
               w="80%"
               mt="10"
               rounded="2xl"
             ></Button>
-          )}
+          }
         </Box>
         <Text
           fontSize="lg"

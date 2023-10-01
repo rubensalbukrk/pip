@@ -2,7 +2,9 @@ import React from 'react';
 import { Box, Text, Heading, Button, Image, Container } from 'native-base';
 import BackButton from '../BackButton';
 
-export default function NoticesView({route}) {
+export default function NoticeView({ route }) {
+    console.log(route?.params?.img)
+    
  return (
    <Box
    flex={1}
@@ -17,13 +19,14 @@ export default function NoticesView({route}) {
         w="100%"
         h="200"
         alt="picture-notice"
-        source={route?.params?.picture} 
+        source={{uri: route?.params?.img }} 
         />
     </Box>
+    <BackButton />
     <Heading
         color="#fff"
         >
-            {route?.params?.titulo}
+            {route?.params?.title}
         </Heading>
     <Container 
     w="80%"

@@ -43,17 +43,19 @@ import MyParents from "../../../components/UserLayout/userParents";
 import BackButton from "../../../components/BackButton";
 import { api, deleteAprovado } from "../../requisitions/api";
 import * as ImagePicker from "expo-image-picker";
+import UserAvatar from "../../../components/UserAvatar";
 
 const apiUpload = `${api}/upload`;
 
 export const User = () => {
-  const [image, setImage] = useState();
   const { auth, setAuth } = useContext(AuthContext);
   const { isOpen, onOpen, onClose } = useDisclose();
   const {
     users,
     setUsers,
     logged,
+    avatar,
+    setAvatar,
     setLogged,
     solicitations,
     setSolicitations,
@@ -66,10 +68,7 @@ export const User = () => {
   var parentsCount = logged.filhos?.length;
   var primeiro_nome = nome?.split(" ").shift();
 
-  useEffect(() => (
-    getSolicitation(),
-    getAprovados()
-    ), [api]);
+  useEffect(() => (getSolicitation(), getAprovados()), []);
 
   if (solicitations) {
     var userSolicitations = solicitations.filter(
@@ -77,7 +76,7 @@ export const User = () => {
     );
   }
 
- 
+
   const pickImageAsync = async () => {
     const { assets, canceled } = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
@@ -101,22 +100,26 @@ export const User = () => {
           })
         )
       );
-      axios.post(`${api}/upload`, formData, {
-        headers: new Headers({
-          "ngrok-skip-browser-warning": "69421",
-        }),
-      });
-      setImage(assets[0].uri);
-      saveProfilePicture(filename);
-      getUserData()
+      axios
+        .post(`${api}/upload`, formData, {
+          headers: new Headers({
+            "ngrok-skip-browser-warning": "69421",
+          }),
+        })
+        .then(() => {
+          updateUserAvatar(filename);
+        })
+        .then(() => {
+          getUserData();
+        })
+        .then(() => {
+          setAvatar(logged.avatar);
+        });
     } else {
       alert("Você não escolheu uma imagem!");
     }
   };
-  function sendImage() {
-    axios.post(apiUpload, formData);
-  }
-  function saveProfilePicture(fileName) {
+  function updateUserAvatar(fileName) {
     let userUpdate = {
       ...logged,
       avatar: `${api}/files/${fileName}`,
@@ -253,8 +256,6 @@ export const User = () => {
       }
     );
 
-    
-
   return (
     <Box flex="1" w="100%" bg="light.100" alignItems="center">
       <Box
@@ -275,7 +276,19 @@ export const User = () => {
           justifyContent="space-between"
           alignItems="center"
         >
-          <BackButton />
+          <TouchableOpacity
+            style={{
+              width: 60,
+              height: 60,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            onPress={() => {
+              navigation.navigate("HomeApp");
+            }}
+          >
+            <Feather name="arrow-left-circle" color="white" size={28} />
+          </TouchableOpacity>
 
           <TouchableOpacity
             style={{
@@ -292,12 +305,9 @@ export const User = () => {
         </Box>
 
         <Box bottom="10%" flexDir="row">
-          <Avatar
-            position={"absolute"}
-            mb="2"
-            source={{ uri: logged?.avatar }}
-            size="2xl"
-          />
+          <Box position="absolute" mb="2">
+            <UserAvatar size="2xl" />
+          </Box>
 
           <Badge
             style={{ position: "absolute", right: "-5%", top: "20%" }}
@@ -392,7 +402,7 @@ export const User = () => {
               <InputInfoUser infoLabel="Idade" infoValue={logged.idade} />
               <InputInfoUser infoLabel="Endereço" infoValue={logged.address} />
               <InputInfoUser infoLabel="Bairro" infoValue={logged.bairro} />
-             
+
               <InputInfoUser infoLabel="CPF" infoValue={logged.cpf} />
               <InputInfoUser infoLabel="NIS" infoValue={logged.nis} />
               <InputInfoUser infoLabel="Email" infoValue={logged.email} />
@@ -522,6 +532,27 @@ export const User = () => {
                 Configurações
               </Text>
             </Box>
+            
+            {logged.isCoordAutist == true && (
+              <Actionsheet.Item
+                startIcon={
+                  <MaterialIcons
+                    size={32}
+                    color="black"
+                    name="admin-panel-settings"
+                  />
+                }
+              >
+                <Pressable
+                  style={{ width: "100%" }}
+                  w="100%"
+                  h="100%"
+                  onPress={() => navigation.navigate("Admin")}
+                >
+                  <Text>Coordenação dos Autistas</Text>
+                </Pressable>
+              </Actionsheet.Item>
+            )}
 
             {logged.isAdmin == true && (
               <Actionsheet.Item

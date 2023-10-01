@@ -1,13 +1,14 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect} from 'react'
 import axios from "axios";
 import { UserContext } from '../contexts/UserContext';
 
-export const api = "https://dacb-45-183-25-32.ngrok-free.app/require"
+export const api = "https://8149-45-183-25-32.ngrok-free.app/require"
+
 
 export function getNotices(){
     const {setNotices} = useContext(UserContext)
     axios
-      .get(apiNotice, {
+      .get(`${api}/notices`, {
         method: "get",
         headers: new Headers({
           "ngrok-skip-browser-warning": "69420",

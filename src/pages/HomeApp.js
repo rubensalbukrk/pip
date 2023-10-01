@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import * as Animatable from "react-native-animatable";
 import { StatusBar } from "react-native";
 import {
@@ -25,6 +25,7 @@ import { useNavigation } from "@react-navigation/native";
 import { CarouselHome } from "../../components/Carousel";
 import CardView from "../../components/CardsView";
 import { AuthContext } from "../contexts/AuthContext";
+import UserAvatar from "../../components/UserAvatar";
 
 export const HomeApp = () => {
   const { users, logged } = useContext(UserContext);
@@ -32,9 +33,6 @@ export const HomeApp = () => {
   const navigation = useNavigation();
   const nome = logged?.nome;
   const primeiro_nome = nome?.split(" ").shift();
-
- 
-console.log(logged.avatar)
 
   return (
     <>
@@ -85,25 +83,14 @@ console.log(logged.avatar)
           </Animatable.Text>
         </Box>
         <Animatable.View delay={200} duration={2000} animation="bounceInDown">
-          <Avatar
-            
-            size={"lg"}
-            shadow={2}
-            bg={"light.200"}
-            source={{ uri: logged?.avatar }}
+          <TouchableOpacity
+          onPress={() => navigation.navigate('User')}
           >
-            <TouchableOpacity
-              onPress={() => navigation.navigate("User")}
-              style={{
-                width: "100%",
-                height: "100%",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <AntDesign name="user" size={42} color="black" />
-            </TouchableOpacity>
-          </Avatar>
+            <UserAvatar
+            size={"lg"}
+          />
+          </TouchableOpacity>
+          
         </Animatable.View>
       </Box>
 
