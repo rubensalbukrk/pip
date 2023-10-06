@@ -13,6 +13,7 @@ import {
   Progress,
   Center,
   Divider,
+  ZStack,
 } from "native-base";
 import PieGraphic from "../../Graphics/PieGraphic";
 
@@ -21,7 +22,7 @@ export default function TabCadastros() {
   return (
       <ScrollView mb="5%" flex={1} w="100%" horizontal={false}>
 
-          <VStack alignSelf="center" shadow={2} w="90%" bg="darkBlue.200" rounded="lg" alignItems="center" justifyContent="center">
+          <VStack alignSelf="center" shadow={2} w="90%" rounded="lg" alignItems="center" justifyContent="center">
             <PieGraphic />
             <HStack alignItems="center">
 
@@ -50,11 +51,38 @@ export default function TabCadastros() {
 
             </HStack>
           </VStack>
-          <HStack mt="5" h="200px" space={2} alignSelf="center" shadow={2} w="90%" bg="lightBlue.300" rounded="lg" alignItems="center" justifyContent="center">
-            <Heading color="light.100" shadow={1} fontSize="xl">BAIRROS</Heading>
-              
-          </HStack>
-     
+        
+            <Heading color="lightBlue.400" ml="4%" shadow={1} fontSize="3xl">BAIRROS</Heading>
+              <Divider my="2" />
+            <HStack mb="4%" alignItems="center" justifyContent="center" flexWrap={1} w="100%">
+              <Center h="140px" mx="4" my="2" w="140px" rounded="lg" bg="lightBlue.500">
+                <Text color="light.100" fontSize="6xl"> 0 </Text>
+                <Text color="light.100" fontSize="lg">Alto Popular</Text>
+              </Center>
+              <Center h="140px" mx="4" my="2" w="140px" rounded="lg" bg="lightBlue.500">
+                <Text color="light.100" fontSize="6xl">0</Text>
+                <Text color="light.100" fontSize="lg">Varzea Nova</Text>
+              </Center>
+              <Center h="140px" mx="4" my="2" w="140px" rounded="lg" bg="lightBlue.500">
+                <Text color="light.100" fontSize="6xl">0</Text>
+                <Text color="light.100" fontSize="lg">Tibiri</Text>
+              </Center>
+              <Center h="140px" mx="4" my="2" w="140px" rounded="lg" bg="lightBlue.500">
+                <Text color="light.100" fontSize="6xl">0</Text>
+                <Text color="light.100" fontSize="lg">Marcos Moura</Text>
+              </Center>
+              <Center h="140px" mx="4" my="2" w="140px" rounded="lg" bg="lightBlue.500">
+                <Text color="light.100" fontSize="6xl">0</Text>
+                <Text color="light.100" fontSize="md">Cruz do Espirito S.</Text>
+              </Center>
+              <Center h="140px" mx="4" my="2" w="140px" rounded="lg" bg="lightBlue.500">
+                <Text color="light.100" fontSize="6xl">0</Text>
+                <Text color="light.100" fontSize="lg">Outros</Text>
+              </Center>
+            
+            </HStack>
+        
+   
       </ScrollView>
       
 

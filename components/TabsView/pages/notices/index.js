@@ -28,25 +28,32 @@ import * as ImagePicker from "expo-image-picker";
 const apiUpload = `${api}/upload`;
 
 export default function NewNotice() {
+  const [updateList, setUpdateList] = useState(false)
   const [dataNotice, setData] = useState({
   })  
   const { setNotices, notices } = useContext(UserContext);
   const navigation = useNavigation();
 
-  useEffect(() => {
+  function getNotices(){
     axios
-      .get(`${api}/notices`, {
-        method: "get",
-        headers: new Headers({
-          "ngrok-skip-browser-warning": "69420",
-        }),
-      })
-      .then((response) => {
-        const notices = response.data.notices;
-        setNotices(notices)
-      })
-      .catch((error) => console.log(error));
-  }, []);
+    .get(`${api}/notices`, {
+      method: "get",
+      headers: new Headers({
+        "ngrok-skip-browser-warning": "69420",
+      }),
+    })
+    .then((response) => {
+      const notices = response.data.notices;
+      setNotices(notices)
+      setUpdateList(false)
+    })
+    .catch((error) => console.log(error));
+  }
+
+  if(updateList){
+    getNotices();
+  }
+
   const pickImageAsync = async () => {
     const { assets, canceled } = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
@@ -121,6 +128,8 @@ function addNotice(){
         maxH="240px"
         mb="3%"
         rounded="xl"
+        refreshing={updateList}
+        onRefresh={() => setUpdateList(true)}
         renderItem={({ item, index }) => {
           return (
             <Center w="100%" h="100px">

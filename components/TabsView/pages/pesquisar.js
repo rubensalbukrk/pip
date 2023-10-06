@@ -4,6 +4,7 @@ import {
   HStack,
   VStack,
   Box,
+  Button,
   Avatar,
   Text,
   Center,
@@ -21,28 +22,50 @@ import axios from "axios";
 import { api } from "../../../src/requisitions/api";
 
 export default function TabSearch() {
+  const [updateList, setUpdateList] = useState(false)
   const { users, setUsers } = useContext(UserContext);
   const [search, setSearch] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [masterData, setMasterData] = useState([]);
   const navigation = useNavigation();
 
-  useEffect(() => {
-    axios
-      .get(`${api}/users`, {
-        method: "get",
-        headers: new Headers({
-          "ngrok-skip-browser-warning": "69420",
-        }),
-      })
-      .then((response) => {
-        const users = response.data.users;
-        setUsers(users);
-        setFilteredData(users);
-        setMasterData(users);
-      })
-      .catch((error) => console.log(error));
-  }, []);
+ function getUsers(){
+  axios
+  .get(`${api}/users`, {
+    method: "get",
+    headers: new Headers({
+      "ngrok-skip-browser-warning": "69420",
+    }),
+  })
+  .then((response) => {
+    const users = response.data.users;
+    setUsers(users);
+    setFilteredData(users);
+    setMasterData(users);
+    setUpdateList(false)
+  })
+  .catch((error) => (
+    <Box
+    flex={1}
+    w="100%"
+    bg="lightBlue.400"
+    >
+      <Heading>UM PROBLEMA FOI ENCONTRADO</Heading>
+
+      <Text color={"light.100"}>{error}</Text>
+
+      <Button
+      colorScheme={"darkBlue"}
+      onPress={() => navigation.navigate('HomeApp')}
+      >
+        VOLTAR
+      </Button>
+    </Box>
+  ));
+ }
+ if (updateList){
+  getUsers()
+ }
 
   const searchFilter = (text) => {
     if (text) {
@@ -93,6 +116,8 @@ export default function TabSearch() {
       <FlatList
         data={filteredData}
         horizontal={false}
+        refreshing={updateList}
+        onRefresh={() => setUpdateList(true)}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item.id.toString()}
         style={{

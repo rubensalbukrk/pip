@@ -21,6 +21,7 @@ import {
   Heading,
   useDisclose,
   Divider,
+  NativeBaseProvider,
   Container,
   Icon,
   Circle,
@@ -44,6 +45,7 @@ import BackButton from "../../../components/BackButton";
 import { api, deleteAprovado } from "../../requisitions/api";
 import * as ImagePicker from "expo-image-picker";
 import UserAvatar from "../../../components/UserAvatar";
+import { LinearGradient } from 'expo-linear-gradient';
 
 const apiUpload = `${api}/upload`;
 
@@ -256,11 +258,32 @@ export const User = () => {
       }
     );
 
-  return (
-    <Box flex="1" w="100%" bg="light.100" alignItems="center">
+    const config = {
+      dependencies: {
+        'linear-gradient': LinearGradient
+      }
+    };
+  
+    return (
+      <NativeBaseProvider config={config}>
+    <Box flex="1" w="100%" alignItems="center"
+    bg={{
+      linearGradient: {
+        colors: ['lightBlue.600', 'lightBlue.400'],
+        start: [0, 0],
+        end: [1, 0]
+      }
+    }}
+    >
       <Box
         w="100%"
-        bg="lightBlue.400"
+        bg={{
+          linearGradient: {
+            colors: ['lightBlue.600', 'lightBlue.400'],
+            start: [0, 0],
+            end: [1, 0]
+          }
+        }}
         h="30%"
         shadow={2}
         alignItems="center"
@@ -306,7 +329,7 @@ export const User = () => {
 
         <Box bottom="10%" flexDir="row">
           <Box position="absolute" mb="2">
-            <UserAvatar size="2xl" />
+            <UserAvatar source={{uri: logged?.avatar}} size="2xl" />
           </Box>
 
           <Badge
@@ -363,7 +386,13 @@ export const User = () => {
       </Box>
 
       <ScrollView w="100%" horizontal={false} bg="lightBlue.400">
-        <Box alignItems="center">
+        <Box alignItems="center"    bg={{
+      linearGradient: {
+        colors: ['lightBlue.600', 'lightBlue.400'],
+        start: [0, 0],
+        end: [1, 0]
+      }
+    }}>
           <VStack
             space={3}
             w="100%"
@@ -608,5 +637,6 @@ export const User = () => {
         </Actionsheet>
       </Center>
     </Box>
+    </NativeBaseProvider>
   );
 };

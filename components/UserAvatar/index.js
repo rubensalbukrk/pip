@@ -5,6 +5,6 @@ import { UserContext } from '../../src/contexts/UserContext';
 export default function UserAvatar(props) {
   const {logged} = useContext(UserContext)
  return (
-    <Avatar size={props.size} source={{uri: logged?.avatar}} />
+    <Avatar shadow={5} size={props.size} source={props.source} />
   );
 }

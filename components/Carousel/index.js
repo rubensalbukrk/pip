@@ -49,21 +49,8 @@ export const CarouselHome = () => {
           <Box alignItems="center">
             <Box
               w="90%"
-              maxH="300"
+              h="180px"
               rounded="lg"
-              borderColor="coolGray.200"
-              borderWidth="1"
-              _dark={{
-                borderColor: "coolGray.600",
-                backgroundColor: "gray.700",
-              }}
-              _web={{
-                shadow: 2,
-                borderWidth: 0,
-              }}
-              _light={{
-                backgroundColor: "gray.50",
-              }}
             >
               <Pressable 
               onPress={() => navigation.navigate('ViewNotice', {
@@ -74,25 +61,25 @@ export const CarouselHome = () => {
               })}
               >
                 
-              <Box w="80%" h="170">
+              <Box rounded={"lg"} h="100%" w="100%">
              
                   <Image
                   w="100%"
-                  h="100"
+                  h="100%"
+                  rounded="lg"
+                  resizeMode="cover"
                     source={{
                       uri: item.img }}
                     alt={`${item.mensagem}`}
                   />
-                <Text>{item.mensagem}</Text>
+               
                
                 <Box position={"relative"} alignSelf="center">
                 
                 </Box>
                 <Center
-                  bg="violet.500"
-                  _dark={{
-                    bg: "violet.400",
-                  }}
+                  bg="darkBlue.400"
+                  rounded="lg"
                   _text={{
                     color: "warmGray.50",
                     fontWeight: "700",
