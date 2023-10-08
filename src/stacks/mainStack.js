@@ -2,7 +2,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Login } from "./Login";
 import { Cadastro } from "./Cadastro";
-import { Welcome } from "./Welcome";
+import Welcome from "./Welcome";
 import { HomeApp } from "../pages/HomeApp";
 import { User } from "../pages/User";
 import Sobre from "../pages/Sobre";

@@ -18,25 +18,25 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { api } from "../../requisitions/api";
 import { UserContext } from "../../contexts/UserContext";
 import { LinearGradient } from "expo-linear-gradient";
- 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const Login = () => {
   const { users, setUsers, logged, setNotices } = useContext(UserContext);
-  const { Authentication, submit, setSubmit } = useContext(AuthContext);
+  const { Authentication, submit, setSubmit, saveMyLogin, auth } = useContext(AuthContext);
   const [cpf, setCpf] = useState(String);
   const [password, setPassword] = useState(String);
   const [show, setShow] = useState(false);
+
   const navigation = useNavigation();
 
   useEffect(() => {
    
-    if (logged.id){
+    if(logged?.cpf){
       navigation.navigate('HomeApp')
     }
-    
   },[logged])
 
-  const getUsers = async () => {
+  const getUsers = () => {
     axios
       .get(`${api}/users`, {
         method: "get",
@@ -44,8 +44,8 @@ export const Login = () => {
           "ngrok-skip-browser-warning": "69420",
         }),
       })
-      .then( async (response) => {
-        const users = await response.data.users;
+      .then((response) => {
+        const users = response.data.users;
         setUsers(users);
       })
       .catch((error) => console.log(error));

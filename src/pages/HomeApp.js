@@ -177,10 +177,7 @@ export const HomeApp = () => {
               <CarouselHome />
             </Animatable.View>
 
-            <Center>
-              <CardView />
-              <CardView />
-            </Center>
+
           </Box>
         </ScrollView>
       </Box>

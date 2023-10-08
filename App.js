@@ -1,11 +1,8 @@
 import 'react-native-gesture-handler'
-import { useContext } from 'react';
 import { useFonts } from 'expo-font';
-import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native'
 
 import Preload from './src/stacks/Preload';
-import { Login } from './src/stacks/Login';
 import MainStack from './src/stacks/mainStack';
 import AuthProvider from './src/contexts/AuthContext';
 import UserProvider from './src/contexts/UserContext';
@@ -54,7 +51,7 @@ export default function App() {
     <UserProvider>
     <AuthProvider>
       <NavigationContainer>
-        {!auth ? <MainStack /> : <Login />}
+        <MainStack />
       </NavigationContainer>
     </AuthProvider>
     </UserProvider>

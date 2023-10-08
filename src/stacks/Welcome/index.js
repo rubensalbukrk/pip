@@ -6,13 +6,28 @@ import { UserContext } from "../../contexts/UserContext";
 import { Box, Avatar, Container, Text, Image, Button, Heading, NativeBaseProvider } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import { LinearGradient } from 'expo-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-export const Welcome = () => {
- 
+export default function Welcome() {
+  const {logged, setLogged, setAuth, auth} = useContext(UserContext)
   const navigation = useNavigation();
 
+useEffect(() => {
+  getMyLogin()
+  if (logged?.cpf){
+    navigation.navigate('HomeApp')
+  }
+},[])
 
+  function getMyLogin(){
+    AsyncStorage.getItem('token').then(
+      (value) => {
+        let dataUser = JSON.parse(value);
+        setLogged(dataUser) 
+      }
+    );
+  };
+ 
   const config = {
     dependencies: {
       'linear-gradient': LinearGradient

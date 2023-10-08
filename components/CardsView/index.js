@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Image, AspectRatio, Center, HStack, Stack, Text, Heading } from 'native-base';
 
-export default function CardView() {
+export default function CardView(props) {
  return (
     <Box maxW="80" shadow={3} rounded="lg" mt="9" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
         borderColor: "coolGray.600",
@@ -25,25 +25,24 @@ export default function CardView() {
             fontWeight: "700",
             fontSize: "xs"
           }} position="absolute" bottom="0" px="3" py="1.5">
-              PHOTOS
+              {props.title}
             </Center>
           </Box>
           <Stack p="4" space={3}>
             <Stack space={2}>
               <Heading size="md" ml="-1">
-                The Garden City
+                {props.heading}
               </Heading>
               <Text fontSize="xs" _light={{
               color: "violet.500"
             }} _dark={{
               color: "violet.400"
             }} fontWeight="500" ml="-0.5" mt="-1">
-                The Silicon Valley of India.
+                {props.little}
               </Text>
             </Stack>
             <Text fontWeight="400">
-              Bengaluru (also called Bangalore) is the center of India's high-tech
-              industry. The city is also known for its parks and nightlife.
+              {props.descrition}
             </Text>
             <HStack alignItems="center" space={4} justifyContent="space-between">
               <HStack alignItems="center">

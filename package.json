@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "expo start",
+    "start": "npx expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web"
@@ -38,12 +38,13 @@
     "react-native-tab-view": "^3.5.2",
     "typescript": "^5.1.6",
     "expo-linear-gradient": "~12.3.0",
-    "expo-image-picker": "~14.3.2"
+    "expo-image-picker": "~14.3.2",
+    "@react-native-async-storage/async-storage": "1.18.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@types/react-native": "^0.71.6",
-    "react-native": "^0.72.4"
+    "react-native": "0.72.5"
   },
   "private": true
 }

@@ -1,14 +1,28 @@
 import React, { createContext, useState, useEffect, useContext } from 'react'
 import { UserContext } from '../UserContext';
 import { Alert } from 'react-native';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const AuthContext = createContext();
 
 export default function AuthProvider({children}){
-    const { users, setLogged } = useContext(UserContext)
-    const [auth , setAuth] = useState(false)
-  
+    const { users, setLogged, logged } = useContext(UserContext)
+    const [auth, setAuth] = useState(false)
+
+    function saveMyLogin(user){
+        //function to save the value in AsyncStorage
+        if (user) {
+          let data = JSON.stringify(user)
+    
+          AsyncStorage.setItem('token', data);
+          //Setting a data to a AsyncStorage with respect to a key
+          alert('Data Saved');
+    
+        } else {
+          alert('Tente novamente');
+          //alert for the empty InputText
+        }
+      };
 
    function Authentication(cpf, password) {
         let userCpf = cpf
@@ -17,6 +31,8 @@ export default function AuthProvider({children}){
     
             if (user){
                 setLogged(user)
+                setAuth(true)
+                saveMyLogin(user)
             }
             else {
                 Alert.alert('Houve algum problema', 'Dados inválidos tente novamente!')
@@ -25,8 +41,10 @@ export default function AuthProvider({children}){
     }
     const contexts = {
         auth,
-        Authentication,
         setAuth,
+        saveMyLogin,
+        Authentication,
+    
     }
 
     return (
