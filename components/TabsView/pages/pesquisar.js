@@ -29,6 +29,10 @@ export default function TabSearch() {
   const [masterData, setMasterData] = useState([]);
   const navigation = useNavigation();
 
+  useEffect(() => {
+    getUsers()
+  },[])
+
  function getUsers(){
   axios
   .get(`${api}/users`, {

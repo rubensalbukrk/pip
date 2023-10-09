@@ -8,6 +8,8 @@ import {
   Text,
   Input,
   Button,
+  Switch,
+  VStack,
   Pressable,
   Icon,
   NativeBaseProvider,
@@ -18,11 +20,12 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { api } from "../../requisitions/api";
 import { UserContext } from "../../contexts/UserContext";
 import { LinearGradient } from "expo-linear-gradient";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export const Login = () => {
+  
   const { users, setUsers, logged, setNotices } = useContext(UserContext);
-  const { Authentication, submit, setSubmit, saveMyLogin, auth } = useContext(AuthContext);
+  const { Authentication, submit, setSubmit, auth, setSigningAuto, signingAuto} = useContext(AuthContext);
   const [cpf, setCpf] = useState(String);
   const [password, setPassword] = useState(String);
   const [show, setShow] = useState(false);
@@ -73,6 +76,10 @@ export const Login = () => {
     dependencies: {
       "linear-gradient": LinearGradient,
     },
+  };
+  const toggleSigningAuto = () => {
+    setSigningAuto((previousState) => !previousState);
+    
   };
 
   return (
@@ -182,7 +189,16 @@ export const Login = () => {
             placeholder="******"
             defaultValue="123456"
           />
-
+          <VStack alignSelf="left" mx="5" my="2">
+            <Text color="light.100" fontFamily="Doppio One" >Lembrar-me</Text>
+            <Switch 
+            value={signingAuto}
+            size="sm" 
+            onToggle={() => {
+              toggleSigningAuto()
+            }} />
+          </VStack>
+          
           {!submit ?
             <Button
               size={"lg"}
