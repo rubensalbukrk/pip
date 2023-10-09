@@ -1,11 +1,10 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { View, TouchableOpacity, Dimensions } from "react-native";
+import { View, TouchableOpacity, Dimensions, ScrollView, RefreshControl } from "react-native";
 import {
   Box,
   Circle,
   FlatList,
-  ScrollView,
   Container,
   Heading,
   Text,
@@ -15,6 +14,7 @@ import {
   Center,
   Divider,
   Button,
+  NativeBaseProvider
 } from "native-base";
 import {
   MaterialIcons,
@@ -26,6 +26,7 @@ import {
 import BackButton from "../../../BackButton";
 import { UserContext } from "../../../../src/contexts/UserContext";
 import { useNavigation } from "@react-navigation/native";
+import { LinearGradient } from "expo-linear-gradient";
 import {
   api,
   deleteSolicitation,
@@ -33,6 +34,7 @@ import {
 } from "../../../../src/requisitions/api";
 
 export default function Solicitation() {
+  const [refreshing, setRefreshing] = useState(false)
   const { users, logged, solicitations, setSolicitations, aprovados, setAprovados } = useContext(UserContext);
   const navigation = useNavigation();
   
@@ -41,7 +43,7 @@ export default function Solicitation() {
     getAprovados()
   ),[])
 
-  const getAprovados = () => {
+ const getAprovados = () => {
     axios
       .get(`${api}/aprovados`, {
         method: "get",
@@ -56,7 +58,7 @@ export default function Solicitation() {
   
       .catch((error) => console.log(error));
   };
-  const getSolicitation = () => {
+ const getSolicitation = () => {
     axios
       .get(`${api}/solicitations`, {
         method: "get",
@@ -67,14 +69,38 @@ export default function Solicitation() {
       .then((response) => {
         const solicitations = response.data.solicitations;
         setSolicitations(solicitations);
+        setRefreshing(false);
       })
   
       .catch((error) => console.log(error));
   };
 
-
+if (refreshing) {
+  getAprovados()
+  getSolicitation();
+}
+const config = {
+  dependencies: {
+    "linear-gradient": LinearGradient,
+  },
+};
   return (
-    <ScrollView flex={1} w="100%" bg="darkBlue.400" py="10" px="5">
+    <NativeBaseProvider config={config}>
+    <Box flex={1} w="100%" px="4" py="10" bg={{
+      linearGradient: {
+        colors: ["lightBlue.600", "lightBlue.400"],
+        start: [0, 0],
+        end: [1, 0],
+      },
+    }}>
+    <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={() => setRefreshing(true)}
+            />
+          }
+    flex={1} w="100%" bg="darkBlue.400" py="10" px="5">
       <Box flexDir="row" w="100%" top="2%">
       <FontAwesome5 name="user-clock" size={40} color="white" />
         <Heading mx="3" fontSize="4xl" color="light.100">
@@ -88,6 +114,7 @@ export default function Solicitation() {
         data={solicitations}
         horizontal={false}
         keyExtractor={(item) => item.id}
+        
         style={{
           flex: 1,
           width: "100%",
@@ -97,7 +124,7 @@ export default function Solicitation() {
         renderItem={({ item, index }) => {
           let userInfo = users.find(user => String(user.cpf) === String(item.cpf))
           return (
-            <Center my="3" w="100%">
+            <Center key={item.id} my="3" w="100%">
               <HStack w="100%" mt="4%" h="160">
                 <VStack bg="lightBlue.400" rounded="xl" py="5%" px="3" w="100%">
                   <Text color={"light.100"}>Nome: {item.nome} </Text>
@@ -115,7 +142,7 @@ export default function Solicitation() {
                       height: 40,
                       opacity: 0.8,
                     }}
-                    onPress={() => deleteSolicitation(item.id)}
+                    onPress={() => deleteSolicitation(item?.id)}
                   >
                     <FontAwesome
                       name="remove"
@@ -175,6 +202,7 @@ export default function Solicitation() {
             <Center my="3" w="100%">
               <HStack w="100%" h="120px">
                 <VStack bg="lightBlue.400" alignSelf="center" rounded="xl" py="5%" px="2" w="100%">
+                  <Text>ID: {item.id} </Text>
                   <Text color={"light.100"}>Nome: {item.nome} </Text>
                   <Text color={"light.100"}>Serviço: {item.service} </Text>
                   <Text color={"light.100"}>STATUS: {item.status} </Text>
@@ -218,5 +246,7 @@ export default function Solicitation() {
         <Feather name="arrow-left-circle" size={40} color="white" />
       </TouchableOpacity>
     </ScrollView>
+    </Box>
+    </NativeBaseProvider>
   );
 }

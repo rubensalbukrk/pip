@@ -36,7 +36,6 @@ const handleConfirmSolicitation = () => {
         })
     })
     .then(response => {
-      deleteSolicitation(route?.params?.id)
       alert(JSON.stringify(response.data))
     })
     .catch(error => console.error(error));

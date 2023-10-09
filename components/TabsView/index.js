@@ -63,7 +63,6 @@ export function TabViewAdmin() {
         const borderColor = index === i ? 'cyan.500' : useColorModeValue('coolGray.200', 'gray.400');
         return <Box mt="10" borderBottomWidth="3" borderColor={borderColor} flex={1} alignItems="center" p="3" cursor="pointer">
               <Pressable onPress={() => {
-            console.log(i);
             setIndex(i);
           }}>
                 <Animated.Text style={{

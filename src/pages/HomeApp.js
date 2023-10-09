@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { api } from "../requisitions/api";
 import * as Animatable from "react-native-animatable";
-import { StatusBar } from "react-native";
+
 import {
   View,
   TouchableOpacity,
@@ -25,7 +25,6 @@ import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { CarouselHome } from "../../components/Carousel";
 import CardView from "../../components/CardsView";
-import { AuthContext } from "../contexts/AuthContext";
 import UserAvatar from "../../components/UserAvatar";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -68,7 +67,7 @@ export const HomeApp = () => {
       <Box
         w="100%"
         t="0"
-        h="15%"
+        h="20%"
         flexDir={"row"}
         justifyContent="space-between"
         px="4"
@@ -176,7 +175,6 @@ export const HomeApp = () => {
             <Animatable.View duration={1000} delay={1000} animation="fadeIn">
               <CarouselHome />
             </Animatable.View>
-
 
           </Box>
         </ScrollView>

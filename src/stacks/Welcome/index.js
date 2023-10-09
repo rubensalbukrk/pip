@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
-import axios from "axios";
+import React, { useContext, useEffect } from "react";
+
 import * as Animatable from "react-native-animatable";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../contexts/UserContext";
-import { Box, Avatar, Container, Text, Image, Button, Heading, NativeBaseProvider } from "native-base";
+import { Box, Container, Text, Image, Button, Heading, NativeBaseProvider } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import { LinearGradient } from 'expo-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -42,7 +42,7 @@ useEffect(() => {
         start: [0, 0],
         end: [1, 0]
       }
-    }}  rounded="xl" _text={{
+    }} _text={{
       fontSize: 'md',
       fontWeight: 'medium',
       color: 'warmGray.50',
@@ -66,7 +66,7 @@ useEffect(() => {
         />
       </Animatable.View>
 
-      <Container position="absolute" top="30%" left="4%" w="80%" h="100" space={3}>
+      <Container position="absolute" top="30%" left="4%" w="100%" h="100" space={3}>
         <Animatable.View
           animation="fadeInRight"
           delay={1000}
@@ -80,11 +80,12 @@ useEffect(() => {
           animation="fadeInRight"
           delay={1000}
         >
-          <Heading my="1" mx="2" color="light.100" shadow={4} fontSize="4xl">
+          <Heading my="1" mx="2" color="light.100" w="70%" shadow={4} fontSize="4xl">
             Bem vindo(a)!
           </Heading>
         </Animatable.View>
       </Container>
+
       <Box w="100%" rounded={"xl"} h="20%" justifyContent="center" bgColor="rgba(255, 255, 255, 0.12)">
         <Animatable.View animation="fadeInLeft" delay={1000}>
           <Text mx="3" alignSelf="center" color="light.100" fontSize="2xl">

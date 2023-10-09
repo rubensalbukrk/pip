@@ -41,12 +41,14 @@ function PieGraphic() {
         }
     })
 
+
+
     let voluntariosCount = voluntarios.length
     let pessoasCount = users.length
     let autistasCount = autistas.length
     let coordenadoresCount = coordenadores.length
 
-    const colors = ['#0005ff','#9555ff','#FF3100','#41bb']
+    const colors = ['#0005ff','#9555ff','#41bb','#FF3100']
     const data = [pessoasCount, autistasCount, coordenadoresCount, voluntariosCount]
 
     const pieData = data

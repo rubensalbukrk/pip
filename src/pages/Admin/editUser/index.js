@@ -7,39 +7,43 @@ import {
   Box,
   Text,
   Input,
-  Icon,
   Button,
   Avatar,
-  Center,
   Container,
+  Center,
+  Select,
+  CheckIcon,
   VStack,
   HStack,
   Switch,
   Heading,
   Divider,
-  CheckIcon,
   ScrollView,
-  Select,
+  NativeBaseProvider,
 } from "native-base";
-import { AntDesign } from "@expo/vector-icons";
 import { Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import BackButton from "../../../../components/BackButton";
-import MyParents from "../../../../components/UserLayout/userParents";
+import InputInfoUser from "../../../../components/UserLayout/inputUser";
 
-const hoje = new Date()
-const data = hoje.getDate().toString().padStart(2,0) + "/" + String(hoje.getMonth() + 1).padStart(2,'0') + "/" + hoje.getFullYear() + ` as ` + hoje.toLocaleTimeString()
+const hoje = new Date();
+const data =
+  hoje.getDate().toString().padStart(2, 0) +
+  "/" +
+  String(hoje.getMonth() + 1).padStart(2, "0") +
+  "/" +
+  hoje.getFullYear() +
+  ` as ` +
+  hoje.toLocaleTimeString();
 
 export default function EditUser({ route }) {
-
   const { logged } = useContext(UserContext);
   const [formData, setData] = React.useState({
     date: data,
   });
-  const [dataFilho, setDataFilho] = React.useState({});
+  const [bairro, setBairro] = React.useState(route?.params?.bairro);
   const [voluntario, setVoluntario] = useState(route?.params?.isVolt);
   const [estagiario, setEstagiario] = useState(route?.params?.isEtg);
-  const [isCoord, setIsCoord] = React.useState("");
   const [isCoordAutist, setIsCoordAutist] = useState(
     route?.params?.isCoordAutist
   );
@@ -65,12 +69,12 @@ export default function EditUser({ route }) {
   const [address, setAddress] = useState(route?.params?.address);
   const [cpf, setCpf] = useState(route?.params?.cpf);
   const [nis, setNis] = useState(route?.params?.nis);
-  const [filho, setFilhos] = useState(route?.params?.filhos);
-  const[addFilho, setAddFilhos] = useState({})
+  const [dataFilho, setDataFilho] = React.useState({});
+  const [filhos, setFilhos] = useState(route?.params?.filhos);
   const [phone, setPhone] = useState(route?.params?.phone);
   const [email, setEmail] = useState(route?.params?.email);
   const [member, setMember] = useState(route?.params?.question1);
-  const [opnion, setQuestion] = useState(route?.params?.question1);
+  const [opnion, setQuestion] = useState(route?.params?.question2);
   const [pass, setPass] = useState(route?.params?.password);
   const navigation = useNavigation();
 
@@ -89,10 +93,12 @@ export default function EditUser({ route }) {
     idade: idade,
     avatar: avatar,
     address: address,
+    bairro: bairro,
     cpf: cpf,
+    nis: nis,
+    filhos: filhos,
     phone: phone,
     email: email,
-    filho: filho,
     question1: member,
     question2: opnion,
     password: pass,
@@ -104,37 +110,80 @@ export default function EditUser({ route }) {
       headers: new Headers({
         "ngrok-skip-browser-warning": "69421",
       }),
-    });
+    })
+    .then(() => {
+      setFilhos([""])
+    })
     return Alert.alert("Atualização", "O usuário foi alterado!");
   }
   const UserFilhos = () => {
-
+   console.error(filhos)
     return (
       <Box>
-        <Text color="light.100">Filhos</Text>
-        { filho?.map((item) => {
+        { filhos?.map((item) => {
+          
           return (
-            <Box bg="darkBlue.500" rounded="2xl" py="2" my="2" px="2" space={2}>
-            <Text>Nome: {item.nome}</Text>
-            <Text>CPF: {item.cpf}</Text>
-            <Text>Idade: {item.idade}</Text>
+            <Box bg="darkBlue.400" rounded="2xl" py="2" my="2" px="2" space={2}>
+              <Text>Nome: {item?.nome}</Text>
+              <Text>CPF: {item?.cpf}</Text>
+              <Text>Idade: {item?.idade}</Text>
             </Box>
-          )
+          );
         })}
-
       </Box>
-    )
-  }
+    );
+  };
   function addFilhos() {
-    filho?.push({
-      nome: dataFilho.nome,
-      idade: dataFilho.idade,
-      cpf: dataFilho.cpf,
-    });
-    setFilhos(filho)
-    alert('Adicionado')
+    
+    try {
+      filhos?.push({
+        nome: dataFilho.nome,
+        idade: dataFilho.idade,
+        cpf: dataFilho.cpf,
+      });
+  
+      alert("Adicionado");
+    } catch (error) {
+      alert('Houve um problema, tente novamente!')
+      navigation.navigate('HomeApp')
+    }
   }
 
+  const SeletorBairro = () => {
+
+    return <Center w="100%">
+        <Box alignSelf="left" rounded="lg" h="50" _text={{color: "#fff"}} maxW="300">
+          
+          <Select 
+          fontFamily="Doppio One"
+          fontSize="lg"
+          selectedValue={bairro} 
+          minWidth="250"
+          h="40px"
+          rounded="2xl"
+          color={"light.100"}
+          bg="rgba(255, 255, 255, 0.1)"
+         borderColor="rgba(255, 255, 255, 0.18)"
+          outlineColor={"light.100"}
+          dropdownIcon={<CheckIcon size="6" color="light.100" />}
+          
+          placeholder={route?.params?.bairro}
+          placeholderTextColor={"light.100"} 
+          _selectedItem={{
+          bg: "lightBlue.400",
+          colorScheme: "lightBlue",
+          endIcon: <CheckIcon size="6" color="#fff" />,
+          rounded: "3xl"
+        }} mt={1} onValueChange={(value) => setBairro(value)}>
+            <Select.Item label="Santa Rita" value="Santa Rita" />
+            <Select.Item label="Varzea Nova" value="Varzea Nova" />
+            <Select.Item label="Tibiri" value="Tibiri" />
+            <Select.Item label="Marcos Moura" value="Marcos Moura" />
+            <Select.Item label="Cruz do Espirito Santo" value="Cruz do Espirito Santo" />
+          </Select>
+        </Box>
+      </Center>;
+  };
   const toggleEstagio = () => {
     setEstagiario((previousState) => !previousState);
   };
@@ -167,6 +216,9 @@ export default function EditUser({ route }) {
   };
 
   return (
+    <NativeBaseProvider>
+
+    
     <Box
       flex={1}
       flexBasis={0}
@@ -396,6 +448,14 @@ export default function EditUser({ route }) {
               placeholderTextColor="000"
             />
 
+            <Text color="white">Bairro</Text>
+            
+            
+            
+            <SeletorBairro />
+           
+           
+
             <Text color="white">NIS</Text>
             <Input
               variant="filled"
@@ -418,44 +478,88 @@ export default function EditUser({ route }) {
               placeholderTextColor="#000"
             />
 
-            {route?.params?.filhos?.length === 0 ? "NÃO" : <UserFilhos />}
+            <Box
+              w="100%"
+              mt="6%"
+              bg="lightBlue.500"
+              rounded="2xl"
+              px="3"
+              py="2"
+            >
+              <Box w="70px">
+                <InputInfoUser
+                  infoLabel="Filhos"
+                  infoValue={
+                    filhos?.length === "0"
+                      ? "Não"
+                      : `${filhos?.length}`
+                  }
+                />
+              </Box>
+
+              {filhos?.length === "0" ? "NÃO" : <UserFilhos />}
+            </Box>
             <Container
               space={3}
               px="3"
               py="2"
-              bg="darkBlue.500"
-              w="80%"
+              bg="rgba(255, 255, 255, 0.18)"
+              w="50%"
               rounded="2xl"
             >
-              <Text color="light.100">Adicionar filho</Text>
-              <Text>Nome</Text>
+              <Text color="light.100">Nome</Text>
               <Input
+                bg="rgba(255, 255, 255, 0.1)"
+                clearTextOnFocus={true}
+                rounded="2xl"
+                size="2xl"
+                showSoftInputOnFocus={true}
+                focusOutlineColor="rgba(255, 255, 255, 0.50)"
+                selectionColor="rgba(255, 255, 255, 0.58)"
+                borderColor="rgba(255, 255, 255, 0.18)"
+                color={"light.100"}
                 onChangeText={(value) =>
                   setDataFilho({ ...dataFilho, nome: value })
                 }
               />
-           
-              <Text>CPF</Text>
+              <Text color="light.100">Idade</Text>
               <Input
+                bg="rgba(255, 255, 255, 0.1)"
+                clearTextOnFocus={true}
+                rounded="2xl"
+                size="2xl"
+                showSoftInputOnFocus={true}
+                focusOutlineColor="rgba(255, 255, 255, 0.50)"
+                selectionColor="rgba(255, 255, 255, 0.58)"
+                borderColor="rgba(255, 255, 255, 0.18)"
+                color={"light.100"}
+                onChangeText={(value) =>
+                  setDataFilho({ ...dataFilho, idade: value })
+                }
+              />
+              <Text color="light.100">CPF</Text>
+              <Input
+                bg="rgba(255, 255, 255, 0.1)"
+                clearTextOnFocus={true}
+                rounded="2xl"
+                size="2xl"
+                showSoftInputOnFocus={true}
+                focusOutlineColor="rgba(255, 255, 255, 0.50)"
+                selectionColor="rgba(255, 255, 255, 0.58)"
+                borderColor="rgba(255, 255, 255, 0.18)"
+                color={"light.100"}
                 onChangeText={(value) =>
                   setDataFilho({ ...dataFilho, cpf: value })
                 }
               />
-              <HStack justifyContent="space-between" w="100%" alignItems="center">
-                <VStack w="50%" mb="2">
-                  <Text>Idade</Text>
-                <Input
-                w="30%"
-                m
-                  onChangeText={(value) =>
-                    setDataFilho({ ...dataFilho, idade: value })
-                  }
-                />
-                </VStack>
-              <Button colorScheme="darkBlue" size="sm" alignSelf="center" onPress={() => addFilhos()}>
+              <Button
+                my="2"
+                size="sm"
+                bg="rgba(255, 255, 255, 0.18)"
+                onPress={() => addFilhos()}
+              >
                 Adicionar
               </Button>
-              </HStack>
             </Container>
             <Box w="20%" h="50" justifyContent={"start"}>
               <Text mb="10%" color="light.100" fontSize="xs">
@@ -519,5 +623,6 @@ export default function EditUser({ route }) {
         </Center>
       </ScrollView>
     </Box>
+    </NativeBaseProvider>
   );
 }

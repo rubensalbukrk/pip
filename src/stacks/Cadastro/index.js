@@ -31,10 +31,10 @@ export const Cadastro = () => {
   const [formData, setData] = React.useState({
     date: dataAtual,
   });
-  const [service, setService] = React.useState("");
+  const [bairro, setBairro] = React.useState("");
   const [dataFilho, setDataFilho] = React.useState({});
   const [autista, setAutista] = useState(false);
-  const [filho, setFilhos] = useState([]);
+  const [filhos, setFilhos] = useState([]);
   const navigation = useNavigation();
 
   function newUser() {
@@ -51,28 +51,32 @@ export const Cadastro = () => {
       .catch((error) => console.error(error));
   }
   function addFilhos() {
-    filho?.push({
+    filhos?.push({
       nome: dataFilho.nome,
       idade: dataFilho.idade,
       cpf: dataFilho.cpf,
     });
-    setData({ ...formData, filho });
+    setData({ ...formData, filhos });
     alert('Adicionado')
   }
+  function removeFilhos(){
+    filhos.pop()
+    console.log(filhos)
+    alert('Ultimo filho removido!')
+  }
   useEffect(() => {
-    service && setData({ ...formData, bairro: service })
-  },[service])
+    bairro && setData({ ...formData, bairro: bairro })
+  },[bairro])
 
   const SeletorBairro = () => {
-  
-   
+
     return <Center w="100%">
         <Box alignSelf="left" rounded="lg" h="50" _text={{color: "#fff"}} maxW="300">
           
           <Select 
           fontFamily="Doppio One"
           fontSize="lg"
-          selectedValue={service} 
+          selectedValue={bairro} 
           minWidth="250"
           h="40px"
           rounded="2xl"
@@ -89,7 +93,7 @@ export const Cadastro = () => {
           colorScheme: "lightBlue",
           endIcon: <CheckIcon size="6" color="#fff" />,
           rounded: "3xl"
-        }} mt={1} onValueChange={(value) => setService(value)}>
+        }} mt={1} onValueChange={(value) => setBairro(value)}>
             <Select.Item label="Santa Rita" value="Santa Rita" />
             <Select.Item label="Varzea Nova" value="Varzea Nova" />
             <Select.Item label="Tibiri" value="Tibiri" />
@@ -489,6 +493,9 @@ export const Cadastro = () => {
               />
               <Button my="2" size="sm" bg="rgba(255, 255, 255, 0.18)" onPress={() => addFilhos()}>
                 Adicionar
+              </Button>
+              <Button my="2" size="sm" bg="rgba(255, 255, 255, 0.18)" onPress={() => removeFilhos()}>
+                Remover Ultimo
               </Button>
             </Container>
             <FormControl.HelperText

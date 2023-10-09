@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import axios from "axios";
 import {
   Box,
   Heading,
@@ -7,18 +8,19 @@ import {
   Text,
   Divider,
   Button,
-  ScrollView,
   FlatList,
   VStack,
+  NativeBaseProvider,
   HStack,
 } from "native-base";
 import { UserContext } from "../../contexts/UserContext";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, ScrollView, RefreshControl } from "react-native";
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import BackButton from "../../../components/BackButton";
 import { deleteSolicitation, deleteAprovado } from "../../requisitions/api";
 import { useNavigation } from "@react-navigation/native";
-
+import { api } from "../../requisitions/api";
+import { LinearGradient } from "expo-linear-gradient";
 
 function ListSolicitations(props) {
   const navigation = useNavigation()
@@ -46,7 +48,7 @@ return (
           height: 40,
           opacity: 0.8,
         }}
-        onPress={() => deleteSolicitation(props.item.id)}
+        onPress={() => deleteSolicitation(props.id)}
       >
         <FontAwesome name="remove" size={36} color="white" />
       </TouchableOpacity>
@@ -84,7 +86,8 @@ return (
 }
 
 export default function PageCoordenador() {
-  const { solicitations, users, logged, aprovados } = useContext(UserContext);
+  const [refreshing, setRefreshing] = useState(false)
+  const { solicitations, users, logged, aprovados, setAprovados, setSolicitations } = useContext(UserContext);
   const [filtred, setFiltred] = useState()
   const navigation = useNavigation();
   if (solicitations) {
@@ -267,16 +270,72 @@ var IsPasse = () => {
   )
 }
 }
+const getAprovados = () => {
+  axios
+    .get(`${api}/aprovados`, {
+      method: "get",
+      headers: new Headers({
+        "ngrok-skip-browser-warning": "69420",
+      }),
+    })
+    .then((response) => {
+      const aprovados = response.data.aprovados;
+      setAprovados(aprovados);
+    })
 
+    .catch((error) => console.log(error));
+};
+const getSolicitation = () => {
+  axios
+    .get(`${api}/solicitations`, {
+      method: "get",
+      headers: new Headers({
+        "ngrok-skip-browser-warning": "69420",
+      }),
+    })
+    .then((response) => {
+      const solicitations = response.data.solicitations;
+      setSolicitations(solicitations);
+      setRefreshing(false);
+    })
 
+    .catch((error) => console.log(error));
+};
+if(refreshing) {
+getAprovados()
+getSolicitation();
+}
+
+const config = {
+  dependencies: {
+    "linear-gradient": LinearGradient,
+  },
+};
   return (
-    <ScrollView flex={1} horizontal={false} px="3" py="3" w="100%" bg="lightBlue.400">
-      <Center w="100%">
-        <Box position="absolute" top="2.5%" left="-3%">
+    <NativeBaseProvider config={config}>
+    <Box flex={1} w="100%" bg={{
+      linearGradient: {
+        colors: ["lightBlue.600", "lightBlue.400"],
+        start: [0, 0],
+        end: [1, 0],
+      },
+    }}>
+      <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={() => setRefreshing(true)}
+            />
+          }
+          horizontal={false} >
+    
+   
+      <Center mt="5%" >
+        <Box position="absolute" top="2%" left="3%">
           <BackButton />
         </Box>
 
-        <Heading mt="9%" color="light.100" alignSelf="center">
+        <Heading mt="8%" color="light.100" alignSelf="center">
           Coordenação
         </Heading>
         <Divider mx="3" my="3" alignSelf="center" w="80%" />
@@ -287,7 +346,7 @@ var IsPasse = () => {
           shadow={2}
           py="3"
           px="4"
-          bg="darkBlue.400"
+          bg="lightBlue.400"
         >
           <Heading alignSelf="left" color="light.100">
             SOLICITAÇÕES
@@ -363,6 +422,9 @@ var IsPasse = () => {
       /> 
         </Box>
       </Center>
+      
     </ScrollView>
+    </Box>
+    </NativeBaseProvider>
   );
 }
