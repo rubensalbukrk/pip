@@ -400,7 +400,7 @@ export const User = () => {
             justifyContent="space-around"
             alignItems="center"
           >
-            <Container w="90%" px="4" py="3" rounded="lg" bg="lightBlue.500">
+            <Container w="90%" mb="10%" px="4" py="3" rounded="lg" bg="lightBlue.500">
               <Box
                 h="30"
                 flexDir="row"
@@ -459,90 +459,13 @@ export const User = () => {
                   />
                 </Box>
 
-                {logged?.filhos?.length === 0 ? "NÃO" : <MyParents />}
+                {logged?.filhos?.length === 0 ? "NÃO" : logged?.filhos?.map((item) => {
+                  return <MyParents nome={item.nome} cpf={item.cpf} idade={item.idade} />
+                }) }
               </Box>
             </Container>
 
-            <Container
-              w="95%"
-              h="350"
-              py="4"
-              mb="20"
-              space={4}
-              shadow={4}
-              bg="rgba(200, 255, 254, 0.15)"
-              rounded="md"
-            >
-              <Box
-                pl="5"
-                h="30"
-                flexDir="row"
-                justifyContent="center"
-                alignItems="center"
-              >
-                <Icon
-                  as={<Octicons name="checklist" size={32} color="white" />}
-                  size="xl"
-                  color="white"
-                />
-                <Heading ml="3" color="light.100">
-                  Meus benefícios
-                </Heading>
-              </Box>
-
-              <Divider alignSelf="center" w="90%" />
-
-              <FlatList
-                data={userSolicitations}
-                horizontal={false}
-                keyExtractor={(item) => item.id}
-                style={{
-                  flex: 1,
-                  width: "100%",
-                  height: "40%",
-                  borderRadius: 40,
-                }}
-                my="3"
-                renderItem={({ item }) => {
-                  return (
-                    <Center my="3" w="100%">
-                      <HStack w="100%" justifyContent="center" h="130px">
-                        <VStack
-                          bg="lightBlue.500"
-                          rounded="xl"
-                          py="5%"
-                          px="2"
-                          w="85%"
-                        >
-                          <Text color={"light.100"}>
-                            Serviço: {item.service}
-                          </Text>
-                          <Text color={"light.100"}>STATUS: {item.status}</Text>
-                          <Text color={"light.100"}>Data: {item.date}</Text>
-                          <TouchableOpacity
-                            style={{
-                              position: "absolute",
-                              right: 1,
-                              top: 5,
-                              width: 40,
-                              height: 40,
-                              opacity: 0.8,
-                            }}
-                            onPress={() => deleteAprovado(item.id)}
-                          >
-                            <FontAwesome
-                              name="remove"
-                              size={36}
-                              color="white"
-                            />
-                          </TouchableOpacity>
-                        </VStack>
-                      </HStack>
-                    </Center>
-                  );
-                }}
-              />
-            </Container>
+           
           </VStack>
         </Box>
       </ScrollView>

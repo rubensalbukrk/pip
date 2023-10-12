@@ -21,7 +21,8 @@ import { api, deleteSolicitation} from "../../../../../src/requisitions/api";
 
 export default function SolicitationInfoUser({ route }) {
   const [status, setStatus] = useState()
-
+  const filhos = route?.params?.userInfo?.filhos
+  console.warn(filhos)
 const handleConfirmSolicitation = () => {
     let userApproved = {
         nome: route?.params?.userInfo.nome,
@@ -118,7 +119,7 @@ function handleUpdateStatus(){
             <InputInfoUser
               infoLabel="Filhos"
               infoValue={
-                route?.params?.userInfo.filhos?.length === "0"
+                route?.params?.userInfo.filhos?.length === 0
                   ? "Não"
                   : `${route?.params?.userInfo.filhos?.length}`
               }
@@ -126,7 +127,9 @@ function handleUpdateStatus(){
             {route?.params?.userInfo.filhos?.length === 0 ? (
               "NÃO"
             ) : (
-              <MyParents />
+              route?.params?.userInfo.filhos?.map((item) => {
+                return <MyParents nome={item.nome} cpf={item.cpf} idade={item.idade} />
+              })
             )}
           </Box>
         </Container>

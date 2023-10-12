@@ -3,12 +3,10 @@ import { Box, Text, Container, Divider } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import { UserContext } from "../../src/contexts/UserContext";
 
-export default function MyParents() {
-  const { logged } = useContext(UserContext);
-  const parentsCount = logged.filhos?.map((item) => {
+export default function MyParents(props) {
     return (
       <Box
-        key={item.cpf}
+        key={props.cpf}
         w="100%"
         mt="4%"
         px="2"
@@ -28,7 +26,7 @@ export default function MyParents() {
           bg="lightBlue.500"
         >
           <Text color="black" paddingX="4" fontSize="lg">
-            {item.nome}
+            {props.nome}
           </Text>
         </Box>
         <Text mt="2" ml="2" color="light.700" fontSize="lg">
@@ -44,7 +42,7 @@ export default function MyParents() {
           bg="lightBlue.500"
         >
           <Text color="black" paddingX="4" fontSize="lg">
-            {item.cpf}
+            {props.cpf}
           </Text>
         </Box>
         <Text ml="2" color="light.700" fontSize="lg">
@@ -61,13 +59,12 @@ export default function MyParents() {
             justifyContent="center"
           >
             <Text paddingX="4" color="black" mr="3" fontSize="lg">
-              {item.idade}
+              {props.idade}
             </Text>
           </Box>
           <Divider w="100%" alignSelf={"center"} />
         
       </Box>
     );
-  });
-  return parentsCount;
+
 }

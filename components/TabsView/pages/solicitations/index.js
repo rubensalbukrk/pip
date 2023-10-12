@@ -202,7 +202,7 @@ const config = {
             <Center my="3" w="100%">
               <HStack w="100%" h="120px">
                 <VStack bg="lightBlue.400" alignSelf="center" rounded="xl" py="5%" px="2" w="100%">
-                  <Text>ID: {item.id} </Text>
+             
                   <Text color={"light.100"}>Nome: {item.nome} </Text>
                   <Text color={"light.100"}>Serviço: {item.service} </Text>
                   <Text color={"light.100"}>STATUS: {item.status} </Text>

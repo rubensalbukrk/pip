@@ -116,12 +116,10 @@ export default function EditUser({ route }) {
     })
     return Alert.alert("Atualização", "O usuário foi alterado!");
   }
-  const UserFilhos = () => {
-   console.error(filhos)
-    return (
-      <Box>
+ let UserFilhos = () => {
+  return (
+    <Box>
         { filhos?.map((item) => {
-          
           return (
             <Box bg="darkBlue.400" rounded="2xl" py="2" my="2" px="2" space={2}>
               <Text>Nome: {item?.nome}</Text>
@@ -129,10 +127,13 @@ export default function EditUser({ route }) {
               <Text>Idade: {item?.idade}</Text>
             </Box>
           );
-        })}
+        })
+
+        }
       </Box>
-    );
-  };
+  )
+  }
+   
   function addFilhos() {
     
     try {

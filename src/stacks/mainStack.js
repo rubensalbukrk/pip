@@ -16,6 +16,7 @@ import Services from "../pages/Services";
 import ViewService from "../pages/Services/ViewService";
 import SolicitationInfoUser from "../../components/TabsView/pages/solicitations/userSolicitation";
 import PageCoordenador from "../pages/Coordenador"
+import SolicitationsUser from "../pages/Solicitations";
 
 
 const Stack = createNativeStackNavigator();
@@ -58,7 +59,8 @@ export default function MainStack() {
         presentation: 'modal'
       }}
       > 
-      <Stack.Screen name="ViewNotice" component={NoticeView} />
+        <Stack.Screen name="SolicitationUser" component={SolicitationsUser} />
+        <Stack.Screen name="ViewNotice" component={NoticeView} />
         <Stack.Screen name="SolicitationInfoUser" component={SolicitationInfoUser} />
       </Stack.Group>
     </Stack.Navigator>
