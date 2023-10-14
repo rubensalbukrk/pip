@@ -25,6 +25,7 @@ export default function SolicitationInfoUser({ route }) {
   console.warn(filhos)
 const handleConfirmSolicitation = () => {
     let userApproved = {
+      cpf: route?.params?.cpf,
         nome: route?.params?.userInfo.nome,
         service: route?.params?.service,
         date: route?.params?.date,
@@ -36,6 +37,9 @@ const handleConfirmSolicitation = () => {
             "ngrok-skip-browser-warning" : "69421"
         })
     })
+    .then(
+      deleteSolicitation(route?.params?.id)
+    )
     .then(response => {
       alert(JSON.stringify(response.data))
     })

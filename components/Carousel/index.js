@@ -40,13 +40,13 @@ export const CarouselHome = () => {
       <Carousel
         loop
         width={ITEM_WIDTH}
-        height={180}
+        height={200}
         autoPlay={true}
         data={notices}
         overscrollEnabled={true}
         scrollAnimationDuration={1400}
         renderItem={({ index, item }) => (
-          <Box alignItems="center">
+          <Box shadow={7} alignItems="center">
             <Box
               w="90%"
               h="180px"

@@ -11,11 +11,11 @@ export default function MyParents(props) {
         mt="4%"
         px="2"
         py="3"
-        bg="lightBlue.400"
+        bg="rgba(255,255,255, 0.12)"
         rounded="lg"
-        opacity={0.5}
+        opacity={0.8}
       >
-        <Text ml="2" color="light.700" fontSize="lg">
+        <Text ml="2" color="light.100" fontSize="lg">
           Nome
         </Text>
         <Box
@@ -23,29 +23,29 @@ export default function MyParents(props) {
           justifyContent="center"
           rounded="md"
           opacity="0.9"
-          bg="lightBlue.500"
+          bg="rgba(255,255,255, 0.12)"
         >
-          <Text color="black" paddingX="4" fontSize="lg">
+          <Text color="light.100" paddingX="4" fontSize="lg">
             {props.nome}
           </Text>
         </Box>
-        <Text mt="2" ml="2" color="light.700" fontSize="lg">
+        <Text mt="2" ml="2" color="light.100" fontSize="lg">
           CPF
         </Text>
         <Box
           h="10"
-          w="65%"
+          w="80%"
           mb="2"
           justifyContent="center"
           rounded="md"
           opacity="0.9"
-          bg="lightBlue.500"
+          bg="rgba(255,255,255, 0.12)"
         >
-          <Text color="black" paddingX="4" fontSize="lg">
+          <Text color="light.100" paddingX="4" fontSize="lg">
             {props.cpf}
           </Text>
         </Box>
-        <Text ml="2" color="light.700" fontSize="lg">
+        <Text ml="2" color="light.100" fontSize="lg">
           Idade
         </Text>
       
@@ -54,15 +54,14 @@ export default function MyParents(props) {
             mb="4%"
             w="25%"
             h="10"
-            bg="lightBlue.500"
+            bg="rgba(255,255,255, 0.12)"
             rounded="md"
             justifyContent="center"
           >
-            <Text paddingX="4" color="black" mr="3" fontSize="lg">
+            <Text paddingX="4" color="light.100" mr="3" fontSize="lg">
               {props.idade}
             </Text>
           </Box>
-          <Divider w="100%" alignSelf={"center"} />
         
       </Box>
     );

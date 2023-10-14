@@ -4,11 +4,11 @@ import { AntDesign } from "@expo/vector-icons";
 
 export default function InputInfoUser(props) {
   return (
-    <Box justifyContent="left">
+    <Box  justifyContent="left">
       <Text ml="2" color="light.100" mt="3%" fontSize="lg">
         {props.infoLabel}
       </Text>
-      <Box opacity={0.8} h="10" bg="lightBlue.400" rounded="md" justifyContent="center">
+      <Box h="10" w="100%" bg="rgba(255,255,255, 0.12)" rounded="md" justifyContent="center">
         <Text paddingX="4" color="white" mr="3" fontSize="lg" >
           {props.infoValue}
         </Text>

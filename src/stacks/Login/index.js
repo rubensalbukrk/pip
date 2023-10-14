@@ -204,7 +204,7 @@ export const Login = () => {
               size={"lg"}
               w="80%"
               mt="10"
-              
+              colorScheme={"blue"}
               bg={"rgba(255, 255, 255, 0.22)"}
               rounded="2xl"
               onPress={() => {

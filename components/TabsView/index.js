@@ -31,7 +31,6 @@ export const renderScene = SceneMap({
   first: FirstRoute,
   second: SecondRoute,
   third: ThirdRoute,
-  fourth: FourthRoute
 });
 
 export function TabViewAdmin() {
@@ -45,9 +44,6 @@ export function TabViewAdmin() {
   }, {
     key: 'third',
     title: 'Gerênciar'
-  }, {
-    key: 'fourth',
-    title: 'Outros'
   }]);
 
 

@@ -67,7 +67,7 @@ export const HomeApp = () => {
       <Box
         w="100%"
         t="0"
-        h="20%"
+        h="22%"
         flexDir={"row"}
         justifyContent="space-between"
         px="4"
@@ -82,33 +82,34 @@ export const HomeApp = () => {
         }}
       >
         <Animatable.View
-          style={{ width: 60, height: 60 }}
+          style={{ width: 90, height: 100 }}
           delay={800}
           duration={2000}
           animation="bounceInLeft"
         >
           <Image
             alt="pip-logo"
-            w="60"
-            h="60"
+            w="150"
+            h="100"
             shadow={4}
             resizeMode="contain"
             source={require("../../assets/pip-icon.png")}
           />
           <Text
             color="light.100"
-            style={{ bottom: "20%", left: "50%", fontSize: 12, width: 200 }}
+            style={{ bottom: "20%", left: "50%", fontSize: 12, width: 200, fontFamily: "Doppio One" }}
           >
             PROJETO INCLUSÃO POPULAR
           </Text>
         </Animatable.View>
-        <Box flexDir={"row"} alignItems="center" paddingTop="3">
+
+       
           <Animatable.Text
             style={{
               height: 40,
               fontFamily: "Doppio One",
               fontSize: 20,
-              marginBottom: "30%",
+              marginTop: "-20%",
               color: "white",
             }}
             delay={800}
@@ -117,12 +118,14 @@ export const HomeApp = () => {
           >
             Olá {primeiro_nome}
           </Animatable.Text>
-        </Box>
-        <Animatable.View delay={200} duration={2000} animation="bounceInDown">
+       
+        
+        <Animatable.View  delay={200} duration={2000} animation="bounceInDown">
           <TouchableOpacity onPress={() => navigation.navigate("User")}>
-            <UserAvatar source={{ uri: logged?.avatar }} size={"lg"} />
+            <UserAvatar source={{ uri: logged?.avatar }} size={"2xl"} />
           </TouchableOpacity>
         </Animatable.View>
+
       </Box>
       <Box flex={1} w="100%" bg={{
               linearGradient: {
@@ -203,7 +206,7 @@ export const HomeApp = () => {
               color="white"
               size="xl"
             />
-            <Text color="white" fontSize="12">
+            <Text color="white" fontSize="12" fontFamily="Doppio One">
               Inicio
             </Text>
           </Center>
@@ -222,7 +225,7 @@ export const HomeApp = () => {
               color="white"
               size="xl"
             />
-            <Text color="white" fontSize="12">
+            <Text color="white" fontSize="12" fontFamily="Doppio One">
               Quem somos
             </Text>
           </Center>
@@ -245,7 +248,7 @@ export const HomeApp = () => {
               color="white"
               size="xl"
             />
-            <Text color="white" fontSize="12">
+            <Text color="white" fontSize="12" fontFamily="Doppio One">
               Serviços
             </Text>
           </Center>
@@ -264,7 +267,7 @@ export const HomeApp = () => {
               color="white"
               size="xl"
             />
-            <Text color="white" fontSize="12">
+            <Text color="white" fontSize="12" fontFamily="Doppio One">
               Solicitações
             </Text>
           </Center>

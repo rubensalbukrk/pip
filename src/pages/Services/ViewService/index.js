@@ -11,11 +11,12 @@ import {
   Button,
   HStack,
   VStack,
+  NativeBaseProvider
 } from "native-base";
 import BackButton from "../../../../components/BackButton";
 import { UserContext } from "../../../contexts/UserContext";
 import { api } from "../../../requisitions/api";
-
+import { LinearGradient } from "expo-linear-gradient";
 export default function ViewService({ route }) {
   const {logged} = useContext(UserContext)
 
@@ -41,16 +42,30 @@ export default function ViewService({ route }) {
       .catch((error) => console.error(error));
   }
 
+  const config = {
+    dependencies: {
+      "linear-gradient": LinearGradient,
+    },
+  };
+
   return (
-    <ScrollView flex={1} bg="lightBlue.400" w="100%">
+    <NativeBaseProvider config={config}>
+    <ScrollView flex={1} bg="lightBlue.700" w="100%">
       <Box
         w="100%"
+        minHeight="900"
         py="46"
         justifyContent="center"
         alignItems="center"
-        bg="lightBlue.400"
+        bg={{
+          linearGradient: {
+            colors: ["lightBlue.500", "lightBlue.700"],
+            start: [1, 1],
+            end: [0, 0],
+          },
+        }}
       >
-        <Box position="absolute" top="4%" left="4%">
+        <Box position="absolute" top="9%" left="4%">
           <BackButton />
         </Box>
         <Image
@@ -65,23 +80,21 @@ export default function ViewService({ route }) {
             {route?.params?.titulo}
           </Heading>
 
-          <VStack
-            px="2"
-            py="2"
-            w="100%"
-            bg="lightBlue.300"
-            rounded="lg"
-            space={1}
+          <Box
+           rounded="lg"
+           shadow={7}
+           px="2"
+           py="3"
+            bg="rgba(255,255,255, 0.15)"
           >
             <Heading
-              _text={{ color: "darkBlue.700" }}
-              w="80"
+              
               fontSize="md"
-              color={"darkBlue.700"}
+              color={"light.100"}
             >
               {route?.params?.descricao}
             </Heading>
-          </VStack>
+          </Box>
           <Text alignSelf="right" color="#fff" mt="2%" fontSize="2xl">
             Serviços disponíveis
           </Text>
@@ -89,7 +102,7 @@ export default function ViewService({ route }) {
             px="2"
             py="2"
             w="100%"
-            bg="lightBlue.300"
+            bg="rgba(255,255,255, 0.15)"
             rounded="lg"
             space={1}
             maxH="800"
@@ -105,5 +118,6 @@ export default function ViewService({ route }) {
         </Box>
       </Box>
     </ScrollView>
+   </NativeBaseProvider>
   );
 }
