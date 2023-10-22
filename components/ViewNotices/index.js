@@ -20,7 +20,7 @@ export default function NoticeView({ route }) {
         w="100%"
         bg={{
           linearGradient: {
-            colors: ['darkBlue.600', 'darkBlue.400'],
+            colors: ['lightBlue.800', 'lightBlue.400'],
             start: [0, 0],
             end: [1, 1],
           },
@@ -87,6 +87,10 @@ export default function NoticeView({ route }) {
             {route?.params?.date}
           </Text>
         </Box>
+        <Box alignSelf="center">
+          <BackButton />
+        </Box>
+        
       </Box>
     </NativeBaseProvider>
   );

@@ -1,13 +1,13 @@
 import 'react-native-gesture-handler'
 import { useFonts } from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native'
-
 import Preload from './src/stacks/Preload';
 import MainStack from './src/stacks/mainStack';
 import AuthProvider from './src/contexts/AuthContext';
 import UserProvider from './src/contexts/UserContext';
 import { NativeBaseProvider, extendTheme } from 'native-base';
 import { LogBox } from 'react-native';
+import { CopilotProvider } from "react-native-copilot";
 
 LogBox.ignoreAllLogs();//Ignore all log notifications
 
@@ -47,6 +47,7 @@ export default function App() {
   const auth = false;
 
   return (
+    <CopilotProvider>
     <NativeBaseProvider theme={theme}>
     <UserProvider>
     <AuthProvider>
@@ -56,5 +57,6 @@ export default function App() {
     </AuthProvider>
     </UserProvider>
     </NativeBaseProvider>
+  </CopilotProvider>
   );
 }

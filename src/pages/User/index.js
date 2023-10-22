@@ -294,6 +294,7 @@ export const User = () => {
               <Button
                 w="60"
                 h="7"
+                shadow={4}
                 size={"xs"}
                 bg="lightBlue.500"
                 variant={"solid"}
@@ -311,6 +312,7 @@ export const User = () => {
               <Text
                 color="light.100"
                 mt="4%"
+                shadow={6}
                 fontSize="2xl"
                 fontFamily="Doppio One"
               >

@@ -81,7 +81,7 @@ function ListSolicitations(props) {
   );
 }
 
-export default function PageCoordenador({route}) {
+export default function PageCoordenador({ route }) {
   const [refreshing, setRefreshing] = useState(false);
   const {
     solicitations,
@@ -329,7 +329,12 @@ export default function PageCoordenador({route}) {
               <BackButton />
             </Box>
 
-            <Heading fontSize="lg" mt="10%" color="light.100" alignSelf="center">
+            <Heading
+              fontSize="lg"
+              mt="10%"
+              color="light.100"
+              alignSelf="center"
+            >
               {route?.params?.title}
             </Heading>
             <Divider mx="3" my="3" alignSelf="center" w="80%" />
@@ -338,6 +343,7 @@ export default function PageCoordenador({route}) {
               h="400px"
               rounded="xl"
               shadow={2}
+              alignSelf={"center"}
               py="3"
               px="4"
               bg="rgba(255,255,255, 0.16)"
@@ -346,21 +352,25 @@ export default function PageCoordenador({route}) {
                 SOLICITAÇÕES
               </Heading>
               <Divider w="100%" mb="5%" />
-              <ScrollView w="100%" horizontal={false} rounded="xl">
+              <ScrollView 
+                w="100%" 
+                horizontal={false} 
+                rounded="xl"
+                style={{borderRadius: 40}}
+                >
                 {logged?.isCoordAutist ? <IsAutist /> : null}
-                
+
                 {logged?.isCoordMulher ? <IsMulher /> : null}
-                
+
                 {logged?.isCoordSaude ? <IsSaude /> : null}
-                
+
                 {logged?.isCoordCidadania ? <IsCidadania /> : null}
-                
+
                 {logged?.isCoordProtagonista ? <IsProtagonista /> : null}
-               
+
                 {logged?.isCoordPasse ? <IsPasse /> : null}
-                
+
                 {logged?.isCoordAlimentar ? <IsAlimentar /> : null}
-          
               </ScrollView>
             </Box>
 
@@ -373,6 +383,7 @@ export default function PageCoordenador({route}) {
               shadow={5}
               py="3"
               px="4"
+              alignSelf={"center"}
             >
               <Heading color="light.100">APROVAÇÕES</Heading>
               <Divider w="90%" />
