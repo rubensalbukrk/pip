@@ -1,21 +1,17 @@
 import React, { useContext } from "react";
-import { View, Dimensions } from "react-native";
 import {
   Box,
   Circle,
   ScrollView,
-  Container,
-  FlatList,
   Heading,
   Text,
   VStack,
   HStack,
-  Progress,
   Center,
   Divider,
-  ZStack,
+
 } from "native-base";
-import PieGraphic from "../../Graphics/PieGraphic";
+
 import { UserContext } from "../../../src/contexts/UserContext";
 
 export default function TabCadastros() {
@@ -56,7 +52,7 @@ let cruzEspiritoSantoCount = cruzEspiritoSanto?.length
       <ScrollView mb="5%" flex={1} w="100%" horizontal={false}>
 
           <VStack alignSelf="center" shadow={2} w="90%" rounded="lg" alignItems="center" justifyContent="center">
-            <PieGraphic />
+         
             <HStack alignItems="center">
 
             

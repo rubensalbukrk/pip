@@ -70,11 +70,11 @@ export default function Welcome() {
             <Image
               position="absolute"
               alt="pip-logo"
-              w="60%"
-              h="40%"
+              w="70%"
+              h="350px"
               right="7%"
               top="2%"
-              mt="20%"
+              mt="4%"
               resizeMode="contain"
               source={require("../../../assets/pip-icon.png")}
             />

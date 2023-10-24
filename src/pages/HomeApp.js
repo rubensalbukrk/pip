@@ -7,6 +7,7 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
+  SafeAreaView,
   RefreshControl,
 } from "react-native";
 import { UserContext } from "../contexts/UserContext";
@@ -19,6 +20,7 @@ import {
   Pressable,
   Image,
   NativeBaseProvider,
+  
 } from "native-base";
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -44,11 +46,14 @@ export const HomeApp = () => {
   const CopilotText = walkthroughable(Text);
   const CopilotView = walkthroughable(View);
 
-  useEffect(() => {
-    setTimeout(() => {
-      start();
-    }, 1000);
-  }, []);
+
+		useEffect(() => {
+      setTimeout(() => {
+        start()
+        setLastEvent('start')
+      },1000)
+    },[])
+
 
   useEffect(() => {
     copilotEvents.on("stepChange", (step) => {
@@ -61,6 +66,9 @@ export const HomeApp = () => {
       setLastEvent(`stop`);
     });
   }, [copilotEvents]);
+
+ 
+
   const config = {
     dependencies: {
       "linear-gradient": LinearGradient,
@@ -90,6 +98,7 @@ export const HomeApp = () => {
   return (
     <>
       <NativeBaseProvider config={config}>
+        
         <Box
           w="100%"
           t="0"
@@ -147,7 +156,7 @@ export const HomeApp = () => {
               top: -50,
               color: "white",
             }}
-            shadow={4} >Ola {primeiro_nome}</Text>
+            shadow={4} >Olà {primeiro_nome}</Text>
           </Animatable.View>
 
           <Animatable.View delay={200} duration={2000} animation="bounceInDown">

@@ -41,8 +41,6 @@ function PieGraphic() {
         }
     })
 
-
-
     let voluntariosCount = voluntarios.length
     let pessoasCount = users.length
     let autistasCount = autistas.length
@@ -55,12 +53,9 @@ function PieGraphic() {
         .filter((value) => value > 0)
         .map((value, index) => ({
             value: value,
-        
             svg: {
                 fill: colors[index],
             },
-
-   
             key: `pie-${index}`,
         }))
 
@@ -86,19 +81,7 @@ function PieGraphic() {
         
         return(
             <View style={{flex: 1, width: '100%', justifyContent: 'center'}}>
-                <PieChart style={{ height: 250,  }} 
-                data={pieData}
-               animate={true}
-               animationDuration={1000}
-                outerRadius={'85%'}
-                innerRadius={'45%'}
-                borderRadius={'40%'}
-                padAngl="10"
-                startAngle="27"
-                endAngle="50"
-                 >
-                    <Label />
-                 </PieChart>
+                
             </View>
         )
 }
