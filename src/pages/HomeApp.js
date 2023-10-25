@@ -28,7 +28,7 @@ import UserAvatar from "../../components/UserAvatar";
 import { LinearGradient } from "expo-linear-gradient";
 
 export const HomeApp = () => {
-  const firstrun = useRef(true)
+  const firstrun = useRef(false)
   const [refreshing, setRefreshing] = useState(false);
   const { users, logged, setNotices } = useContext(UserContext);
   const [selected, setSelected] = React.useState(0);
@@ -46,11 +46,10 @@ export const HomeApp = () => {
   const CopilotView = walkthroughable(View);
 
   useEffect(() => {
+    firstrun.current = true
     if(firstrun){
-      firstrun.current = true
         start();
     }
-    firstrun.current = false
   },[]);
 
   useEffect(() => {
@@ -88,12 +87,14 @@ export const HomeApp = () => {
 
   if (refreshing) {
     getNotices();
+
   }
 
   return (
     <>
       <NativeBaseProvider config={config}>
         <Box
+        ref={firstrun}
           w="100%"
           t="0"
           h="22%"
@@ -111,7 +112,7 @@ export const HomeApp = () => {
           }}
         >
           <Animatable.View
-            style={{ width: 90, height: 100 }}
+            style={{ width: 90, height: 100, marginBottom: '10%' }}
             delay={800}
             duration={2000}
             animation="bounceInLeft"
@@ -121,7 +122,7 @@ export const HomeApp = () => {
               w="150"
               h="100"
               shadow={4}
-              resizeMode="contain"
+              resizeMode="cover"
               source={require("../../assets/pip-icon.png")}
             />
             <Text
@@ -129,7 +130,7 @@ export const HomeApp = () => {
               style={{
                 bottom: "20%",
                 left: "50%",
-                fontSize: 12,
+                fontSize: 14,
                 width: 200,
                 fontFamily: "Doppio One",
               }}

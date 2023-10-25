@@ -38,7 +38,7 @@ export default function Services() {
     {
       id: 2,
       title: "Mulher",
-      picture: require("../../../assets/imgs/pip-mulher.jpeg"),
+      picture: require("../../../assets/imgs/pip-mulher.png"),
       labelTitulo: "PIP MULHER",
       labelDesc:
         "Visando potencializar os cuidados com as mulheres cadastradas e em parceria com o Sesc Saúde Mulher, ofertamos mensalmente citológicos e mamografias, como também grupos de orientações em saúde coletiva e gestacional.",
@@ -52,7 +52,7 @@ export default function Services() {
     {
       id: 3,
       title: "CIDADANIA",
-      picture: require("../../../assets/imgs/pip-cidadania.jpg"),
+      picture: require("../../../assets/imgs/pip-cidadania.png"),
       labelTitulo: "PIP CIDADANIA",
       labelDesc:
         "O acesso à documentação básica é de extrema importância para que a população consiga acessar outros serviços públicos. Dessa forma, essa pasta viabiliza o agendamento de RG, CPF e Carteira De Trabalho Digital.",
@@ -62,7 +62,7 @@ export default function Services() {
     {
       id: 4,
       title: "Segurança Alimentar",
-      picture: require("../../../assets/imgs/pip-sgralimentar.jpg"),
+      picture: require("../../../assets/imgs/pip-sgralimentar.png"),
       labelTitulo: "PIP SEGURANÇA ALIMENTAR",
       labelDesc:
         "O acesso à alimentação é direito de todos e todas. Diante do cenário de vulnerabilidade social que foi potencializado com a pandemia, nós estamos comprometidos em cooperar com a missão mundial de erradicar a pobreza e fome extrema.",
@@ -75,7 +75,7 @@ export default function Services() {
     {
       id: 5,
       title: "Saúde Mental",
-      picture: require("../../../assets/imgs/pip-saudemental.jpg"),
+      picture: require("../../../assets/imgs/pip-saudemental.png"),
       labelTitulo: "PIP SAÚDE MENTAL",
       labelDesc:
         "Uma das maiores problemáticas na sociedade são as doenças psicossomáticas e por isso queremos contribuir para que as famílias cadastradas tenham acesso à atendimentos de psicologia para garantir sua saúde mental.",
@@ -85,7 +85,7 @@ export default function Services() {
     {
       id: 6,
       title: "Protagonismo",
-      picture: require("../../../assets/imgs/pip-protagonista.jpg"),
+      picture: require("../../../assets/imgs/pip-protagonista.png"),
       labelTitulo: "PIP PROTAGONISMO JUVENIL",
       labelDesc:
         "Em parceria com o Centro de Integração Empresa Escola - CIEE, encaminhamos jovens de 14 á 23 anos para o cadastro de prioridade por estarem em situação de vulnerabilidade social.",
@@ -95,7 +95,7 @@ export default function Services() {
     {
       id: 7,
       title: "PASSE LIVRE",
-      picture: require("../../../assets/imgs/cord-administrativa.jpg"),
+      picture: require("../../../assets/imgs/pip-passelivre.png"),
       labelTitulo: "PIP PASSE LIVRE ESTADUAL",
       labelDesc:
         "O passe livre estadual é direito garantido pela Lei 18.419/2015 para pessoas com deficiência que assegura a isenção das taxas nos transportes coletivos intermunicipais. O Projeto Inclusão Popular é credenciado na FUNAD para solicitar o PASSE LIVRE PCD.",
@@ -139,6 +139,7 @@ export default function Services() {
             fontSize: 18,
             left: "-30%",
             marginTop: "20%",
+            fontFamily: 'Doppio One',
             height: 30,
             width: 300,
           }}
@@ -150,7 +151,7 @@ export default function Services() {
       </Box>
       </HStack>
      
-      <Heading w="100%" shadow={4} color="#fff" my="3" mt="8%" fontSize="xl">
+      <Heading w="100%" shadow={4} color="#fff" my="3" mt="8%" fontSize="xl" fontFamily="Doppio One">
         Oferecemos serviços gratuitamente de qualidade prestado por profissionais qualificados!
       </Heading>
       <FlatList
@@ -186,19 +187,20 @@ export default function Services() {
                   })
                 }
               >
-                <Image
-                  resizeMode="cover"
-                  w="40%"
-                  alt="picture-service"
-                  h="full"
-                  backgroundColor={"rgba(255,255,255, 0.4)"}
-                  rounded="lg"
-                  source={item.picture}
-                />
-                <Heading w="60%" mx="4%" mb="10%" numberOfLines={4} fontSize={"md"} color="light.100">{item.labelDesc}</Heading>
-                <Box posiiton="absolute" bottom="-15%" right="30%">
+                <Box posiiton="absolute" bottom="-15%" left="10%">
                 <SimpleLineIcons name="arrow-right" size={24} color="white" />
                 </Box>
+                <Heading w="45%" ml="1%" fontFamily="Doppio One" mb="10%" numberOfLines={5} fontSize={"md"} color="light.100">{item.labelDesc}</Heading>
+                <Image
+                  resizeMode="auto"
+                  w="45%"
+                  alt="picture-service"
+                  h="90%"
+                  backgroundColor={"rgba(255,255,255, 0.1)"}
+                  rounded="full"
+                  source={item.picture}
+                />
+                
               </TouchableOpacity>
             </Box>
           );

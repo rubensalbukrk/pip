@@ -12,19 +12,20 @@ import {
   Heading,
   NativeBaseProvider,
 } from "native-base";
-
+import { useCopilot } from "react-native-copilot";
 import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Welcome() {
   const { logged, setLogged, setAuth, auth } = useContext(UserContext);
   const navigation = useNavigation();
-
+  const { start, copilotEvents } = useCopilot();
 
   useEffect(() => {
     getMyLogin();
     if (logged?.cpf) {
       navigation.navigate("HomeApp");
+      
     }
   }, []);
 
