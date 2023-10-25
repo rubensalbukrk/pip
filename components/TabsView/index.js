@@ -55,13 +55,14 @@ export function TabViewAdmin() {
           inputRange,
           outputRange: inputRange.map(inputIndex => inputIndex === i ? 1 : 0.5)
         });
-        const color = index === i ? useColorModeValue('#38b6ff', '#e5e5e5') : useColorModeValue('#71cbff', '#a1a1aa');
-        const borderColor = index === i ? 'cyan.500' : useColorModeValue('coolGray.200', 'gray.400');
+        const color = index === i ? useColorModeValue('#fff', '#e5e5e5') : useColorModeValue('#80ccff', '#a1a1aa');
+        const borderColor = index === i ? 'light.200' : useColorModeValue('cyan.400', 'gray.400');
         return <Box mt="10" borderBottomWidth="3" borderColor={borderColor} flex={1} alignItems="center" p="3" cursor="pointer">
               <Pressable onPress={() => {
             setIndex(i);
           }}>
                 <Animated.Text style={{
+                  fontFamily: "Doppio One",
               color
             }}>{route.title}</Animated.Text>
               </Pressable>

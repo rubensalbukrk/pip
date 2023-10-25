@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useRef, useState, useEffect } from "react";
 import axios from "axios";
 import { api } from "../requisitions/api";
 import * as Animatable from "react-native-animatable";
@@ -7,7 +7,6 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
-  SafeAreaView,
   RefreshControl,
 } from "react-native";
 import { UserContext } from "../contexts/UserContext";
@@ -20,7 +19,6 @@ import {
   Pressable,
   Image,
   NativeBaseProvider,
-  
 } from "native-base";
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -30,6 +28,7 @@ import UserAvatar from "../../components/UserAvatar";
 import { LinearGradient } from "expo-linear-gradient";
 
 export const HomeApp = () => {
+  const firstrun = useRef(true)
   const [refreshing, setRefreshing] = useState(false);
   const { users, logged, setNotices } = useContext(UserContext);
   const [selected, setSelected] = React.useState(0);
@@ -46,14 +45,13 @@ export const HomeApp = () => {
   const CopilotText = walkthroughable(Text);
   const CopilotView = walkthroughable(View);
 
-
-		useEffect(() => {
-      setTimeout(() => {
-        start()
-        setLastEvent('start')
-      },1000)
-    },[])
-
+  useEffect(() => {
+    if(firstrun){
+      firstrun.current = true
+        start();
+    }
+    firstrun.current = false
+  },[]);
 
   useEffect(() => {
     copilotEvents.on("stepChange", (step) => {
@@ -66,9 +64,6 @@ export const HomeApp = () => {
       setLastEvent(`stop`);
     });
   }, [copilotEvents]);
-
- 
-
   const config = {
     dependencies: {
       "linear-gradient": LinearGradient,
@@ -98,7 +93,6 @@ export const HomeApp = () => {
   return (
     <>
       <NativeBaseProvider config={config}>
-        
         <Box
           w="100%"
           t="0"
@@ -156,11 +150,12 @@ export const HomeApp = () => {
               top: -50,
               color: "white",
             }}
-            shadow={4} >Olà {primeiro_nome}</Text>
+            shadow={4} >Ola {primeiro_nome}</Text>
           </Animatable.View>
 
           <Animatable.View delay={200} duration={2000} animation="bounceInDown">
             <CopilotStep
+            ref={firstrun}
               active={secondStepActive}
               text="Aqui você entra no seu perfil!"
               order={2}

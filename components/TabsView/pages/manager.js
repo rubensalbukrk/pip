@@ -1,28 +1,21 @@
-import React, { useContext, useEffect } from "react";
-import axios from "axios";
-import { View, FlatList, TouchableOpacity, Dimensions } from "react-native";
+import React from "react";
 import {
   Box,
-  Circle,
   ScrollView,
-  Container,
   Heading,
   Text,
   VStack,
-  HStack,
-  Progress,
   Center,
   Divider,
   Button,
 } from "native-base";
 import {
-  MaterialIcons,
   Feather,
   AntDesign,
   FontAwesome,
 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { UserContext } from "../../../src/contexts/UserContext";
+
 
 export default function TabManager() {
   const navigation = useNavigation();
@@ -37,7 +30,7 @@ export default function TabManager() {
           space={2}
           alignSelf="center"
           shadow={2}
-          bg="darkBlue.300"
+          bg="rgba(255,255,255, 0.15)"
           rounded="lg"
           alignItems="center"
           justifyContent="center"
@@ -57,7 +50,7 @@ export default function TabManager() {
             my="2"
             mb="4"
             rounded={"xl"}
-            colorScheme={"darkBlue"}
+            colorScheme={"info"}
             onPress={() => navigation.navigate("NewNotices")}
           >
             <Feather name="arrow-right-circle" size={28} color="white" />
@@ -73,7 +66,7 @@ export default function TabManager() {
           space={2}
           alignSelf="center"
           shadow={2}
-          bg="darkBlue.300"
+          bg="rgba(255,255,255, 0.15)"
           rounded="lg"
           alignItems="center"
           justifyContent="center"
@@ -90,7 +83,7 @@ export default function TabManager() {
             my="2"
             mb="4"
             rounded={"xl"}
-            colorScheme={"orange"}
+            colorScheme={"info"}
             onPress={() => navigation.navigate("Solicitation")}
           >
             <Feather name="arrow-right-circle" size={28} color="white" />

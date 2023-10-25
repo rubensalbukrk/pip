@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { StyleSheet, View, TouchableOpacity } from "react-native";
-import { Ionicons, AntDesign } from "@expo/vector-icons";
+import React, { useContext, useEffect } from "react";
+import { AntDesign } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../contexts/UserContext";
@@ -70,11 +69,11 @@ export default function Welcome() {
             <Image
               position="absolute"
               alt="pip-logo"
-              w="70%"
-              h="350px"
+              w="60%"
+              h="40%"
               right="7%"
               top="2%"
-              mt="4%"
+              mt="20%"
               resizeMode="contain"
               source={require("../../../assets/pip-icon.png")}
             />

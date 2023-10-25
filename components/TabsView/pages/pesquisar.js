@@ -14,7 +14,7 @@ import {
   Container,
 } from "native-base";
 import { View, FlatList, TouchableOpacity } from "react-native";
-import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
+import { Ionicons, FontAwesome5, Feather } from "@expo/vector-icons";
 
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../../src/contexts/UserContext";
@@ -28,6 +28,7 @@ export default function TabSearch() {
   const [filteredData, setFilteredData] = useState([]);
   const [masterData, setMasterData] = useState([]);
   const navigation = useNavigation();
+  const asUser = `${api}/files/user.png`
 
   useEffect(() => {
     getUsers()
@@ -90,27 +91,28 @@ export default function TabSearch() {
   return (
     <Center flex={1} w="100%" px="5">
       <VStack w="100%" space={5} alignSelf="center">
-        <Heading color="lightBlue.500" fontSize="lg">
-          Procurar por nome
-        </Heading>
+       
         <Input
+          mt="5%"
           onChangeText={(text) => searchFilter(text)}
           value={search}
-          placeholder="Search"
+          placeholder="Procurar por nome"
+          placeholderTextColor={ "rgba(255,255,255, 0.65)"}
           variant="outline"
           width="100%"
+          fontFamily={"Doppio One"}
           h="50px"
           colorScheme={"lightBlue"}
           focusOutlineColor={"lightBlue.300"}
           borderRadius="10"
-          borderColor={"lightBlue.300"}
+          borderColor={ "rgba(255,255,255, 0.65)"}
           mb="4%"
           px="2"
           InputLeftElement={
             <Icon
               ml="2"
               size="5"
-              color="lightBlue.400"
+              color="light.100"
               as={<Ionicons name="ios-search" />}
             />
           }
@@ -128,6 +130,7 @@ export default function TabSearch() {
           flex: 1,
           width: "100%",
           height: 300,
+          fontFamily: "Doppio One",
           marginBottom: "9%",
           borderRadius: 20,
         }}
@@ -142,23 +145,25 @@ export default function TabSearch() {
                 borderRadius: 20,
                 marginTop: 10,
                 marginBottom: 10,
-                backgroundColor: "#1cacff",
+                backgroundColor: "rgba(255,255,255, 0.15)",
               }}
             >
               <HStack space={4} alignItems="center">
                 <Avatar ml="4%" source={{ uri: item.avatar }} />
                 <VStack flex="1">
                   <Box rounded="lg" flex="1" mr="18%">
-                    <Text numberOfLines={1} ellipsizeMode="tail" color="white">
+                    <Text fontFamily="Doppio One" numberOfLines={1} ellipsizeMode="tail" color="white">
                       {item.nome}
                     </Text>
                   </Box>
-                  <Box rounded="lg" flex="1" mr="18%" bg="#38b6ff">
+                  <Box rounded="lg" fontFamily="Doppio One" flex="1" mr="18%" bg="rgba(255,255,255, 0.10)">
                     <Text
+                    ml="2"
+                    fontFamily="Doppio One"
                       numberOfLines={1}
                       ellipsizeMode="tail"
                       style={{ flex: 1 }}
-                      color="light.200"
+                      color="light.100"
                     >
                       {item.question2}
                     </Text>
