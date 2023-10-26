@@ -1,10 +1,13 @@
-import React, { useContext } from 'react';
+import React, { PureComponent, useContext } from 'react';
 import { Avatar } from 'native-base';
 import { UserContext } from '../../src/contexts/UserContext';
 
-export default function UserAvatar(props) {
-  const {logged} = useContext(UserContext)
- return (
-    <Avatar shadow={5} size={props.size} source={props.source} />
-  );
-}
+export default class UserAvatar extends PureComponent {
+
+  render() {
+    const {logged} = this.context
+    return (
+      <Avatar shadow={5} size={this.props.name} source={{ uri: logged.avatar }} />
+    )
+}}
+UserAvatar.contextType = UserContext

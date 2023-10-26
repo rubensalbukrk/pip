@@ -109,13 +109,13 @@ function addNotice(){
     <Box flex={1} w="100%" bg="darkBlue.400" pt="10" px="5">
       <Box flexDir="row" top="2%">
         <FontAwesome name="newspaper-o" size={40} color="white" />
-        <Heading mx="3" color="light.100">
+        <Heading mx="3" fontFamily="Doppio One" color="light.100">
           Gerênciador de Notícias
         </Heading>
       </Box>
 
       <Divider my="4" />
-      <Text fontSize="lg" mb="2%" color={"light.100"}>
+      <Text fontSize="lg" fontFamily="Doppio One" mb="2%" color={"light.100"}>
         Atuais
       </Text>
 
@@ -125,27 +125,31 @@ function addNotice(){
         bgColor="lightBlue.400"
         flex={1}
         w="100%"
-        maxH="240px"
+        maxH="270px"
         mb="3%"
         rounded="xl"
         refreshing={updateList}
         onRefresh={() => setUpdateList(true)}
         renderItem={({ item, index }) => {
           return (
-            <Center w="100%" h="100px">
+            <Center w="100%" h="110px" mb="5%" mt="5%">
             
                 <VStack
                   bg="lightBlue.300"
                   rounded="xl"
                   py="1%"
                   px="3%"
+                  mx="2"
                   w="88%"
-                  h="70%"
+                  h="110px"
+                 justifyContent={"center"}
+                > 
+                <Box alignSelf="center" justifyContent={"center"}>
+                  <Text fontFamily="Doppio One" color="light.100">Titulo: {item.title} </Text>
+                  <Text fontFamily="Doppio One" color="light.100" numberOfLines="1" ellipsizeMode="tail" >Descrição: {item.mensagem} </Text>
+                  <Text fontFamily="Doppio One" color="light.100">Data: {item.date} </Text>
+                </Box>
                   
-                >
-                  <Text>Titulo: {item.title} </Text>
-                  <Text numberOfLines="1" ellipsizeMode="tail" >Descrição: {item.mensagem} </Text>
-                  <Text>Data: {item.date} </Text>
                   <TouchableOpacity
                     style={{
                       position: "absolute",
@@ -168,11 +172,11 @@ function addNotice(){
           );
         }}
       />
-        <Text fontSize="lg" mb="2%" color={"light.100"}>
+        <Text fontFamily="Doppio One" fontSize="lg" mb="2%" color={"light.100"}>
         Nova notícia
       </Text>
       <VStack bg="lightBlue.400" rounded="xl" py="2" px="5">
-        <Text fontSize={"lg"} color="white">
+        <Text fontSize={"lg"} fontFamily="Doppio One" color="light.100">
           Titulo
         </Text>
         <Input 
@@ -182,7 +186,7 @@ function addNotice(){
         opacity={0.8}
         onChangeText={(value) => setData({...dataNotice, title: value})}
         />
-        <Text fontSize={"lg"} color="white">
+        <Text fontSize={"lg"} fontFamily="Doppio One" color="light.100">
           Descrição
         </Text>
         <Input
@@ -206,7 +210,7 @@ function addNotice(){
           >
             <HStack space={3}>
                 <FontAwesome5 name="check" size={24} color="white" />
-            <Text color="white">Adicionar</Text>
+            <Text fontFamily="Doppio One" color="light.100">Adicionar</Text>
             </HStack>
           </Button>
         </HStack>

@@ -117,7 +117,7 @@ export default function SolicitationsUser() {
               size="xl"
               color="white"
             />
-            <Heading ml="3" color="light.100">
+            <Heading ml="3" fontFamily="Doppio One" color="light.100">
               Minhas solicitações
             </Heading>
           </Box>
@@ -147,9 +147,9 @@ export default function SolicitationsUser() {
                         px="2"
                         w="85%"
                       >
-                        <Text color={"light.100"}>Serviço: {item.service}</Text>
-                        <Text color={"light.100"}>STATUS: {item.status}</Text>
-                        <Text color={"light.100"}>Data: {item.date}</Text>
+                        <Text fontFamily="Doppio One" color={"light.100"}>Serviço: {item.service}</Text>
+                        <Text fontFamily="Doppio One" color={"light.100"}>STATUS: {item.status}</Text>
+                        <Text fontFamily="Doppio One" color={"light.100"}>Data: {item.date}</Text>
                         <TouchableOpacity
                           style={{
                             position: "absolute",
@@ -184,7 +184,7 @@ export default function SolicitationsUser() {
               size="xl"
               color="white"
             />
-            <Heading ml="3" color="light.100">
+            <Heading ml="3" fontFamily="Doppio One" color="light.100">
               Meus benefícios
             </Heading>
           </Box>
@@ -212,9 +212,9 @@ export default function SolicitationsUser() {
                       px="2"
                       w="85%"
                     >
-                      <Text color={"light.100"}>Serviço: {item.service}</Text>
-                      <Text color={"light.100"}>STATUS: {item.status}</Text>
-                      <Text color={"light.100"}>Data: {item.date}</Text>
+                      <Text fontFamily="Doppio One" color={"light.100"}>Serviço: {item.service}</Text>
+                      <Text fontFamily="Doppio One" color={"light.100"}>STATUS: {item.status}</Text>
+                      <Text fontFamily="Doppio One" color={"light.100"}>Data: {item.date}</Text>
                     </VStack>
                   </HStack>
                 </Center>

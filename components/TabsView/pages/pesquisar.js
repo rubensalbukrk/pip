@@ -118,7 +118,7 @@ export default function TabSearch() {
           }
         />
       </VStack>
-      <Divider color={"lightBlue.300"} my="2%" />
+     
       <FlatList
         data={filteredData}
         horizontal={false}

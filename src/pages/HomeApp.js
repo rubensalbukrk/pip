@@ -37,19 +37,17 @@ export const HomeApp = () => {
   const primeiro_nome = nome?.split(" ").shift();
 
   //Tutorial para usuários
-  const { start, copilotEvents } = useCopilot();
+  var { start, copilotEvents, visible} = useCopilot();
   const [secondStepActive, setSecondStepActive] = useState(true);
-
   const [lastEvent, setLastEvent] = useState(null);
-
   const CopilotText = walkthroughable(Text);
   const CopilotView = walkthroughable(View);
 
+
   useEffect(() => {
-    firstrun.current = true
-    if(firstrun){
-        start();
-    }
+      setTimeout(() => {
+        start('secondText')
+      }, 1000)
   },[]);
 
   useEffect(() => {
@@ -151,7 +149,7 @@ export const HomeApp = () => {
               top: -50,
               color: "white",
             }}
-            shadow={4} >Ola {primeiro_nome}</Text>
+            shadow={4} >Olá {primeiro_nome}</Text>
           </Animatable.View>
 
           <Animatable.View delay={200} duration={2000} animation="bounceInDown">
@@ -164,7 +162,7 @@ export const HomeApp = () => {
             >
               <CopilotView>
                 <TouchableOpacity onPress={() => navigation.navigate("User")}>
-                  <UserAvatar source={{ uri: logged?.avatar }} size={"2xl"} />
+                  <UserAvatar size={"2xl"} />
                 </TouchableOpacity>
               </CopilotView>
             </CopilotStep>
@@ -281,7 +279,7 @@ export const HomeApp = () => {
           <CopilotStep
             text="Encontre o serviço que você precisa aqui!"
             order={1}
-            name="openApp"
+            name="firstText"
           >
             <CopilotView style={{flex: 1}}>
               <Pressable

@@ -253,7 +253,7 @@ export const User = () => {
 
           <Box bottom="10%" flexDir="row">
             <Box position="absolute" mb="2">
-              <UserAvatar source={{ uri: logged?.avatar }} size="2xl" />
+              <UserAvatar size="2xl" />
             </Box>
 
             <Badge
