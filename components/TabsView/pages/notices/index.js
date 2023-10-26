@@ -11,6 +11,7 @@ import {
   Divider,
   Input,
   HStack,
+  NativeBaseProvider
 } from "native-base";
 import { TouchableOpacity } from "react-native";
 import { api, deleteNotice, getNotices } from "../../../../src/requisitions/api";
@@ -25,6 +26,8 @@ import {
 import BackButton from "../../../BackButton";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
+import { LinearGradient } from "expo-linear-gradient";
+
 const apiUpload = `${api}/upload`;
 
 export default function NewNotice() {
@@ -105,8 +108,22 @@ function addNotice(){
     .catch(error => console.error(error));
 }
 
+const config = {
+  dependencies: {
+    "linear-gradient": LinearGradient,
+  },
+};
   return (
-    <Box flex={1} w="100%" bg="darkBlue.400" pt="10" px="5">
+    <NativeBaseProvider config={config}>
+    <Box flex={1} w="100%" pt="10" px="5"
+    bg={{
+      linearGradient: {
+        colors: ["lightBlue.600", "lightBlue.400"],
+        start: [0, 0],
+        end: [1, 0],
+      },
+    }}
+    >
       <Box flexDir="row" top="2%">
         <FontAwesome name="newspaper-o" size={40} color="white" />
         <Heading mx="3" fontFamily="Doppio One" color="light.100">
@@ -122,7 +139,7 @@ function addNotice(){
       <FlatList
         data={notices}
         keyExtractor={(item) => item.id.toString()}
-        bgColor="lightBlue.400"
+        
         flex={1}
         w="100%"
         maxH="270px"
@@ -135,7 +152,7 @@ function addNotice(){
             <Center w="100%" h="110px" mb="5%" mt="5%">
             
                 <VStack
-                  bg="lightBlue.300"
+                  bg="rgba(255,255,255, 0.15)"
                   rounded="xl"
                   py="1%"
                   px="3%"
@@ -175,14 +192,14 @@ function addNotice(){
         <Text fontFamily="Doppio One" fontSize="lg" mb="2%" color={"light.100"}>
         Nova notícia
       </Text>
-      <VStack bg="lightBlue.400" rounded="xl" py="2" px="5">
+      <VStack bg="rgba(255,255,255, 0.15)" rounded="xl" py="2" px="5">
         <Text fontSize={"lg"} fontFamily="Doppio One" color="light.100">
           Titulo
         </Text>
         <Input 
         w="75%" 
         variant="ghost" 
-        bg="lightBlue.300" 
+        bg="rgba(255,255,255, 0.15)" 
         opacity={0.8}
         onChangeText={(value) => setData({...dataNotice, title: value})}
         />
@@ -193,7 +210,7 @@ function addNotice(){
           mb="4%"
           h="70"
           variant="ghost"
-          bg="lightBlue.300"
+          bg="rgba(255,255,255, 0.15)"
           opacity={0.8}
           onChangeText={(value) => setData({...dataNotice, mensagem: value})}
         />
@@ -204,7 +221,8 @@ function addNotice(){
             <Feather name="image" size={32} color="white" />
           </Button>
 
-          <Button 
+          <Button
+          size={"sm"} 
           colorScheme={"info"}
           onPress={() => addNotice() & console.log(dataNotice)}
           >
@@ -222,12 +240,13 @@ function addNotice(){
           justifyContent: "center",
           alignItems: "center",
           alignSelf: "center",
-          marginTop: "3%",
+          marginTop: "10%",
         }}
         onPress={() => navigation.goBack()}
       >
         <Feather name="arrow-left-circle" size={40} color="white" />
       </TouchableOpacity>
     </Box>
+    </NativeBaseProvider>
   );
 }

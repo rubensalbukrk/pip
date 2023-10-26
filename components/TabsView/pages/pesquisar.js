@@ -203,6 +203,7 @@ export default function TabSearch() {
                       email: item.email,
                       password: item.password,
                       question1: item.question1,
+                      question2: item.question2,
                     })
                   }
                 >

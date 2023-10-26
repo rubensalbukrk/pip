@@ -244,9 +244,8 @@ export const Login = () => {
           Esqueci minha senha
         </Text>
         <Button
-          variant={"subtle"}
-          bg="blue.700"
-  
+          variant={"solid"}
+          colorScheme={"lightBlue"}
           size={"lg"}
           w="200"
           mt="10"

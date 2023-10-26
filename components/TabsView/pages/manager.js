@@ -29,8 +29,8 @@ export default function TabManager() {
           maxH="240px"
           space={2}
           alignSelf="center"
-          shadow={2}
-          bg="rgba(255,255,255, 0.15)"
+          shadow={6}
+          bg="lightBlue.400"
           rounded="lg"
           alignItems="center"
           justifyContent="center"
@@ -38,11 +38,11 @@ export default function TabManager() {
           <Box position={"absolute"} left="5%" top="5%">
             <FontAwesome name="newspaper-o" size={40} color="white" />
           </Box>
-          <Heading color={"light.100"}>Notícias</Heading>
+          <Heading fontFamily={"Doppio One"} color={"light.100"}>Notícias</Heading>
 
           <Divider ml="12%" my="2" w="70%" />
 
-          <Text fontSize="xl" color={"light.100"}>
+          <Text fontSize="xl" fontFamily={"Doppio One"} color={"light.100"}>
             Gerêncie todas as notícias!
           </Text>
 
@@ -57,7 +57,7 @@ export default function TabManager() {
           </Button>
         </VStack>
 
-        <Divider my="3" />
+        <Divider my="9" opacity={0.5} />
 
         <VStack
           px="4"
@@ -65,8 +65,8 @@ export default function TabManager() {
           maxH="240px"
           space={2}
           alignSelf="center"
-          shadow={2}
-          bg="rgba(255,255,255, 0.15)"
+          shadow={5}
+          bg="lightBlue.400"
           rounded="lg"
           alignItems="center"
           justifyContent="center"
@@ -74,9 +74,9 @@ export default function TabManager() {
           <Box position={"absolute"} left="5%" top="5%">
             <AntDesign name="exception1" size={40} color="white" />
           </Box>
-          <Heading color={"light.100"}>Solicitações</Heading>
+          <Heading fontFamily={"Doppio One"} color={"light.100"}>Solicitações</Heading>
           <Divider ml="12%" my="2" w="70%" />
-          <Text fontSize="xl" color={"light.100"}>
+          <Text fontSize="xl" fontFamily={"Doppio One"} color={"light.100"}>
             Gerêncie todos os pedidos de serviços!
           </Text>
           <Button

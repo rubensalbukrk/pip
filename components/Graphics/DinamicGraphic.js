@@ -66,24 +66,26 @@ import { UserContext } from '../../src/contexts/UserContext';
     const { labelWidth, selectedSlice } = this.state;
     const { label, value } = selectedSlice;
     const keys = ['Pessoas', 'Autistas', 'Voluntários', 'Coordenador'];
-    const values = [123, 80, 50, 30];
+    const values = [pessoasCount, autistasCount, voluntariosCount, coordenadoresCount];
     const colors = ['#0017FF','#0068FF','#008DFF', '#00CCD9']
     const data = keys.map((key, index) => {
         return {
           key,
           value: values[index],
-          svg: { fill: colors[index] },
-          arc: { outerRadius: (70 + values[index]) + '%', padAngle: label === key ? 0.1 : 0 },
+          svg: { fill: colors[index], opacity: 0.6},
+          arc: { outerRadius: (120 + (values[index] >= 100 ? 50 : values[index])), padAngle: label === key ? 0.1 : 0 },
           onPress: () => this.setState({ selectedSlice: { label: key, value: values[index] } })
         }
       })
     const deviceWidth = Dimensions.get('window').width
 
     return (
-      <View style={{ justifyContent: 'center', flex: 1, width: '100%', height: 350 }}>
+      <View style={{ justifyContent: 'center', flex: 1, width: '100%', height: 400 }}>
         <PieChart
-          contentInset='overflow'
-          style={{ height: 350 }}
+          style={{ width: '100%', height: 350, justifyContent: 'center' }}
+          xMax="90"
+          yMax="100"
+          xMin="30"
           outerRadius={90}
           innerRadius={85}
           data={data}

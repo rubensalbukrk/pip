@@ -67,8 +67,8 @@ export default function NoticeView({ route }) {
           h="200"
           rounded="xl"
           my="5"
-          py="3"
-          px="2"
+          py="7"
+          px="4"
         >
           <Text fontSize={"2xl"} color="#fff">
             {route?.params?.mensagem}

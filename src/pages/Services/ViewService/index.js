@@ -55,7 +55,7 @@ export default function ViewService({ route }) {
         w="100%"
         minHeight="900"
         py="46"
-        justifyContent="center"
+       
         alignItems="center"
         bg={{
           linearGradient: {
@@ -69,14 +69,15 @@ export default function ViewService({ route }) {
           <BackButton />
         </Box>
         <Image
+          resizeMode='cover'
           rounded="full"
-          mb="3"
+          my="15%"
           alt="pip-service"
-          size={48}
+          size={64}
           source={route?.params?.picture}
         />
         <Box px="3" w="100%">
-          <Heading alignSelf="right" color="#fff" mt="2%" fontSize="4xl">
+          <Heading alignSelf="right" fontFamily="Doppio One" color="#fff" mt="2%" fontSize="4xl">
             {route?.params?.titulo}
           </Heading>
 
@@ -88,14 +89,14 @@ export default function ViewService({ route }) {
             bg="rgba(255,255,255, 0.15)"
           >
             <Heading
-              
+              fontFamily="Doppio One"
               fontSize="md"
               color={"light.100"}
             >
               {route?.params?.descricao}
             </Heading>
           </Box>
-          <Text alignSelf="right" color="#fff" mt="2%" fontSize="2xl">
+          <Text alignSelf="right" fontFamily="Doppio One" color="#fff" mt="2%" fontSize="2xl">
             Serviços disponíveis
           </Text>
           <VStack

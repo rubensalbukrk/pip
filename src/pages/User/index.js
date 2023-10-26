@@ -419,11 +419,12 @@ export const User = () => {
 
         <Center>
           <Actionsheet isOpen={isOpen} onClose={onClose} size="100%">
-            <Actionsheet.Content bg={"rgba(0, 173, 255, 1)"}>
-              <Box w="100%" borderTopRadius={"xl"} bg={"rgba(255,255,255, 0.25)"} h={60} px={4} justifyContent="center">
+            <Actionsheet.Content bg={"rgba(0, 173, 255, 0.40)"}>
+              <Box w="100%" borderTopRadius={"xl"} bg={"lightBlue.400"} h={60} px={4} justifyContent="center">
                 <Text
                   fontSize="2xl"
                   color="light.100"
+                  fontFamily="Doppio One"
                   _dark={{
                     color: "light.100",
                   }}
@@ -434,7 +435,7 @@ export const User = () => {
 
               {logged?.isCoordAutist == true && (
                 <Actionsheet.Item
-                bg={"rgba(255,255,255, 0.25)"}
+                bg={"lightBlue.400"}
                   startIcon={
                     <MaterialIcons
                       size={32}
@@ -455,7 +456,7 @@ export const User = () => {
               )}
               {logged?.isCoordMulher == true && (
                 <Actionsheet.Item
-                bg={"rgba(255,255,255, 0.25)"}
+                bg={"lightBlue.400"}
                   startIcon={
                     <MaterialIcons
                       size={32}
@@ -476,7 +477,7 @@ export const User = () => {
               )}
               {logged?.isCoordSaude == true && (
                 <Actionsheet.Item
-                bg={"rgba(255,255,255, 0.25)"}
+                bg={"lightBlue.400"}
                   startIcon={
                     <MaterialIcons
                       size={32}
@@ -497,7 +498,7 @@ export const User = () => {
               )}
               {logged?.isCoordAlimentar == true && (
                 <Actionsheet.Item
-                bg={"rgba(255,255,255, 0.25)"}
+                bg={"lightBlue.400"}
                   startIcon={
                     <MaterialIcons
                       size={32}
@@ -518,7 +519,7 @@ export const User = () => {
               )}
               {logged?.isCoordCidadania == true && (
                 <Actionsheet.Item
-                bg={"rgba(255,255,255, 0.25)"}
+                bg={"lightBlue.400"}
                   startIcon={
                     <MaterialIcons
                       size={32}
@@ -539,7 +540,7 @@ export const User = () => {
               )}
               {logged?.isCoordProtagonista == true && (
                 <Actionsheet.Item
-                bg={"rgba(255,255,255, 0.25)"}
+                bg={"lightBlue.400"}
                   startIcon={
                     <MaterialIcons
                       size={32}
@@ -560,7 +561,7 @@ export const User = () => {
               )}
               {logged?.isCoordPasse == true && (
                 <Actionsheet.Item
-                bg={"rgba(255,255,255, 0.25)"}
+                bg={"lightBlue.400"}
                   startIcon={
                     <MaterialIcons
                       size={32}
@@ -582,7 +583,7 @@ export const User = () => {
 
               {logged.isAdmin == true && (
                 <Actionsheet.Item 
-                  bg={"rgba(255,255,255, 0.25)"}
+                bg={"lightBlue.400"}
                   startIcon={
                     <MaterialIcons
                       size={32}
@@ -601,7 +602,7 @@ export const User = () => {
                   </Pressable>
                 </Actionsheet.Item>
               )}
-              <Actionsheet.Item bg={"rgba(255,255,255, 0.25)"}
+              <Actionsheet.Item bg={"lightBlue.400"}
                 startIcon={
                   <MaterialCommunityIcons
                     size={32}
@@ -613,7 +614,7 @@ export const User = () => {
                 <Text fontSize="xl" color="light.100">Alterar dados</Text>
               </Actionsheet.Item>
 
-              <Actionsheet.Item borderBottomRadius={"xl"} bg={"rgba(255,255,255, 0.25)"}
+              <Actionsheet.Item borderBottomRadius={"xl"} bg={"lightBlue.400"}
                 startIcon={
                   <Ionicons size={32} color="white" name="md-close-circle" />
                 }

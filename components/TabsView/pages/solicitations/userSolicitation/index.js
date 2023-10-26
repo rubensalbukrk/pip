@@ -119,7 +119,7 @@ function handleUpdateStatus(){
             
          
 
-          <Box w="100%" mt="6%" bg="lightBlue.400" rounded="2xl" px="3" py="2">
+          <Box w="100%" mt="6%" bg="rgba(255,255,255, 0.15)" rounded="2xl" px="3" py="2">
             <InputInfoUser
               infoLabel="Filhos"
               infoValue={

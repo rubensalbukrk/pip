@@ -14,10 +14,14 @@ import {
   Heading,
   FormControl,
   NativeBaseProvider,
+  VStack,
+  HStack,
 } from "native-base";
+import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { api } from "../../requisitions/api";
+import { TouchableOpacity, FlatList } from "react-native";
 
 const dataAtual = new Date();
 
@@ -28,6 +32,7 @@ const config = {
 };
 
 export const Cadastro = () => {
+  const [updateList, setUpdateList] = useState(false)
   const [formData, setData] = React.useState({
     date: dataAtual,
   });
@@ -59,11 +64,58 @@ export const Cadastro = () => {
     setData({ ...formData, filhos });
     alert("Adicionado");
   }
-  function removeFilhos() {
-    filhos.pop();
-    console.log(filhos);
-    alert("Ultimo filho removido!");
-  }
+  const UserFilhos = () => {
+    try {
+      return (
+        <Box w="100%" flex={1}>
+          <FlatList
+          refreshing={updateList}
+            keyExtractor={(item) => item.cpf.toString()}
+            data={filhos}
+            renderItem={({ item, index }) => {
+              return (
+                <HStack w="100%">
+
+                <Box
+                  flex={1}
+                  w="80%"
+                  bg="rgba(255,255,255, 0.15)"
+                  rounded="2xl"
+                  py="3"
+                  my="2"
+                  px="3"
+                >
+
+                  <Text fontSize={22} color="light.100" fontFamily="Doppio One">
+                    Nome: {item?.nome}
+                  </Text>
+                  <Text fontSize={22} color="light.100" fontFamily="Doppio One">
+                    CPF: {item?.cpf}
+                  </Text>
+                  <Text fontSize={22} color="light.100" fontFamily="Doppio One">
+                    Idade: {item?.idade}
+                  </Text>
+                </Box>
+                <TouchableOpacity
+                      onPress={() => {
+                        filhos.splice(index, 1);
+                        setUpdateList((previousState) => !previousState)
+                      }}
+                      style={{ width: '20%', alignItems: "center", justifyContent: "center" }}
+                    >
+                      <Feather name="user-minus" size={42} color="white" />
+                    </TouchableOpacity>
+                </HStack>
+              );
+            }}
+          />
+        </Box>
+      );
+    } catch (error) {
+      alert("Dados de usuário não encontrado!");
+      navigation.goBack();
+    }
+  };
   useEffect(() => {
     bairro && setData({ ...formData, bairro: bairro });
   }, [bairro]);
@@ -461,6 +513,7 @@ export const Cadastro = () => {
                   setData({ ...formData, parentsCount: value })
                 }
               />
+              <UserFilhos />
               <Container
                 space={3}
                 px="3"
@@ -518,18 +571,11 @@ export const Cadastro = () => {
                   my="2"
                   size="sm"
                   bg="rgba(255, 255, 255, 0.18)"
-                  onPress={() => addFilhos() }
+                  onPress={() => addFilhos()}
                 >
                   Adicionar
                 </Button>
-                <Button
-                  my="2"
-                  size="sm"
-                  bg="rgba(255, 255, 255, 0.18)"
-                  onPress={() => removeFilhos()}
-                >
-                  Remover Ultimo
-                </Button>
+                
               </Container>
               <FormControl.HelperText
                 _text={{

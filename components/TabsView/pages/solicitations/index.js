@@ -100,10 +100,10 @@ const config = {
               onRefresh={() => setRefreshing(true)}
             />
           }
-    flex={1} w="100%" bg="darkBlue.400" py="10" px="5">
+    flex={1} w="100%" bg="lightBlue.400" py="10" px="5">
       <Box flexDir="row" w="100%" top="2%">
       <FontAwesome5 name="user-clock" size={40} color="white" />
-        <Heading mx="3" fontSize="4xl" color="light.100">
+        <Heading mx="3" fontSize="4xl" fontFamily="Doppio One" color="light.100">
           Solicitações
         </Heading>
       </Box>
@@ -126,13 +126,13 @@ const config = {
           return (
             <Center key={item.id} my="3" w="100%">
               <HStack w="100%" mt="4%" h="160">
-                <VStack bg="lightBlue.400" rounded="xl" py="5%" px="3" w="100%">
-                  <Text color={"light.100"}>Nome: {item.nome} </Text>
-                  <Text color={"light.100"}>CPF: {item.cpf} </Text>
-                  <Text color={"light.100"}>Serviço: {item.service} </Text>
-                  <Text color={"light.100"}>Pasta: {item.pasta} </Text>
-                  <Text color={"light.100"}>STATUS: {item.status} </Text>
-                  <Text color={"light.100"}>Data: {item.date} </Text>
+                <VStack bg="rgba(255,255,255, 0.15)" rounded="xl" py="5%" px="3" w="100%">
+                  <Text fontFamily="Doppio One" color={"light.100"}>Nome: {item.nome} </Text>
+                  <Text fontFamily="Doppio One" color={"light.100"}>CPF: {item.cpf} </Text>
+                  <Text fontFamily="Doppio One" color={"light.100"}>Serviço: {item.service} </Text>
+                  <Text fontFamily="Doppio One" color={"light.100"}>Pasta: {item.pasta} </Text>
+                  <Text fontFamily="Doppio One" color={"light.100"}>STATUS: {item.status} </Text>
+                  <Text fontFamily="Doppio One" color={"light.100"}>Data: {item.date} </Text>
                   <TouchableOpacity
                     style={{
                       position: "absolute",
@@ -181,7 +181,7 @@ const config = {
 
       <Box flexDir="row" top="2%">
         <FontAwesome5 name="user-check" size={40} color="white" />
-        <Heading mx="3" fontSize="4xl" color="light.100">
+        <Heading mx="3" fontSize="4xl" fontFamily="Doppio One" color="light.100">
           Aprovações
         </Heading>
       </Box>
@@ -201,12 +201,12 @@ const config = {
           return (
             <Center my="3" w="100%">
               <HStack w="100%" h="120px">
-                <VStack bg="lightBlue.400" alignSelf="center" rounded="xl" py="5%" px="2" w="100%">
+                <VStack bg="rgba(255,255,255, 0.15)" alignSelf="center" rounded="xl" py="5%" px="2" w="100%">
              
-                  <Text color={"light.100"}>Nome: {item.nome} </Text>
-                  <Text color={"light.100"}>Serviço: {item.service} </Text>
-                  <Text color={"light.100"}>STATUS: {item.status} </Text>
-                  <Text color={"light.100"}>Data: {item.date} </Text>
+                  <Text fontFamily={"Doppio One"} color={"light.100"}>Nome: {item.nome} </Text>
+                  <Text fontFamily={"Doppio One"} color={"light.100"}>Serviço: {item.service} </Text>
+                  <Text fontFamily={"Doppio One"} color={"light.100"}>STATUS: {item.status} </Text>
+                  <Text fontFamily={"Doppio One"} color={"light.100"}>Data: {item.date} </Text>
                   <TouchableOpacity
                     style={{
                       position: "absolute",
