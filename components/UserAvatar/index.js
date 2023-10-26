@@ -7,7 +7,8 @@ export default class UserAvatar extends PureComponent {
   render() {
     const {logged} = this.context
     return (
-      <Avatar shadow={5} size={this.props.name} source={{ uri: logged.avatar }} />
+      <Avatar shadow={5} size={this.props.size} source={{ uri: logged.avatar }} />
     )
 }}
 UserAvatar.contextType = UserContext
+
