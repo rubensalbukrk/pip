@@ -28,7 +28,6 @@ export default function TabManager() {
           w="100%"
           maxH="240px"
           space={2}
-          alignSelf="center"
           shadow={6}
           bg="lightBlue.400"
           rounded="lg"
@@ -64,7 +63,6 @@ export default function TabManager() {
           w="100%"
           maxH="240px"
           space={2}
-          alignSelf="center"
           shadow={5}
           bg="lightBlue.400"
           rounded="lg"

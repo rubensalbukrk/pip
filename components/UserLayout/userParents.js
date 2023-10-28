@@ -1,12 +1,10 @@
-import React, { useContext } from "react";
-import { Box, Text, Container, Divider } from "native-base";
-import { AntDesign } from "@expo/vector-icons";
-import { UserContext } from "../../src/contexts/UserContext";
+import React from "react";
+import { Box, Text } from "native-base";
 
 export default function MyParents(props) {
     return (
       <Box
-        key={props.cpf}
+        key={props.keyId}
         w="100%"
         mt="4%"
         px="2"
@@ -52,7 +50,7 @@ export default function MyParents(props) {
           <Box
             opacity={0.9}
             mb="4%"
-            w="25%"
+            w="30%"
             h="10"
             bg="rgba(255,255,255, 0.12)"
             rounded="md"

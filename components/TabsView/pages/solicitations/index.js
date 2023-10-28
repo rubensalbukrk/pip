@@ -1,29 +1,23 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { View, TouchableOpacity, Dimensions, ScrollView, RefreshControl } from "react-native";
+import { TouchableOpacity, ScrollView, RefreshControl } from "react-native";
 import {
   Box,
-  Circle,
   FlatList,
-  Container,
   Heading,
   Text,
   VStack,
   HStack,
-  Progress,
   Center,
   Divider,
-  Button,
   NativeBaseProvider
 } from "native-base";
 import {
-  MaterialIcons,
   Feather,
-  AntDesign,
   FontAwesome,
   FontAwesome5,
 } from "@expo/vector-icons";
-import BackButton from "../../../BackButton";
+
 import { UserContext } from "../../../../src/contexts/UserContext";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";

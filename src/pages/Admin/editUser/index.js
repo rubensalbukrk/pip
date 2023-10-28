@@ -21,10 +21,14 @@ import {
   ScrollView,
   NativeBaseProvider,
 } from "native-base";
-import { Alert } from "react-native";
+
 import { useNavigation } from "@react-navigation/native";
 import BackButton from "../../../../components/BackButton";
 import InputInfoUser from "../../../../components/UserLayout/inputUser";
+import { LinearGradient } from "expo-linear-gradient";
+
+import { TouchableOpacity } from "react-native-gesture-handler";
+
 
 const hoje = new Date();
 const data =
@@ -115,36 +119,59 @@ export default function EditUser({ route }) {
       .then(() => {
         setFilhos([""]);
       });
-    return Alert.alert("Atualização", "O usuário foi alterado!");
+    return alert("Atualização", "O usuário foi alterado!");
   }
- let UserFilhos = () => {
-
+  const UserFilhos = () => {
     try {
       return (
-        <Box>
-          { filhos ? filhos.map((item) => {
-                return (
-                  <Box
-                    bg="darkBlue.400"
-                    rounded="2xl"
-                    py="2"
-                    my="2"
-                    px="2"
-                    space={2}
-                  >
-                    <Text>Nome: {item?.nome}</Text>
-                    <Text>CPF: {item?.cpf}</Text>
-                    <Text>Idade: {item?.idade}</Text>
-                  </Box>
-                );
-              }) : <Text color="light.100" fontFamily="Doppio One">Não tem filhos</Text> }
+        <Box w="100%" flex={1}>
+          <FlatList
+          refreshing={updateList}
+            keyExtractor={(item) => item.cpf.toString()}
+            data={filhos}
+            renderItem={({ item, index }) => {
+              return (
+                <HStack w="100%">
+
+                <Box
+                  flex={1}
+                  w="80%"
+                  bg="rgba(255,255,255, 0.15)"
+                  rounded="2xl"
+                  py="3"
+                  my="2"
+                  px="3"
+                >
+
+                  <Text fontSize={22} color="light.100" fontFamily="Doppio One">
+                    Nome: {item?.nome}
+                  </Text>
+                  <Text fontSize={22} color="light.100" fontFamily="Doppio One">
+                    CPF: {item?.cpf}
+                  </Text>
+                  <Text fontSize={22} color="light.100" fontFamily="Doppio One">
+                    Idade: {item?.idade}
+                  </Text>
+                </Box>
+                <TouchableOpacity
+                      onPress={() => {
+                        filhos.splice(index, 1);
+                        setUpdateList((previousState) => !previousState)
+                      }}
+                      style={{ width: '20%', alignItems: "center", justifyContent: "center" }}
+                    >
+                      <Feather name="user-minus" size={42} color="white" />
+                    </TouchableOpacity>
+                </HStack>
+              );
+            }}
+          />
         </Box>
       );
     } catch (error) {
       alert("Dados de usuário não encontrado!");
-      navigation.goBack()
+      navigation.goBack();
     }
-    
   };
 
   function addFilhos() {
@@ -165,10 +192,9 @@ export default function EditUser({ route }) {
     return (
       <Center w="100%">
         <Box
-          alignSelf="left"
+        alignSelf={'center'}
           rounded="lg"
           h="50"
-          _text={{ color: "#fff" }}
           maxW="300"
         >
           <Select
@@ -182,13 +208,13 @@ export default function EditUser({ route }) {
             bg="rgba(255, 255, 255, 0.1)"
             borderColor="rgba(255, 255, 255, 0.18)"
             outlineColor={"light.100"}
-            dropdownIcon={<CheckIcon size="6" color="light.100" />}
+            dropdownIcon={<CheckIcon size="6" color={'#f2f2f2'} />}
             placeholder={route?.params?.bairro}
             placeholderTextColor={"light.100"}
             _selectedItem={{
               bg: "lightBlue.400",
               colorScheme: "lightBlue",
-              endIcon: <CheckIcon size="6" color="#fff" />,
+              endIcon: <CheckIcon size="6" color="#f2f2f2" />,
               rounded: "3xl",
             }}
             mt={1}
@@ -238,27 +264,33 @@ export default function EditUser({ route }) {
     setIsCoordProtagonista((previousState) => !previousState);
   };
 
+  const config = {
+    dependencies: {
+      "linear-gradient": LinearGradient,
+    },
+  };
+
   return (
-    <NativeBaseProvider>
+    <NativeBaseProvider config={config}>
       <Box
         flex={1}
-        flexBasis={0}
-        flexGrow={"20"}
+        w="100%"
+        h="full"
         alignItems={"center"}
         justifyContent={"center"}
-        bg="darkBlue.400"
+        bg={{
+          linearGradient: {
+            colors: ["lightBlue.400", "lightBlue.600"],
+            start: [0, 0],
+            end: [1, 0],
+          },
+        }}
       >
-        <Animatable.View
-          style={{ width: "100%" }}
-          animation="slideInDown"
-          duration={1000}
-          delay={200}
-        >
+
           <Box
             w="100%"
             h="100px"
-            bg="darkBlue.500"
-            shadow={1}
+            bg="rgba(255,255,255, 0.15)"
             alignItems="center"
             justifyContent="center"
             roundedBottom="20"
@@ -270,14 +302,9 @@ export default function EditUser({ route }) {
             <Text fontSize="2xl" marginTop="15%" color="white">
               ALTERAR DADOS
             </Text>
-            <Avatar
-              size={"lg"}
-              shadow={2}
-              bg={"light.200"}
-              source={{ uri: route?.params?.avatar }}
-            />
+            <Avatar size={'lg'} source={{ uri: route?.params?.avatar }} />
           </Box>
-        </Animatable.View>
+       
         <ScrollView flex={1} w="100%">
           <Center py="10%">
             <HStack
@@ -287,10 +314,9 @@ export default function EditUser({ route }) {
               my="1%"
               rounded="xl"
               py="5"
-              shadow={6}
               alignItems="center"
               justifyContent="space-evenly"
-              bg="darkBlue.400"
+              bg="rgba(255,255,255, 0.15)"
             >
               <VStack h="100%" my="4" alignItems="center" space={2}>
                 <Text color="light.100" fontSize="xs">
@@ -321,10 +347,9 @@ export default function EditUser({ route }) {
               h="200px"
               w="80%"
               my="3"
-              bg="darkBlue.400"
-              shadow={8}
+              bg="rgba(255,255,255, 0.15)"
               rounded="2xl"
-              alignItems="left"
+              alignItems="flex-start"
             >
               <Heading color="light.100">Coordenador</Heading>
               <Divider w="100%" />
@@ -332,7 +357,7 @@ export default function EditUser({ route }) {
               <HStack
                 w="100%"
                 space={3}
-                alignItems="left"
+                alignItems="flex-start"
                 justifyContent="center"
               >
                 <VStack h="14px" my="4" alignItems="center" space={2}>
@@ -432,8 +457,8 @@ export default function EditUser({ route }) {
               my="5%"
               px="5"
               py="7"
-              shadow={8}
-              bg="darkBlue.400"
+              
+              bg="rgba(255,255,255, 0.15)"
               rounded="xl"
             >
               <Text color="white">Nome</Text>
@@ -498,7 +523,7 @@ export default function EditUser({ route }) {
               <Box
                 w="100%"
                 mt="6%"
-                bg="lightBlue.500"
+                bg="rgba(255,255,255, 0.15)"
                 rounded="2xl"
                 px="3"
                 py="2"
@@ -507,12 +532,12 @@ export default function EditUser({ route }) {
                   <InputInfoUser
                     infoLabel="Filhos"
                     infoValue={
-                      filhos?.length === "0" ? "Não" : `${filhos?.length}`
+                      filhos?.length === 0 ? "Não" : `${filhos?.length}`
                     }
                   />
                 </Box>
 
-                {filhos?.length === "0" ? "NÃO" : <UserFilhos />}
+                {filhos?.length === 0 ? "" : <UserFilhos />}
               </Box>
               <Container
                 space={3}

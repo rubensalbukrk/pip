@@ -1,15 +1,12 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import axios from "axios";
 import {
   ScrollView,
   Box,
   Text,
   Image,
-  Center,
-  Container,
   Heading,
   Button,
-  HStack,
   VStack,
   NativeBaseProvider
 } from "native-base";
@@ -55,7 +52,6 @@ export default function ViewService({ route }) {
         w="100%"
         minHeight="900"
         py="46"
-       
         alignItems="center"
         bg={{
           linearGradient: {
@@ -77,13 +73,12 @@ export default function ViewService({ route }) {
           source={route?.params?.picture}
         />
         <Box px="3" w="100%">
-          <Heading alignSelf="right" fontFamily="Doppio One" color="#fff" mt="2%" fontSize="4xl">
+          <Heading alignSelf='flex-start' fontFamily="Doppio One" color="#fff" mt="2%" fontSize="4xl">
             {route?.params?.titulo}
           </Heading>
 
           <Box
            rounded="lg"
-           shadow={7}
            px="2"
            py="3"
             bg="rgba(255,255,255, 0.15)"

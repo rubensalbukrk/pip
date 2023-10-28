@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import axios from "axios";
 import {
   Pressable,
@@ -9,11 +9,7 @@ import {
   Text,
   Button,
   Center,
-  VStack,
-  FlatList,
-  HStack,
   Actionsheet,
-  Avatar,
   Badge,
   ScrollView,
   Heading,
@@ -22,24 +18,18 @@ import {
   NativeBaseProvider,
   Container,
   Icon,
-  Circle,
-  CircleIcon,
 } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../../contexts/AuthContext";
 import {
   Feather,
-  Entypo,
-  Octicons,
   MaterialCommunityIcons,
   MaterialIcons,
-  FontAwesome,
   Ionicons,
 } from "@expo/vector-icons";
 import { UserContext } from "../../contexts/UserContext";
 import InputInfoUser from "../../../components/UserLayout/inputUser";
 import MyParents from "../../../components/UserLayout/userParents";
-import BackButton from "../../../components/BackButton";
 import { api, deleteAprovado } from "../../requisitions/api";
 import * as ImagePicker from "expo-image-picker";
 import UserAvatar from "../../../components/UserAvatar";
@@ -186,7 +176,7 @@ export const User = () => {
   return (
     <NativeBaseProvider config={config}>
       <Box
-        flex="1"
+        flex={1}
         w="100%"
         alignItems="center"
         bg={{
@@ -404,11 +394,12 @@ export const User = () => {
                     ? "NÃO"
                     : logged?.filhos?.map((item) => {
                         return (
+                          <Box w="100%" key={`id-${item.cpf}`}>
                           <MyParents
                             nome={item.nome}
                             cpf={item.cpf}
                             idade={item.idade}
-                          />
+                          /></Box>
                         );
                       })}
                 </Box>

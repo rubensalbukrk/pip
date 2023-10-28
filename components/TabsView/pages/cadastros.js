@@ -19,6 +19,7 @@ import {
 import { UserContext } from "../../../src/contexts/UserContext";
 
 import PieChartWithDynamicSlices from "../../Graphics/DinamicGraphic";
+import PieChartwith from "../../Graphics/pieChart";
 
 export default function TabCadastros() {
   const { users } = useContext(UserContext);
@@ -64,7 +65,6 @@ export default function TabCadastros() {
         alignItems="center"
         justifyContent="center"
       >
-      
        <PieChartWithDynamicSlices />
       
       </VStack>
@@ -77,7 +77,7 @@ export default function TabCadastros() {
         mb="4%"
         alignItems="center"
         justifyContent="center"
-        flexWrap={1}
+        
         w="100%"
       >
         <Center

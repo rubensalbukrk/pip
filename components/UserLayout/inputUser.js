@@ -1,6 +1,5 @@
 import React from "react";
-import { Box, Text, Center, Heading, Input, Image, Avatar } from "native-base";
-import { AntDesign } from "@expo/vector-icons";
+import { Box, Text } from "native-base";
 
 export default function InputInfoUser(props) {
   return (

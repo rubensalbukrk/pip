@@ -4,14 +4,9 @@ import Carousel from "react-native-reanimated-carousel";
 import { View, Dimensions } from "react-native";
 import {
   Box,
-  Text,
   Image,
   Center,
-  HStack,
-  Stack,
-  Heading,
   Pressable,
-  AspectRatio,
 } from "native-base";
 import { UserContext } from "../../src/contexts/UserContext";
 import { apiNotice } from "../../src/requisitions/api";

@@ -79,7 +79,6 @@ export const Login = () => {
   };
   const toggleSigningAuto = () => {
     setSigningAuto((previousState) => !previousState);
-    
   };
 
   return (
@@ -95,8 +94,7 @@ export const Login = () => {
             end: [1, 0],
           },
         }}
-        p="12"
-        rounded="xl"
+        p="6"
         _text={{
           fontSize: "md",
           fontWeight: "medium",
@@ -105,31 +103,30 @@ export const Login = () => {
         }}
       >
         <Animatable.View
-          style={{ flex: 1, width: "100%", height: "20%" }}
+          style={{ width: "100%" }}
           delay={400}
           animation="bounceIn"
         >
           <Image
             style={{
               resizeMode: "contain",
-              width: "60%",
-              marginTop: "10%",
+              width: "90%",
+              height: 300,
+              marginHorizontal: '15%',
               alignSelf: "center",
             }}
             alt="pip-logo"
-            source={require("../../../assets/imgs/pip-logoTESTE.png")}
+            source={require("../../../assets/pip-icon.png")}
           />
         </Animatable.View>
 
         <Box
-          bgColor="rgba(255, 255, 255, 0.22)"
-          h="44%"
-          shadow={6}
-          mb="5%"
-          rounded={"2xl"}
+          my="5%"
           w="95%"
-          alignItems={"center"}
-          justifyContent="center"
+          py="5%"
+          alignItems="center"
+          bgColor="rgba(255, 255, 255, 0.22)"
+          rounded="2xl"
         >
           <Box
             w="90%"
@@ -137,18 +134,17 @@ export const Login = () => {
             mb="5%"
             flexDir="row"
             alignItems={"center"}
-            justifyContent="space-between"
             borderWidth="1"
             borderColor={"rgba(255, 255, 255, 0.32)"}
             rounded="2xl"
           >
-            <Feather name="user" size={32} color={"rgba(255, 255, 255, 0.32)"} />
+            <Feather name="user" size={32} color={"rgba(255, 255, 255, 0.70)"} />
             <TextInputMask
               style={{
                 width: "100%",
                 borderColor: "#23B5D3",
-                color: "#fff",
-                marginLeft: "15%",
+                marginLeft: '3%',
+                color: '#f9f9f9',
                 height: 50,
                 textAlign: "left",
                 fontSize: 24,
@@ -166,8 +162,7 @@ export const Login = () => {
             onChangeText={(pass) => setPassword(pass)}
             fontSize="2xl"
             w="90%"
-            
-            style={{ color: "rgba(255, 255, 255, 0.32)" }}
+            style={{ color: "rgba(255, 255, 255, 0.72)" }}
             borderColor={"rgba(255, 255, 255, 0.32)"}
             placeholderTextColor={"rgba(255, 255, 255, 0.32)"}
             rounded="2xl"
@@ -181,17 +176,18 @@ export const Login = () => {
                   }
                   size={9}
                   mr="2"
-                  color={"rgba(255, 255, 255, 0.52)"}
+                  color={"rgba(255, 255, 255, 0.72)"}
                 />
               </Pressable>
             }
-            InputLeftElement={<Feather name="lock" size={32} color={"rgba(255, 255, 255, 0.32)"} />}
+            InputLeftElement={<Feather name="lock" size={32} color={"rgba(255, 255, 255, 0.72)"} />}
             placeholder="******"
             defaultValue="123456"
           />
-          <VStack alignSelf="left" mx="5" my="2">
+          <VStack alignSelf="flex-start" mx="5" my="2">
             <Text color="light.100" fontFamily="Doppio One" >Lembrar-me</Text>
-            <Switch 
+            <Switch
+            alignSelf="flex-start" 
             value={signingAuto}
             size="sm" 
             onToggle={() => {
@@ -203,7 +199,6 @@ export const Login = () => {
             <Button
               size={"lg"}
               w="80%"
-              mt="10"
               colorScheme={"blue"}
               bg={"rgba(255, 255, 255, 0.22)"}
               rounded="2xl"
@@ -229,7 +224,6 @@ export const Login = () => {
               color={"light.400"}
               size={"lg"}
               w="80%"
-              mt="10"
               rounded="2xl"
             ></Button>
           }

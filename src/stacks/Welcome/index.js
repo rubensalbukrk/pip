@@ -12,14 +12,13 @@ import {
   Heading,
   NativeBaseProvider,
 } from "native-base";
-import { useCopilot } from "react-native-copilot";
 import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Welcome() {
   const { logged, setLogged, setAuth, auth } = useContext(UserContext);
   const navigation = useNavigation();
-  const { start, copilotEvents } = useCopilot();
+
 
   useEffect(() => {
     getMyLogin();
@@ -46,7 +45,8 @@ export default function Welcome() {
     <NativeBaseProvider config={config}>
       <>
         <Box
-          flex="1"
+          flex={1}
+          w="100%"
           bg={{
             linearGradient: {
               colors: ["lightBlue.600", "lightBlue.400"],

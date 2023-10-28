@@ -10,8 +10,7 @@ import {
   Center,
   Input,
   Heading,
-  Divider,
-  Container,
+
 } from "native-base";
 import { View, FlatList, TouchableOpacity } from "react-native";
 import { Ionicons, FontAwesome5, Feather } from "@expo/vector-icons";
@@ -28,7 +27,7 @@ export default function TabSearch() {
   const [filteredData, setFilteredData] = useState([]);
   const [masterData, setMasterData] = useState([]);
   const navigation = useNavigation();
-  const asUser = `${api}/files/user.png`
+  const noAvatar = `${api}/files/user.png`
 
   useEffect(() => {
     getUsers()
@@ -97,7 +96,7 @@ export default function TabSearch() {
           onChangeText={(text) => searchFilter(text)}
           value={search}
           placeholder="Procurar por nome"
-          placeholderTextColor={ "rgba(255,255,255, 0.65)"}
+          placeholderTextColor={"rgba(255,255,255, 0.65)"}
           variant="outline"
           width="100%"
           fontFamily={"Doppio One"}

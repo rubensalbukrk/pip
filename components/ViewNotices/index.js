@@ -6,7 +6,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { SimpleLineIcons } from "@expo/vector-icons";
 
 export default function NoticeView({ route }) {
-    
+
   const config = {
     dependencies: {
       "linear-gradient": LinearGradient,
@@ -32,10 +32,10 @@ export default function NoticeView({ route }) {
           textAlign: "center",
         }}
       >
-        <Box top="0" w="100%">
+        <Box top="0" h="40%" w="100%">
           <Image
             w="100%"
-            h="400"
+            h="full"
             roundedBottom={"40"}
             alt="picture-notice"
             source={{ uri: route?.params?.img }}
@@ -62,7 +62,7 @@ export default function NoticeView({ route }) {
         <Box
           w="95%"
           bg="rgba(255,255,255, 0.2)"
-          shadow={8}
+          mb="5%"
           alignSelf="center"
           h="200"
           rounded="xl"
@@ -79,7 +79,7 @@ export default function NoticeView({ route }) {
           h="8"
           w="70%"
           bg="rgba(255,255,255, 0.2)"
-          shadow={8}
+          mb="5%"
           justifyContent={"center"}
           rounded="lg"
         >

@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import * as Animatable from "react-native-animatable";
-import { Feather } from "@expo/vector-icons";
 import { Box, Text, Avatar, NativeBaseProvider } from "native-base";
 import { UserContext } from "../../contexts/UserContext";
 import { useNavigation } from "@react-navigation/native";
@@ -22,6 +21,8 @@ export default function Admin() {
     <NativeBaseProvider config={config}>
       <Box
         flex={1}
+        w="100%"
+        minH="600"
         bg={{
           linearGradient: {
             colors: ['lightBlue.600', "lightBlue.400"],

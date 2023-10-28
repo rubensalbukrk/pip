@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import {
   Box,
@@ -19,11 +19,9 @@ import { UserContext } from "../../../../src/contexts/UserContext";
 import {
   MaterialIcons,
   Feather,
-  AntDesign,
   FontAwesome,
   FontAwesome5,
 } from "@expo/vector-icons";
-import BackButton from "../../../BackButton";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import { LinearGradient } from "expo-linear-gradient";
@@ -163,7 +161,7 @@ const config = {
                 > 
                 <Box alignSelf="center" justifyContent={"center"}>
                   <Text fontFamily="Doppio One" color="light.100">Titulo: {item.title} </Text>
-                  <Text fontFamily="Doppio One" color="light.100" numberOfLines="1" ellipsizeMode="tail" >Descrição: {item.mensagem} </Text>
+                  <Text fontFamily="Doppio One" color="light.100" numberOfLines={1} ellipsizeMode="tail" >Descrição: {item.mensagem} </Text>
                   <Text fontFamily="Doppio One" color="light.100">Data: {item.date} </Text>
                 </Box>
                   

@@ -4,7 +4,7 @@ import {
   Box,
   Text,
   ScrollView,
-  Container,
+
   Center,
   Icon,
   Heading,
@@ -14,7 +14,7 @@ import {
   VStack,
   NativeBaseProvider,
 } from "native-base";
-import { Pressable, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { FontAwesome, Octicons } from "@expo/vector-icons";
 import { api, deleteAprovado } from "../../requisitions/api";
 import UserAvatar from "../../../components/UserAvatar";

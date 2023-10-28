@@ -14,7 +14,6 @@ import {
   Heading,
   FormControl,
   NativeBaseProvider,
-  VStack,
   HStack,
 } from "native-base";
 import { Feather } from "@expo/vector-icons";
@@ -64,7 +63,7 @@ export const Cadastro = () => {
     setData({ ...formData, filhos });
     alert("Adicionado");
   }
-  const UserFilhos = () => {
+ const UserFilhos = () => {
     try {
       return (
         <Box w="100%" flex={1}>
@@ -86,13 +85,13 @@ export const Cadastro = () => {
                   px="3"
                 >
 
-                  <Text fontSize={22} color="light.100" fontFamily="Doppio One">
+                  <Text fontSize={18} color="light.100" fontFamily="Doppio One">
                     Nome: {item?.nome}
                   </Text>
-                  <Text fontSize={22} color="light.100" fontFamily="Doppio One">
+                  <Text fontSize={18} color="light.100" fontFamily="Doppio One">
                     CPF: {item?.cpf}
                   </Text>
-                  <Text fontSize={22} color="light.100" fontFamily="Doppio One">
+                  <Text fontSize={18} color="light.100" fontFamily="Doppio One">
                     Idade: {item?.idade}
                   </Text>
                 </Box>
@@ -122,9 +121,9 @@ export const Cadastro = () => {
 
   const SeletorBairro = () => {
     return (
-      <Center w="100%">
+    
         <Box
-          alignSelf="left"
+          alignSelf="flex-start"
           rounded="lg"
           h="50"
           _text={{ color: "#fff" }}
@@ -163,7 +162,6 @@ export const Cadastro = () => {
             />
           </Select>
         </Box>
-      </Center>
     );
   };
 
@@ -437,7 +435,7 @@ export const Cadastro = () => {
               ></FormControl.HelperText>
             </FormControl>
             <FormControl.Label
-              alignSelf="left"
+              alignSelf="flex-start"
               _text={{
                 color: "light.100",
                 fontSize: 22,

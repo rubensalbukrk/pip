@@ -3,12 +3,9 @@ import {
   Box,
   Text,
   Image,
-  Button,
   Center,
-  Container,
   FlatList,
   HStack,
-  VStack,
   Heading,
   NativeBaseProvider
 } from "native-base";
@@ -130,7 +127,7 @@ export default function Services() {
           w="100px"
           h="100px"
           shadow={4}
-          resizeMode="contain"
+          resizeMode='contain'
           source={require("../../../assets/pip-icon.png")}
         />
         <Text

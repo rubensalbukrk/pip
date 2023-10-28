@@ -1,4 +1,4 @@
-import React,{ useContext } from 'react';
+import React from 'react';
 import {
   Text,
   View,
@@ -6,8 +6,6 @@ import {
 } from 'react-native';
 import { PieChart } from 'react-native-svg-charts'
 import { UserContext } from '../../src/contexts/UserContext';
-
-
 
  class PieChartWithDynamicSlices extends React.PureComponent {
 

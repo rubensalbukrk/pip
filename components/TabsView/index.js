@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { View, ScrollView, StyleSheet, Dimensions, StatusBar, TouchableOpacity, Animated, Pressable } from 'react-native';
+import { Animated, Pressable, Dimensions } from 'react-native';
 import { TabView, SceneMap } from 'react-native-tab-view';
-import { Box, Text, Center, Presable, useColorModeValue } from 'native-base';
+import { Box, Center, useColorModeValue } from 'native-base';
 import TabCadastros from './pages/cadastros';
 import TabSearch from './pages/pesquisar';
 import TabManager from './pages/manager';
+
 
 const FirstRoute = () => <Center flex={1} h="100%" mx="2" my="4">
     <TabCadastros />
@@ -19,10 +20,6 @@ const ThirdRoute = () => <Center flex={1} h="100%" mx="2" my="4">
    <TabManager />
   </Center>;
 
-const FourthRoute = () => <Center flex={1} my="2">
- 
-    
-  </Center>;
 
 const initialLayout = {
   width: Dimensions.get('window').width
@@ -49,7 +46,7 @@ export function TabViewAdmin() {
 
   const renderTabBar = props => {
     const inputRange = props.navigationState.routes.map((x, i) => i);
-    return <Box flexDirection="row">
+    return <Box key={`${index}-key`} flexDirection="row">
         {props.navigationState.routes.map((route, i) => {
         const opacity = props.position.interpolate({
           inputRange,
@@ -75,6 +72,6 @@ export function TabViewAdmin() {
     index,
     routes
   }} renderScene={renderScene} renderTabBar={renderTabBar} onIndexChange={setIndex} initialLayout={initialLayout} style={{
-    
+    width: '100%', height: 400
   }} />;
 }

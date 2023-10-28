@@ -3,7 +3,6 @@ import {
   Box,
   ScrollView,
   Image,
-  Center,
   Text,
   Heading,
   NativeBaseProvider,
@@ -12,10 +11,10 @@ import BackButton from "../../../components/BackButton";
 import { LinearGradient } from "expo-linear-gradient";
 import { Dimensions } from "react-native";
 
+
 export default function Sobre() {
 
-  const height = Dimensions.get('window').height
- 
+const height = Dimensions.get('window').height 
   const config = {
     dependencies: {
       "linear-gradient": LinearGradient,
@@ -24,10 +23,11 @@ export default function Sobre() {
 
   return (
     <NativeBaseProvider config={config}>
-      <ScrollView flex={1} w="100%" bg="lightBlue.400">
-        <Center 
+      <ScrollView flex={1} height={height} w="100%" bg="lightBlue.400">
+        <Box
           w="100%"
-          height={height}
+          justifyContent="center"
+          alignItems="center"
           bg={{
             linearGradient: {
               colors: ['lightBlue.600', 'lightBlue.400'],
@@ -35,23 +35,19 @@ export default function Sobre() {
               end: [1, 0]
             }
           }}
-          >
-          <Box position="absolute" left="2%" top="8%">
-            <BackButton />
-          </Box>
+          > 
           <Image
-            w="80%"
-            my="10%"
-            resizeMode="stretch"
-            
-            source={require("../../../assets/imgs/pip-logoTESTE.png")}
+            w="90%"
+            alt="pip-logo"
+            maxH="300"
+            resizeMode="contain"
+            source={require("../../../assets/pip-icon.png")}
           />
           <Heading color="#fff" fontSize="lg">
             O que é o PROJETO INCLUSÃO SOCIAL?
           </Heading>
 
           <Box
-            shadow={3}
             w="90%"
             mt="2%"
             py="2"
@@ -75,7 +71,6 @@ export default function Sobre() {
           </Heading>
 
           <Box
-            shadow={8}
             w="90%"
             mb="3%"
             px="2"
@@ -88,14 +83,13 @@ export default function Sobre() {
               coordenações das pastas de atuação.
             </Text>
 
-            <Text color="light.100" fontSize="lg" bold>
-              Somos:
-            </Text>
+          
           </Box>
-          <Text color="light.100" fontSize="md">
+          <BackButton />
+          <Text my="5%" fontFamily={"Doppio One"} color="light.100" fontSize="lg">
             Todos os direitos reservados 2023 .
           </Text>
-        </Center>
+        </Box>
       </ScrollView>
     </NativeBaseProvider>
   );

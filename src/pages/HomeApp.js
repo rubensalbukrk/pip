@@ -20,15 +20,13 @@ import {
   Image,
   NativeBaseProvider,
 } from "native-base";
-import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { CarouselHome } from "../../components/Carousel";
-import { CopilotStep, walkthroughable, useCopilot } from "react-native-copilot";
 import UserAvatar from "../../components/UserAvatar";
 import { LinearGradient } from "expo-linear-gradient";
 
 export const HomeApp = () => {
-  const firstrun = useRef(false)
   const [refreshing, setRefreshing] = useState(false);
   const { users, logged, setNotices } = useContext(UserContext);
   const [selected, setSelected] = React.useState(0);
@@ -36,31 +34,6 @@ export const HomeApp = () => {
   const nome = logged?.nome;
   const primeiro_nome = nome?.split(" ").shift();
 
-  //Tutorial para usuários
-  var { start, copilotEvents, visible} = useCopilot();
-  const [secondStepActive, setSecondStepActive] = useState(true);
-  const [lastEvent, setLastEvent] = useState(null);
-  const CopilotText = walkthroughable(Text);
-  const CopilotView = walkthroughable(View);
-
-
-  useEffect(() => {
-      setTimeout(() => {
-        start('secondText')
-      }, 1000)
-  },[]);
-
-  useEffect(() => {
-    copilotEvents.on("stepChange", (step) => {
-      setLastEvent(`stepChange: ${step.name}`);
-    });
-    copilotEvents.on("start", () => {
-      setLastEvent(`start`);
-    });
-    copilotEvents.on("stop", () => {
-      setLastEvent(`stop`);
-    });
-  }, [copilotEvents]);
   const config = {
     dependencies: {
       "linear-gradient": LinearGradient,
@@ -85,21 +58,19 @@ export const HomeApp = () => {
 
   if (refreshing) {
     getNotices();
-
   }
 
   return (
     <>
       <NativeBaseProvider config={config}>
         <Box
-        ref={firstrun}
           w="100%"
           t="0"
-          h="22%"
+          h="250px"
           flexDir={"row"}
-          justifyContent="space-between"
           px="4"
           pt="10%"
+          justifyContent={"space-between"}
           alignItems="center"
           bg={{
             linearGradient: {
@@ -110,7 +81,32 @@ export const HomeApp = () => {
           }}
         >
           <Animatable.View
-            style={{ width: 90, height: 100, marginBottom: '10%' }}
+            style={{
+              position: "absolute",
+              top: 20,
+              left: '60%',
+              height: 80,
+            }}
+            delay={800}
+            duration={2000}
+            animation="bounceInDown"
+          >
+            <Text
+              fontSize={"2xl"}
+              style={{
+                fontFamily: "Doppio One",
+                position: "absolute",
+                top: '15%',
+                alignSelf: "center",
+                right: "-20%",
+                color: "white",
+              }}
+            >
+              Olá {primeiro_nome}
+            </Text>
+          </Animatable.View>
+          <Animatable.View
+            style={{ width: 90, height: 100, left: '-10%', bottom: '10%' }}
             delay={800}
             duration={2000}
             animation="bounceInLeft"
@@ -119,7 +115,6 @@ export const HomeApp = () => {
               alt="pip-logo"
               w="150"
               h="100"
-              shadow={4}
               resizeMode="cover"
               source={require("../../assets/pip-icon.png")}
             />
@@ -128,7 +123,7 @@ export const HomeApp = () => {
               style={{
                 bottom: "20%",
                 left: "50%",
-                fontSize: 14,
+                fontSize: 12,
                 width: 200,
                 fontFamily: "Doppio One",
               }}
@@ -137,36 +132,11 @@ export const HomeApp = () => {
             </Text>
           </Animatable.View>
 
-          <Animatable.View
-            delay={800}
-            duration={2000}
-            animation="bounceInDown"
-          >
-            <Text
-            style={{
-              fontFamily: "Doppio One",
-              fontSize: 20,
-              top: -50,
-              color: "white",
-            }}
-            shadow={4} >Olá {primeiro_nome}</Text>
-          </Animatable.View>
-
-          <Animatable.View delay={200} duration={2000} animation="bounceInDown">
-            <CopilotStep
-            ref={firstrun}
-              active={secondStepActive}
-              text="Aqui você entra no seu perfil!"
-              order={2}
-              name="secondText"
-            >
-              <CopilotView>
-                <TouchableOpacity onPress={() => navigation.navigate("User")}>
-                  <UserAvatar size={"2xl"} />
-                </TouchableOpacity>
-              </CopilotView>
-            </CopilotStep>
-          </Animatable.View>
+          <Box bottom={10}>
+            <TouchableOpacity onPress={() => navigation.navigate("User")}>
+              <UserAvatar size={"2xl"} />
+            </TouchableOpacity>
+          </Box>
         </Box>
 
         <Box
@@ -226,12 +196,7 @@ export const HomeApp = () => {
             </Box>
           </ScrollView>
         </Box>
-        <HStack
-          bg={"lightBlue.500"}
-          alignItems="center"
-          safeAreaBottom
-          shadow={9}
-        >
+        <HStack bg={"lightBlue.500"} alignItems="center">
           <Pressable
             cursor="pointer"
             opacity={selected === 0 ? 1 : 0.5}
@@ -276,69 +241,51 @@ export const HomeApp = () => {
               </Text>
             </Center>
           </Pressable>
-          <CopilotStep
-            text="Encontre o serviço que você precisa aqui!"
-            order={1}
-            name="firstText"
+
+          <Pressable
+            cursor="pointer"
+            opacity={selected === 2 ? 1 : 0.6}
+            py="2"
+            flex={1}
+            onPress={() => setSelected(2) & navigation.navigate("Services")}
           >
-            <CopilotView style={{flex: 1}}>
-              <Pressable
-                cursor="pointer"
-                opacity={selected === 2 ? 1 : 0.6}
-                py="2"
-                flex={1}
-                onPress={() => setSelected(2) & navigation.navigate("Services")}
-              >
-                <Center>
-                  <Icon
-                    mb="1"
-                    as={
-                      <MaterialCommunityIcons
-                        name={
-                          selected === 2 ? "hand-heart" : "hand-heart-outline"
-                        }
-                      />
-                    }
-                    color="white"
-                    size="xl"
+            <Center>
+              <Icon
+                mb="1"
+                as={
+                  <MaterialCommunityIcons
+                    name={selected === 2 ? "hand-heart" : "hand-heart-outline"}
                   />
-                  <Text color="white" fontSize="12" fontFamily="Doppio One">
-                    Serviços
-                  </Text>
-                </Center>
-              </Pressable>
-            </CopilotView>
-          </CopilotStep>
-          <CopilotStep
-            active={secondStepActive}
-            text="Veja o andamento das suas solicitações de serviço!"
-            order={3}
-            name="threeText"
-          >
-            <CopilotView style={{flex: 1}}>
-              <Pressable
-                cursor="pointer"
-                opacity={selected === 3 ? 1 : 0.5}
-                py="2"
-                flex={1}
-                onPress={() =>
-                  setSelected(3) & navigation.navigate("SolicitationUser")
                 }
-              >
-                <Center>
-                  <Icon
-                    mb="1"
-                    as={<MaterialCommunityIcons name="clipboard-text-search" />}
-                    color="white"
-                    size="xl"
-                  />
-                  <Text color="white" fontSize="12" fontFamily="Doppio One">
-                    Solicitações
-                  </Text>
-                </Center>
-              </Pressable>
-            </CopilotView>
-          </CopilotStep>
+                color="white"
+                size="xl"
+              />
+              <Text color="white" fontSize="12" fontFamily="Doppio One">
+                Serviços
+              </Text>
+            </Center>
+          </Pressable>
+          <Pressable
+            cursor="pointer"
+            opacity={selected === 3 ? 1 : 0.5}
+            py="2"
+            flex={1}
+            onPress={() =>
+              setSelected(3) & navigation.navigate("SolicitationUser")
+            }
+          >
+            <Center>
+              <Icon
+                mb="1"
+                as={<MaterialCommunityIcons name="clipboard-text-search" />}
+                color="white"
+                size="xl"
+              />
+              <Text color="white" fontSize="12" fontFamily="Doppio One">
+                Solicitações
+              </Text>
+            </Center>
+          </Pressable>
         </HStack>
       </NativeBaseProvider>
     </>
