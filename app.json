@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "pip-app",
+    "name": "PIP",
     "slug": "pip-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/pip-icon.png",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -20,7 +20,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/pip-icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.rasofts.pipapp.com"
