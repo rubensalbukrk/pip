@@ -21,24 +21,26 @@ import { deleteSolicitation, deleteAprovado } from "../../requisitions/api";
 import { useNavigation } from "@react-navigation/native";
 import { api } from "../../requisitions/api";
 import { LinearGradient } from "expo-linear-gradient";
+import { GlobalStyles } from "../../../components/GlobalStyles";
 
 function ListSolicitations(props) {
   const navigation = useNavigation();
   return (
     <Center my="3" w="100%">
-      <HStack w="100%" shadow={3} mt="4%" h="160">
+      <HStack w="100%" mt="4%" h="160">
         <VStack
           bg="rgba(255,255,255, 0.16)"
           rounded="xl"
           py="5%"
           px="3"
+          space={1}
           w="100%"
         >
-          <Text color={"light.100"}>Nome: {props.nome} </Text>
-          <Text color={"light.100"}>CPF: {props.cpf} </Text>
-          <Text color={"light.100"}>Serviço: {props.service} </Text>
-          <Text color={"light.100"}>STATUS: {props.status} </Text>
-          <Text color={"light.100"}>Data: {props.date} </Text>
+          <Text style={[GlobalStyles.fontSystem]}>Nome: {props.nome} </Text>
+          <Text style={[GlobalStyles.fontSystem]}>CPF: {props.cpf} </Text>
+          <Text style={[GlobalStyles.fontSystem]}>Serviço: {props.service} </Text>
+          <Text style={[GlobalStyles.fontSystem]}>STATUS: {props.status} </Text>
+          <Text style={[GlobalStyles.fontSystem]}>Data: {props.date} </Text>
           <TouchableOpacity
             style={{
               position: "absolute",
@@ -60,6 +62,7 @@ function ListSolicitations(props) {
               width: 40,
               height: 40,
               opacity: 0.8,
+              fontFamily: 'Doppio One',
             }}
             onPress={() =>
               navigation.navigate("SolicitationInfoUser", {
@@ -330,34 +333,37 @@ export default function PageCoordenador({ route }) {
             </Box>
 
             <Heading
-              fontSize="lg"
+              fontSize="xl"
               mt="10%"
               color="light.100"
               alignSelf="center"
+              fontFamily="Doppio One"
             >
               {route?.params?.title}
             </Heading>
-            <Divider mx="3" my="3" alignSelf="center" w="80%" />
+            <Divider w="80%" mx="3" my="3" alignSelf="center" opacity={0.4} />
             <Box
               w="97%"
               h="400px"
               rounded="xl"
-              shadow={2}
               alignSelf={"center"}
               py="3"
               px="4"
               bg="rgba(255,255,255, 0.16)"
             >
-              <Heading alignSelf="left" color="light.100">
+              <Heading
+                alignSelf="flex-start"
+                fontFamily="Doppio One"
+                color="light.100"
+              >
                 SOLICITAÇÕES
               </Heading>
-              <Divider w="100%" mb="5%" />
-              <ScrollView 
-                w="100%" 
-                horizontal={false} 
-                rounded="xl"
-                style={{borderRadius: 40}}
-                >
+              <Divider w="100%" mb="5%" opacity={0.4} />
+              <ScrollView
+                w="100%"
+                horizontal={false}
+                style={{ borderRadius: 40, fontFamily: 'Doppio One' }}
+              >
                 {logged?.isCoordAutist ? <IsAutist /> : null}
 
                 {logged?.isCoordMulher ? <IsMulher /> : null}
@@ -380,13 +386,18 @@ export default function PageCoordenador({ route }) {
               bg="rgba(255,255,255, 0.16)"
               my="4"
               rounded="xl"
-              shadow={5}
               py="3"
               px="4"
               alignSelf={"center"}
             >
-              <Heading color="light.100">APROVAÇÕES</Heading>
-              <Divider w="90%" />
+              <Heading
+                alignSelf="flex-start"
+                fontFamily="Doppio One"
+                color="light.100"
+              >
+                APROVAÇÕES
+              </Heading>
+              <Divider w="90%" opacity={0.4} />
               <FlatList
                 data={aprovados}
                 horizontal={false}
@@ -413,14 +424,34 @@ export default function PageCoordenador({ route }) {
                           px="2"
                           w="100%"
                         >
-                          <Text color={"light.100"}>Nome: {item.nome} </Text>
-                          <Text color={"light.100"}>
+                          <Text
+                            fontSize="lg"
+                            fontFamily="Doppio One"
+                            color={"light.100"}
+                          >
+                            Nome: {item.nome}{" "}
+                          </Text>
+                          <Text
+                            fontSize="lg"
+                            fontFamily="Doppio One"
+                            color={"light.100"}
+                          >
                             Serviço: {item.service}{" "}
                           </Text>
-                          <Text color={"light.100"}>
+                          <Text
+                            fontSize="lg"
+                            fontFamily="Doppio One"
+                            color={"light.100"}
+                          >
                             STATUS: {item.status}{" "}
                           </Text>
-                          <Text color={"light.100"}>Data: {item.date} </Text>
+                          <Text
+                            fontSize="lg"
+                            fontFamily="Doppio One"
+                            color={"light.100"}
+                          >
+                            Data: {item.date}{" "}
+                          </Text>
                           <TouchableOpacity
                             style={{
                               position: "absolute",

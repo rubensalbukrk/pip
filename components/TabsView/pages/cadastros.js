@@ -77,7 +77,7 @@ export default function TabCadastros() {
         mb="4%"
         alignItems="center"
         justifyContent="center"
-        
+        flexWrap={'wrap'}
         w="100%"
       >
         <Center

@@ -17,7 +17,7 @@ import {
 import { Ionicons, Feather } from "@expo/vector-icons";
 import { TextInputMask } from "react-native-masked-text";
 import { AuthContext } from "../../contexts/AuthContext";
-import { api } from "../../requisitions/api";
+import { getNotices, getUsers } from "../../requisitions/api";
 import { UserContext } from "../../contexts/UserContext";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -33,40 +33,11 @@ export const Login = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-   
     if(logged?.cpf){
       navigation.navigate('HomeApp')
     }
   },[logged])
 
-  const getUsers = () => {
-    axios
-      .get(`${api}/users`, {
-        method: "get",
-        headers: new Headers({
-          "ngrok-skip-browser-warning": "69420",
-        }),
-      })
-      .then((response) => {
-        const users = response.data.users;
-        setUsers(users);
-      })
-      .catch((error) => console.log(error));
-  };
- function getNotices(){
-    axios
-      .get(`${api}/notices`, {
-        method: "get",
-        headers: new Headers({
-          "ngrok-skip-browser-warning": "69420",
-        }),
-      })
-      .then((response) => {
-        const notices = response.data.notices;
-        setNotices(notices);
-      })
-      .catch((error) => console.log(error));
-  };
   useEffect(() => {
     getUsers()
     getNotices()

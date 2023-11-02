@@ -26,32 +26,14 @@ import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import { LinearGradient } from "expo-linear-gradient";
 
-const apiUpload = `${api}/upload`;
 
 export default function NewNotice() {
-  const [updateList, setUpdateList] = useState(false)
   const [dataNotice, setData] = useState({
   })  
-  const { setNotices, notices } = useContext(UserContext);
+  const { refreshing, setRefreshing, setNotices, notices } = useContext(UserContext);
   const navigation = useNavigation();
 
-  function getNotices(){
-    axios
-    .get(`${api}/notices`, {
-      method: "get",
-      headers: new Headers({
-        "ngrok-skip-browser-warning": "69420",
-      }),
-    })
-    .then((response) => {
-      const notices = response.data.notices;
-      setNotices(notices)
-      setUpdateList(false)
-    })
-    .catch((error) => console.log(error));
-  }
-
-  if(updateList){
+  if(refreshing){
     getNotices();
   }
 
@@ -143,8 +125,8 @@ const config = {
         maxH="270px"
         mb="3%"
         rounded="xl"
-        refreshing={updateList}
-        onRefresh={() => setUpdateList(true)}
+        refreshing={refreshing}
+        onRefresh={() => setRefreshing(true)}
         renderItem={({ item, index }) => {
           return (
             <Center w="100%" h="110px" mb="5%" mt="5%">

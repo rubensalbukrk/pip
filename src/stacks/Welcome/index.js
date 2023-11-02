@@ -75,7 +75,7 @@ export default function Welcome() {
               right="7%"
               top="2%"
               mt="20%"
-              resizeMode="contain"
+              resizeMode="cover"
               source={require("../../../assets/pip-icon.png")}
             />
           </Animatable.View>
@@ -95,6 +95,7 @@ export default function Welcome() {
                 mx="2"
                 color="light.100"
                 fontSize="5xl"
+                fontFamily="Doppio One"
               >
                 Olá,
               </Heading>
@@ -107,6 +108,7 @@ export default function Welcome() {
                 color="light.100"
                 w="70%"
                 shadow={4}
+                fontFamily="Doppio One"
                 fontSize="4xl"
               >
                 Bem vindo(a)!
@@ -122,7 +124,7 @@ export default function Welcome() {
             bgColor="rgba(255, 255, 255, 0.12)"
           >
             <Animatable.View animation="fadeInLeft" delay={1000}>
-              <Text mx="3" alignSelf="center" color="light.100" fontSize="2xl">
+              <Text mx="3" alignSelf="center" fontFamily="Doppio One" color="light.100" fontSize="2xl">
                 Somos o projeto inclusão popular e aqui você vai encontrar
                 serviços, notícias e muito mais...
               </Text>
@@ -156,7 +158,7 @@ export default function Welcome() {
                       onPress={() => navigation.navigate("Login")}
                     >
                       <Box w="100%" flexDirection="row">
-                        <Text color="#fff" fontSize="2xl">
+                        <Text fontFamily="Doppio One" color="#fff" fontSize="2xl">
                           Começar
                         </Text>
                         <AntDesign name="arrowright" size={40} color="white" />

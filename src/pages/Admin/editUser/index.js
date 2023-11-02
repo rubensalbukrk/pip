@@ -9,6 +9,7 @@ import {
   Input,
   Button,
   Avatar,
+  Image,
   Container,
   Center,
   Select,
@@ -26,9 +27,9 @@ import { useNavigation } from "@react-navigation/native";
 import BackButton from "../../../../components/BackButton";
 import InputInfoUser from "../../../../components/UserLayout/inputUser";
 import { LinearGradient } from "expo-linear-gradient";
-
-import { TouchableOpacity } from "react-native-gesture-handler";
-
+import { Feather } from "@expo/vector-icons";
+import { TouchableOpacity, FlatList } from "react-native";
+import { GlobalStyles } from "../../../../components/GlobalStyles";
 
 const hoje = new Date();
 const data =
@@ -41,6 +42,7 @@ const data =
   hoje.toLocaleTimeString();
 
 export default function EditUser({ route }) {
+  const [updateList, setUpdateList] = useState(false);
   const { logged } = useContext(UserContext);
   const [formData, setData] = React.useState({
     date: data,
@@ -126,42 +128,55 @@ export default function EditUser({ route }) {
       return (
         <Box w="100%" flex={1}>
           <FlatList
-          refreshing={updateList}
-            keyExtractor={(item) => item.cpf.toString()}
+            keyExtractor={(item) => item.cpf}
             data={filhos}
             renderItem={({ item, index }) => {
               return (
                 <HStack w="100%">
-
-                <Box
-                  flex={1}
-                  w="80%"
-                  bg="rgba(255,255,255, 0.15)"
-                  rounded="2xl"
-                  py="3"
-                  my="2"
-                  px="3"
-                >
-
-                  <Text fontSize={22} color="light.100" fontFamily="Doppio One">
-                    Nome: {item?.nome}
-                  </Text>
-                  <Text fontSize={22} color="light.100" fontFamily="Doppio One">
-                    CPF: {item?.cpf}
-                  </Text>
-                  <Text fontSize={22} color="light.100" fontFamily="Doppio One">
-                    Idade: {item?.idade}
-                  </Text>
-                </Box>
-                <TouchableOpacity
-                      onPress={() => {
-                        filhos.splice(index, 1);
-                        setUpdateList((previousState) => !previousState)
-                      }}
-                      style={{ width: '20%', alignItems: "center", justifyContent: "center" }}
+                  <Box
+                    flex={1}
+                    w="80%"
+                    bg="rgba(255,255,255, 0.15)"
+                    rounded="2xl"
+                    py="3"
+                    my="2"
+                    px="3"
+                  >
+                    <Text
+                      fontSize={22}
+                      color="light.100"
+                      fontFamily="Doppio One"
                     >
-                      <Feather name="user-minus" size={42} color="white" />
-                    </TouchableOpacity>
+                      Nome: {item?.nome}
+                    </Text>
+                    <Text
+                      fontSize={22}
+                      color="light.100"
+                      fontFamily="Doppio One"
+                    >
+                      CPF: {item?.cpf}
+                    </Text>
+                    <Text
+                      fontSize={22}
+                      color="light.100"
+                      fontFamily="Doppio One"
+                    >
+                      Idade: {item?.idade}
+                    </Text>
+                  </Box>
+                  <TouchableOpacity
+                    onPress={() => {
+                      filhos?.splice(index, 1);
+                      setUpdateList((previousState) => !previousState);
+                    }}
+                    style={{
+                      width: "20%",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Feather name="user-minus" size={42} color="white" />
+                  </TouchableOpacity>
                 </HStack>
               );
             }}
@@ -169,7 +184,7 @@ export default function EditUser({ route }) {
         </Box>
       );
     } catch (error) {
-      alert("Dados de usuário não encontrado!");
+      alert("Erro ao exibir dados de usuário!");
       navigation.goBack();
     }
   };
@@ -191,12 +206,7 @@ export default function EditUser({ route }) {
   const SeletorBairro = () => {
     return (
       <Center w="100%">
-        <Box
-        alignSelf={'center'}
-          rounded="lg"
-          h="50"
-          maxW="300"
-        >
+        <Box alignSelf={"center"} rounded="lg" h="50" maxW="300">
           <Select
             fontFamily="Doppio One"
             fontSize="lg"
@@ -208,7 +218,7 @@ export default function EditUser({ route }) {
             bg="rgba(255, 255, 255, 0.1)"
             borderColor="rgba(255, 255, 255, 0.18)"
             outlineColor={"light.100"}
-            dropdownIcon={<CheckIcon size="6" color={'#f2f2f2'} />}
+            dropdownIcon={<CheckIcon size="6" color={"#f2f2f2"} />}
             placeholder={route?.params?.bairro}
             placeholderTextColor={"light.100"}
             _selectedItem={{
@@ -281,30 +291,39 @@ export default function EditUser({ route }) {
         bg={{
           linearGradient: {
             colors: ["lightBlue.400", "lightBlue.600"],
-            start: [0, 0],
-            end: [1, 0],
+            start: [0, 1],
+            end: [0, 0],
           },
         }}
       >
-
-          <Box
-            w="100%"
-            h="100px"
-            bg="rgba(255,255,255, 0.15)"
-            alignItems="center"
-            justifyContent="center"
-            roundedBottom="20"
-          >
-            <Box bottom="-2%" left="-1%" position="absolute">
-              <BackButton />
-            </Box>
-
-            <Text fontSize="2xl" marginTop="15%" color="white">
-              ALTERAR DADOS
-            </Text>
-            <Avatar size={'lg'} source={{ uri: route?.params?.avatar }} />
+        <Box
+          w="100%"
+          h="100px"
+          alignItems="center"
+          justifyContent="center"
+          roundedBottom="20"
+        >
+          <Box bottom="-2%" left="-1%" position="absolute">
+            <BackButton />
           </Box>
-       
+
+          <Text
+            style={[
+              GlobalStyles.fontSystem.fontFamily]}
+            fontSize={"3xl"}
+            color="light.100"
+            bold
+            marginTop="15%"
+          >
+            ALTERAR DADOS
+          </Text>
+          <Image
+            backgroundColor={"lightBlue.800"}
+            size={"lg"}
+            source={{ uri: avatar === 0 ? "" : route?.params?.avatar }}
+          />
+        </Box>
+
         <ScrollView flex={1} w="100%">
           <Center py="10%">
             <HStack
@@ -457,7 +476,6 @@ export default function EditUser({ route }) {
               my="5%"
               px="5"
               py="7"
-              
               bg="rgba(255,255,255, 0.15)"
               rounded="xl"
             >
@@ -608,7 +626,7 @@ export default function EditUser({ route }) {
                 <Switch
                   value={autista}
                   onToggle={toggleAutista}
-                  colorScheme="darkBlue"
+                  colorScheme="lightBlue"
                 />
               </Box>
 
@@ -651,13 +669,13 @@ export default function EditUser({ route }) {
                 Opinião
               </Text>
               <Input
-              variant="filled"
-              style={{ color: "light.100" }}
-              size="xl"
-              value={opnion}
-              placeholder={`${opnion ? opnion : ""}`}
-              onChangeText={(text) => setOpnion(text)}
-               />
+                variant="filled"
+                style={{ color: "light.100" }}
+                size="xl"
+                value={opnion}
+                placeholder={`${opnion ? opnion : ""}`}
+                onChangeText={(text) => setOpnion(text)}
+              />
             </VStack>
 
             <Button
@@ -665,7 +683,7 @@ export default function EditUser({ route }) {
               w="70%"
               shadow={5}
               rounded="2xl"
-              colorScheme={"darkBlue"}
+              colorScheme={"lightBlue"}
               onPress={() => {
                 updateUser() && navigation.goBack();
               }}

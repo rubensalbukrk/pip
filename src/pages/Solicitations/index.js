@@ -4,7 +4,6 @@ import {
   Box,
   Text,
   ScrollView,
-
   Center,
   Icon,
   Heading,
@@ -16,7 +15,7 @@ import {
 } from "native-base";
 import { TouchableOpacity } from "react-native";
 import { FontAwesome, Octicons } from "@expo/vector-icons";
-import { api, deleteAprovado } from "../../requisitions/api";
+import { api, deleteAprovado, getAprovados, getSolicitation } from "../../requisitions/api";
 import UserAvatar from "../../../components/UserAvatar";
 import { LinearGradient } from "expo-linear-gradient";
 import { UserContext } from "../../contexts/UserContext";
@@ -26,7 +25,7 @@ import { Dimensions } from "react-native";
 var height = Dimensions.get("window").height;
 
 export default function SolicitationsUser() {
-  const { logged, solicitations, setSolicitations, setAprovados, aprovados } =
+  const { logged, solicitations, aprovados } =
     useContext(UserContext);
 
   useEffect(() => (getSolicitation(), getAprovados()), []);
@@ -41,37 +40,6 @@ export default function SolicitationsUser() {
       (item) => String(item.cpf) === String(logged.cpf)
     );
   }
-
-  const getAprovados = () => {
-    axios
-      .get(`${api}/aprovados`, {
-        method: "get",
-        headers: new Headers({
-          "ngrok-skip-browser-warning": "69420",
-        }),
-      })
-      .then((response) => {
-        const aprovados = response.data.aprovados;
-        setAprovados(aprovados);
-      })
-
-      .catch((error) => console.log(error));
-  };
-  const getSolicitation = () => {
-    axios
-      .get(`${api}/solicitations`, {
-        method: "get",
-        headers: new Headers({
-          "ngrok-skip-browser-warning": "69420",
-        }),
-      })
-      .then((response) => {
-        const solicitations = response.data.solicitations;
-        setSolicitations(solicitations);
-      })
-
-      .catch((error) => console.log(error));
-  };
 
   const config = {
     dependencies: {
@@ -132,7 +100,7 @@ export default function SolicitationsUser() {
               style={{
                 flex: 1,
                 width: "100%",
-                height: "200px",
+                height: 200,
                 borderRadius: 40,
               }}
               my="3"
@@ -147,9 +115,15 @@ export default function SolicitationsUser() {
                         px="2"
                         w="85%"
                       >
-                        <Text fontFamily="Doppio One" color={"light.100"}>Serviço: {item.service}</Text>
-                        <Text fontFamily="Doppio One" color={"light.100"}>STATUS: {item.status}</Text>
-                        <Text fontFamily="Doppio One" color={"light.100"}>Data: {item.date}</Text>
+                        <Text fontFamily="Doppio One" color={"light.100"}>
+                          Serviço: {item.service}
+                        </Text>
+                        <Text fontFamily="Doppio One" color={"light.100"}>
+                          STATUS: {item.status}
+                        </Text>
+                        <Text fontFamily="Doppio One" color={"light.100"}>
+                          Data: {item.date}
+                        </Text>
                         <TouchableOpacity
                           style={{
                             position: "absolute",
@@ -212,9 +186,15 @@ export default function SolicitationsUser() {
                       px="2"
                       w="85%"
                     >
-                      <Text fontFamily="Doppio One" color={"light.100"}>Serviço: {item.service}</Text>
-                      <Text fontFamily="Doppio One" color={"light.100"}>STATUS: {item.status}</Text>
-                      <Text fontFamily="Doppio One" color={"light.100"}>Data: {item.date}</Text>
+                      <Text fontFamily="Doppio One" color={"light.100"}>
+                        Serviço: {item.service}
+                      </Text>
+                      <Text fontFamily="Doppio One" color={"light.100"}>
+                        STATUS: {item.status}
+                      </Text>
+                      <Text fontFamily="Doppio One" color={"light.100"}>
+                        Data: {item.date}
+                      </Text>
                     </VStack>
                   </HStack>
                 </Center>

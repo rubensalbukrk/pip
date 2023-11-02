@@ -1,8 +1,6 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
-import axios from "axios";
-import { api } from "../requisitions/api";
+import { getNotices } from "../requisitions/api";
 import * as Animatable from "react-native-animatable";
-
 import {
   View,
   TouchableOpacity,
@@ -18,6 +16,7 @@ import {
   Icon,
   Pressable,
   Image,
+  Divider,
   NativeBaseProvider,
 } from "native-base";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -25,10 +24,10 @@ import { useNavigation } from "@react-navigation/native";
 import { CarouselHome } from "../../components/Carousel";
 import UserAvatar from "../../components/UserAvatar";
 import { LinearGradient } from "expo-linear-gradient";
+import { GlobalStyles } from "../../components/GlobalStyles";
 
 export const HomeApp = () => {
-  const [refreshing, setRefreshing] = useState(false);
-  const { users, logged, setNotices } = useContext(UserContext);
+  const { users, logged, setNotices, refreshing, setRefreshing } = useContext(UserContext);
   const [selected, setSelected] = React.useState(0);
   const navigation = useNavigation();
   const nome = logged?.nome;
@@ -40,22 +39,6 @@ export const HomeApp = () => {
     },
   };
 
-  function getNotices() {
-    axios
-      .get(`${api}/notices`, {
-        method: "get",
-        headers: new Headers({
-          "ngrok-skip-browser-warning": "69420",
-        }),
-      })
-      .then((response) => {
-        const notices = response.data.notices;
-        setNotices(notices);
-        setRefreshing(false);
-      })
-      .catch((error) => console.log(error));
-  }
-
   if (refreshing) {
     getNotices();
   }
@@ -65,11 +48,9 @@ export const HomeApp = () => {
       <NativeBaseProvider config={config}>
         <Box
           w="100%"
-          t="0"
-          h="250px"
+          h="180px"
           flexDir={"row"}
           px="4"
-          pt="10%"
           justifyContent={"space-between"}
           alignItems="center"
           bg={{
@@ -81,49 +62,24 @@ export const HomeApp = () => {
           }}
         >
           <Animatable.View
-            style={{
-              position: "absolute",
-              top: 20,
-              left: '60%',
-              height: 80,
-            }}
-            delay={800}
-            duration={2000}
-            animation="bounceInDown"
-          >
-            <Text
-              fontSize={"2xl"}
-              style={{
-                fontFamily: "Doppio One",
-                position: "absolute",
-                top: '15%',
-                alignSelf: "center",
-                right: "-20%",
-                color: "white",
-              }}
-            >
-              Olá {primeiro_nome}
-            </Text>
-          </Animatable.View>
-          <Animatable.View
-            style={{ width: 90, height: 100, left: '-10%', bottom: '10%' }}
+            style={{ width: 180, height: 150, top: '5%', left: '-20%'}}
             delay={800}
             duration={2000}
             animation="bounceInLeft"
           >
             <Image
               alt="pip-logo"
-              w="150"
-              h="100"
+              w="200"
+              h="150"
               resizeMode="cover"
               source={require("../../assets/pip-icon.png")}
             />
             <Text
               color="light.100"
               style={{
-                bottom: "20%",
-                left: "50%",
-                fontSize: 12,
+                bottom: "30%",
+                left: "55%",
+                fontSize: 14,
                 width: 200,
                 fontFamily: "Doppio One",
               }}
@@ -132,7 +88,7 @@ export const HomeApp = () => {
             </Text>
           </Animatable.View>
 
-          <Box bottom={10}>
+          <Box top={5}>
             <TouchableOpacity onPress={() => navigation.navigate("User")}>
               <UserAvatar size={"2xl"} />
             </TouchableOpacity>
@@ -150,6 +106,24 @@ export const HomeApp = () => {
             },
           }}
         >
+          <Animatable.View
+            style={{
+              width: '100%',
+              marginTop: 20,
+            }}
+            delay={800}
+            duration={2000}
+            animation="bounceInLeft"
+          >
+            
+            <Text
+              fontSize={"2xl"}
+              style={[GlobalStyles.fontSystem, {left: 20, fontSize: 30}]}
+            >
+              Olá {primeiro_nome}
+            </Text>
+            <Divider w="50%" opacity={0.4} />
+          </Animatable.View>
           <ScrollView
             refreshControl={
               <RefreshControl

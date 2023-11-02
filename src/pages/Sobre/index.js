@@ -10,11 +10,10 @@ import {
 import BackButton from "../../../components/BackButton";
 import { LinearGradient } from "expo-linear-gradient";
 import { Dimensions } from "react-native";
-
+import { GlobalStyles } from "../../../components/GlobalStyles";
 
 export default function Sobre() {
-
-const height = Dimensions.get('window').height 
+  const height = Dimensions.get("window").height;
   const config = {
     dependencies: {
       "linear-gradient": LinearGradient,
@@ -23,27 +22,34 @@ const height = Dimensions.get('window').height
 
   return (
     <NativeBaseProvider config={config}>
-      <ScrollView flex={1} height={height} w="100%" bg="lightBlue.400">
+      <ScrollView w="100%" h={height} bg="lightBlue.400">
         <Box
+          h={height}
+          flex={1}
           w="100%"
-          justifyContent="center"
+          justifyContent={"center"}
           alignItems="center"
           bg={{
             linearGradient: {
-              colors: ['lightBlue.600', 'lightBlue.400'],
+              colors: ["lightBlue.600", "lightBlue.400"],
               start: [0, 0],
-              end: [1, 0]
-            }
+              end: [1, 0],
+            },
           }}
-          > 
+        >
           <Image
             w="90%"
+            position="absolute"
+            blurRadius={9}
+            opacity={0.8}
             alt="pip-logo"
-            maxH="300"
-            resizeMode="contain"
+            resizeMode="cover"
             source={require("../../../assets/pip-icon.png")}
           />
-          <Heading color="#fff" fontSize="lg">
+
+          <Heading fontFamily={"Doppio One"} fontSize={"9xl"} color="light.100" opacity={0.8}>PIP</Heading>
+
+          <Heading style={[GlobalStyles.fontSystem]} fontSize="lg">
             O que é o PROJETO INCLUSÃO SOCIAL?
           </Heading>
 
@@ -55,7 +61,7 @@ const height = Dimensions.get('window').height
             bg="rgba(255,255,255, 0.15)"
             rounded="lg"
           >
-            <Text color="#fff" fontSize="md">
+            <Text style={[GlobalStyles.fontSystem]} fontSize="md">
               O PIP é uma associação sem fins lucrativos, inscrito no CNPJ :
               46.612.280/0001-90 e atuando no município de Santa Rita -PB. Somo
               uma equipe de voluntários que se dividem em VOLUNTÁRIOS INTEGRAIS
@@ -66,7 +72,7 @@ const height = Dimensions.get('window').height
             </Text>
           </Box>
 
-          <Heading mt="3%" fontSize="2xl" color="#fff">
+          <Heading style={[GlobalStyles.fontSystem]} mt="3%" fontSize="2xl">
             Coordenação
           </Heading>
 
@@ -78,15 +84,17 @@ const height = Dimensions.get('window').height
             bg="rgba(255,255,255, 0.15)"
             rounded="lg"
           >
-            <Text color="#fff" alignText="center" fontSize="sm">
+            <Text
+              style={[GlobalStyles.fontSystem]}
+              alignText="center"
+              fontSize="sm"
+            >
               O PIP é composto por 04 coordenações de cunho administrativo e 10
               coordenações das pastas de atuação.
             </Text>
-
-          
           </Box>
           <BackButton />
-          <Text my="5%" fontFamily={"Doppio One"} color="light.100" fontSize="lg">
+          <Text style={[GlobalStyles.fontSystem]} my="1%" fontSize="lg">
             Todos os direitos reservados 2023 .
           </Text>
         </Box>

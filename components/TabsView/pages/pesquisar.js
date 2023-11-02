@@ -4,7 +4,6 @@ import {
   HStack,
   VStack,
   Box,
-  Button,
   Avatar,
   Text,
   Center,
@@ -14,15 +13,12 @@ import {
 } from "native-base";
 import { View, FlatList, TouchableOpacity } from "react-native";
 import { Ionicons, FontAwesome5, Feather } from "@expo/vector-icons";
-
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../../src/contexts/UserContext";
-import axios from "axios";
-import { api } from "../../../src/requisitions/api";
+import { api, getUsers } from "../../../src/requisitions/api";
 
 export default function TabSearch() {
-  const [updateList, setUpdateList] = useState(false)
-  const { users, setUsers } = useContext(UserContext);
+  const { refreshing, setRefreshing, users, setUsers } = useContext(UserContext);
   const [search, setSearch] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [masterData, setMasterData] = useState([]);
@@ -33,41 +29,7 @@ export default function TabSearch() {
     getUsers()
   },[])
 
- function getUsers(){
-  axios
-  .get(`${api}/users`, {
-    method: "get",
-    headers: new Headers({
-      "ngrok-skip-browser-warning": "69420",
-    }),
-  })
-  .then((response) => {
-    const users = response.data.users;
-    setUsers(users);
-    setFilteredData(users);
-    setMasterData(users);
-    setUpdateList(false)
-  })
-  .catch((error) => (
-    <Box
-    flex={1}
-    w="100%"
-    bg="lightBlue.400"
-    >
-      <Heading>UM PROBLEMA FOI ENCONTRADO</Heading>
-
-      <Text color={"light.100"}>{error}</Text>
-
-      <Button
-      colorScheme={"darkBlue"}
-      onPress={() => navigation.navigate('HomeApp')}
-      >
-        VOLTAR
-      </Button>
-    </Box>
-  ));
- }
- if (updateList){
+ if (refreshing){
   getUsers()
  }
 
@@ -95,10 +57,12 @@ export default function TabSearch() {
           mt="5%"
           onChangeText={(text) => searchFilter(text)}
           value={search}
+          color={"light.100"}
           placeholder="Procurar por nome"
           placeholderTextColor={"rgba(255,255,255, 0.65)"}
           variant="outline"
           width="100%"
+          fontSize={"xl"}
           fontFamily={"Doppio One"}
           h="50px"
           colorScheme={"lightBlue"}

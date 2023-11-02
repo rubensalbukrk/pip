@@ -30,11 +30,12 @@ import {
 import { UserContext } from "../../contexts/UserContext";
 import InputInfoUser from "../../../components/UserLayout/inputUser";
 import MyParents from "../../../components/UserLayout/userParents";
-import { api, deleteAprovado } from "../../requisitions/api";
+import { api, deleteAprovado, getSolicitation, getAprovados } from "../../requisitions/api";
 import * as ImagePicker from "expo-image-picker";
 import UserAvatar from "../../../components/UserAvatar";
 import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { GlobalStyles } from "../../../components/GlobalStyles";
 
 const apiUpload = `${api}/upload`;
 
@@ -135,37 +136,6 @@ export const User = () => {
       })
       .catch((error) => console.error(error));
   }
-
-  const getAprovados = () => {
-    axios
-      .get(`${api}/aprovados`, {
-        method: "get",
-        headers: new Headers({
-          "ngrok-skip-browser-warning": "69420",
-        }),
-      })
-      .then((response) => {
-        const aprovados = response.data.aprovados;
-        setAprovados(aprovados);
-      })
-
-      .catch((error) => console.log(error));
-  };
-  const getSolicitation = () => {
-    axios
-      .get(`${api}/solicitations`, {
-        method: "get",
-        headers: new Headers({
-          "ngrok-skip-browser-warning": "69420",
-        }),
-      })
-      .then((response) => {
-        const solicitations = response.data.solicitations;
-        setSolicitations(solicitations);
-      })
-
-      .catch((error) => console.log(error));
-  };
 
   const config = {
     dependencies: {
@@ -411,14 +381,9 @@ export const User = () => {
         <Center>
           <Actionsheet isOpen={isOpen} onClose={onClose} size="100%">
             <Actionsheet.Content bg={"rgba(0, 173, 255, 0.40)"}>
-              <Box w="100%" borderTopRadius={"xl"} bg={"lightBlue.400"} h={60} px={4} justifyContent="center">
+              <Box w="100%" borderTopRadius={"xl"} bg={"lightBlue.500"} h={60} px={4} justifyContent="center">
                 <Text
-                  fontSize="2xl"
-                  color="light.100"
-                  fontFamily="Doppio One"
-                  _dark={{
-                    color: "light.100",
-                  }}
+                 style={[GlobalStyles.fontSystem]}
                 >
                   Menu
                 </Text>
@@ -426,7 +391,7 @@ export const User = () => {
 
               {logged?.isCoordAutist == true && (
                 <Actionsheet.Item
-                bg={"lightBlue.400"}
+                bg={"lightBlue.500"}
                   startIcon={
                     <MaterialIcons
                       size={32}
@@ -441,13 +406,13 @@ export const User = () => {
                     h="100%"
                     onPress={() => navigation.navigate("PageCoordenador", { title: 'Coordenação do Autista' })}
                   >
-                    <Text fontSize="xl" color="light.100">Coordenação dos Autistas</Text>
+                    <Text style={[GlobalStyles.fontSystem]}>Coordenação dos Autistas</Text>
                   </Pressable>
                 </Actionsheet.Item>
               )}
               {logged?.isCoordMulher == true && (
                 <Actionsheet.Item
-                bg={"lightBlue.400"}
+                bg={"lightBlue.500"}
                   startIcon={
                     <MaterialIcons
                       size={32}
@@ -462,7 +427,7 @@ export const User = () => {
                     h="100%"
                     onPress={() => navigation.navigate("PageCoordenador", { title: 'Coordenação da Mulher' })}
                   >
-                    <Text fontSize="xl" color="light.100">Coordenação da Mulher</Text>
+                    <Text style={[GlobalStyles.fontSystem]}>Coordenação da Mulher</Text>
                   </Pressable>
                 </Actionsheet.Item>
               )}
@@ -483,7 +448,7 @@ export const User = () => {
                     h="100%"
                     onPress={() => navigation.navigate("PageCoordenador", { title: 'Coordenação da Saúde' })}
                   >
-                    <Text fontSize="xl" color="light.100">Coordenação da Saúde</Text>
+                    <Text style={[GlobalStyles.fontSystem]}>Coordenação da Saúde</Text>
                   </Pressable>
                 </Actionsheet.Item>
               )}
@@ -504,7 +469,7 @@ export const User = () => {
                     h="100%"
                     onPress={() => navigation.navigate("PageCoordenador", { title: 'Coordenação da Alimentação' })}
                   >
-                    <Text fontSize="xl" color="light.100">Coordenação da Alimentação</Text>
+                    <Text style={[GlobalStyles.fontSystem]}>Coordenação da Alimentação</Text>
                   </Pressable>
                 </Actionsheet.Item>
               )}
@@ -525,7 +490,7 @@ export const User = () => {
                     h="100%"
                     onPress={() => navigation.navigate("PageCoordenador", { title: 'Coordenação da Cidadania' })}
                   >
-                    <Text fontSize="xl" color="light.100">Coordenação da Cidadania</Text>
+                    <Text style={[GlobalStyles.fontSystem]}>Coordenação da Cidadania</Text>
                   </Pressable>
                 </Actionsheet.Item>
               )}
@@ -546,7 +511,7 @@ export const User = () => {
                     h="100%"
                     onPress={() => navigation.navigate("PageCoordenador", { title: 'Coordenação Protagonistas' })}
                   >
-                    <Text fontSize="xl" color="light.100">Coordenação Protagonistas</Text>
+                    <Text style={[GlobalStyles.fontSystem]}>Coordenação Protagonistas</Text>
                   </Pressable>
                 </Actionsheet.Item>
               )}
@@ -567,7 +532,7 @@ export const User = () => {
                     h="100%"
                     onPress={() => navigation.navigate("PageCoordenador", { title: 'Coordenação do Passe Livre' })}
                   >
-                    <Text fontSize="xl" color="light.100">Coordenação do Passe Livre</Text>
+                    <Text style={[GlobalStyles.fontSystem]}>Coordenação do Passe Livre</Text>
                   </Pressable>
                 </Actionsheet.Item>
               )}
@@ -589,11 +554,11 @@ export const User = () => {
                     h="100%"
                     onPress={() => navigation.navigate("Admin")}
                   >
-                    <Text fontSize="xl" color="light.100">Painel de Administração</Text>
+                    <Text style={[GlobalStyles.fontSystem]}>Painel de Administração</Text>
                   </Pressable>
                 </Actionsheet.Item>
               )}
-              <Actionsheet.Item bg={"lightBlue.400"}
+              <Actionsheet.Item bg={"lightBlue.500"}
                 startIcon={
                   <MaterialCommunityIcons
                     size={32}
@@ -602,10 +567,10 @@ export const User = () => {
                   />
                 }
               >
-                <Text fontSize="xl" color="light.100">Alterar dados</Text>
+                <Text style={[GlobalStyles.fontSystem]}>Alterar dados</Text>
               </Actionsheet.Item>
 
-              <Actionsheet.Item borderBottomRadius={"xl"} bg={"lightBlue.400"}
+              <Actionsheet.Item borderBottomRadius={"xl"} bg={"lightBlue.500"}
                 startIcon={
                   <Ionicons size={32} color="white" name="md-close-circle" />
                 }
@@ -621,7 +586,7 @@ export const User = () => {
                     
                   }
                 >
-                  <Text fontSize="xl" color="light.100">Sair</Text>
+                  <Text style={[GlobalStyles.fontSystem]}>Sair</Text>
                 </Pressable>
               </Actionsheet.Item>
             </Actionsheet.Content>

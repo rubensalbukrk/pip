@@ -8,7 +8,9 @@ export const FederalBlue = '#0E0E52'
 
 export const GlobalStyles = StyleSheet.create({
 	fontSystem: {
-	fontFamily : 'Doppio One'
+	fontFamily : 'Doppio One',
+	color: '#f9f9f9',
+	fontSize: 18,
 	},
     PersianBlue: { backgroundColor: '#192BC2'},
 	CelestialBlue: { color: '#449DD1'}, 
