@@ -59,7 +59,6 @@ export default function TabCadastros() {
     <ScrollView mb="5%" flex={1} w="100%" horizontal={false}>
       <VStack
         alignSelf="center"
-        shadow={2}
         w="90%"
         rounded="lg"
         alignItems="center"
@@ -86,7 +85,6 @@ export default function TabCadastros() {
           my="2"
           w="140px"
           rounded="lg"
-          shadow={6}
           bg="rgba(255,255,255, 0.15)"
         >
           <Text color="light.100" fontSize="6xl" fontFamily="Doppio One">
@@ -104,7 +102,6 @@ export default function TabCadastros() {
           my="2"
           w="140px"
           rounded="lg"
-          shadow={6}
           bg="rgba(255,255,255, 0.15)"
         >
           <Text color="light.100" fontSize="6xl" fontFamily="Doppio One">
@@ -122,7 +119,6 @@ export default function TabCadastros() {
           my="2"
           w="140px"
           rounded="lg"
-          shadow={6}
           bg="rgba(255,255,255, 0.15)"
         >
           <Text color="light.100" fontSize="6xl" fontFamily="Doppio One">
@@ -140,7 +136,6 @@ export default function TabCadastros() {
           my="2"
           w="140px"
           rounded="lg"
-          shadow={6}
           bg="rgba(255,255,255, 0.15)"
         >
           <Text color="light.100" fontSize="6xl" fontFamily="Doppio One">
@@ -157,7 +152,6 @@ export default function TabCadastros() {
           my="2"
           w="140px"
           rounded="lg"
-          shadow={6}
           bg="rgba(255,255,255, 0.15)"
         >
           <Text color="light.100" fontSize="6xl" fontFamily="Doppio One">
@@ -174,7 +168,6 @@ export default function TabCadastros() {
           my="2"
           w="140px"
           rounded="lg"
-          shadow={6}
           bg="rgba(255,255,255, 0.15)"
         >
           <Text color="light.100" fontSize="6xl" fontFamily="Doppio One">

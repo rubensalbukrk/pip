@@ -11,9 +11,10 @@ import BackButton from "../../../components/BackButton";
 import { LinearGradient } from "expo-linear-gradient";
 import { Dimensions } from "react-native";
 import { GlobalStyles } from "../../../components/GlobalStyles";
+const height = Dimensions.get("window").height + 100
 
 export default function Sobre() {
-  const height = Dimensions.get("window").height;
+  
   const config = {
     dependencies: {
       "linear-gradient": LinearGradient,
@@ -22,11 +23,12 @@ export default function Sobre() {
 
   return (
     <NativeBaseProvider config={config}>
-      <ScrollView w="100%" h={height} bg="lightBlue.400">
+      <ScrollView flex={1} w="100%" h={height} bg="lightBlue.400">
         <Box
           h={height}
           flex={1}
           w="100%"
+          
           justifyContent={"center"}
           alignItems="center"
           bg={{

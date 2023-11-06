@@ -28,8 +28,7 @@ export default function TabManager() {
           w="100%"
           maxH="240px"
           space={2}
-          shadow={6}
-          bg="lightBlue.400"
+          bg="rgba(255,255,255, 0.15)"
           rounded="lg"
           alignItems="center"
           justifyContent="center"
@@ -63,8 +62,7 @@ export default function TabManager() {
           w="100%"
           maxH="240px"
           space={2}
-          shadow={5}
-          bg="lightBlue.400"
+          bg="rgba(255,255,255, 0.15)"
           rounded="lg"
           alignItems="center"
           justifyContent="center"

@@ -126,8 +126,7 @@ export default function Services() {
           alt="pip-logo"
           w="100px"
           h="100px"
-          shadow={4}
-          resizeMode='contain'
+          resizeMode='cover'
           source={require("../../../assets/pip-icon.png")}
         />
         <Text
@@ -148,7 +147,7 @@ export default function Services() {
       </Box>
       </HStack>
      
-      <Heading w="100%" shadow={4} color="#fff" my="3" mt="8%" fontSize="xl" fontFamily="Doppio One">
+      <Heading w="100%" color="#fff" my="3" mt="8%" fontSize="xl" fontFamily="Doppio One">
         Oferecemos serviços gratuitamente de qualidade prestado por profissionais qualificados!
       </Heading>
       <FlatList

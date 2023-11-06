@@ -17,31 +17,30 @@ import {
 import { Ionicons, Feather } from "@expo/vector-icons";
 import { TextInputMask } from "react-native-masked-text";
 import { AuthContext } from "../../contexts/AuthContext";
-import { getNotices, getUsers } from "../../requisitions/api";
+import { api, getNotices, getUsers } from "../../requisitions/api";
 import { UserContext } from "../../contexts/UserContext";
 import { LinearGradient } from "expo-linear-gradient";
 
-
 export const Login = () => {
-  
-  const { users, setUsers, logged, setNotices } = useContext(UserContext);
-  const { Authentication, submit, setSubmit, auth, setSigningAuto, signingAuto} = useContext(AuthContext);
+  const { users, logged, setNotices } = useContext(UserContext);
+  const {
+    Authentication,
+    submit,
+    setSubmit,
+    auth,
+    setSigningAuto,
+    signingAuto,
+  } = useContext(AuthContext);
   const [cpf, setCpf] = useState(String);
   const [password, setPassword] = useState(String);
   const [show, setShow] = useState(false);
-
   const navigation = useNavigation();
 
   useEffect(() => {
-    if(logged?.cpf){
-      navigation.navigate('HomeApp')
+    if (logged?.cpf) {
+      navigation.navigate("HomeApp");
     }
-  },[logged])
-
-  useEffect(() => {
-    getUsers()
-    getNotices()
-  },[]);
+  }, [logged]);
 
   const config = {
     dependencies: {
@@ -83,7 +82,7 @@ export const Login = () => {
               resizeMode: "contain",
               width: "90%",
               height: 300,
-              marginHorizontal: '15%',
+              marginHorizontal: "15%",
               alignSelf: "center",
             }}
             alt="pip-logo"
@@ -109,13 +108,17 @@ export const Login = () => {
             borderColor={"rgba(255, 255, 255, 0.32)"}
             rounded="2xl"
           >
-            <Feather name="user" size={32} color={"rgba(255, 255, 255, 0.70)"} />
+            <Feather
+              name="user"
+              size={32}
+              color={"rgba(255, 255, 255, 0.70)"}
+            />
             <TextInputMask
               style={{
                 width: "100%",
                 borderColor: "#23B5D3",
-                marginLeft: '3%',
-                color: '#f9f9f9',
+                marginLeft: "3%",
+                color: "#f9f9f9",
                 height: 50,
                 textAlign: "left",
                 fontSize: 24,
@@ -151,22 +154,31 @@ export const Login = () => {
                 />
               </Pressable>
             }
-            InputLeftElement={<Feather name="lock" size={32} color={"rgba(255, 255, 255, 0.72)"} />}
+            InputLeftElement={
+              <Feather
+                name="lock"
+                size={32}
+                color={"rgba(255, 255, 255, 0.72)"}
+              />
+            }
             placeholder="******"
             defaultValue="123456"
           />
           <VStack alignSelf="flex-start" mx="5" my="2">
-            <Text color="light.100" fontFamily="Doppio One" >Lembrar-me</Text>
+            <Text color="light.100" fontFamily="Doppio One">
+              Lembrar-me
+            </Text>
             <Switch
-            alignSelf="flex-start" 
-            value={signingAuto}
-            size="sm" 
-            onToggle={() => {
-              toggleSigningAuto()
-            }} />
+              alignSelf="flex-start"
+              value={signingAuto}
+              size="sm"
+              onToggle={() => {
+                toggleSigningAuto();
+              }}
+            />
           </VStack>
-          
-          {!submit ?
+
+          {!submit ? (
             <Button
               size={"lg"}
               w="80%"
@@ -174,20 +186,16 @@ export const Login = () => {
               bg={"rgba(255, 255, 255, 0.22)"}
               rounded="2xl"
               onPress={() => {
-                Authentication(cpf, password)
+                Authentication(cpf, password);
               }}
             >
-              <Text
-              color="light.100"
-              fontSize="lg"
-              fontFamily={"Doppio One"}
-              >
+              <Text color="light.100" fontSize="lg" fontFamily={"Doppio One"}>
                 Entrar
               </Text>
             </Button>
-            :
+          ) : (
             <Button
-            fontFamily={"Doppio One"}
+              fontFamily={"Doppio One"}
               isLoading
               isLoadingText="Aguarde..."
               variant="solid"
@@ -197,7 +205,7 @@ export const Login = () => {
               w="80%"
               rounded="2xl"
             ></Button>
-          }
+          )}
         </Box>
         <Text
           fontSize="lg"
@@ -218,7 +226,15 @@ export const Login = () => {
           mb="10"
           onPress={() => navigation.navigate("Cadastrar")}
         >
-          <Text fontSize="xl" color="light.100" fontFamily="Doppio One" shadow={8} bold>REGISTRAR</Text>
+          <Text
+            fontSize="xl"
+            color="light.100"
+            fontFamily="Doppio One"
+            shadow={8}
+            bold
+          >
+            REGISTRAR
+          </Text>
         </Button>
       </Box>
     </NativeBaseProvider>

@@ -40,7 +40,7 @@ import { GlobalStyles } from "../../../components/GlobalStyles";
 const apiUpload = `${api}/upload`;
 
 export const User = () => {
-  const { auth, setAuth } = useContext(AuthContext);
+
   const { isOpen, onOpen, onClose } = useDisclose();
   const {
     users,
@@ -54,20 +54,53 @@ export const User = () => {
     setAprovados,
     aprovados,
   } = useContext(UserContext);
+  const { auth, setAuth } = useContext(AuthContext);
   const navigation = useNavigation();
 
   var nome = logged?.nome;
-  var parentsCount = logged.filhos?.length;
+  var parentsCount = logged?.filhos?.length;
   var primeiro_nome = nome?.split(" ").shift();
 
-  useEffect(() => (getSolicitation(), getAprovados()), []);
+  useEffect(() => {
+    getSolicitations(),
+    getAprovados()
+  }, []);
 
   if (solicitations) {
     var userSolicitations = solicitations.filter(
       (item) => String(item.cpf) === String(logged.cpf)
     );
   }
-
+  const getSolicitations = async () => {
+    try {
+      const response = await axios.get(`${api}/solicitations`, {
+        method: "get",
+        headers: new Headers({
+          "ngrok-skip-browser-warning": "69420",
+        }),
+      });
+      const solicitations = await response.data.solicitations;
+      setSolicitations(solicitations);
+    } catch (error) {
+      alert("Houve um problema com o servidor, aguarde um momento!");
+    }
+  };
+  const getAprovados = async () => {
+    const { setAprovados } = useContext(UserContext);
+    try {
+      const response2 = await axios.get(`${api}/aprovados`, {
+        method: "get",
+        headers: new Headers({
+          "ngrok-skip-browser-warning": "69420",
+        }),
+      });
+      const aprovados = await response2.data.aprovados;
+      setAprovados(aprovados);
+    } catch (error) {
+        alert("Houve um problema com o serviço, aguarde um momento!") &
+        navigate("HomeApp")
+    }
+  };
   const pickImageAsync = async () => {
     const { assets, canceled } = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,

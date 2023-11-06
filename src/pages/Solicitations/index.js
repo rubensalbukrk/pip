@@ -3,7 +3,6 @@ import axios from "axios";
 import {
   Box,
   Text,
-  ScrollView,
   Center,
   Icon,
   Heading,
@@ -13,9 +12,12 @@ import {
   VStack,
   NativeBaseProvider,
 } from "native-base";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, ScrollView, RefreshControl } from "react-native";
 import { FontAwesome, Octicons } from "@expo/vector-icons";
-import { api, deleteAprovado, getAprovados, getSolicitation } from "../../requisitions/api";
+import {
+  api,
+  deleteAprovado,
+} from "../../requisitions/api";
 import UserAvatar from "../../../components/UserAvatar";
 import { LinearGradient } from "expo-linear-gradient";
 import { UserContext } from "../../contexts/UserContext";
@@ -25,10 +27,46 @@ import { Dimensions } from "react-native";
 var height = Dimensions.get("window").height;
 
 export default function SolicitationsUser() {
-  const { logged, solicitations, aprovados } =
+  const {refreshing, setRefreshing, logged, solicitations, setSolicitations, aprovados } =
     useContext(UserContext);
 
-  useEffect(() => (getSolicitation(), getAprovados()), []);
+  const getSolicitations = async () => {
+    try {
+      const response = await axios.get(`${api}/solicitations`, {
+        method: "get",
+        headers: new Headers({
+          "ngrok-skip-browser-warning": "69420",
+        }),
+      });
+      const solicitations = await response.data.solicitations;
+      setSolicitations(solicitations);
+      setRefreshing(false)
+    } catch (error) {
+      alert("Houve um problema com o servidor, aguarde um momento!");
+    }
+  };
+  const getAprovados = async () => {
+    const { setAprovados } = useContext(UserContext);
+    try {
+      const response2 = await axios.get(`${api}/aprovados`, {
+        method: "get",
+        headers: new Headers({
+          "ngrok-skip-browser-warning": "69420",
+        }),
+      });
+      const aprovados = await response2.data.aprovados;
+      setAprovados(aprovados);
+    } catch (error) {
+        alert("Houve um problema com o serviço, aguarde um momento!") &
+        navigate("HomeApp")
+    }
+  };
+
+  useEffect(() => {
+    getSolicitations()
+    getAprovados()
+  }, []);
+
   if (solicitations) {
     var userSolicitations = solicitations.filter(
       (item) => String(item.cpf) === String(logged.cpf)
@@ -49,7 +87,13 @@ export default function SolicitationsUser() {
 
   return (
     <NativeBaseProvider config={config}>
-      <ScrollView h={height} bg={"lightBlue.400"} horizontal={false} w="100%">
+      <ScrollView refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={() => getSolicitations() && setRefreshing(true)}
+              />
+            }
+            h={height} bg={"lightBlue.400"} horizontal={false} w="100%">
         <Box
           flex={1}
           py="12"

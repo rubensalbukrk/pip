@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from "react";
+import axios from "axios";
 import { AntDesign } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import { useNavigation } from "@react-navigation/native";
@@ -12,19 +13,20 @@ import {
   Heading,
   NativeBaseProvider,
 } from "native-base";
+import { api } from "../../requisitions/api";
 import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+
+  
 export default function Welcome() {
-  const { logged, setLogged, setAuth, auth } = useContext(UserContext);
-  const navigation = useNavigation();
-
-
+  const { setUsers, users, logged, setLogged, setAuth, auth } = useContext(UserContext);
+  const { navigate } = useNavigation();
+  
   useEffect(() => {
     getMyLogin();
     if (logged?.cpf) {
-      navigation.navigate("HomeApp");
-      
+      navigate("HomeApp");
     }
   }, []);
 
@@ -34,6 +36,22 @@ export default function Welcome() {
       setLogged(dataUser);
     });
   }
+
+const getUsers = async () => {
+    try {
+      const response = await axios.get(`${api}/users`, {
+        method: "get",
+        headers: new Headers({
+          "ngrok-skip-browser-warning": "69420",
+        }),
+      });
+      const data = await response.data.users;
+      setUsers(data);
+
+    } catch (error) {
+      alert("Não houve respostas do servidor, tente novamente!")
+    }
+  };
 
   const config = {
     dependencies: {
@@ -124,7 +142,13 @@ export default function Welcome() {
             bgColor="rgba(255, 255, 255, 0.12)"
           >
             <Animatable.View animation="fadeInLeft" delay={1000}>
-              <Text mx="3" alignSelf="center" fontFamily="Doppio One" color="light.100" fontSize="2xl">
+              <Text
+                mx="3"
+                alignSelf="center"
+                fontFamily="Doppio One"
+                color="light.100"
+                fontSize="2xl"
+              >
                 Somos o projeto inclusão popular e aqui você vai encontrar
                 serviços, notícias e muito mais...
               </Text>
@@ -136,36 +160,34 @@ export default function Welcome() {
             delay={1200}
             style={{ width: "100%" }}
           >
- 
-                  <Animatable.View
-                    style={{
-                      flexDirection: "row",
-                      width: 400,
-                      height: 100,
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                    animation="rubberBand"
-                    iterationDelay={2}
-                    iterationCount="infinite"
-                  >
-                    <Button
-                      w="50%"
-                      variant="solid"
-                      rounded="2xl"
-                      bgColor="rgba(255, 255, 255, 0.12)"
-                      mt="30"
-                      onPress={() => navigation.navigate("Login")}
-                    >
-                      <Box w="100%" flexDirection="row">
-                        <Text fontFamily="Doppio One" color="#fff" fontSize="2xl">
-                          Começar
-                        </Text>
-                        <AntDesign name="arrowright" size={40} color="white" />
-                      </Box>
-                    </Button>
-                  </Animatable.View>
-
+            <Animatable.View
+              style={{
+                flexDirection: "row",
+                width: 400,
+                height: 100,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              animation="rubberBand"
+              iterationDelay={2}
+              iterationCount="infinite"
+            >
+              <Button
+                w="50%"
+                variant="solid"
+                rounded="2xl"
+                bgColor="rgba(255, 255, 255, 0.12)"
+                mt="30"
+                onPress={() => getUsers() && navigate('Login') }
+              >
+                <Box w="100%" flexDirection="row">
+                  <Text fontFamily="Doppio One" color="#fff" fontSize="2xl">
+                    Começar
+                  </Text>
+                  <AntDesign name="arrowright" size={40} color="white" />
+                </Box>
+              </Button>
+            </Animatable.View>
           </Animatable.View>
         </Box>
       </>

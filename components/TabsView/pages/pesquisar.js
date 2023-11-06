@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import axios from "axios";
 import {
   Icon,
   HStack,
@@ -9,7 +10,6 @@ import {
   Center,
   Input,
   Heading,
-
 } from "native-base";
 import { View, FlatList, TouchableOpacity } from "react-native";
 import { Ionicons, FontAwesome5, Feather } from "@expo/vector-icons";
@@ -21,19 +21,34 @@ export default function TabSearch() {
   const { refreshing, setRefreshing, users, setUsers } = useContext(UserContext);
   const [search, setSearch] = useState("");
   const [filteredData, setFilteredData] = useState([]);
-  const [masterData, setMasterData] = useState([]);
+  const [masterData, setMasterData] = useState([users]);
   const navigation = useNavigation();
-  const noAvatar = `${api}/files/user.png`
-
-  useEffect(() => {
-    getUsers()
-  },[])
+  const noAvatar = require('../../../assets/user.png')
 
  if (refreshing){
   getUsers()
+  setRefreshing(false)
  }
 
-  const searchFilter = (text) => {
+async function getUsers(){
+  try {
+    const response = await axios.get(`${api}/users`, {
+    method: "get",
+    headers: new Headers({
+      "ngrok-skip-browser-warning": "69420",
+    }),
+  })
+    const data = await response.data.users;
+    setUsers(data);
+    setFilteredData(data);
+    setMasterData(data);
+    setUpdateList(false)
+  } catch (error) {
+    alert('Houve um problema com o servidor, tente novamente!')
+  }
+}
+
+const searchFilter = (text) => {
     if (text) {
       const newData = masterData.filter(function (item) {
         if (item.nome) {
@@ -85,10 +100,10 @@ export default function TabSearch() {
       <FlatList
         data={filteredData}
         horizontal={false}
-        refreshing={updateList}
-        onRefresh={() => setUpdateList(true)}
+        refreshing={refreshing}
+        onRefresh={() => setRefreshing(true)}
         showsVerticalScrollIndicator={false}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.id}
         style={{
           flex: 1,
           width: "100%",
