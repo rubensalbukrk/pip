@@ -23,7 +23,7 @@ export default function TabSearch() {
   const [filteredData, setFilteredData] = useState([]);
   const [masterData, setMasterData] = useState([users]);
   const navigation = useNavigation();
-  const noAvatar = require('../../../assets/user.png')
+
 
  if (refreshing){
   getUsers()
@@ -42,9 +42,9 @@ async function getUsers(){
     setUsers(data);
     setFilteredData(data);
     setMasterData(data);
-    setUpdateList(false)
+    setRefreshing(false)
   } catch (error) {
-    alert('Houve um problema com o servidor, tente novamente!')
+    alert(`Houve um problema com o servidor, tente novamente! ${error}`)
   }
 }
 

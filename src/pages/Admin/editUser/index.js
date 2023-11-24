@@ -8,7 +8,6 @@ import {
   Text,
   Input,
   Button,
-  Avatar,
   Image,
   Container,
   Center,
@@ -318,9 +317,12 @@ export default function EditUser({ route }) {
             ALTERAR DADOS
           </Text>
           <Image
-            backgroundColor={"lightBlue.800"}
+          opacity={1}
+          backgroundColor={"lightBlue.500"}
+          style={{zIndex: 10}}
+            rounded="full"
             size={"lg"}
-            source={{ uri: avatar === 0 ? "" : route?.params?.avatar }}
+            source={avatar ? {uri: route?.params?.avatar} : require('../../../../assets/user.png')}
           />
         </Box>
 

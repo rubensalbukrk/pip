@@ -1,9 +1,8 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import axios from "axios";
 import { UserContext } from "../contexts/UserContext";
-import { useNavigation } from "@react-navigation/native";
 
-export const api = "https://9cd8-45-183-26-22.ngrok-free.app/require";
+export const api = "https://109a-45-183-25-57.ngrok-free.app/require";
 export const apiUpload = `${api}/upload`;
 
 export const getUsers = async () => {

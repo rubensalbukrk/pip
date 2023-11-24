@@ -54,7 +54,7 @@ export function TabViewAdmin() {
         });
         const color = index === i ? useColorModeValue('#fff', '#e5e5e5') : useColorModeValue('#80ccff', '#a1a1aa');
         const borderColor = index === i ? 'light.200' : useColorModeValue('cyan.400', 'gray.400');
-        return <Box mt="10" borderBottomWidth="3" borderColor={borderColor} flex={1} alignItems="center" p="3" cursor="pointer">
+        return <Box key={`id@-${i}`} mt="10" borderBottomWidth="3" borderColor={borderColor} flex={1} alignItems="center" p="3" cursor="pointer">
               <Pressable onPress={() => {
             setIndex(i);
           }}>

@@ -14,6 +14,7 @@ import BackButton from "../../../../components/BackButton";
 import { UserContext } from "../../../contexts/UserContext";
 import { api } from "../../../requisitions/api";
 import { LinearGradient } from "expo-linear-gradient";
+
 export default function ViewService({ route }) {
   const {logged} = useContext(UserContext)
 
@@ -47,7 +48,7 @@ export default function ViewService({ route }) {
 
   return (
     <NativeBaseProvider config={config}>
-    <ScrollView flex={1} bg="lightBlue.700" w="100%">
+    <ScrollView flex={1} showsVerticalScrollIndicator={false} bg="lightBlue.700" w="100%">
       <Box
         w="100%"
         minHeight="900"

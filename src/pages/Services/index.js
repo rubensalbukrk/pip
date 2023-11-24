@@ -155,6 +155,7 @@ export default function Services() {
         mb="10%"
         flex={1}
         data={items}
+        showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => {
           return (

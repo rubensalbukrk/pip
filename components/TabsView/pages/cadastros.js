@@ -59,8 +59,7 @@ export default function TabCadastros() {
     <ScrollView mb="5%" flex={1} w="100%" horizontal={false}>
       <VStack
         alignSelf="center"
-        w="90%"
-        rounded="lg"
+        w="100%"
         alignItems="center"
         justifyContent="center"
       >

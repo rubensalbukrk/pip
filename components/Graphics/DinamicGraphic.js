@@ -57,7 +57,7 @@ import { UserContext } from '../../src/contexts/UserContext';
     });
     
     let voluntariosCount = voluntarios.length;
-    let pessoasCount = users.length;
+    let pessoasCount = users.length
     let autistasCount = autistas.length;
     let coordenadoresCount = coordenadores.length;
 
@@ -71,7 +71,7 @@ import { UserContext } from '../../src/contexts/UserContext';
           key,
           value: values[index],
           svg: { fill: colors[index], opacity: 0.6},
-          arc: { outerRadius: (120 + (values[index] >= 100 ? 50 : values[index])), padAngle: label === key ? 0.1 : 0 },
+          arc: { outerRadius: (120 + (values[index] >= 120 ? 30 : values[index])), padAngle: label === key ? 0.1 : 0 },
           onPress: () => this.setState({ selectedSlice: { label: key, value: values[index] } })
         }
       })

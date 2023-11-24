@@ -117,12 +117,12 @@ export default function SolicitationsUser() {
           </Box>
 
           <Box
-            alignSelf={"left"}
+            w="100%"
             pl="5"
             h="30"
             flexDir="row"
-            justifyContent="center"
-            alignItems="center"
+            justifyContent="flex-start"
+            alignItems="flex-start"
           >
             <Icon
               as={<Octicons name="checklist" size={32} color="white" />}
@@ -130,7 +130,7 @@ export default function SolicitationsUser() {
               color="white"
             />
             <Heading ml="3" fontFamily="Doppio One" color="light.100">
-              Minhas solicitações
+             Suas solicitações
             </Heading>
           </Box>
 
