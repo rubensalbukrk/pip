@@ -3,25 +3,12 @@ import { View, ActivityIndicator, Image } from "react-native";
 
 export default function Preload() {
   return (
-    <>
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-
-          backgroundColor: "#fff",
-        }}
-      >
+      <View className="flex-1 w-full bg-white">
         <Image
-          style={{
-            width: "100%",
-            height: "40%",
-            marginBottom: "5%",
-          }}
+          className='w-full h-40 mb-48'
           source={require("../../../assets/imgs/pip-logo.jpg")}
         />
         <ActivityIndicator size={"large"} color={"black"} />
       </View>
-    </>
   );
 }

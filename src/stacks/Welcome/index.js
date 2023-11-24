@@ -1,28 +1,17 @@
 import React, { useContext, useEffect } from "react";
+import { View, Text, TouchableOpacity } from "react-native";
 import axios from "axios";
 import { AntDesign } from "@expo/vector-icons";
-import * as Animatable from "react-native-animatable";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../contexts/UserContext";
-import {
-  Box,
-  Container,
-  Text,
-  Image,
-  Button,
-  Heading,
-  NativeBaseProvider,
-} from "native-base";
 import { api } from "../../requisitions/api";
-import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
-  
 export default function Welcome() {
-  const { setUsers, users, logged, setLogged, setAuth, auth } = useContext(UserContext);
+  const { setUsers, logged, setLogged } =
+    useContext(UserContext);
   const { navigate } = useNavigation();
-  
+
   useEffect(() => {
     getMyLogin();
     if (logged?.cpf) {
@@ -37,7 +26,7 @@ export default function Welcome() {
     });
   }
 
-const getUsers = async () => {
+  const getUsers = async () => {
     try {
       const response = await axios.get(`${api}/users`, {
         method: "get",
@@ -47,150 +36,47 @@ const getUsers = async () => {
       });
       const data = await response.data.users;
       setUsers(data);
-
     } catch (error) {
-      alert("Não houve respostas do servidor, tente novamente!")
+      alert("Não houve respostas do servidor, tente novamente!");
     }
   };
 
-  const config = {
-    dependencies: {
-      "linear-gradient": LinearGradient,
-    },
-  };
-
   return (
-    <NativeBaseProvider config={config}>
-      <>
-        <Box
-          flex={1}
-          w="100%"
-          bg={{
-            linearGradient: {
-              colors: ["lightBlue.600", "lightBlue.400"],
-              start: [0, 0],
-              end: [1, 0],
-            },
-          }}
-          _text={{
-            fontSize: "md",
-            fontWeight: "medium",
-            color: "warmGray.50",
-            textAlign: "center",
-          }}
-          alignItems="center"
-        >
-          <Animatable.View
-            style={{ width: "100%", height: "50%" }}
-            delay={800}
-            animation="bounceInDown"
-          >
-            <Image
-              position="absolute"
-              alt="pip-logo"
-              w="60%"
-              h="40%"
-              right="7%"
-              top="2%"
-              mt="20%"
-              resizeMode="cover"
-              source={require("../../../assets/pip-icon.png")}
-            />
-          </Animatable.View>
+    <View className="flex-1 w-full items-center bg-blue-500">
+      <View className="w-full h-48">
+        <Image
+          className="absolute w-60 h-40 right-7 top-2 mt-20"
+          alt="pip-logo"
+          resizeMode="cover"
+          source={require("../../../assets/pip-icon.png")}
+        />
+      </View>
 
-          <Container
-            position="absolute"
-            top="30%"
-            left="4%"
-            w="100%"
-            h="100"
-            space={3}
-          >
-            <Animatable.View animation="fadeInRight" delay={1000}>
-              <Heading
-                my="1"
-                shadow={7}
-                mx="2"
-                color="light.100"
-                fontSize="5xl"
-                fontFamily="Doppio One"
-              >
-                Olá,
-              </Heading>
-            </Animatable.View>
+      <View className="absolute w-full h-full gap-3 top-32 left-4">
+        <Text className="font-default my-1 mx-2 text-white text-4xl">Olá,</Text>
+        <Text className="font-default w-72 text-4xl text-white mx-2 my-1">
+          Bem vindo(a)!
+        </Text>
+      </View>
 
-            <Animatable.View animation="fadeInRight" delay={1000}>
-              <Heading
-                my="1"
-                mx="2"
-                color="light.100"
-                w="70%"
-                shadow={4}
-                fontFamily="Doppio One"
-                fontSize="4xl"
-              >
-                Bem vindo(a)!
-              </Heading>
-            </Animatable.View>
-          </Container>
+      <View className="w-full rounded-xl h-20 justify-center bg-white/5">
+        <Text className="font-default self-center mx-3 text-white text-2xl">
+          Somos o projeto inclusão popular e aqui você vai encontrar serviços,
+          notícias e muito mais...
+        </Text>
+      </View>
 
-          <Box
-            w="100%"
-            rounded={"xl"}
-            h="20%"
-            justifyContent="center"
-            bgColor="rgba(255, 255, 255, 0.12)"
-          >
-            <Animatable.View animation="fadeInLeft" delay={1000}>
-              <Text
-                mx="3"
-                alignSelf="center"
-                fontFamily="Doppio One"
-                color="light.100"
-                fontSize="2xl"
-              >
-                Somos o projeto inclusão popular e aqui você vai encontrar
-                serviços, notícias e muito mais...
-              </Text>
-            </Animatable.View>
-          </Box>
-
-          <Animatable.View
-            animation="fadeInUp"
-            delay={1200}
-            style={{ width: "100%" }}
-          >
-            <Animatable.View
-              style={{
-                flexDirection: "row",
-                width: 400,
-                height: 100,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              animation="rubberBand"
-              iterationDelay={2}
-              iterationCount="infinite"
-            >
-              <Button
-                w="50%"
-                variant="solid"
-                rounded="2xl"
-                bgColor="rgba(255, 255, 255, 0.12)"
-                mt="30"
-                onPress={() => getUsers() && navigate('Login') }
-              >
-                <Box w="100%" flexDirection="row">
-                  <Text fontFamily="Doppio One" color="#fff" fontSize="2xl">
-                    Começar
-                  </Text>
-                  <AntDesign name="arrowright" size={40} color="white" />
-                </Box>
-              </Button>
-            </Animatable.View>
-          </Animatable.View>
-        </Box>
-      </>
-    </NativeBaseProvider>
+      <TouchableOpacity
+        className="w-52 mt-32 rounded-2xl bg-white/10"
+        onPress={() => getUsers() && navigate("Login")}
+      >
+        <View className="w-full flex-row">
+          <Text fontFamily="Doppio One" color="#fff" fontSize="2xl">
+            Começar
+          </Text>
+          <AntDesign name="arrowright" size={40} color="white" />
+        </View>
+      </TouchableOpacity>
+    </View>
   );
 }

@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  Select,
+} from "react-native";
 import axios from "axios";
 import {
-  Box,
-  Image,
-  Input,
-  Text,
-  Button,
-  Container,
-  Center,
   Select,
-  CheckIcon,
-  ScrollView,
-  Heading,
-  FormControl,
-  NativeBaseProvider,
-  HStack,
 } from "native-base";
 import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
@@ -24,14 +20,8 @@ import { TouchableOpacity, FlatList } from "react-native";
 
 const dataAtual = new Date();
 
-const config = {
-  dependencies: {
-    "linear-gradient": LinearGradient,
-  },
-};
-
 export const Cadastro = () => {
-  const [updateList, setUpdateList] = useState(false)
+  const [updateList, setUpdateList] = useState(false);
   const [formData, setData] = React.useState({
     date: dataAtual,
   });
@@ -63,52 +53,43 @@ export const Cadastro = () => {
     setData({ ...formData, filhos });
     alert("Adicionado");
   }
- const UserFilhos = () => {
+  const UserFilhos = () => {
     try {
       return (
-        <Box w="100%" flex={1}>
+        <View className="flex-1 w-full">
           <FlatList
-          refreshing={updateList}
+            refreshing={updateList}
             keyExtractor={(item) => item.cpf.toString()}
             data={filhos}
             renderItem={({ item, index }) => {
               return (
-                <HStack w="100%">
+                <View className="w-full">
+                  <View className="flex-1 w-80 py-3 px-3 my-2 rounded-2xl bg-white/20">
+                    <Text className="font-default text-lg text-white">
+                      Nome: {item?.nome}
+                    </Text>
+                    <Text className="font-default text-lg text-white">
+                      CPF: {item?.cpf}
+                    </Text>
+                    <Text className="font-default text-lg text-white">
+                      Idade: {item?.idade}
+                    </Text>
+                  </View>
 
-                <Box
-                  flex={1}
-                  w="80%"
-                  bg="rgba(255,255,255, 0.15)"
-                  rounded="2xl"
-                  py="3"
-                  my="2"
-                  px="3"
-                >
-
-                  <Text fontSize={18} color="light.100" fontFamily="Doppio One">
-                    Nome: {item?.nome}
-                  </Text>
-                  <Text fontSize={18} color="light.100" fontFamily="Doppio One">
-                    CPF: {item?.cpf}
-                  </Text>
-                  <Text fontSize={18} color="light.100" fontFamily="Doppio One">
-                    Idade: {item?.idade}
-                  </Text>
-                </Box>
-                <TouchableOpacity
-                      onPress={() => {
-                        filhos.splice(index, 1);
-                        setUpdateList((previousState) => !previousState)
-                      }}
-                      style={{ width: '20%', alignItems: "center", justifyContent: "center" }}
-                    >
-                      <Feather name="user-minus" size={42} color="white" />
-                    </TouchableOpacity>
-                </HStack>
+                  <TouchableOpacity
+                    onPress={() => {
+                      filhos.splice(index, 1);
+                      setUpdateList((previousState) => !previousState);
+                    }}
+                    className='w-20 justify-center items-center'
+                  >
+                    <Feather name="user-minus" size={42} color="white" />
+                  </TouchableOpacity>
+                </View>
               );
             }}
           />
-        </Box>
+        </View>
       );
     } catch (error) {
       alert("Dados de usuário não encontrado!");
@@ -118,52 +99,6 @@ export const Cadastro = () => {
   useEffect(() => {
     bairro && setData({ ...formData, bairro: bairro });
   }, [bairro]);
-
-  const SeletorBairro = () => {
-    return (
-    
-        <Box
-          alignSelf="flex-start"
-          rounded="lg"
-          h="50"
-          _text={{ color: "#fff" }}
-          maxW="300"
-        >
-          <Select
-            fontFamily="Doppio One"
-            fontSize="lg"
-            selectedValue={bairro}
-            minWidth="250"
-            h="40px"
-            rounded="2xl"
-            color={"light.100"}
-            bg="rgba(255, 255, 255, 0.1)"
-            borderColor="rgba(255, 255, 255, 0.18)"
-            outlineColor={"light.100"}
-            dropdownIcon={<CheckIcon size="6" color="light.100" />}
-            placeholder="Selecionar bairro"
-            placeholderTextColor={"light.100"}
-            _selectedItem={{
-              bg: "lightBlue.400",
-              colorScheme: "lightBlue",
-              endIcon: <CheckIcon size="6" color="#fff" />,
-              rounded: "3xl",
-            }}
-            mt={1}
-            onValueChange={(value) => setBairro(value)}
-          >
-            <Select.Item label="Santa Rita" value="Santa Rita" />
-            <Select.Item label="Varzea Nova" value="Varzea Nova" />
-            <Select.Item label="Tibiri" value="Tibiri" />
-            <Select.Item label="Marcos Moura" value="Marcos Moura" />
-            <Select.Item
-              label="Cruz do Espirito Santo"
-              value="Cruz do Espirito Santo"
-            />
-          </Select>
-        </Box>
-    );
-  };
 
   const toggleEstagio = () => {
     setEstagiario((previousState) => !previousState);
@@ -179,526 +114,175 @@ export const Cadastro = () => {
   };
 
   return (
-    <NativeBaseProvider config={config}>
-      <Box
-        flex="1"
-        justifyContent={"center"}
-        pt="20"
-        pb="3"
-        px="5"
-        h="100%"
-        bg={{
-          linearGradient: {
-            colors: ["lightBlue.400", "lightBlue.600"],
-            start: [1, 1],
-            end: [0, 1],
-          },
-        }}
-      >
-        <Heading
-          fontFamily="Doppio One"
-          textAlign={"left"}
-          color="light.100"
-          shadow={6}
-          fontSize={"4xl"}
-        >
-          Bem vindo,
-        </Heading>
-        <Heading
-          color="light.100"
-          fontFamily="Doppio One"
-          shadow={6}
-          textAlign={"left"}
-        >
-          Faça seu cadastro
-        </Heading>
+    <View className="flex-1 justify-center pt-20 pb-3 px-5 h-full">
+      <Text className="font-default text-left text-white text-4xl">
+        Bem vindo,
+      </Text>
+      <Text className="font-default text-left text-white text-xl">
+        Faça seu cadastro
+      </Text>
 
-        <Image
-          position={"absolute"}
-          top="7%"
-          right="10%"
-          w="90"
-          h="90"
-          alt="icon-pip"
-          resizeMode="cover"
-          source={require("../../../assets/pip-icon.png")}
-        />
+      <Image
+        className="absolute top-7 right-10 w-96 h-90"
+        alt="icon-pip"
+        resizeMode="cover"
+        source={require("../../../assets/pip-icon.png")}
+      />
 
-        <ScrollView showsVerticalScrollIndicator={false} marginTop="12%">
-          <Box alignItems={"center"} alignSelf={"center"} h="100%" w="100%">
-            <FormControl mt="5" isRequired>
-              <FormControl.Label
-                _text={{
-                  color: "light.100",
-                  fontSize: 22,
-                  fontFamily: "Doppio One",
-                  bold: true,
-                  color: "light.100",
-                  fontSize: 22,
-                  fontFamily: "Doppio One",
-                }}
-                shadow={6}
-              >
-                Nome completo
-              </FormControl.Label>
-              <Input
-                bg="rgba(255, 255, 255, 0.1)"
-                clearTextOnFocus={true}
-                rounded="2xl"
-                size="2xl"
-                showSoftInputOnFocus={true}
-                focusOutlineColor="rgba(255, 255, 255, 0.50)"
-                selectionColor="rgba(255, 255, 255, 0.58)"
-                borderColor="rgba(255, 255, 255, 0.18)"
-                color={"light.100"}
-                onChangeText={(value) => setData({ ...formData, nome: value })}
-              />
+      <ScrollView className="mt-9" showsVerticalScrollIndicator={false}>
+        <View className="w-full h-full self-center items-center">
+          <View className="mt-4">
+            <Text className="font-default text-lg font-bold text-white">
+              Nome completo
+            </Text>
+            <TextInput
+              className="rounded-2xl bg-white/10 border-white/20"
+              onChangeText={(value) => setData({ ...formData, nome: value })}
+            />
+          </View>
 
-              <FormControl.ErrorMessage
-                _text={{
-                  fontSize: "xs",
-                }}
-              >
-                Insira um nome válido
-              </FormControl.ErrorMessage>
-            </FormControl>
+          <View className="mt-4">
+            <Text className="font-default text-lg font-bold text-white">
+              Idade
+            </Text>
+            <TextInput
+              className="rounded-2xl bg-white/10 border-white/20"
+              onChangeText={(value) => setData({ ...formData, idade: value })}
+            />
+          </View>
 
-            <FormControl mt="5" isRequired>
-              <FormControl.Label
-                _text={{
-                  color: "light.100",
-                  fontSize: 22,
-                  fontFamily: "Doppio One",
-                  bold: true,
-                }}
-              >
-                Idade
-              </FormControl.Label>
-              <Input
-                bg="rgba(255, 255, 255, 0.1)"
-                clearTextOnFocus={true}
-                rounded="2xl"
-                size="2xl"
-                showSoftInputOnFocus={true}
-                focusOutlineColor="rgba(255, 255, 255, 0.50)"
-                selectionColor="rgba(255, 255, 255, 0.58)"
-                borderColor="rgba(255, 255, 255, 0.18)"
-                color={"light.100"}
-                w="20%"
-                onChangeText={(value) => setData({ ...formData, idade: value })}
-              />
-            </FormControl>
+          <View className="mt-4">
+            <Text className="font-default text-lg font-bold text-white">
+              CPF
+            </Text>
+            <TextInput
+              className="rounded-2xl bg-white/10 border-white/20"
+              onChangeText={(value) => setData({ ...formData, cpf: value })}
+            />
+          </View>
 
-            <FormControl mt="5" isRequired>
-              <FormControl.Label
-                _text={{
-                  color: "light.100",
-                  fontSize: 22,
-                  fontFamily: "Doppio One",
-                  bold: true,
-                }}
-              >
-                CPF
-              </FormControl.Label>
-              <Input
-                bg="rgba(255, 255, 255, 0.1)"
-                clearTextOnFocus={true}
-                rounded="2xl"
-                size="2xl"
-                showSoftInputOnFocus={true}
-                focusOutlineColor="rgba(255, 255, 255, 0.50)"
-                selectionColor="rgba(255, 255, 255, 0.58)"
-                borderColor="rgba(255, 255, 255, 0.18)"
-                color={"light.100"}
-                w="50%"
-                placeholder="000.000.000-00"
-                placeholderTextColor="light.100"
-                onChangeText={(value) => setData({ ...formData, cpf: value })}
-              />
-            </FormControl>
+          <View className="mt-4">
+            <Text className="font-default text-lg font-bold text-white">
+              NIS
+            </Text>
+            <TextInput
+              className="rounded-2xl bg-white/10 border-white/20"
+              onChangeText={(value) => setData({ ...formData, nis: value })}
+            />
+          </View>
 
-            <FormControl mt="5" isRequired>
-              <FormControl.Label
-                _text={{
-                  color: "light.100",
-                  fontSize: 22,
-                  fontFamily: "Doppio One",
-                  bold: true,
-                }}
-              >
-                Número NIS
-              </FormControl.Label>
-              <Input
-                bg="rgba(255, 255, 255, 0.1)"
-                clearTextOnFocus={true}
-                rounded="2xl"
-                size="2xl"
-                showSoftInputOnFocus={true}
-                focusOutlineColor="rgba(255, 255, 255, 0.50)"
-                selectionColor="rgba(255, 255, 255, 0.58)"
-                borderColor="rgba(255, 255, 255, 0.18)"
-                color={"light.100"}
-                w="50%"
-                onChangeText={(value) => setData({ ...formData, nis: value })}
-              />
-              <FormControl.HelperText
-                _text={{
-                  fontSize: "xs",
-                }}
-              ></FormControl.HelperText>
-              <FormControl.ErrorMessage
-                _text={{
-                  fontSize: "xs",
-                }}
-              >
-                NIS inválido!
-              </FormControl.ErrorMessage>
-            </FormControl>
+          <View className="mt-4">
+            <Text className="font-default text-lg font-bold text-white">
+              Email
+            </Text>
+            <TextInput
+              className="rounded-2xl bg-white/10 border-white/20"
+              onChangeText={(value) => setData({ ...formData, email: value })}
+            />
+          </View>
 
-            <FormControl mt="5">
-              <FormControl.Label
-                _text={{
-                  color: "light.100",
-                  fontSize: 22,
-                  fontFamily: "Doppio One",
-                  bold: true,
-                }}
-              >
-                Email
-              </FormControl.Label>
-              <Input
-                bg="rgba(255, 255, 255, 0.1)"
-                clearTextOnFocus={true}
-                rounded="2xl"
-                size="2xl"
-                showSoftInputOnFocus={true}
-                focusOutlineColor="rgba(255, 255, 255, 0.50)"
-                selectionColor="rgba(255, 255, 255, 0.58)"
-                borderColor="rgba(255, 255, 255, 0.18)"
-                color={"light.100"}
-                w="80%"
-                placeholder="Ex: meu-email@gmail.com"
-                placeholderTextColor="light.100"
-                onChangeText={(value) => setData({ ...formData, email: value })}
-              />
-              <FormControl.HelperText
-                shadow={4}
-                _text={{
-                  fontSize: "xs",
-                  color: "light.100",
-                }}
-              >
-                Insira um e-mail válido!
-              </FormControl.HelperText>
-              <FormControl.ErrorMessage
-                _text={{
-                  fontSize: "xs",
-                }}
-              >
-                Este e-mail não é válido!
-              </FormControl.ErrorMessage>
-            </FormControl>
+          <View className="mt-4">
+            <Text className="font-default text-lg font-bold text-white">
+              Endereço
+            </Text>
+            <TextInput
+              className="rounded-2xl bg-white/10 border-white/20"
+              onChangeText={(value) => setData({ ...formData, address: value })}
+            />
+          </View>
 
-            <FormControl mt="5" isRequired>
-              <FormControl.Label
-                _text={{
-                  color: "light.100",
-                  fontSize: 22,
-                  fontFamily: "Doppio One",
-                  bold: true,
-                }}
-              >
-                Endereço
-              </FormControl.Label>
-              <Input
-                bg="rgba(255, 255, 255, 0.1)"
-                clearTextOnFocus={true}
-                rounded="2xl"
-                size="2xl"
-                showSoftInputOnFocus={true}
-                focusOutlineColor="rgba(255, 255, 255, 0.50)"
-                selectionColor="rgba(255, 255, 255, 0.58)"
-                borderColor="rgba(255, 255, 255, 0.18)"
-                color={"light.100"}
-                w="80%"
-                placeholder="Rua Severo Rodrigues, 457"
-                placeholderTextColor="light.100"
-                onChangeText={(value) =>
-                  setData({ ...formData, address: value })
-                }
-              />
-              <FormControl.HelperText
-                _text={{
-                  fontSize: "xs",
-                  color: "light.100",
-                }}
-              ></FormControl.HelperText>
-            </FormControl>
-            <FormControl.Label
-              alignSelf="flex-start"
-              _text={{
-                color: "light.100",
-                fontSize: 22,
-                fontFamily: "Doppio One",
-                bold: true,
-              }}
-            >
+          <View className="mt-4">
+            <Text className="font-default text-lg font-bold text-white">
               Bairro
-            </FormControl.Label>
-            <SeletorBairro />
+            </Text>
+            
+          </View>
 
-            <FormControl mt="5" isRequired>
-              <FormControl.Label
-                _text={{
-                  color: "light.100",
-                  fontSize: 22,
-                  fontFamily: "Doppio One",
-                  bold: true,
-                }}
-              >
-                Celular
-              </FormControl.Label>
-              <Input
-                bg="rgba(255, 255, 255, 0.1)"
-                clearTextOnFocus={true}
-                rounded="2xl"
-                size="2xl"
-                showSoftInputOnFocus={true}
-                focusOutlineColor="rgba(255, 255, 255, 0.50)"
-                selectionColor="rgba(255, 255, 255, 0.58)"
-                borderColor="rgba(255, 255, 255, 0.18)"
-                color={"light.100"}
-                w="60%"
-                placeholder="(083) xxxx-xxxx"
-                placeholderTextColor="light.100"
-                onChangeText={(value) => setData({ ...formData, phone: value })}
-              />
-              <FormControl.HelperText
-                shadow={4}
-                _text={{
-                  fontSize: "xs",
-                  color: "light.100",
-                }}
-              >
-                Seu contato atual
-              </FormControl.HelperText>
-            </FormControl>
+          <View className="mt-4">
+            <Text className="font-default text-lg font-bold text-white">
+              Celular
+            </Text>
+            <TextInput
+              className="rounded-2xl bg-white/10 border-white/20"
+              onChangeText={(value) => setData({ ...formData, phone: value })}
+            />
+          </View>
 
-            <FormControl mt="5" isRequired>
-              <FormControl.Label
-                _text={{
-                  color: "light.100",
-                  fontSize: 22,
-                  fontFamily: "Doppio One",
-                  bold: true,
-                }}
-              >
-                Quantos filhos você tem?
-              </FormControl.Label>
-              <Input
-                bg="rgba(255, 255, 255, 0.1)"
-                clearTextOnFocus={true}
-                rounded="2xl"
-                size="2xl"
-                showSoftInputOnFocus={true}
-                focusOutlineColor="rgba(255, 255, 255, 0.50)"
-                selectionColor="rgba(255, 255, 255, 0.58)"
-                borderColor="rgba(255, 255, 255, 0.18)"
-                color={"light.100"}
-                w="20%"
-                mb="4"
+          <View className="mt-5">
+            <Text className="font-default text-lg font-bold text-white">
+              Quantos filhos você tem?
+            </Text>
+            <TextInput
+              className="rounded-2xl bg-white/10 border-white/20"
+              onChangeText={(value) =>
+                setData({ ...formData, parentsCount: value })
+              }
+            />
+
+            <UserFilhos />
+            <View className="w-52 rounded-xl gap-3 px-3 py-2 bg-white/20">
+              <Text className="font-default font-bold text-white">Nome</Text>
+              <TextInput
+                className="rounded-2xl bg-white/10 border-white/20"
                 onChangeText={(value) =>
-                  setData({ ...formData, parentsCount: value })
+                  setDataFilho({ ...dataFilho, nome: value })
                 }
               />
-              <UserFilhos />
-              <Container
-                space={3}
-                px="3"
-                py="2"
+              <Text className="font-default font-bold text-white">Idade</Text>
+              <TextInput
+                className="rounded-2xl bg-white/10 border-white/20"
+                onChangeText={(value) =>
+                  setDataFilho({ ...dataFilho, idade: value })
+                }
+              />
+              <Text className="font-default font-bold text-white">CPF</Text>
+              <TextInput
+                className="rounded-2xl bg-white/10 border-white/20"
+                onChangeText={(value) =>
+                  setDataFilho({ ...dataFilho, cpf: value })
+                }
+              />
+              <TouchableOpacity
+                my="2"
+                size="sm"
                 bg="rgba(255, 255, 255, 0.18)"
-                w="50%"
-                rounded="2xl"
+                onPress={() => addFilhos()}
               >
-                <Text color="light.100">Nome</Text>
-                <Input
-                  bg="rgba(255, 255, 255, 0.1)"
-                  clearTextOnFocus={true}
-                  rounded="2xl"
-                  size="2xl"
-                  showSoftInputOnFocus={true}
-                  focusOutlineColor="rgba(255, 255, 255, 0.50)"
-                  selectionColor="rgba(255, 255, 255, 0.58)"
-                  borderColor="rgba(255, 255, 255, 0.18)"
-                  color={"light.100"}
-                  onChangeText={(value) =>
-                    setDataFilho({ ...dataFilho, nome: value })
-                  }
-                />
-                <Text color="light.100">Idade</Text>
-                <Input
-                  bg="rgba(255, 255, 255, 0.1)"
-                  clearTextOnFocus={true}
-                  rounded="2xl"
-                  size="2xl"
-                  showSoftInputOnFocus={true}
-                  focusOutlineColor="rgba(255, 255, 255, 0.50)"
-                  selectionColor="rgba(255, 255, 255, 0.58)"
-                  borderColor="rgba(255, 255, 255, 0.18)"
-                  color={"light.100"}
-                  onChangeText={(value) =>
-                    setDataFilho({ ...dataFilho, idade: value })
-                  }
-                />
-                <Text color="light.100">CPF</Text>
-                <Input
-                  bg="rgba(255, 255, 255, 0.1)"
-                  clearTextOnFocus={true}
-                  rounded="2xl"
-                  size="2xl"
-                  showSoftInputOnFocus={true}
-                  focusOutlineColor="rgba(255, 255, 255, 0.50)"
-                  selectionColor="rgba(255, 255, 255, 0.58)"
-                  borderColor="rgba(255, 255, 255, 0.18)"
-                  color={"light.100"}
-                  onChangeText={(value) =>
-                    setDataFilho({ ...dataFilho, cpf: value })
-                  }
-                />
-                <Button
-                  my="2"
-                  size="sm"
-                  bg="rgba(255, 255, 255, 0.18)"
-                  onPress={() => addFilhos()}
-                >
-                  Adicionar
-                </Button>
-                
-              </Container>
-              <FormControl.HelperText
-                _text={{
-                  fontSize: "xs",
-                }}
-              ></FormControl.HelperText>
-              <FormControl.ErrorMessage
-                _text={{
-                  fontSize: "xs",
-                }}
-              >
-                Inválido
-              </FormControl.ErrorMessage>
-            </FormControl>
+                Adicionar
+              </TouchableOpacity>
+            </View>
+          </View>
 
-            <FormControl mt="5" isRequired>
-              <FormControl.Label
-                _text={{
-                  color: "light.100",
-                  fontSize: 22,
-                  fontFamily: "Doppio One",
-                  bold: true,
-                }}
-              >
-                Senha
-              </FormControl.Label>
-              <Input
-                bg="rgba(255, 255, 255, 0.1)"
-                clearTextOnFocus={true}
-                rounded="2xl"
-                size="2xl"
-                showSoftInputOnFocus={true}
-                focusOutlineColor="rgba(255, 255, 255, 0.50)"
-                selectionColor="rgba(255, 255, 255, 0.58)"
-                borderColor="rgba(255, 255, 255, 0.18)"
-                color={"light.100"}
-                w="60%"
-                placeholder="*******"
-                placeholderTextColor="light.100"
-                onChangeText={(value) =>
-                  setData({ ...formData, password: value })
-                }
-              />
-              <FormControl.HelperText
-                shadow={4}
-                _text={{
-                  fontSize: "xs",
-                  color: "light.100",
-                }}
-              >
-                Deve conter letras e números
-              </FormControl.HelperText>
-            </FormControl>
+          <Text className="font-default font-bold text-white">Senha*</Text>
+          <TextInput
+            className="rounded-2xl bg-white/10 border-white/20"
+            onChangeText={(value) => setData({ ...formData, password: value })}
+          />
 
-            <FormControl mt="5" isRequired>
-              <FormControl.Label
-                _text={{
-                  color: "light.100",
-                  fontSize: 22,
-                  fontFamily: "Doppio One",
-                  bold: true,
-                }}
-              >
-                Confirmar
-              </FormControl.Label>
-              <Input
-                bg="rgba(255, 255, 255, 0.1)"
-                clearTextOnFocus={true}
-                rounded="2xl"
-                size="2xl"
-                showSoftInputOnFocus={true}
-                focusOutlineColor="rgba(255, 255, 255, 0.50)"
-                selectionColor="rgba(255, 255, 255, 0.58)"
-                borderColor="rgba(255, 255, 255, 0.18)"
-                color={"light.100"}
-                w="60%"
-                placeholder="*******"
-                placeholderTextColor="light.100"
-                onChangeText={(value) =>
-                  setData({ ...formData, password: value })
-                }
-              />
-              <FormControl.HelperText
-                shadow={4}
-                _text={{
-                  fontSize: "xs",
-                  color: "light.100",
-                }}
-              >
-                Deve conter letras e números
-              </FormControl.HelperText>
-            </FormControl>
+          <Text className="font-default font-bold text-white">
+            Confirmar senha*
+          </Text>
+          <TextInput
+            className="rounded-2xl bg-white/10 border-white/20"
+            onChangeText={(value) => setData({ ...formData, password: value })}
+          />
 
-            <Button
-              shadow={6}
-              variant={"solid"}
-              w="70%"
-              h="65"
-              mx="5"
-              my="5"
-              bg="blue.700"
-              rounded="full"
-              onPress={() => newUser() & navigation.navigate("Login")}
-            >
-              <Text color="light.100" shadow={3} fontSize="2xl" bold>
-                ENVIAR
-              </Text>
-            </Button>
-            <Button
-              opacity={0.6}
-              mb="5"
-              variant={"solid"}
-              w="70%"
-              h="50"
-              mx="5"
-              my="2"
-              bg="blue.600"
-              rounded="full"
-              onPress={() => navigation.goBack()}
-            >
-              VOLTAR
-            </Button>
-          </Box>
-        </ScrollView>
-      </Box>
-    </NativeBaseProvider>
+          <TouchableOpacity
+            className="w-72 h-64 mx-5 my-5 bg-blue-700 rounded-full"
+            onPress={() => newUser() & navigation.navigate("Login")}
+          >
+            <Text className="font-default font-2xl font-bold text-white">
+              ENVIAR
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            className="w-72 h-64 mx-5 my-2 mb-4 opacity-40 bg-blue-600 rounded-full"
+            onPress={() => navigation.goBack()}
+          >
+            VOLTAR
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </View>
   );
 };

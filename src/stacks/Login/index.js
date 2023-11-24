@@ -1,36 +1,24 @@
 import React, { useContext, useState, useEffect } from "react";
-import axios from "axios";
-import * as Animatable from "react-native-animatable";
-import { useNavigation } from "@react-navigation/native";
 import {
-  Box,
-  Image,
+  View,
   Text,
-  Input,
-  Button,
+  Image,
+  TouchableOpacity,
+  TextInput,
   Switch,
-  VStack,
-  Pressable,
-  Icon,
-  NativeBaseProvider,
-} from "native-base";
+  ActivityIndicator,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+
 import { Ionicons, Feather } from "@expo/vector-icons";
 import { TextInputMask } from "react-native-masked-text";
 import { AuthContext } from "../../contexts/AuthContext";
-import { api, getNotices, getUsers } from "../../requisitions/api";
 import { UserContext } from "../../contexts/UserContext";
-import { LinearGradient } from "expo-linear-gradient";
 
 export const Login = () => {
   const { users, logged, setNotices } = useContext(UserContext);
-  const {
-    Authentication,
-    submit,
-    setSubmit,
-    auth,
-    setSigningAuto,
-    signingAuto,
-  } = useContext(AuthContext);
+  const { Authentication, submit, setSigningAuto, signingAuto } =
+    useContext(AuthContext);
   const [cpf, setCpf] = useState(String);
   const [password, setPassword] = useState(String);
   const [show, setShow] = useState(false);
@@ -42,201 +30,109 @@ export const Login = () => {
     }
   }, [logged]);
 
-  const config = {
-    dependencies: {
-      "linear-gradient": LinearGradient,
-    },
-  };
   const toggleSigningAuto = () => {
     setSigningAuto((previousState) => !previousState);
   };
 
   return (
-    <NativeBaseProvider config={config}>
-      <Box
-        flex={1}
-        justifyContent={"center"}
-        alignItems={"center"}
-        bg={{
-          linearGradient: {
-            colors: ["lightBlue.400", "lightBlue.600"],
-            start: [0, 0],
-            end: [1, 0],
-          },
+    <View className="flex-1 p-6 justify-center items-center bg-blue-500" p="6">
+      <Image
+        style={{
+          resizeMode: "contain",
+          width: "90%",
+          height: 300,
+          marginHorizontal: "15%",
+          alignSelf: "center",
         }}
-        p="6"
-        _text={{
-          fontSize: "md",
-          fontWeight: "medium",
-          color: "warmGray.50",
-          textAlign: "center",
-        }}
-      >
-        <Animatable.View
-          style={{ width: "100%" }}
-          delay={400}
-          animation="bounceIn"
-        >
-          <Image
+        alt="pip-logo"
+        source={require("../../../assets/pip-icon.png")}
+      />
+
+      <View className="w-96 my-5 py-5 items-center rounded-2xl bg-white/20">
+        <View className="flex-row w-80 h-12 mb-5 items-center rounded-2xl border-2 border-white/25">
+          <Feather name="user" size={32} color={"rgba(255, 255, 255, 0.70)"} />
+          <TextInputMask
             style={{
-              resizeMode: "contain",
-              width: "90%",
-              height: 300,
-              marginHorizontal: "15%",
-              alignSelf: "center",
+              width: "100%",
+              borderColor: "#23B5D3",
+              marginLeft: "3%",
+              color: "#f9f9f9",
+              height: 50,
+              textAlign: "left",
+              fontSize: 24,
             }}
-            alt="pip-logo"
-            source={require("../../../assets/pip-icon.png")}
+            type="cpf"
+            bg={"rgba(255, 255, 255, 0.32)"}
+            placeholderTextColor={"rgba(255, 255, 255, 0.62)"}
+            value={cpf}
+            placeholder="000.000.000-00"
+            onChangeText={(text) => setCpf(text)}
           />
-        </Animatable.View>
+        </View>
 
-        <Box
-          my="5%"
-          w="95%"
-          py="5%"
-          alignItems="center"
-          bgColor="rgba(255, 255, 255, 0.22)"
-          rounded="2xl"
-        >
-          <Box
-            w="90%"
-            h="12"
-            mb="5%"
-            flexDir="row"
-            alignItems={"center"}
-            borderWidth="1"
-            borderColor={"rgba(255, 255, 255, 0.32)"}
-            rounded="2xl"
-          >
-            <Feather
-              name="user"
-              size={32}
-              color={"rgba(255, 255, 255, 0.70)"}
-            />
-            <TextInputMask
-              style={{
-                width: "100%",
-                borderColor: "#23B5D3",
-                marginLeft: "3%",
-                color: "#f9f9f9",
-                height: 50,
-                textAlign: "left",
-                fontSize: 24,
-              }}
-              type="cpf"
-              bg={"rgba(255, 255, 255, 0.32)"}
-              placeholderTextColor={"rgba(255, 255, 255, 0.62)"}
-              value={cpf}
-              placeholder="000.000.000-00"
-              onChangeText={(text) => setCpf(text)}
-            />
-          </Box>
-
-          <Input
-            onChangeText={(pass) => setPassword(pass)}
-            fontSize="2xl"
-            w="90%"
-            style={{ color: "rgba(255, 255, 255, 0.72)" }}
-            borderColor={"rgba(255, 255, 255, 0.32)"}
-            placeholderTextColor={"rgba(255, 255, 255, 0.32)"}
-            rounded="2xl"
-            textAlign={"center"}
-            type={show ? "text" : "password"}
-            InputRightElement={
-              <Pressable onPress={() => setShow(!show)}>
-                <Icon
-                  as={
-                    <Ionicons name={show ? "eye-outline" : "eye-off-outline"} />
-                  }
-                  size={9}
-                  mr="2"
-                  color={"rgba(255, 255, 255, 0.72)"}
-                />
-              </Pressable>
-            }
-            InputLeftElement={
-              <Feather
-                name="lock"
+        <TextInput
+          className="w-96 rounded-xl text-center text-2xl border-white/30"
+          onChangeText={(pass) => setPassword(pass)}
+          placeholderTextColor={"rgba(255, 255, 255, 0.32)"}
+          type={show ? "text" : "password"}
+          InputRightElement={
+            <TouchableOpacity onPress={() => setShow(!show)}>
+              <Ionicons
+                name={show ? "eye-outline" : "eye-off-outline"}
+                color="#fff"
                 size={32}
-                color={"rgba(255, 255, 255, 0.72)"}
               />
-            }
-            placeholder="******"
-            defaultValue="123456"
-          />
-          <VStack alignSelf="flex-start" mx="5" my="2">
-            <Text color="light.100" fontFamily="Doppio One">
-              Lembrar-me
-            </Text>
-            <Switch
-              alignSelf="flex-start"
-              value={signingAuto}
-              size="sm"
-              onToggle={() => {
-                toggleSigningAuto();
-              }}
+            </TouchableOpacity>
+          }
+          InputLeftElement={
+            <Feather
+              name="lock"
+              size={32}
+              color={"rgba(255, 255, 255, 0.72)"}
             />
-          </VStack>
+          }
+          placeholder="******"
+          defaultValue="123456"
+        />
 
-          {!submit ? (
-            <Button
-              size={"lg"}
-              w="80%"
-              colorScheme={"blue"}
-              bg={"rgba(255, 255, 255, 0.22)"}
-              rounded="2xl"
-              onPress={() => {
-                Authentication(cpf, password);
-              }}
-            >
-              <Text color="light.100" fontSize="lg" fontFamily={"Doppio One"}>
-                Entrar
-              </Text>
-            </Button>
-          ) : (
-            <Button
-              fontFamily={"Doppio One"}
-              isLoading
-              isLoadingText="Aguarde..."
-              variant="solid"
-              bg="darkBlue.500"
-              color={"light.400"}
-              size={"lg"}
-              w="80%"
-              rounded="2xl"
-            ></Button>
-          )}
-        </Box>
-        <Text
-          fontSize="lg"
-          fontFamily={"Doppio One"}
-          textDecorationLine={"underline"}
-          textDecorationColor={"lightBlue.400"}
-          color={"light.100"}
-        >
-          Esqueci minha senha
-        </Text>
-        <Button
-          variant={"solid"}
-          colorScheme={"lightBlue"}
-          size={"lg"}
-          w="200"
-          mt="10"
-          shadow={9}
-          mb="10"
-          onPress={() => navigation.navigate("Cadastrar")}
-        >
-          <Text
-            fontSize="xl"
-            color="light.100"
-            fontFamily="Doppio One"
-            shadow={8}
-            bold
+        <View className="self-start mx-5 my-2">
+          <Text className="font-default text-white">Lembrar-me</Text>
+          <Switch
+            className="self-start "
+            trackColor={{ false: "#767577", true: "#81b0ff" }}
+            thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+            value={signingAuto}
+            onValueChange={() => {
+              toggleSigningAuto();
+            }}
+          />
+        </View>
+
+        {!submit ? (
+          <TouchableOpacity
+            className="w-80 h-20 rounded-2xl bg-white/20"
+            onPress={() => {
+              Authentication(cpf, password);
+            }}
           >
-            REGISTRAR
-          </Text>
-        </Button>
-      </Box>
-    </NativeBaseProvider>
+            <Text className="font-default text-lg text-white">Entrar</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity className="flex-row w-80 rounded-2xl bg-white/5 ">
+            <Text className="font-default text-lg text-white/40">
+              Aguarde <ActivityIndicator />
+            </Text>
+          </TouchableOpacity>
+        )}
+      </View>
+
+      <TouchableOpacity
+        className="w-80 my-10"
+        variant={"solid"}
+        onPress={() => navigation.navigate("Cadastrar")}
+      >
+        <Text className="font-default text-xl text-white">REGISTRAR</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
