@@ -1,69 +1,36 @@
 import React from "react";
-import {
-  Box,
-  ScrollView,
-  Image,
-  Text,
-  Heading,
-  NativeBaseProvider,
-} from "native-base";
+import { View, Image, Text, ScrollView } from "react-native";
 import BackButton from "../../../components/BackButton";
-import { LinearGradient } from "expo-linear-gradient";
-import { Dimensions } from "react-native";
-import { GlobalStyles } from "../../../components/GlobalStyles";
-const height = Dimensions.get("window").height + 100
 
 export default function Sobre() {
-  
-  const config = {
-    dependencies: {
-      "linear-gradient": LinearGradient,
-    },
-  };
-
   return (
-    <NativeBaseProvider config={config}>
       <ScrollView flex={1} w="100%" h={height} bg="lightBlue.400">
-        <Box
-          h={height}
-          flex={1}
-          w="100%"
-          
-          justifyContent={"center"}
-          alignItems="center"
-          bg={{
-            linearGradient: {
-              colors: ["lightBlue.600", "lightBlue.400"],
-              start: [0, 0],
-              end: [1, 0],
-            },
-          }}
+        <View
+        className='flex-1 w-full h-full items-center justify-center bg-blue-600'
         >
           <Image
-            w="90%"
-            position="absolute"
-            blurRadius={9}
-            opacity={0.8}
+          className='w-80 absolute blur-xl opacity-75'
             alt="pip-logo"
             resizeMode="cover"
             source={require("../../../assets/pip-icon.png")}
           />
 
-          <Heading fontFamily={"Doppio One"} fontSize={"9xl"} color="light.100" opacity={0.8}>PIP</Heading>
+          <Text 
+          className='font-default text-6xl opacity-70 font-bold text-white'
+          >PIP</Text>
 
-          <Heading style={[GlobalStyles.fontSystem]} fontSize="lg">
-            O que é o PROJETO INCLUSÃO SOCIAL?
-          </Heading>
-
-          <Box
-            w="90%"
-            mt="2%"
-            py="2"
-            px="3"
-            bg="rgba(255,255,255, 0.15)"
-            rounded="lg"
+          <Text
+          className='font-default text-lg font-bold text-white'
           >
-            <Text style={[GlobalStyles.fontSystem]} fontSize="md">
+            O que é o PROJETO INCLUSÃO SOCIAL?
+          </Text>
+
+          <View
+          className='w-96 mt-2 py-2 px-3 bg-white/10 rounded-lg'
+          >
+            <Text
+            className='font-default text-md text-white'
+            >
               O PIP é uma associação sem fins lucrativos, inscrito no CNPJ :
               46.612.280/0001-90 e atuando no município de Santa Rita -PB. Somo
               uma equipe de voluntários que se dividem em VOLUNTÁRIOS INTEGRAIS
@@ -72,35 +39,31 @@ export default function Sobre() {
               poder público e uma rede de empresas privadas que tem como alvo
               minorar as vulnerabilidades sociais.
             </Text>
-          </Box>
+          </View>
 
-          <Heading style={[GlobalStyles.fontSystem]} mt="3%" fontSize="2xl">
+          <Text
+          className='font-default text-3xl mt-3 font-bold text-white'
+          >
             Coordenação
-          </Heading>
+          </Text>
 
-          <Box
-            w="90%"
-            mb="3%"
-            px="2"
-            py="3"
-            bg="rgba(255,255,255, 0.15)"
-            rounded="lg"
+          <View
+          className='w-96 mb-3 px-2 py-3 bg-white/20 rounded-lg'
           >
             <Text
-              style={[GlobalStyles.fontSystem]}
-              alignText="center"
-              fontSize="sm"
+            className='font-default text-xl ml-3 text-center text-white'
             >
               O PIP é composto por 04 coordenações de cunho administrativo e 10
               coordenações das pastas de atuação.
             </Text>
-          </Box>
+          </View>
           <BackButton />
-          <Text style={[GlobalStyles.fontSystem]} my="1%" fontSize="lg">
+          <Text
+          className='font-default text-md mt-3 font-bold text-white'
+          >
             Todos os direitos reservados 2023 .
           </Text>
-        </Box>
+        </View>
       </ScrollView>
-    </NativeBaseProvider>
   );
 }

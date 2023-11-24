@@ -1,19 +1,10 @@
 import React, { useContext } from "react";
+import { View, Image, Text, TouchableOpacity, ScrollView } from "react-native";
 import axios from "axios";
-import {
-  ScrollView,
-  Box,
-  Text,
-  Image,
-  Heading,
-  Button,
-  VStack,
-  NativeBaseProvider
-} from "native-base";
 import BackButton from "../../../../components/BackButton";
 import { UserContext } from "../../../contexts/UserContext";
-import { api } from "../../../requisitions/api";
-import { LinearGradient } from "expo-linear-gradient";
+import { api } from "../../../api/api";
+
 
 export default function ViewService({ route }) {
   const {logged} = useContext(UserContext)
@@ -40,81 +31,52 @@ export default function ViewService({ route }) {
       .catch((error) => console.error(error));
   }
 
-  const config = {
-    dependencies: {
-      "linear-gradient": LinearGradient,
-    },
-  };
-
   return (
-    <NativeBaseProvider config={config}>
     <ScrollView flex={1} showsVerticalScrollIndicator={false} bg="lightBlue.700" w="100%">
-      <Box
-        w="100%"
-        minHeight="900"
-        py="46"
-        alignItems="center"
-        bg={{
-          linearGradient: {
-            colors: ["lightBlue.500", "lightBlue.700"],
-            start: [1, 1],
-            end: [0, 0],
-          },
-        }}
+      <View
+      className='w-full h-full py-46 items-center bg-blue-600'
       >
-        <Box position="absolute" top="9%" left="4%">
+        <View 
+        className='absolute top-9 left-4'>
           <BackButton />
-        </Box>
+        </View>
         <Image
+          className=' w-40 h-40 my-14 rounded-full'
           resizeMode='cover'
-          rounded="full"
-          my="15%"
           alt="pip-service"
-          size={64}
           source={route?.params?.picture}
         />
-        <Box px="3" w="100%">
-          <Heading alignSelf='flex-start' fontFamily="Doppio One" color="#fff" mt="2%" fontSize="4xl">
+        <View
+        className='w-full px-3'>
+          <Text 
+          className='font-default self-start text-4xl mt-2 font-bold text-white'>
             {route?.params?.titulo}
-          </Heading>
+          </Text>
 
-          <Box
-           rounded="lg"
-           px="2"
-           py="3"
-            bg="rgba(255,255,255, 0.15)"
-          >
-            <Heading
-              fontFamily="Doppio One"
-              fontSize="md"
-              color={"light.100"}
-            >
+          <View
+          className='px-2 py-2 rounded-lg bg-white/20'>
+            <Text
+            className='font-default text-lg font-bold text-white'>
               {route?.params?.descricao}
-            </Heading>
-          </Box>
-          <Text alignSelf="right" fontFamily="Doppio One" color="#fff" mt="2%" fontSize="2xl">
+            </Text>
+          </View>
+          <Text 
+          className='font-default self-end text-2xl mt-2 font-bold text-white'>
             Serviços disponíveis
           </Text>
-          <VStack
-            px="2"
-            py="2"
-            w="100%"
-            bg="rgba(255,255,255, 0.15)"
-            rounded="lg"
-            space={1}
-            maxH="800"
+          <View
+          className='px-2 py-2 w-full gap-1 rounded-lg bg-white/20'
           >
             
-            {route?.params?.requisite[0] ? <Button onPress={() => handleSolicitation(route?.params?.requisite[0])} colorScheme={'darkBlue'}>{route?.params?.requisite[0]}</Button> : null }
-            {route?.params?.requisite[1] ? <Button onPress={() => handleSolicitation(route?.params?.requisite[1])} colorScheme={'darkBlue'}>{route?.params?.requisite[1]}</Button> : null }
-            {route?.params?.requisite[2] ? <Button onPress={() => handleSolicitation(route?.params?.requisite[2])} colorScheme={'darkBlue'}>{route?.params?.requisite[2]}</Button> : null }
-            {route?.params?.requisite[3] ? <Button onPress={() => handleSolicitation(route?.params?.requisite[3])} colorScheme={'darkBlue'}>{route?.params?.requisite[3]}</Button> : null }
+            {route?.params?.requisite[0] ? <TouchableOpacity onPress={() => handleSolicitation(route?.params?.requisite[0])} colorScheme={'darkBlue'}>{route?.params?.requisite[0]}</TouchableOpacity> : null }
+            {route?.params?.requisite[1] ? <TouchableOpacity onPress={() => handleSolicitation(route?.params?.requisite[1])} colorScheme={'darkBlue'}>{route?.params?.requisite[1]}</TouchableOpacity> : null }
+            {route?.params?.requisite[2] ? <TouchableOpacity onPress={() => handleSolicitation(route?.params?.requisite[2])} colorScheme={'darkBlue'}>{route?.params?.requisite[2]}</TouchableOpacity> : null }
+            {route?.params?.requisite[3] ? <TouchableOpacity onPress={() => handleSolicitation(route?.params?.requisite[3])} colorScheme={'darkBlue'}>{route?.params?.requisite[3]}</TouchableOpacity> : null }
          
-          </VStack>
+          </View>
 
-        </Box>
-      </Box>
+        </View>
+      </View>
     </ScrollView>
-   </NativeBaseProvider>
   );
 }

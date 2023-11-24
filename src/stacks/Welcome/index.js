@@ -4,7 +4,7 @@ import axios from "axios";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../contexts/UserContext";
-import { api } from "../../requisitions/api";
+import { api } from "../../api/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Welcome() {

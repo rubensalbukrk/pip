@@ -1,19 +1,9 @@
 import React from "react";
-import {
-  Box,
-  Text,
-  Image,
-  Center,
-  FlatList,
-  HStack,
-  Heading,
-  NativeBaseProvider
-} from "native-base";
 import BackButton from "../../../components/BackButton";
-import { SimpleLineIcons } from '@expo/vector-icons'
+import { SimpleLineIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { TouchableOpacity } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import { View, Image, Text, FlatList, TouchableOpacity } from "react-native";
+
 export default function Services() {
   const navigation = useNavigation();
   const items = [
@@ -100,79 +90,43 @@ export default function Services() {
       pasta: "Passe Livre",
     },
   ];
-
-  const config = {
-    dependencies: {
-      "linear-gradient": LinearGradient,
-    },
-  };
-
   return (
-    <NativeBaseProvider config={config}>
-    <Center
-    w="100%" 
-    flex={1} 
-    px="5"
-    bg={{
-      linearGradient: {
-        colors: ["lightBlue.600", "lightBlue.400"],
-        start: [0, 0],
-        end: [0, 1],
-      },
-    }}
-    >
-      <HStack w="100%" mt="10%" alignSelf={"center"} h="100">
+    <View className="flex-1 w-full px-5 justify-center items-center bg-blue-600">
+      <View className="flex-row w-full h-full mt-10 self-center">
         <Image
+          className="w-36 h-36"
           alt="pip-logo"
-          w="100px"
-          h="100px"
-          resizeMode='cover'
+          resizeMode="cover"
           source={require("../../../assets/pip-icon.png")}
         />
-        <Text
-          color="light.100"
-          style={{
-            fontSize: 18,
-            left: "-30%",
-            marginTop: "20%",
-            fontFamily: 'Doppio One',
-            height: 30,
-            width: 300,
-          }}
-        >
+        <Text className="font-default right-30 text-lg mt-20 font-bold text-white">
           PROJETO INCLUSÃO POPULAR
-        </Text> 
-        <Box position="absolute" right="1%" top="4%">
-        <BackButton />
-      </Box>
-      </HStack>
-     
-      <Heading w="100%" color="#fff" my="3" mt="8%" fontSize="xl" fontFamily="Doppio One">
-        Oferecemos serviços gratuitamente de qualidade prestado por profissionais qualificados!
-      </Heading>
+        </Text>
+        <View className="absolute right-1 top-4">
+          <BackButton />
+        </View>
+      </View>
+
+      <Text className="font-default text-lg text-white my-3 mt-8">
+        Oferecemos serviços gratuitamente de qualidade prestado por
+        profissionais qualificados!
+      </Text>
+
       <FlatList
-        w="100%"
-        mb="10%"
-        flex={1}
+        className="flex-1 w-full mb-10"
         data={items}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => {
           return (
-            <Box
-              my="3"
-              w="100%"
-              h="180"
-              bg={"rgba(255,255,255, 0.15)"}
-              rounded="xl"
-            >
+            <View className="w-full h-180 my-3 rounded-lg bg-white/20">
               <TouchableOpacity
                 style={{
                   width: "100%",
                   height: 180,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'center'
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
                 onPress={() =>
                   navigation.navigate("ViewService", {
@@ -184,26 +138,23 @@ export default function Services() {
                   })
                 }
               >
-                <Box posiiton="absolute" bottom="-15%" left="10%">
-                <SimpleLineIcons name="arrow-right" size={24} color="white" />
-                </Box>
-                <Heading w="45%" ml="1%" fontFamily="Doppio One" mb="10%" numberOfLines={5} fontSize={"md"} color="light.100">{item.labelDesc}</Heading>
+                <View className="absolute top-16 left-10">
+                  <SimpleLineIcons name="arrow-right" size={24} color="white" />
+                </View>
+                <Text className="w-44 font-default text-2xl ml-1 mb-10 line-clamp-3 font-bold text-white">
+                  {item.labelDesc}
+                </Text>
                 <Image
+                  className="w-46 h-96 bg-white/10 rounded-full"
                   resizeMode="auto"
-                  w="45%"
                   alt="picture-service"
-                  h="90%"
-                  backgroundColor={"rgba(255,255,255, 0.1)"}
-                  rounded="full"
                   source={item.picture}
                 />
-                
               </TouchableOpacity>
-            </Box>
+            </View>
           );
         }}
       />
-    </Center>
-    </NativeBaseProvider>
+    </View>
   );
 }

@@ -6,16 +6,11 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
-  Select,
 } from "react-native";
 import axios from "axios";
-import {
-  Select,
-} from "native-base";
 import { Feather } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
-import { api } from "../../requisitions/api";
+import { api } from "../../api/api";
 import { TouchableOpacity, FlatList } from "react-native";
 
 const dataAtual = new Date();

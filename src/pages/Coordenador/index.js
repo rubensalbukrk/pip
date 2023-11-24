@@ -1,69 +1,44 @@
 import React, { useContext, useState } from "react";
+import { View, Text, FlatList } from "react-native";
 import axios from "axios";
-import {
-  Box,
-  Heading,
-  Input,
-  Center,
-  Text,
-  Divider,
-  Button,
-  FlatList,
-  VStack,
-  NativeBaseProvider,
-  HStack,
-} from "native-base";
+
 import { UserContext } from "../../contexts/UserContext";
 import { TouchableOpacity, ScrollView, RefreshControl } from "react-native";
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import BackButton from "../../../components/BackButton";
 import { deleteSolicitation, deleteAprovado } from "../../requisitions/api";
 import { useNavigation } from "@react-navigation/native";
-import { api } from "../../requisitions/api";
-import { LinearGradient } from "expo-linear-gradient";
-import { GlobalStyles } from "../../../components/GlobalStyles";
+import { api } from "../../api/api";
 
 function ListSolicitations(props) {
   const navigation = useNavigation();
   return (
-    <Center my="3" w="100%">
-      <HStack w="100%" mt="4%" h="160">
-        <VStack
-          bg="rgba(255,255,255, 0.16)"
-          rounded="xl"
-          py="5%"
-          px="3"
-          space={1}
-          w="100%"
-        >
-          <Text style={[GlobalStyles.fontSystem]}>Nome: {props.nome} </Text>
-          <Text style={[GlobalStyles.fontSystem]}>CPF: {props.cpf} </Text>
-          <Text style={[GlobalStyles.fontSystem]}>Serviço: {props.service} </Text>
-          <Text style={[GlobalStyles.fontSystem]}>STATUS: {props.status} </Text>
-          <Text style={[GlobalStyles.fontSystem]}>Data: {props.date} </Text>
+    <View my="3" w="100%">
+      <View className="flex-row w-full mt-4 h-160">
+        <View className="w-full gap-1 px-3 py-5 rounded-xl bg-white/20">
+          <Text className="font-default text-lg text-white">
+            Nome: {props.nome}{" "}
+          </Text>
+          <Text className="font-default text-lg text-white">
+            CPF: {props.cpf}{" "}
+          </Text>
+          <Text className="font-default text-lg text-white">
+            Serviço: {props.service}{" "}
+          </Text>
+          <Text className="font-default text-lg text-white">
+            STATUS: {props.status}{" "}
+          </Text>
+          <Text className="font-default text-lg text-white">
+            Data: {props.date}{" "}
+          </Text>
           <TouchableOpacity
-            style={{
-              position: "absolute",
-              right: 1,
-              top: 5,
-              width: 40,
-              height: 40,
-              opacity: 0.8,
-            }}
+            className="w-22 h-22 absolute top-5 right-1 opacity-80"
             onPress={() => deleteSolicitation(props.id)}
           >
             <FontAwesome name="remove" size={36} color="white" />
           </TouchableOpacity>
           <TouchableOpacity
-            style={{
-              position: "absolute",
-              right: 5,
-              bottom: 5,
-              width: 40,
-              height: 40,
-              opacity: 0.8,
-              fontFamily: 'Doppio One',
-            }}
+            className="w-22 h-22 absolute top-5 right-5 opacity-80"
             onPress={() =>
               navigation.navigate("SolicitationInfoUser", {
                 id: props.id,
@@ -78,9 +53,9 @@ function ListSolicitations(props) {
           >
             <FontAwesome5 name="info-circle" size={36} color="white" />
           </TouchableOpacity>
-        </VStack>
-      </HStack>
-    </Center>
+        </View>
+      </View>
+    </View>
   );
 }
 
@@ -121,7 +96,7 @@ export default function PageCoordenador({ route }) {
     );
     var IsCidadania = () => {
       return (
-        <Box>
+        <View>
           {cidadaniaSolicitations.map((item) => {
             const { service, nome, status, date } = item;
             return (
@@ -136,12 +111,12 @@ export default function PageCoordenador({ route }) {
               />
             );
           })}
-        </Box>
+        </View>
       );
     };
     var IsAutist = () => {
       return (
-        <Box>
+        <View>
           {autistSolicitations.map((item) => {
             const { service, nome, status, date, cpf, id } = item;
             let userInfo = users.find(
@@ -159,12 +134,12 @@ export default function PageCoordenador({ route }) {
               />
             );
           })}
-        </Box>
+        </View>
       );
     };
     var IsMulher = () => {
       return (
-        <Box>
+        <View>
           {mulherSolicitations.map((item) => {
             const { service, nome, status, date } = item;
             return (
@@ -179,12 +154,12 @@ export default function PageCoordenador({ route }) {
               />
             );
           })}
-        </Box>
+        </View>
       );
     };
     var IsSaude = () => {
       return (
-        <Box>
+        <View>
           {saudeSolicitations.map((item) => {
             const { service, nome, status, date } = item;
             return (
@@ -199,12 +174,12 @@ export default function PageCoordenador({ route }) {
               />
             );
           })}
-        </Box>
+        </View>
       );
     };
     var IsProtagonista = () => {
       return (
-        <Box>
+        <View>
           {protagonistaSolicitations.map((item) => {
             const { service, nome, status, date } = item;
             return (
@@ -219,12 +194,12 @@ export default function PageCoordenador({ route }) {
               />
             );
           })}
-        </Box>
+        </View>
       );
     };
     var IsAlimentar = () => {
       return (
-        <Box>
+        <View>
           {alimentarSolicitations.map((item) => {
             const { service, nome, status, date, cpf, id } = item;
             return (
@@ -239,12 +214,12 @@ export default function PageCoordenador({ route }) {
               />
             );
           })}
-        </Box>
+        </View>
       );
     };
     var IsPasse = () => {
       return (
-        <Box>
+        <View>
           {passeSolicitations.map((item) => {
             const { service, nome, status, date } = item;
             return (
@@ -259,7 +234,7 @@ export default function PageCoordenador({ route }) {
               />
             );
           })}
-        </Box>
+        </View>
       );
     };
   }
@@ -300,185 +275,92 @@ export default function PageCoordenador({ route }) {
     getSolicitation();
   }
 
-  const config = {
-    dependencies: {
-      "linear-gradient": LinearGradient,
-    },
-  };
   return (
-    <NativeBaseProvider config={config}>
-      <Box
-        flex={1}
-        w="100%"
-        bg={{
-          linearGradient: {
-            colors: ["lightBlue.600", "lightBlue.400"],
-            start: [0, 0],
-            end: [1, 0],
-          },
-        }}
+    <View className="flex-1 w-full bg-blue-600">
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={() => setRefreshing(true)}
+          />
+        }
+        horizontal={false}
       >
-        <ScrollView
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={() => setRefreshing(true)}
-            />
-          }
-          horizontal={false}
-        >
-          <Box mt="5%">
-            <Box position="absolute" top="2%" left="3%">
-              <BackButton />
-            </Box>
+        <View className="mt-5">
+          <View className="absolute top-2 left-3">
+            <BackButton />
+          </View>
 
-            <Heading
-              fontSize="xl"
-              mt="10%"
-              color="light.100"
-              alignSelf="center"
-              fontFamily="Doppio One"
-            >
-              {route?.params?.title}
-            </Heading>
-            <Divider w="80%" mx="3" my="3" alignSelf="center" opacity={0.4} />
-            <Box
-              w="97%"
-              h="400px"
-              rounded="xl"
-              alignSelf={"center"}
-              py="3"
-              px="4"
-              bg="rgba(255,255,255, 0.16)"
-            >
-              <Heading
-                alignSelf="flex-start"
-                fontFamily="Doppio One"
-                color="light.100"
-              >
-                SOLICITAÇÕES
-              </Heading>
-              <Divider w="100%" mb="5%" opacity={0.4} />
-              <ScrollView
-                w="100%"
-                horizontal={false}
-                style={{ borderRadius: 40, fontFamily: 'Doppio One' }}
-              >
-                {logged?.isCoordAutist ? <IsAutist /> : null}
+          <Text className="font-default self-center text-xl mt-10 text-white">
+            {route?.params?.title}
+          </Text>
 
-                {logged?.isCoordMulher ? <IsMulher /> : null}
+          <View className="w-96 h-400 px-4 py-3 self-center rounded-xl bg-white/20">
+            <Text className="font-default text-start text-md text-white">
+              SOLICITAÇÕES
+            </Text>
 
-                {logged?.isCoordSaude ? <IsSaude /> : null}
+            <ScrollView className="w-full rounded-md">
+              {logged?.isCoordAutist ? <IsAutist /> : null}
 
-                {logged?.isCoordCidadania ? <IsCidadania /> : null}
+              {logged?.isCoordMulher ? <IsMulher /> : null}
 
-                {logged?.isCoordProtagonista ? <IsProtagonista /> : null}
+              {logged?.isCoordSaude ? <IsSaude /> : null}
 
-                {logged?.isCoordPasse ? <IsPasse /> : null}
+              {logged?.isCoordCidadania ? <IsCidadania /> : null}
 
-                {logged?.isCoordAlimentar ? <IsAlimentar /> : null}
-              </ScrollView>
-            </Box>
+              {logged?.isCoordProtagonista ? <IsProtagonista /> : null}
 
-            <Box
-              w="95%"
-              h="300px"
-              bg="rgba(255,255,255, 0.16)"
-              my="4"
-              rounded="xl"
-              py="3"
-              px="4"
-              alignSelf={"center"}
-            >
-              <Heading
-                alignSelf="flex-start"
-                fontFamily="Doppio One"
-                color="light.100"
-              >
-                APROVAÇÕES
-              </Heading>
-              <Divider w="90%" opacity={0.4} />
-              <FlatList
-                data={aprovados}
-                horizontal={false}
-                keyExtractor={(item) => item.id}
-                style={{
-                  flex: 1,
-                  width: "100%",
-                  height: "40%",
-                  borderRadius: 40,
-                }}
-                my="3"
-                renderItem={({ item, index }) => {
-                  let userInfo = users.find(
-                    (user) => String(user.cpf) === String(item.cpf)
-                  );
-                  return (
-                    <Center my="3" w="100%">
-                      <HStack w="100%" h="120px">
-                        <VStack
-                          bg="rgba(255,255,255, 0.16)"
-                          alignSelf="center"
-                          rounded="xl"
-                          py="5%"
-                          px="2"
-                          w="100%"
+              {logged?.isCoordPasse ? <IsPasse /> : null}
+
+              {logged?.isCoordAlimentar ? <IsAlimentar /> : null}
+            </ScrollView>
+          </View>
+
+          <View className="w-96 h-300 my-4 py-3 px-4 self-center rounded-xl bg-white/20">
+            <Text className="font-default text-start text-2xl text-white">
+              APROVAÇÕES
+            </Text>
+            <FlatList
+              className="w-full h-40 my-3 rounded-lg"
+              data={aprovados}
+              horizontal={false}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item, index }) => {
+                let userInfo = users.find(
+                  (user) => String(user.cpf) === String(item.cpf)
+                );
+                return (
+                  <View className="w-full my-3 justify-center items-center">
+                    <View className="w-full h-120">
+                      <View className="flex-row w-full py-5 px-2 rounded-xl self-center bg-white/20">
+                        <Text className="font-default text-lg text-white">
+                          Nome: {item.nome}{" "}
+                        </Text>
+                        <Text className="font-default text-lg text-white">
+                          Serviço: {item.service}{" "}
+                        </Text>
+                        <Text className="font-default text-lg text-white">
+                          STATUS: {item.status}{" "}
+                        </Text>
+                        <Text className="font-default text-lg text-white">
+                          Data: {item.date}{" "}
+                        </Text>
+                        <TouchableOpacity
+                          className="w-22 h-22 opacity-75 absolute right-1 top-5"
+                          onPress={() => deleteAprovado(item.id)}
                         >
-                          <Text
-                            fontSize="lg"
-                            fontFamily="Doppio One"
-                            color={"light.100"}
-                          >
-                            Nome: {item.nome}{" "}
-                          </Text>
-                          <Text
-                            fontSize="lg"
-                            fontFamily="Doppio One"
-                            color={"light.100"}
-                          >
-                            Serviço: {item.service}{" "}
-                          </Text>
-                          <Text
-                            fontSize="lg"
-                            fontFamily="Doppio One"
-                            color={"light.100"}
-                          >
-                            STATUS: {item.status}{" "}
-                          </Text>
-                          <Text
-                            fontSize="lg"
-                            fontFamily="Doppio One"
-                            color={"light.100"}
-                          >
-                            Data: {item.date}{" "}
-                          </Text>
-                          <TouchableOpacity
-                            style={{
-                              position: "absolute",
-                              right: 1,
-                              top: 5,
-                              width: 40,
-                              height: 40,
-                              opacity: 0.8,
-                            }}
-                            onPress={() => deleteAprovado(item.id)}
-                          >
-                            <FontAwesome
-                              name="remove"
-                              size={36}
-                              color="white"
-                            />
-                          </TouchableOpacity>
-                        </VStack>
-                      </HStack>
-                    </Center>
-                  );
-                }}
-              />
-            </Box>
-          </Box>
-        </ScrollView>
-      </Box>
-    </NativeBaseProvider>
+                          <FontAwesome name="remove" size={36} color="white" />
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </View>
+                );
+              }}
+            />
+          </View>
+        </View>
+      </ScrollView>
+    </View>
   );
 }
