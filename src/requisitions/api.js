@@ -2,7 +2,7 @@ import { useContext } from "react";
 import axios from "axios";
 import { UserContext } from "../contexts/UserContext";
 
-export const api = "https://109a-45-183-25-57.ngrok-free.app/require";
+export const api = "https://628f-45-183-25-57.ngrok-free.app/require";
 export const apiUpload = `${api}/upload`;
 
 export const getUsers = async () => {
@@ -20,7 +20,6 @@ export const getUsers = async () => {
     alert("Não houve resposta do serviço para usuários!")
   }
 };
-
 
 export const getNotices = async () => {
   const { setNotices, setRefreshing } = useContext(UserContext);
