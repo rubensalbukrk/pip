@@ -1,59 +1,40 @@
 import React, { useContext } from "react";
-import * as Animatable from "react-native-animatable";
-import { Box, Text, Avatar, NativeBaseProvider } from "native-base";
+import { View, Text } from "react-native";
 import { UserContext } from "../../contexts/UserContext";
-import { useNavigation } from "@react-navigation/native";
 import { TabViewAdmin } from "../../../components/TabsView";
 import BackButton from "../../../components/BackButton";
-import { LinearGradient } from "expo-linear-gradient";
-
-const config = {
-  dependencies: {
-    "linear-gradient": LinearGradient,
-  },
-};
+import { useNavigation } from "@react-navigation/native";
+import UserAvatar from "../../../components/UserAvatar";
 
 export default function Admin() {
   const { users, logged } = useContext(UserContext);
   const navigation = useNavigation();
 
   return (
-    <NativeBaseProvider config={config}>
-      <Box
-        flex={1}
-        w="100%"
-        minH="600"
-        bg={{
-          linearGradient: {
-            colors: ['lightBlue.600', "lightBlue.400"],
-            start: [0, 1],
-            end: [0, 0],
-          },
-        }}
-        flexDir="column"
+      <View
+      className='flex-1 flex-col w-full h-full bg-blue-600'
       >
-        <Box w="100%" h="20%" justifyContent="center" alignItems="center">
-          
-          <Box position="absolute" bottom="15%" left="5%" > 
+        <View
+        className='w-full h-20 justify-center items-center'>
+          <View 
+          className='absolute bottom-14 left-5'> 
             <BackButton />
-          </Box>
-          
-
-          <Text fontSize="2xl" mt="9%" color="light.100" fontFamily="Doppio One">
+          </View>
+        
+          <Text 
+          className='font-default text-2xl text-white mt-9'
+          >
             PAINEL DE ADMINISTRAÇÃO
           </Text>
-          <Avatar
-            size="xl"
-            mt="3"
-            shadow={6}
-            source={{ uri: logged?.avatar }}
+          <UserAvatar
+            x={100}
+            y={100}
           />
-        </Box>
+        </View>
 
-        <Box flex={1} w="100%">
+        <View className='flex-1 w-full'>
           <TabViewAdmin />
-        </Box>
-      </Box>
-    </NativeBaseProvider>
+        </View>
+      </View>
   );
 }
