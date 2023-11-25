@@ -1,21 +1,11 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
-import {
-  Icon,
-  HStack,
-  VStack,
-  Box,
-  Avatar,
-  Text,
-  Center,
-  Input,
-  Heading,
-} from "native-base";
-import { View, FlatList, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, Image, FlatList, TouchableOpacity } from "react-native";
 import { Ionicons, FontAwesome5, Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../../src/contexts/UserContext";
-import { api, getUsers } from "../../../src/requisitions/api";
+import { api } from "../../../src/api/api";
+import UserAvatar from "../../UserAvatar";
 
 export default function TabSearch() {
   const { refreshing, setRefreshing, users, setUsers } = useContext(UserContext);
@@ -65,53 +55,30 @@ const searchFilter = (text) => {
   };
 
   return (
-    <Center flex={1} w="100%" px="5">
-      <VStack w="100%" space={5} alignSelf="center">
-       
-        <Input
-          mt="5%"
+    <View
+    className="flex-1 w-full px-5 justify-center items-center">
+      <View
+      className='w-full gap-5 self-center'
+      >
+        <Ionicons name="ios-search" size={32} color='white' />
+        <TextInput
+        className='w-full h-16 font-default rounded-xl text-lg px-2 mb-4 mt-6 border-2 border-white/60'
           onChangeText={(text) => searchFilter(text)}
           value={search}
-          color={"light.100"}
           placeholder="Procurar por nome"
           placeholderTextColor={"rgba(255,255,255, 0.65)"}
-          variant="outline"
-          width="100%"
-          fontSize={"xl"}
-          fontFamily={"Doppio One"}
-          h="50px"
-          colorScheme={"lightBlue"}
-          focusOutlineColor={"lightBlue.300"}
-          borderRadius="10"
-          borderColor={ "rgba(255,255,255, 0.65)"}
-          mb="4%"
-          px="2"
-          InputLeftElement={
-            <Icon
-              ml="2"
-              size="5"
-              color="light.100"
-              as={<Ionicons name="ios-search" />}
-            />
-          }
+          
         />
-      </VStack>
+      </View>
      
       <FlatList
+      className='flex-1 w-full h-300 mb-9 rounded-lg'
         data={filteredData}
         horizontal={false}
         refreshing={refreshing}
         onRefresh={() => setRefreshing(true)}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item.id}
-        style={{
-          flex: 1,
-          width: "100%",
-          height: 300,
-          fontFamily: "Doppio One",
-          marginBottom: "9%",
-          borderRadius: 20,
-        }}
         renderItem={({ item }) => {
           return (
             <View
@@ -126,35 +93,25 @@ const searchFilter = (text) => {
                 backgroundColor: "rgba(255,255,255, 0.15)",
               }}
             >
-              <HStack space={4} alignItems="center">
-                <Avatar ml="4%" source={{ uri: item.avatar }} />
-                <VStack flex="1">
-                  <Box rounded="lg" flex="1" mr="18%">
-                    <Text fontFamily="Doppio One" numberOfLines={1} ellipsizeMode="tail" color="white">
+              <View className='flex-row items-center gap-3'>
+                <UserAvatar x={70} y={70} source={{ uri: item.avatar }} />
+                <View className='flex-1'>
+                  <View className='flex-1 rounded-lg mr-16'>
+                    <Text className='font-default line-clamp-1 text-ellipsis text-white'>
                       {item.nome}
                     </Text>
-                  </Box>
-                  <Box rounded="lg" fontFamily="Doppio One" flex="1" mr="18%" bg="rgba(255,255,255, 0.10)">
+                  </View>
+                  <View className='flex-1 mr-16 rounded-lg bg-white/10'>
                     <Text
-                    ml="2"
-                    fontFamily="Doppio One"
-                      numberOfLines={1}
-                      ellipsizeMode="tail"
-                      style={{ flex: 1 }}
-                      color="light.100"
+                    className='font-default line-clamp-1 text-ellipsis text-white'
                     >
                       {item.question2}
                     </Text>
-                  </Box>
-                </VStack>
+                  </View>
+                </View>
 
                 <TouchableOpacity
-                  style={{
-                    position: "absolute",
-                    opacity: 0.8,
-                    bottom: "50%",
-                    right: 10,
-                  }}
+                className='absolute right-10 bottom-52 opacity-80'
                   onPress={() =>
                     navigation.navigate("EditUser", {
                       id: item.id,
@@ -187,11 +144,11 @@ const searchFilter = (text) => {
                 >
                   <FontAwesome5 name="user-edit" size={24} color="white" />
                 </TouchableOpacity>
-              </HStack>
+              </View>
             </View>
           );
         }}
       />
-    </Center>
+    </View>
   );
 }

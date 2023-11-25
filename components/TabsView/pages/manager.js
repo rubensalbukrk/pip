@@ -1,14 +1,5 @@
 import React from "react";
-import {
-  Box,
-  ScrollView,
-  Heading,
-  Text,
-  VStack,
-  Center,
-  Divider,
-  Button,
-} from "native-base";
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import {
   Feather,
   AntDesign,
@@ -22,70 +13,50 @@ export default function TabManager() {
 
   return (
     <ScrollView  flex={1} w="100%">
-      <Center flex={1} w="100%" px="5">
-        <VStack
-          mt="4%"
-          w="100%"
-          maxH="240px"
-          space={2}
-          bg="rgba(255,255,255, 0.15)"
-          rounded="lg"
-          alignItems="center"
-          justifyContent="center"
+      <View className='flex-1 w-full px-5'>
+        <View className='w-full max-h-44 mt-4 justify-center items-center gap-2 rounded-lg bg-white/20'
         >
-          <Box position={"absolute"} left="5%" top="5%">
+          <View className='absolute left-5 top-5'>
             <FontAwesome name="newspaper-o" size={40} color="white" />
-          </Box>
-          <Heading fontFamily={"Doppio One"} color={"light.100"}>Notícias</Heading>
+          </View>
+          <Text className="font-default text-lg text-white">Notícias</Text>
 
-          <Divider ml="12%" my="2" w="70%" />
+          
 
-          <Text fontSize="xl" fontFamily={"Doppio One"} color={"light.100"}>
+          <Text fontSize="xl" className="font-default text-lg text-white">
             Gerêncie todas as notícias!
           </Text>
 
-          <Button
-            my="2"
-            mb="4"
-            rounded={"xl"}
-            colorScheme={"info"}
+          <TouchableOpacity
+          className='w-64 h-14 my-2 mb-4 rouded-xl'
             onPress={() => navigation.navigate("NewNotices")}
           >
             <Feather name="arrow-right-circle" size={28} color="white" />
-          </Button>
-        </VStack>
+          </TouchableOpacity>
+        </View>
 
-        <Divider my="9" opacity={0.5} />
 
-        <VStack
-          px="4"
-          w="100%"
-          maxH="240px"
-          space={2}
-          bg="rgba(255,255,255, 0.15)"
-          rounded="lg"
-          alignItems="center"
-          justifyContent="center"
+
+        <View className='w-full px-4 justify-center items-center rounded-lg gap-2 bg-white/20'
         >
-          <Box position={"absolute"} left="5%" top="5%">
+          <View 
+          className='absolute top-5 left-5' position={"absolute"}>
             <AntDesign name="exception1" size={40} color="white" />
-          </Box>
-          <Heading fontFamily={"Doppio One"} color={"light.100"}>Solicitações</Heading>
-          <Divider ml="12%" my="2" w="70%" />
-          <Text fontSize="xl" fontFamily={"Doppio One"} color={"light.100"}>
+          </View>
+
+          <Text className="font-default text-lg text-white">Solicitações</Text>
+         
+          <Text className="font-default text-lg text-white">
             Gerêncie todos os pedidos de serviços!
           </Text>
-          <Button
-            my="2"
-            mb="4"
-            rounded={"xl"}
-            colorScheme={"info"}
+          <TouchableOpacity
+          className='w-64 h-14 my-2 mb-4 rouded-xl bg-blue-700'
             onPress={() => navigation.navigate("Solicitation")}
           >
             <Feather name="arrow-right-circle" size={28} color="white" />
-          </Button>
-        </VStack>
-      </Center>
+          </TouchableOpacity>
+        </View>
+      </View>
     </ScrollView>
   );
 }

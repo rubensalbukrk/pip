@@ -1,25 +1,9 @@
 import React, { useContext } from "react";
-import { View, Dimensions } from "react-native";
-import {
-  Box,
-  Circle,
-  ScrollView,
-  Container,
-  FlatList,
-  Heading,
-  Text,
-  VStack,
-  HStack,
-  Progress,
-  Center,
-  Divider,
-  ZStack,
-} from "native-base";
+import { View, Text, FlatList, ScrollView, } from "react-native";
 
 import { UserContext } from "../../../src/contexts/UserContext";
 
 import PieChartWithDynamicSlices from "../../Graphics/DinamicGraphic";
-import PieChartwith from "../../Graphics/pieChart";
 
 export default function TabCadastros() {
   const { users } = useContext(UserContext);
@@ -56,128 +40,77 @@ export default function TabCadastros() {
   let cruzEspiritoSantoCount = cruzEspiritoSanto?.length;
 
   return (
-    <ScrollView mb="5%" flex={1} w="100%" horizontal={false}>
-      <VStack
-        alignSelf="center"
-        w="100%"
-        alignItems="center"
-        justifyContent="center"
+    <ScrollView
+    className='flex-1 w-full mb-5'
+    horizontal={false}>
+      <View className="self-center w-full items-center justify-center"
       >
        <PieChartWithDynamicSlices />
       
-      </VStack>
+      </View>
 
-      <Heading color="light.100" ml="4%" shadow={3} fontFamily="Doppio One" fontSize="3xl">
+      <Text className="font-default text-2xl ml-4 text-white">
         Familias por bairro
-      </Heading>
-      <Divider my="2" />
-      <HStack
-        mb="4%"
-        alignItems="center"
-        justifyContent="center"
-        flexWrap={'wrap'}
-        w="100%"
+      </Text>
+    
+      <View className='flex-row w-full mb-4 items-center justify-center flex-wrap'
       >
-        <Center
-          h="140px"
-          mx="4"
-          my="2"
-          w="140px"
-          rounded="lg"
-          bg="rgba(255,255,255, 0.15)"
+        <View className="w-140 h-140 mx-4 my-2 rounded-lg justify-center items-center bg-white/20"
         >
-          <Text color="light.100" fontSize="6xl" fontFamily="Doppio One">
+          <Text className="font-default text-6xl text-white">
             {" "}
             {tibiriCount ? tibiriCount : "0"}{" "}
           </Text>
-          <Text color="light.100" fontSize="lg" fontFamily="Doppio One">
+          <Text className="font-default text-lg text-white">
             Tibiri
           </Text>
-        </Center>
+        </View>
 
-        <Center
-          h="140px"
-          mx="4"
-          my="2"
-          w="140px"
-          rounded="lg"
-          bg="rgba(255,255,255, 0.15)"
+        <View className="w-140 h-140 mx-4 my-2 rounded-lg justify-center items-center bg-white/20"
         >
-          <Text color="light.100" fontSize="6xl" fontFamily="Doppio One">
+          <Text className="font-default text-6xl text-white">
             {" "}
             {varzeaNovaCount ? varzeaNovaCount : "0"}{" "}
           </Text>
-          <Text color="light.100" fontSize="lg" fontFamily="Doppio One">
+          <Text className="font-default text-lg text-white">
             Varzea Nova
           </Text>
-        </Center>
+        </View>
 
-        <Center
-          h="140px"
-          mx="4"
-          my="2"
-          w="140px"
-          rounded="lg"
-          bg="rgba(255,255,255, 0.15)"
+        <View className="w-140 h-140 mx-4 my-2 rounded-lg justify-center items-center bg-white/20"
         >
-          <Text color="light.100" fontSize="6xl" fontFamily="Doppio One">
+          <Text className="font-default text-6xl text-white">
             {" "}
             {santaRitaCount ? santaRitaCount : "0"}{" "}
           </Text>
-          <Text color="light.100" fontSize="lg" fontFamily="Doppio One">
+          <Text className="font-default text-lg text-white">
             Santa Rita
           </Text>
-        </Center>
+        </View>
 
-        <Center
-          h="140px"
-          mx="4"
-          my="2"
-          w="140px"
-          rounded="lg"
-          bg="rgba(255,255,255, 0.15)"
+        <View className="w-140 h-140 mx-4 my-2 rounded-lg justify-center items-center bg-white/20"
         >
-          <Text color="light.100" fontSize="6xl" fontFamily="Doppio One">
+          <Text className="font-default text-6xl text-white">
             {" "}
             {marcosMouraCount ? marcosMouraCount : "0"}{" "}
           </Text>
-          <Text color="light.100" fontSize="lg" fontFamily="Doppio One">
-            Marcos Moura
+          <Text className="font-default text-lg text-white">
+            marcos Moura
           </Text>
-        </Center>
-        <Center
-          h="140px"
-          mx="4"
-          my="2"
-          w="140px"
-          rounded="lg"
-          bg="rgba(255,255,255, 0.15)"
+        </View>
+
+        <View className="w-140 h-140 mx-4 my-2 rounded-lg justify-center items-center bg-white/20"
         >
-          <Text color="light.100" fontSize="6xl" fontFamily="Doppio One">
+          <Text className="font-default text-6xl text-white">
             {" "}
             {cruzEspiritoSantoCount ? cruzEspiritoSantoCount : "0"}{" "}
           </Text>
-          <Text color="light.100" fontSize="md" fontFamily="Doppio One">
-            Cruz do Espirito S.
+          <Text className="font-default text-lg text-white">
+            Cruz Espirito S.
           </Text>
-        </Center>
-        <Center
-          h="140px"
-          mx="4"
-          my="2"
-          w="140px"
-          rounded="lg"
-          bg="rgba(255,255,255, 0.15)"
-        >
-          <Text color="light.100" fontSize="6xl" fontFamily="Doppio One">
-            {" "}
-            0{" "}
-          </Text>
-          <Text color="light.100" fontSize="lg" fontFamily="Doppio One">
-            Outros
-          </Text>
-        </Center>
-      </HStack>
+        </View>
+
+      </View>
     </ScrollView>
   );
 }

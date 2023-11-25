@@ -1,31 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { TouchableOpacity, ScrollView, RefreshControl } from "react-native";
-import {
-  Box,
-  FlatList,
-  Heading,
-  Text,
-  VStack,
-  HStack,
-  Center,
-  Divider,
-  NativeBaseProvider
-} from "native-base";
+import { View, Text, TouchableOpacity, ScrollView,FlatList, RefreshControl } from "react-native";
 import {
   Feather,
   FontAwesome,
   FontAwesome5,
 } from "@expo/vector-icons";
-
 import { UserContext } from "../../../../src/contexts/UserContext";
 import { useNavigation } from "@react-navigation/native";
-import { LinearGradient } from "expo-linear-gradient";
 import {
   api,
   deleteSolicitation,
   deleteAprovado
-} from "../../../../src/requisitions/api";
+} from "../../../../src/api/api";
 
 export default function Solicitation() {
   const [refreshing, setRefreshing] = useState(false)
@@ -73,42 +60,29 @@ if (refreshing) {
   getAprovados()
   getSolicitation();
 }
-const config = {
-  dependencies: {
-    "linear-gradient": LinearGradient,
-  },
-};
   return (
-    <NativeBaseProvider config={config}>
-    <Box flex={1} w="100%" px="4" py="10" bg={{
-      linearGradient: {
-        colors: ["lightBlue.600", "lightBlue.400"],
-        start: [0, 0],
-        end: [1, 0],
-      },
-    }}>
+
+    <View className='flex-1 w-full px-4 py-10 bg-blue-700'>
     <ScrollView
-          refreshControl={
+        refreshControl={
             <RefreshControl
               refreshing={refreshing}
               onRefresh={() => setRefreshing(true)}
             />
           }
-    flex={1} w="100%" bg="lightBlue.400" py="10" px="5">
-      <Box flexDir="row" w="100%" top="2%">
+        className='flex-1 w-fiçç py-10 px-5 bg-blue-400'>
+      <View className='flex-row w-full top-2'>
       <FontAwesome5 name="user-clock" size={40} color="white" />
-        <Heading mx="3" fontSize="4xl" fontFamily="Doppio One" color="light.100">
+        <Text className="font-default mx-3 text-4xl text-white">
           Solicitações
-        </Heading>
-      </Box>
+        </Text>
+      </View>
 
-      <Divider my="4" />
 
       <FlatList
         data={solicitations}
         horizontal={false}
         keyExtractor={(item) => item.id}
-        
         style={{
           flex: 1,
           width: "100%",
@@ -118,15 +92,15 @@ const config = {
         renderItem={({ item, index }) => {
           let userInfo = users.find(user => String(user.cpf) === String(item.cpf))
           return (
-            <Center key={item.id} my="3" w="100%">
-              <HStack w="100%" mt="4%" h="160">
-                <VStack bg="rgba(255,255,255, 0.15)" rounded="xl" py="5%" px="3" w="100%">
-                  <Text fontFamily="Doppio One" color={"light.100"}>Nome: {item.nome} </Text>
-                  <Text fontFamily="Doppio One" color={"light.100"}>CPF: {item.cpf} </Text>
-                  <Text fontFamily="Doppio One" color={"light.100"}>Serviço: {item.service} </Text>
-                  <Text fontFamily="Doppio One" color={"light.100"}>Pasta: {item.pasta} </Text>
-                  <Text fontFamily="Doppio One" color={"light.100"}>STATUS: {item.status} </Text>
-                  <Text fontFamily="Doppio One" color={"light.100"}>Data: {item.date} </Text>
+            <View className='w-full my-3 justify-center items-center' key={item.id}>
+              <View className='flex-row w-full mt-4 h-160'>
+                <View className='w-full px-3 py-5 bg-white/10'>
+                  <Text className="font-default text-lg text-white">Nome: {item.nome} </Text>
+                  <Text className="font-default text-lg text-white">CPF: {item.cpf} </Text>
+                  <Text className="font-default text-lg text-white">Serviço: {item.service} </Text>
+                  <Text className="font-default text-lg text-white">Pasta: {item.pasta} </Text>
+                  <Text className="font-default text-lg text-white">STATUS: {item.status} </Text>
+                  <Text className="font-default text-lg text-white">Data: {item.date} </Text>
                   <TouchableOpacity
                     style={{
                       position: "absolute",
@@ -165,20 +139,20 @@ const config = {
                   >
                     <FontAwesome5 name="info-circle" size={36} color="white" />
                   </TouchableOpacity>
-                </VStack>
-              </HStack>
-            </Center>
+                </View>
+              </View>
+            </View>
           );
         }}
       />
-      <Divider mt="3%" mx="2" w="40%" alignSelf={"center"} />
+  
 
-      <Box flexDir="row" top="2%">
+      <View className='flex-row top-2'>
         <FontAwesome5 name="user-check" size={40} color="white" />
-        <Heading mx="3" fontSize="4xl" fontFamily="Doppio One" color="light.100">
+        <Text className="font-default mx-3 text-4xl text-white">
           Aprovações
-        </Heading>
-      </Box>
+        </Text>
+      </View>
       <FlatList
         data={aprovados}
         horizontal={false}
@@ -193,14 +167,13 @@ const config = {
         renderItem={({ item, index}) => {
           let userInfo = users.find(user => String(user.cpf) === String(item.cpf))
           return (
-            <Center my="3" w="100%">
-              <HStack w="100%" h="120px">
-                <VStack bg="rgba(255,255,255, 0.15)" alignSelf="center" rounded="xl" py="5%" px="2" w="100%">
-             
-                  <Text fontFamily={"Doppio One"} color={"light.100"}>Nome: {item.nome} </Text>
-                  <Text fontFamily={"Doppio One"} color={"light.100"}>Serviço: {item.service} </Text>
-                  <Text fontFamily={"Doppio One"} color={"light.100"}>STATUS: {item.status} </Text>
-                  <Text fontFamily={"Doppio One"} color={"light.100"}>Data: {item.date} </Text>
+            <View className='w-full my-3 items-center justify-center'>
+              <View className='flex-row w-full h-20'>
+                <View className='w-full py-5 px-2 self-center bg-white/10 rounded-xl'>
+                  <Text className="font-default text-lg text-white">Nome: {item.nome} </Text>
+                  <Text className="font-default text-lg text-white">Serviço: {item.service} </Text>
+                  <Text className="font-default text-lg text-white">STATUS: {item.status} </Text>
+                  <Text className="font-default text-lg text-white">Data: {item.date} </Text>
                   <TouchableOpacity
                     style={{
                       position: "absolute",
@@ -219,9 +192,9 @@ const config = {
                     />
                   </TouchableOpacity>
                   
-                </VStack>
-              </HStack>
-            </Center>
+                </View>
+              </View>
+            </View>
           );
         }}
       /> 
@@ -240,7 +213,6 @@ const config = {
         <Feather name="arrow-left-circle" size={40} color="white" />
       </TouchableOpacity>
     </ScrollView>
-    </Box>
-    </NativeBaseProvider>
+    </View>
   );
 }

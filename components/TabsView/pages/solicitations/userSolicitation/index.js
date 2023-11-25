@@ -1,57 +1,52 @@
 import React, { useState } from "react";
-import axios from "axios";
 import {
-  Box,
+  View,
   Text,
-  Button,
-  Heading,
-  VStack,
-  Input,
-  Container,
+  TextInput,
+  TouchableOpacity,
   ScrollView,
-  Divider,
-  HStack,
-} from "native-base";
+} from "react-native";
+import axios from "axios";
+
 import BackButton from "../../../../BackButton";
 import InputInfoUser from "../../../../UserLayout/inputUser";
 import MyParents from "../../../../UserLayout/userParents";
 import { TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
-import { api, deleteSolicitation} from "../../../../../src/requisitions/api";
+import { api, deleteSolicitation } from "../../../../../src/requisitions/api";
 
 export default function SolicitationInfoUser({ route }) {
-  const [status, setStatus] = useState()
-  const filhos = route?.params?.userInfo?.filhos
-  console.warn(filhos)
-const handleConfirmSolicitation = () => {
+  const [status, setStatus] = useState();
+  const filhos = route?.params?.userInfo?.filhos;
+  console.warn(filhos);
+  const handleConfirmSolicitation = () => {
     let userApproved = {
       cpf: route?.params?.cpf,
-        nome: route?.params?.userInfo.nome,
-        service: route?.params?.service,
-        date: route?.params?.date,
-        status: status
-    }
-    axios.post(`${api}/aprovados`, userApproved, {
-        method: 'post',
+      nome: route?.params?.userInfo.nome,
+      service: route?.params?.service,
+      date: route?.params?.date,
+      status: status,
+    };
+    axios
+      .post(`${api}/aprovados`, userApproved, {
+        method: "post",
         headers: new Headers({
-            "ngrok-skip-browser-warning" : "69421"
-        })
-    })
-    .then(
-      deleteSolicitation(route?.params?.id)
-    )
-    .then(response => {
-      alert(JSON.stringify(response.data))
-    })
-    .catch(error => console.error(error));
-}
-const handleCancelSolicitation = (id) => {
-  axios.delete(`${api}/solicitations/${id}`)
-}
-function handleUpdateStatus(){
-  let updateStatus = {
-    status: status,
-  }
+          "ngrok-skip-browser-warning": "69421",
+        }),
+      })
+      .then(deleteSolicitation(route?.params?.id))
+      .then((response) => {
+        alert(JSON.stringify(response.data));
+      })
+      .catch((error) => console.error(error));
+  };
+  const handleCancelSolicitation = (id) => {
+    axios.delete(`${api}/solicitations/${id}`);
+  };
+  function handleUpdateStatus() {
+    let updateStatus = {
+      status: status,
+    };
     axios.put(`${api}/solicitations/${route?.params?.id}`, updateStatus, {
       method: "put",
       headers: new Headers({
@@ -59,24 +54,22 @@ function handleUpdateStatus(){
       }),
     });
     return alert("Atualizado com sucesso!");
-}
+  }
   return (
-    <ScrollView flex={1} w="100%" h="100%" bg="lightBlue.500">
-   <HStack>
-   <BackButton />
-       <Heading w="100%" shadow={4} my="3" color={"light.100"} textAlign={"center"}>
-        Informações de Solicitação
-      </Heading>
-   </HStack>
-    <Divider  />
-      <VStack w="100%" bg="lightBlue.500" rounded="lg" h="100%">
-        <Container
-          my="2"
-          mx="3"
-          w="100%"
-          _text={{
-            color: "light.100",
-          }}
+    <ScrollView 
+    className='flex-1 w-full h-full bg-blue-500'
+    >
+      <View className='flex-row'>
+        <BackButton />
+        <Text
+          className="font-default my-3 text-lg text-white"
+        >
+          Informações de Solicitação
+        </Text>
+      </View>
+    
+      <View className='w-full h-full rounded-lg bg-blue-600'>
+        <View className='w-full mx-3 my-2'
         >
           <InputInfoUser
             infoLabel="Serviço"
@@ -99,27 +92,24 @@ function handleUpdateStatus(){
             infoLabel="Data de entrada"
             infoValue={route?.params?.date}
           />
-          <Text mt="3" ml="2" fontSize={"lg"} color="#fff">Status</Text>
-          <HStack shadow={3} space={3} alignItems="center" w="100%">
-          <Input
-          value={status}
-          onChangeText={(text) => setStatus(text)}
-          w="70%"
-          bg="lightBlue.400"
-          placeholderTextColor={"#fff"}
-          borderColor={"lightBlue.500"}
-          placeholder={route?.params?.status}
-          />
-         <TouchableOpacity
-         onPress={() => handleUpdateStatus()}
-         >
-         <FontAwesome name="edit" size={28} color="white" />
-         </TouchableOpacity>
-          </HStack>
-            
-         
+          <Text className="font-default text-lg top-3 ml-2 text-white">
+            Status
+          </Text>
+          <View className='flex-row w-full gap-3 items-center'>
+            <TextInput
+            className='w-72 bg-blue-400'
+              value={status}
+              onChangeText={(text) => setStatus(text)}
+              placeholderTextColor={"#fff"}
+              placeholder={route?.params?.status}
+            />
+            <TouchableOpacity onPress={() => handleUpdateStatus()}>
+              <FontAwesome name="edit" size={28} color="white" />
+            </TouchableOpacity>
+          </View>
 
-          <Box w="100%" mt="6%" bg="rgba(255,255,255, 0.15)" rounded="2xl" px="3" py="2">
+          <View className='w-full px-3 py-2 mt-6 rounded-2xl bg-white/10'
+          >
             <InputInfoUser
               infoLabel="Filhos"
               infoValue={
@@ -128,27 +118,31 @@ function handleUpdateStatus(){
                   : `${route?.params?.userInfo.filhos?.length}`
               }
             />
-            {route?.params?.userInfo.filhos?.length === 0 ? (
-              "NÃO"
-            ) : (
-              route?.params?.userInfo.filhos?.map((item) => {
-                return <MyParents nome={item.nome} cpf={item.cpf} idade={item.idade} />
-              })
-            )}
-          </Box>
-        </Container>
-        <HStack my="4" mb="10%"  shadow={6} space={9} alignItems="center" justifyContent={"center"} w="100%">
-          <TouchableOpacity
-          onPress={() => handleConfirmSolicitation()}
-          >
+            {route?.params?.userInfo.filhos?.length === 0
+              ? "NÃO"
+              : route?.params?.userInfo.filhos?.map((item) => {
+                  return (
+                    <MyParents
+                      nome={item.nome}
+                      cpf={item.cpf}
+                      idade={item.idade}
+                    />
+                  );
+                })}
+          </View>
+        </View>
+        <View className='flex-row w-full my-4 mb-10 gap-5 items-center justify-center'
+        >
+          <TouchableOpacity onPress={() => handleConfirmSolicitation()}>
             <FontAwesome name="check-circle" size={72} color="white" />
           </TouchableOpacity>
           <TouchableOpacity
-          onPress={() => deleteSolicitation(route?.params?.id)}>
+            onPress={() => deleteSolicitation(route?.params?.id)}
+          >
             <FontAwesome name="times-circle" size={72} color="white" />
           </TouchableOpacity>
-        </HStack>
-      </VStack>
+        </View>
+      </View>
     </ScrollView>
   );
 }

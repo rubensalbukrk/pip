@@ -1,20 +1,7 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
-import {
-  Box,
-  Center,
-  Button,
-  VStack,
-  Text,
-  FlatList,
-  Heading,
-  Divider,
-  Input,
-  HStack,
-  NativeBaseProvider
-} from "native-base";
-import { TouchableOpacity } from "react-native";
-import { api, deleteNotice, getNotices } from "../../../../src/requisitions/api";
+import { View, Text, TextInput, FlatList, TouchableOpacity } from "react-native";
+import { api, deleteNotice, getNotices } from "../../../../src/api/api";
 import { UserContext } from "../../../../src/contexts/UserContext";
 import {
   MaterialIcons,
@@ -24,7 +11,6 @@ import {
 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
-import { LinearGradient } from "expo-linear-gradient";
 
 
 export default function NewNotice() {
@@ -88,64 +74,42 @@ function addNotice(){
     .catch(error => console.error(error));
 }
 
-const config = {
-  dependencies: {
-    "linear-gradient": LinearGradient,
-  },
-};
   return (
-    <NativeBaseProvider config={config}>
-    <Box flex={1} w="100%" pt="10" px="5"
-    bg={{
-      linearGradient: {
-        colors: ["lightBlue.600", "lightBlue.400"],
-        start: [0, 0],
-        end: [1, 0],
-      },
-    }}
-    >
-      <Box flexDir="row" top="2%">
-        <FontAwesome name="newspaper-o" size={40} color="white" />
-        <Heading mx="3" fontFamily="Doppio One" color="light.100">
-          Gerênciador de Notícias
-        </Heading>
-      </Box>
 
-      <Divider my="4" />
-      <Text fontSize="lg" fontFamily="Doppio One" mb="2%" color={"light.100"}>
+    <View className='flex-1 w-full pt-10 px-5 bg-blue-600'
+    >
+      <View className='flex-row top-2'>
+        <FontAwesome name="newspaper-o" size={40} color="white" />
+        <Text className="font-default text-2xl text-white">
+          Gerênciador de Notícias
+        </Text>
+      </View>
+
+    
+      <Text className="font-default mb-2 text-lg text-white">
         Atuais
       </Text>
 
       <FlatList
+      className='flex-1 w-full mb-3 rounded-xl'
         data={notices}
         keyExtractor={(item) => item.id.toString()}
-        
-        flex={1}
-        w="100%"
-        maxH="270px"
-        mb="3%"
         rounded="xl"
         refreshing={refreshing}
         onRefresh={() => setRefreshing(true)}
         renderItem={({ item, index }) => {
           return (
-            <Center w="100%" h="110px" mb="5%" mt="5%">
+            <View className='w-full h-110 my-5'>
             
-                <VStack
-                  bg="rgba(255,255,255, 0.15)"
-                  rounded="xl"
-                  py="1%"
-                  px="3%"
-                  mx="2"
-                  w="88%"
-                  h="110px"
-                 justifyContent={"center"}
+                <View className='w-80 h-20 mx-2 px-3 py-1 rounded-xl bg-white/20 justify-center'
                 > 
-                <Box alignSelf="center" justifyContent={"center"}>
-                  <Text fontFamily="Doppio One" color="light.100">Titulo: {item.title} </Text>
-                  <Text fontFamily="Doppio One" color="light.100" numberOfLines={1} ellipsizeMode="tail" >Descrição: {item.mensagem} </Text>
-                  <Text fontFamily="Doppio One" color="light.100">Data: {item.date} </Text>
-                </Box>
+                <View
+                className='self-center justify-center'
+                >
+                  <Text className="font-default text-lg text-white">Titulo: {item.title} </Text>
+                  <Text className="font-default text-lg text-white" numberOfLines={1} ellipsizeMode="tail" >Descrição: {item.mensagem} </Text>
+                  <Text className="font-default text-lg text-white">Data: {item.date} </Text>
+                </View>
                   
                   <TouchableOpacity
                     style={{
@@ -164,55 +128,47 @@ const config = {
                       color="white"
                     />
                   </TouchableOpacity>
-                </VStack>
-            </Center>
+                </View>
+            </View>
           );
         }}
       />
-        <Text fontFamily="Doppio One" fontSize="lg" mb="2%" color={"light.100"}>
+        <Text className="font-default mb-2 text-2xl text-white">
         Nova notícia
       </Text>
-      <VStack bg="rgba(255,255,255, 0.15)" rounded="xl" py="2" px="5">
-        <Text fontSize={"lg"} fontFamily="Doppio One" color="light.100">
+      <View className='py-2 px-5 rounded-xl bg-white/20'>
+        <Text className="font-default text-lg text-white">
           Titulo
         </Text>
-        <Input 
-        w="75%" 
-        variant="ghost" 
-        bg="rgba(255,255,255, 0.15)" 
-        opacity={0.8}
+        <TextInput className='w-72 bg-white/20 opacity-80'
         onChangeText={(value) => setData({...dataNotice, title: value})}
         />
-        <Text fontSize={"lg"} fontFamily="Doppio One" color="light.100">
+        <Text className="font-default text-lg text-white">
           Descrição
         </Text>
-        <Input
-          mb="4%"
-          h="70"
-          variant="ghost"
-          bg="rgba(255,255,255, 0.15)"
-          opacity={0.8}
+        <TextInput className='w-72 h-72 mb-4 bg-white/20 opacity-80'
           onChangeText={(value) => setData({...dataNotice, mensagem: value})}
         />
-        <HStack justifyContent="space-between">
-          <Button variant={"ghost"}
+        <View className='flex-row justify-between'>
+          <TouchableOpacity
+          className='w-28 h-28 rounded-xl bg-white/25'
           onPress={() => pickImageAsync()}
           >
             <Feather name="image" size={32} color="white" />
-          </Button>
+          </TouchableOpacity>
 
-          <Button
-          size={"sm"} 
-          colorScheme={"info"}
+          <TouchableOpacity
+          className='w-56 h-13 rounded-xl bg-white/25'
           onPress={() => addNotice() & console.log(dataNotice)}
           >
-            <HStack space={3}>
+            <View className='flex-row gap-3'>
                 <FontAwesome5 name="check" size={24} color="white" />
-            <Text fontFamily="Doppio One" color="light.100">Adicionar</Text>
-            </HStack>
-          </Button>
-        </HStack>
-      </VStack>
+            <Text className="font-default text-lg text-white">Adicionar</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </View>
+
       <TouchableOpacity
         style={{
           width: 70,
@@ -226,7 +182,6 @@ const config = {
       >
         <Feather name="arrow-left-circle" size={40} color="white" />
       </TouchableOpacity>
-    </Box>
-    </NativeBaseProvider>
+    </View>
   );
 }

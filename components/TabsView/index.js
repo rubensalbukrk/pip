@@ -1,24 +1,24 @@
 import * as React from 'react';
-import { Animated, Pressable, Dimensions } from 'react-native';
+import { View, useWindowDimensions } from 'react-native';
 import { TabView, SceneMap } from 'react-native-tab-view';
-import { Box, Center, useColorModeValue } from 'native-base';
+
 import TabCadastros from './pages/cadastros';
 import TabSearch from './pages/pesquisar';
 import TabManager from './pages/manager';
 
 
-const FirstRoute = () => <Center flex={1} h="100%" mx="2" my="4">
+const FirstRoute = () => <View className='flex-1 h-full w-full mx-2 my-4'>
     <TabCadastros />
-  </Center>;
+  </View>;
 
-const SecondRoute = () => <Center flex={1} h="100%" mx="2" my="4">
+const SecondRoute = () => <View className='flex-1 h-full w-full mx-2 my-4'>
     <TabSearch />
     
-  </Center>;
+  </View>;
 
-const ThirdRoute = () => <Center flex={1} h="100%" mx="2" my="4">
+const ThirdRoute = () => <View className='flex-1 h-full w-full mx-2 my-4'>
    <TabManager />
-  </Center>;
+  </View>;
 
 
 const initialLayout = {
@@ -31,6 +31,7 @@ export const renderScene = SceneMap({
 });
 
 export function TabViewAdmin() {
+  const layout = useWindowDimensions();
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([{
     key: 'first',
@@ -44,34 +45,12 @@ export function TabViewAdmin() {
   }]);
 
 
-  const renderTabBar = props => {
-    const inputRange = props.navigationState.routes.map((x, i) => i);
-    return <Box key={`${index}-key`} flexDirection="row">
-        {props.navigationState.routes.map((route, i) => {
-        const opacity = props.position.interpolate({
-          inputRange,
-          outputRange: inputRange.map(inputIndex => inputIndex === i ? 1 : 0.5)
-        });
-        const color = index === i ? useColorModeValue('#fff', '#e5e5e5') : useColorModeValue('#80ccff', '#a1a1aa');
-        const borderColor = index === i ? 'light.200' : useColorModeValue('cyan.400', 'gray.400');
-        return <Box key={`id@-${i}`} mt="10" borderBottomWidth="3" borderColor={borderColor} flex={1} alignItems="center" p="3" cursor="pointer">
-              <Pressable onPress={() => {
-            setIndex(i);
-          }}>
-                <Animated.Text style={{
-                  fontFamily: "Doppio One",
-              color
-            }}>{route.title}</Animated.Text>
-              </Pressable>
-            </Box>;
-      })}
-      </Box>;
-  };
-
-  return <TabView navigationState={{
-    index,
-    routes
-  }} renderScene={renderScene} renderTabBar={renderTabBar} onIndexChange={setIndex} initialLayout={initialLayout} style={{
-    width: '100%', height: 400
-  }} />;
+  return (
+    <TabView
+      navigationState={{ index, routes }}
+      renderScene={renderScene}
+      onIndexChange={setIndex}
+      initialLayout={{ width: layout.width }}
+    />
+  )
 }
