@@ -36,7 +36,7 @@ export const Login = () => {
   };
 
   return (
-    <View className="flex-1 p-6 justify-center items-center bg-blue-500" p="6">
+    <View className="flex-1 p-6 justify-center items-center bg-blue-600" p="6">
       <Image
         style={{
           resizeMode: "contain",
@@ -49,8 +49,8 @@ export const Login = () => {
         source={require("../../../assets/pip-icon.png")}
       />
 
-      <View className="w-96 my-5 py-5 items-center rounded-2xl bg-white/20">
-        <View className="flex-row w-80 h-12 mb-5 items-center rounded-2xl border-2 border-white/25">
+      <View className="w-full my-5 py-5 items-center rounded-2xl bg-white/20">
+        <View className="flex-row w-64 h-12 mb-5 items-center rounded-2xl border-2 border-white/25">
           <Feather name="user" size={32} color={"rgba(255, 255, 255, 0.70)"} />
           <TextInputMask
             style={{
@@ -61,6 +61,7 @@ export const Login = () => {
               height: 50,
               textAlign: "left",
               fontSize: 24,
+              fontFamily: 'Doppio One'
             }}
             type="cpf"
             bg={"rgba(255, 255, 255, 0.32)"}
@@ -72,32 +73,17 @@ export const Login = () => {
         </View>
 
         <TextInput
-          className="w-96 rounded-xl text-center text-2xl border-white/30"
+          className="w-64 h-11 rounded-2xl border-2 text-white font-default text-center text-2xl border-white/30"
           onChangeText={(pass) => setPassword(pass)}
           placeholderTextColor={"rgba(255, 255, 255, 0.32)"}
           type={show ? "text" : "password"}
-          InputRightElement={
-            <TouchableOpacity onPress={() => setShow(!show)}>
-              <Ionicons
-                name={show ? "eye-outline" : "eye-off-outline"}
-                color="#fff"
-                size={32}
-              />
-            </TouchableOpacity>
-          }
-          InputLeftElement={
-            <Feather
-              name="lock"
-              size={32}
-              color={"rgba(255, 255, 255, 0.72)"}
-            />
-          }
+          blurOnSubmit={true}
+          secureTextEntry={true}
           placeholder="******"
-          defaultValue="123456"
         />
 
         <View className="self-start mx-5 my-2">
-          <Text className="font-default text-white">Lembrar-me</Text>
+          <Text className="font-default text-xl mt-2 text-white">Lembrar-me</Text>
           <Switch
             className="self-start "
             trackColor={{ false: "#767577", true: "#81b0ff" }}
@@ -111,16 +97,16 @@ export const Login = () => {
 
         {!submit ? (
           <TouchableOpacity
-            className="w-80 h-20 rounded-2xl bg-white/20"
+            className="w-48 h-14 rounded-2xl items-center justify-center bg-white/20"
             onPress={() => {
               Authentication(cpf, password);
             }}
           >
-            <Text className="font-default text-lg text-white">Entrar</Text>
+            <Text className="font-default self-center text-4xl text-white">Entrar</Text>
           </TouchableOpacity>
         ) : (
-          <TouchableOpacity className="flex-row w-80 rounded-2xl bg-white/5 ">
-            <Text className="font-default text-lg text-white/40">
+          <TouchableOpacity className="w-48 h-14 rounded-2xl items-center justify-center bg-white/10">
+            <Text className="font-default text-4xl text-white/30">
               Aguarde <ActivityIndicator />
             </Text>
           </TouchableOpacity>
@@ -128,8 +114,7 @@ export const Login = () => {
       </View>
 
       <TouchableOpacity
-        className="w-80 my-10"
-        variant={"solid"}
+        className="w-48 h-14 rounded-2xl items-center justify-center bg-white/20"
         onPress={() => navigation.navigate("Cadastrar")}
       >
         <Text className="font-default text-xl text-white">REGISTRAR</Text>
