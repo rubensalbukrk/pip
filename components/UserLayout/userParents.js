@@ -1,67 +1,31 @@
 import React from "react";
-import { Box, Text } from "native-base";
+import { View, Text } from "react-native";
 
 export default function MyParents(props) {
-    return (
-      <Box
-        key={props.keyId}
-        w="100%"
-        mt="4%"
-        px="2"
-        py="3"
-        bg="rgba(255,255,255, 0.12)"
-        rounded="lg"
-        opacity={0.8}
-      >
-        <Text ml="2" color="light.100" fontSize="lg">
-          Nome
+  return (
+    <View
+      className=" w-full mt-4 px-2 py-3 rounded-lg bg-white/20 opacity-80"
+      key={props.keyId}
+    >
+      <Text className="font-default ml-2 text-lg text-white">Nome</Text>
+      <View className="h-10 justify-center opacity-90 rounded-md bg-white/20">
+        <Text className="font-default px-4 text-lg text-white">
+          {props.nome}
         </Text>
-        <Box
-          h="10"
-          justifyContent="center"
-          rounded="md"
-          opacity="0.9"
-          bg="rgba(255,255,255, 0.12)"
-        >
-          <Text color="light.100" paddingX="4" fontSize="lg">
-            {props.nome}
-          </Text>
-        </Box>
-        <Text mt="2" ml="2" color="light.100" fontSize="lg">
-          CPF
+      </View>
+      <Text className="font-default ml-2 mt-2 text-lg text-white">CPF</Text>
+      <View className="w-80 h-10 mb-2 opacity-80 rounded-lg bg-white/20 justify-center">
+        <Text className="font-default px-4 text-lg text-white">
+          {props.cpf}
         </Text>
-        <Box
-          h="10"
-          w="80%"
-          mb="2"
-          justifyContent="center"
-          rounded="md"
-          opacity="0.9"
-          bg="rgba(255,255,255, 0.12)"
-        >
-          <Text color="light.100" paddingX="4" fontSize="lg">
-            {props.cpf}
-          </Text>
-        </Box>
-        <Text ml="2" color="light.100" fontSize="lg">
-          Idade
-        </Text>
-      
-          <Box
-            opacity={0.9}
-            mb="4%"
-            w="30%"
-            h="10"
-            bg="rgba(255,255,255, 0.12)"
-            rounded="md"
-            justifyContent="center"
-          >
-            <Text paddingX="4" color="light.100" mr="3" fontSize="lg">
-              {props.idade}
-            </Text>
-          </Box>
-        
-      </Box>
-    );
+      </View>
+      <Text className="font-default ml-2 text-lg text-white">Idade</Text>
 
+      <View className="w-32 h-10 mb-4 opacity-80 rounded-lg justify-center">
+        <Text className="font-default mr-3 px-4 text-lg text-white">
+          {props.idade}
+        </Text>
+      </View>
+    </View>
+  );
 }

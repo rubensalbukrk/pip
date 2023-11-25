@@ -11,9 +11,8 @@ import axios from "axios";
 import BackButton from "../../../../BackButton";
 import InputInfoUser from "../../../../UserLayout/inputUser";
 import MyParents from "../../../../UserLayout/userParents";
-import { TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
-import { api, deleteSolicitation } from "../../../../../src/requisitions/api";
+import { api, deleteSolicitation } from "../../../../../src/api/api";
 
 export default function SolicitationInfoUser({ route }) {
   const [status, setStatus] = useState();

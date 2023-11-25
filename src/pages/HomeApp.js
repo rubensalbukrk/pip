@@ -28,11 +28,10 @@ export const HomeApp = () => {
 
   return (
     <View
-    className='flex-row w-full h-full px-4 justify-between items-center'
+    className='flex-1 w-full h-96 bg-blue-700 px-4'
     >
       <View
       className='w-30 h-16 top-5 right-40'
-
       >
         <Image
         className='w-30 h-14'
@@ -93,7 +92,7 @@ export const HomeApp = () => {
       </ScrollView>
 
       <View 
-      className='bg-white/20 items-center'
+      className='flex-row w-full bg-white/20 items-center'
       >
         <TouchableOpacity
           cursor="pointer"

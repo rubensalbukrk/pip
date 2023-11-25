@@ -1,27 +1,17 @@
 import React, { useContext, useEffect } from "react";
 import axios from "axios";
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../../contexts/AuthContext";
-import {
-  Feather,
-  MaterialIcons,
-} from "@expo/vector-icons";
+import { Feather, MaterialIcons } from "@expo/vector-icons";
 import { UserContext } from "../../contexts/UserContext";
 import InputInfoUser from "../../../components/UserLayout/inputUser";
 import MyParents from "../../../components/UserLayout/userParents";
-import {
-  api
-} from "../../requisitions/api";
+import { api } from "../../api/api";
 import * as ImagePicker from "expo-image-picker";
 import UserAvatar from "../../../components/UserAvatar";
-
+import { data } from "../../utils/dateNow.";
 const apiUpload = `${api}/upload`;
 
 export const User = () => {
@@ -166,7 +156,7 @@ export const User = () => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            className="w-20 h-20 items-center justify-center opacity-80"
+            className='w-20 h-20 items-center justify-center opacity-80'
             onPress={() => alert("abrindo menu de opçoes")}
           >
             <Feather size={32} color="white" name="settings" />
@@ -179,6 +169,7 @@ export const User = () => {
           </View>
 
           <View className="w-14 h-7 absolute top-20 left-5 bg-blue-800 rounded-md">
+           <Text className="font-default text-xs text-white">
             {logged?.isAdmin == true
               ? "Admin"
               : "Membro" && logged?.isEtg == true
@@ -200,19 +191,17 @@ export const User = () => {
               : "Membro" && logged?.isCoordPasse == true
               ? "Coord Passe"
               : "Membro"}
+           </Text>
+            
           </View>
           <View className="left-5 top-24 absolute">
             <TouchableOpacity
               className="w-60 h-7 bg-blue-400 rounded-lg"
               onPress={() => pickImageAsync()}
             >
-              <Text className="font-default underline text-lg text-white">
-                Alterar
-              </Text>
+              <Text className="font-default underline text-lg text-white">Alterar</Text>
             </TouchableOpacity>
-            <Text className="font-default mt-4 text-lg text-white">
-              Olá {primeiro_nome}
-            </Text>
+            <Text className="font-default mt-4 text-lg text-white">Olá {primeiro_nome}</Text>
           </View>
         </View>
       </View>
@@ -223,9 +212,7 @@ export const User = () => {
             <View className="flex-row h-30 justify-center items-center">
               <MaterialIcons name="info-outline" size={32} color="white" />
 
-              <Text className="font-default ml-2 text-lg text-white">
-                Meus dados
-              </Text>
+              <Text className="font-default ml-2 text-lg text-white">Meus dados</Text>
             </View>
 
             <InputInfoUser
@@ -275,270 +262,7 @@ export const User = () => {
         </View>
       </ScrollView>
 
-      {/* Menu de opções de usuário */}
-      {
-        // <Center>
-        // <Actionsheet isOpen={isOpen} onClose={onClose} size="100%">
-        //   <Actionsheet.Content bg={"rgba(0, 173, 255, 0.40)"}>
-        //     <View
-        //       w="100%"
-        //       borderTopRadius={"xl"}
-        //       bg={"lightBlue.500"}
-        //       h={60}
-        //       px={4}
-        //       justifyContent="center"
-        //     >
-        //       <Text style={[GlobalStyles.fontSystem]}>Menu</Text>
-        //     </View>
-        //     {logged?.isCoordAutist == true && (
-        //       <Actionsheet.Item
-        //         bg={"lightBlue.500"}
-        //         startIcon={
-        //           <MaterialIcons
-        //             size={32}
-        //             color="white"
-        //             name="admin-panel-settings"
-        //           />
-        //         }
-        //       >
-        //         <Pressable
-        //           style={{ width: "100%" }}
-        //           w="100%"
-        //           h="100%"
-        //           onPress={() =>
-        //             navigation.navigate("PageCoordenador", {
-        //               title: "Coordenação do Autista",
-        //             })
-        //           }
-        //         >
-        //           <Text style={[GlobalStyles.fontSystem]}>
-        //             Coordenação dos Autistas
-        //           </Text>
-        //         </Pressable>
-        //       </Actionsheet.Item>
-        //     )}
-        //     {logged?.isCoordMulher == true && (
-        //       <Actionsheet.Item
-        //         bg={"lightBlue.500"}
-        //         startIcon={
-        //           <MaterialIcons
-        //             size={32}
-        //             color="white"
-        //             name="admin-panel-settings"
-        //           />
-        //         }
-        //       >
-        //         <Pressable
-        //           style={{ width: "100%" }}
-        //           w="100%"
-        //           h="100%"
-        //           onPress={() =>
-        //             navigation.navigate("PageCoordenador", {
-        //               title: "Coordenação da Mulher",
-        //             })
-        //           }
-        //         >
-        //           <Text style={[GlobalStyles.fontSystem]}>
-        //             Coordenação da Mulher
-        //           </Text>
-        //         </Pressable>
-        //       </Actionsheet.Item>
-        //     )}
-        //     {logged?.isCoordSaude == true && (
-        //       <Actionsheet.Item
-        //         bg={"lightBlue.400"}
-        //         startIcon={
-        //           <MaterialIcons
-        //             size={32}
-        //             color="white"
-        //             name="admin-panel-settings"
-        //           />
-        //         }
-        //       >
-        //         <Pressable
-        //           style={{ width: "100%" }}
-        //           w="100%"
-        //           h="100%"
-        //           onPress={() =>
-        //             navigation.navigate("PageCoordenador", {
-        //               title: "Coordenação da Saúde",
-        //             })
-        //           }
-        //         >
-        //           <Text style={[GlobalStyles.fontSystem]}>
-        //             Coordenação da Saúde
-        //           </Text>
-        //         </Pressable>
-        //       </Actionsheet.Item>
-        //     )}
-        //     {logged?.isCoordAlimentar == true && (
-        //       <Actionsheet.Item
-        //         bg={"lightBlue.400"}
-        //         startIcon={
-        //           <MaterialIcons
-        //             size={32}
-        //             color="white"
-        //             name="admin-panel-settings"
-        //           />
-        //         }
-        //       >
-        //         <Pressable
-        //           style={{ width: "100%" }}
-        //           w="100%"
-        //           h="100%"
-        //           onPress={() =>
-        //             navigation.navigate("PageCoordenador", {
-        //               title: "Coordenação da Alimentação",
-        //             })
-        //           }
-        //         >
-        //           <Text style={[GlobalStyles.fontSystem]}>
-        //             Coordenação da Alimentação
-        //           </Text>
-        //         </Pressable>
-        //       </Actionsheet.Item>
-        //     )}
-        //     {logged?.isCoordCidadania == true && (
-        //       <Actionsheet.Item
-        //         bg={"lightBlue.400"}
-        //         startIcon={
-        //           <MaterialIcons
-        //             size={32}
-        //             color="white"
-        //             name="admin-panel-settings"
-        //           />
-        //         }
-        //       >
-        //         <Pressable
-        //           style={{ width: "100%" }}
-        //           w="100%"
-        //           h="100%"
-        //           onPress={() =>
-        //             navigation.navigate("PageCoordenador", {
-        //               title: "Coordenação da Cidadania",
-        //             })
-        //           }
-        //         >
-        //           <Text style={[GlobalStyles.fontSystem]}>
-        //             Coordenação da Cidadania
-        //           </Text>
-        //         </Pressable>
-        //       </Actionsheet.Item>
-        //     )}
-        //     {logged?.isCoordProtagonista == true && (
-        //       <Actionsheet.Item
-        //         bg={"lightBlue.400"}
-        //         startIcon={
-        //           <MaterialIcons
-        //             size={32}
-        //             color="white"
-        //             name="admin-panel-settings"
-        //           />
-        //         }
-        //       >
-        //         <Pressable
-        //           style={{ width: "100%" }}
-        //           w="100%"
-        //           h="100%"
-        //           onPress={() =>
-        //             navigation.navigate("PageCoordenador", {
-        //               title: "Coordenação Protagonistas",
-        //             })
-        //           }
-        //         >
-        //           <Text style={[GlobalStyles.fontSystem]}>
-        //             Coordenação Protagonistas
-        //           </Text>
-        //         </Pressable>
-        //       </Actionsheet.Item>
-        //     )}
-        //     {logged?.isCoordPasse == true && (
-        //       <Actionsheet.Item
-        //         bg={"lightBlue.400"}
-        //         startIcon={
-        //           <MaterialIcons
-        //             size={32}
-        //             color="white"
-        //             name="admin-panel-settings"
-        //           />
-        //         }
-        //       >
-        //         <Pressable
-        //           style={{ width: "100%" }}
-        //           w="100%"
-        //           h="100%"
-        //           onPress={() =>
-        //             navigation.navigate("PageCoordenador", {
-        //               title: "Coordenação do Passe Livre",
-        //             })
-        //           }
-        //         >
-        //           <Text style={[GlobalStyles.fontSystem]}>
-        //             Coordenação do Passe Livre
-        //           </Text>
-        //         </Pressable>
-        //       </Actionsheet.Item>
-        //     )}
-        //     {logged.isAdmin == true && (
-        //       <Actionsheet.Item
-        //         bg={"lightBlue.400"}
-        //         startIcon={
-        //           <MaterialIcons
-        //             size={32}
-        //             color="white"
-        //             name="admin-panel-settings"
-        //           />
-        //         }
-        //       >
-        //         <Pressable
-        //           style={{ width: "100%" }}
-        //           w="100%"
-        //           h="100%"
-        //           onPress={() => navigation.navigate("Admin")}
-        //         >
-        //           <Text style={[GlobalStyles.fontSystem]}>
-        //             Painel de Administração
-        //           </Text>
-        //         </Pressable>
-        //       </Actionsheet.Item>
-        //     )}
-        //     <Actionsheet.Item
-        //       bg={"lightBlue.500"}
-        //       startIcon={
-        //         <MaterialCommunityIcons
-        //           size={32}
-        //           color="white"
-        //           name="archive-edit"
-        //         />
-        //       }
-        //     >
-        //       <Text style={[GlobalStyles.fontSystem]}>Alterar dados</Text>
-        //     </Actionsheet.Item>
-        //     <Actionsheet.Item
-        //       borderBottomRadius={"xl"}
-        //       bg={"lightBlue.500"}
-        //       startIcon={
-        //         <Ionicons size={32} color="white" name="md-close-circle" />
-        //       }
-        //     >
-        //       <Pressable
-        //         style={{ width: "100%" }}
-        //         w="100%"
-        //         h="100%"
-        //         onPress={() =>
-        //           navigation.navigate("Login") &
-        //           setAuth(false) &
-        //           setLogged([]) &
-        //           AsyncStorage.clear()
-        //         }
-        //       >
-        //         <Text style={[GlobalStyles.fontSystem]}>Sair</Text>
-        //       </Pressable>
-        //     </Actionsheet.Item>
-        //   </Actionsheet.Content>
-        // </Actionsheet>
-        //</View> </Center>
-      }
+
     </View>
   );
 };

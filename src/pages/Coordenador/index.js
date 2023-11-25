@@ -6,7 +6,7 @@ import { UserContext } from "../../contexts/UserContext";
 import { TouchableOpacity, ScrollView, RefreshControl } from "react-native";
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import BackButton from "../../../components/BackButton";
-import { deleteSolicitation, deleteAprovado } from "../../requisitions/api";
+import { deleteSolicitation, deleteAprovado } from "../../api/api";
 import { useNavigation } from "@react-navigation/native";
 import { api } from "../../api/api";
 

@@ -16,6 +16,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { UserContext } from "../../contexts/UserContext";
 
 export const Login = () => {
+  const [isEnabled , setIsEnable] = useState(false)
   const { users, logged, setNotices } = useContext(UserContext);
   const { Authentication, submit, setSigningAuto, signingAuto } =
     useContext(AuthContext);

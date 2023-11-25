@@ -2,7 +2,7 @@ import { useContext } from "react";
 import axios from "axios";
 import { UserContext } from "../contexts/UserContext";
 
-export const api = "https://628f-45-183-25-57.ngrok-free.app/require";
+export const api = "https://2522-45-183-26-11.ngrok-free.app/require";
 export const apiUpload = `${api}/upload`;
 
 export const getUsers = async () => {

@@ -1,17 +1,18 @@
 import React from "react";
-import { Box, Text } from "native-base";
+import { View, Text } from "react-native";
+
 
 export default function InputInfoUser(props) {
   return (
-    <Box  justifyContent="left">
-      <Text ml="2" color="light.100" mt="3%" fontSize="lg">
+    <View className='justify-start'>
+      <Text className='font-default ml-2 mt-3 text-white text-lg'>
         {props.infoLabel}
       </Text>
-      <Box h="10" w="100%" bg="rgba(255,255,255, 0.12)" rounded="md" justifyContent="center">
-        <Text paddingX="4" color="white" mr="3" fontSize="lg" >
+      <View className='w-full h-12 justify-center rounded-md bg-white/20' >
+        <Text className='font-default py-4 mr-3 text-white text-lg'>
           {props.infoValue}
         </Text>
-      </Box>
-    </Box>
+      </View>
+    </View>
   );
 }
