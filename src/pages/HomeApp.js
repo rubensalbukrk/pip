@@ -13,8 +13,8 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { CarouselHome } from "../../components/Carousel";
 import UserAvatar from "../../components/UserAvatar";
-import HeaderBackground from "../../assets/svgs/header-wave.svg";
-import WaveBottomBackground from "../../assets/svgs/background-bottom.svg";
+import HeaderBackground from "../../assets/svgs/home-header-wave.svg";
+import WaveBottomBackground from "../../assets/svgs/home-background-bottom.svg";
 import { height, width } from "../utils/dimensions";
 
 export const HomeApp = () => {

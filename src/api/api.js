@@ -5,6 +5,23 @@ import { UserContext } from "../contexts/UserContext";
 export const api = "https://a812-45-183-26-11.ngrok-free.app/require";
 export const apiUpload = `${api}upload`;
 
+const config = {
+  headers: {
+    "ngrok-skip-browser-warning": "69421",
+  }
+  }
+
+export const getNotices = async () => {
+  const {setNotices, setRefreshing} = useContext(UserContext)
+  try {
+    const response = await axios.get(`${api}/notices`, config)
+    const notices = await response.data.notices
+    notices && setNotices(notices)
+    setRefreshing(false)
+  } catch (e) {
+    console.log(`Houve um problema: ${e}`)
+  }
+}
 
 export function deleteUser(id) {
   axios

@@ -17,6 +17,7 @@ import ViewService from "../pages/Services/ViewService";
 import SolicitationInfoUser from "../../components/TabsView/pages/solicitations/userSolicitation";
 import PageCoordenador from "../pages/Coordenador"
 import SolicitationsUser from "../pages/Solicitations";
+import { PopMenu } from "../../components/PopMenu/popMenu";
 
 
 const Stack = createNativeStackNavigator();
@@ -53,7 +54,7 @@ export default function MainStack() {
         <Stack.Screen name="User" component={User} />
         
       </Stack.Group>
-
+      
       <Stack.Group
       screenOptions={{
         presentation: 'modal'
@@ -63,6 +64,16 @@ export default function MainStack() {
         <Stack.Screen name="ViewNotice" component={NoticeView} />
         <Stack.Screen name="SolicitationInfoUser" component={SolicitationInfoUser} />
       </Stack.Group>
+
+      <Stack.Group
+      screenOptions={{
+        presentation: 'transparentModal'
+      }}
+      > 
+        <Stack.Screen name="PopMenu" component={PopMenu} />
+       
+      </Stack.Group>
+
     </Stack.Navigator>
   );
 }

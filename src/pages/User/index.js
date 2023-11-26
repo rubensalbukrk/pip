@@ -11,9 +11,8 @@ import MyParents from "../../../components/UserLayout/userParents";
 import { api } from "../../api/api";
 import * as ImagePicker from "expo-image-picker";
 import UserAvatar from "../../../components/UserAvatar";
-import { data } from "../../utils/dateNow.";
-
-const apiUpload = `${api}/upload`;
+import TopBackground from '../../../assets/svgs/user-wave-top.svg'
+import { width } from "../../utils/dimensions";
 
 export const User = () => {
   const {
@@ -22,7 +21,7 @@ export const User = () => {
     setLogged,
   } = useContext(UserContext);
   const { auth, setAuth } = useContext(AuthContext);
-  const navigation = useNavigation();
+  const {navigate} = useNavigation();
 
   const pickImageAsync = async () => {
     const { assets, canceled } = await ImagePicker.launchImageLibraryAsync({
@@ -48,7 +47,8 @@ export const User = () => {
         )
       );
       if (formData){
-        axios.post(`${api}/upload`, formData, {
+        axios
+        .post(`${api}/upload`, formData, {
           method: "POST",
           headers: {
             "ngrok-skip-browser-warning": "69421",
@@ -82,7 +82,6 @@ export const User = () => {
       }),
     });
   }
-
   function getUserData() {
     axios
       .get(`${api}/users/${logged.id}`, {
@@ -98,15 +97,17 @@ export const User = () => {
       .catch((error) => console.error(error));
   }
 
-
   return (
-    <View className="flex-1 w-full items-center bg-blue-600">
-      <View className="w-full bg-blue-800 h-44 items-center justify-between">
-        <View className="flex-row w-full h-14 mt-8 items-center justify-between">
-          <TouchableOpacity
+    <View className="flex-1 w-full items-center">
+      <View className="w-full bg-blue-400 h-44 items-center justify-between">
+       
+        <View className="flex-row w-full h-14">
+          <TopBackground width={width} />
+          <View className='flex-row w-full h-full top-8 absolute items-center justify-between' style={{zIndex: 1}}>
+            <TouchableOpacity
             className="w-20 h-20 items-center justify-center"
             onPress={() => {
-              navigation.navigate("HomeApp");
+              navigate("HomeApp");
             }}
           >
             <Feather name="arrow-left-circle" color="white" size={32} />
@@ -114,10 +115,11 @@ export const User = () => {
 
           <TouchableOpacity
             className="w-20 h-20 items-center justify-center opacity-80"
-            onPress={() => alert("abrindo menu de opçoes")}
+            onPress={() => navigate("PopMenu")}
           >
             <Feather size={32} color="white" name="settings" />
           </TouchableOpacity>
+          </View>
         </View>
 
         <View className="w-40 h-40 mt-2 absolute">
@@ -163,11 +165,11 @@ export const User = () => {
         </View>
       </View>
 
-      <ScrollView className="w-full px-10 py-5 bg-blue-600" horizontal={false}>
+      <ScrollView className="w-full px-10 py-5 bg-white" horizontal={false}>
         <View className="w-full mb-10 rounded-lg">
           <View className="flex-row w-full h-30 items-center">
             <MaterialIcons name="info-outline" size={32} color="white" />
-            <Text className="font-default ml-2 text-lg text-white">
+            <Text className="font-default ml-2 text-lg text-blue-600">
               Meus dados
             </Text>
           </View>
