@@ -13,6 +13,9 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { CarouselHome } from "../../components/Carousel";
 import UserAvatar from "../../components/UserAvatar";
+import HeaderBackground from "../../assets/svgs/header-wave.svg";
+import WaveBottomBackground from "../../assets/svgs/background-bottom.svg";
+import { height, width } from "../utils/dimensions";
 
 export const HomeApp = () => {
   const { users, logged, setNotices, refreshing, setRefreshing } =
@@ -27,48 +30,45 @@ export const HomeApp = () => {
   }
 
   return (
-    <View
-    className='flex-1 w-full h-96 bg-blue-700 px-4'
-    >
-      <View
-      className='w-30 h-16 top-5 right-40'
-      >
-        <Image
-        className='w-30 h-14'
-          alt="pip-logo"
-          resizeMode="cover"
-          source={require("../../assets/pip-icon.png")}
-        />
-        <Text
-        className='font-default bottom-30 left-56 text-lg text-white'
+    <View className="flex-1 w-full">
+      <HeaderBackground
+        style={{ zIndex: 0, position: "absolute" }}
+        width={width}
+        height={height}
+      />
+      <View className="flex-row w-full h-40">
+        <TouchableOpacity
+          style={{ zIndex: 10 }}
+          className="absolute top-20 left-5 w-32 h-32 items-center justify-center bg-blue-600 rounded-full"
+          onPress={() => navigation.navigate("User")}
         >
-          PROJETO INCLUSÃO POPULAR
-        </Text>
-      </View>
-
-      <View >
-        <TouchableOpacity onPress={() => navigation.navigate("User")}>
-          <UserAvatar x={200} y={200} />
+          <UserAvatar x={140} y={140} />
         </TouchableOpacity>
-      </View>
 
-      <View
-      className='flex-1 w-full bg-blue-600'
-
-      >
-        <View
-        className='w-full mt-20'
-        >
-          <Text
-          className='font-default text-white font-2xl'
-          >
-            Olá {primeiro_nome}
+        <View className="w-full h-38 justify-center">
+          <Text className="font-default left-10 bottom-5 text-md text-white">
+            PROJETO INCLUSÃO POPULAR
           </Text>
+          <Image
+            className="absolute right-0 w-40 h-40"
+            alt="pip-logo"
+            resizeMode="cover"
+            source={require("../../assets/pip-icon.png")}
+          />
         </View>
       </View>
 
+      <View
+        style={{ zIndex: 1 }}
+        className="w-full h-10 px-3 mt-2 justify-center"
+      >
+        <Text className="font-default self-end mt-2 text-blue-400 text-2xl">
+          Olá {primeiro_nome}!
+        </Text>
+      </View>
+
       <ScrollView
-      className='w-full h-52 pb-20'
+        className="w-full h-full px-3 py-5"
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
@@ -76,92 +76,89 @@ export const HomeApp = () => {
           />
         }
         horizontal={false}
+        showsVerticalScrollIndicator={false}
       >
-        <View
-        className='flex-1 w-full py-5 bg-blue-700'
-      
-        >
-          <Text
-            className='font-default mt-3 ml-3 text-white text-2xl'
-          >
+        <View className="w-full h-96">
+          <Text className="font-default text-blue-400 text-2xl">
             Notícias
-          </Text>
-
-            <CarouselHome />
+            </Text>
+          <CarouselHome />
         </View>
       </ScrollView>
 
-      <View 
-      className='flex-row w-full bg-white/20 items-center'
-      >
-        <TouchableOpacity
-          cursor="pointer"
-          opacity={selected === 0 ? 1 : 0.5}
-          py="3"
-          flex={1}
-          _focus={{ color: "white" }}
-          onPress={() => setSelected(0)}
+
+        <View
+          style={{ zIndex: 20}}
+          className="absolute bottom-2 flex-row w-full px-3 h-14 rounded-lg justify-between"
         >
-          <View>
+          <TouchableOpacity
+            className="w-16 h-10 items-center justify-center"
+            style={{ opacity: selected === 0 ? 1 : 0.5 }}
+            onPress={() => setSelected(0)}
+          >
             <MaterialCommunityIcons
+              color={"white"}
+              size={38}
               name={selected === 0 ? "home" : "home-outline"}
             />
-
-            <Text color="white" fontSize="12" fontFamily="Doppio One">
+            <Text className="font-default text-white text-center text-xs">
               Inicio
             </Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          cursor="pointer"
-          opacity={selected === 1 ? 1 : 0.5}
-          py="2"
-          flex={1}
-          onPress={() => setSelected(1) & navigation.navigate("Sobre")}
-        >
-          <View>
-            <MaterialCommunityIcons name="clipboard-text-search" />
-            <Text color="white" fontSize="12" fontFamily="Doppio One">
-              Quem somos
-            </Text>
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          cursor="pointer"
-          opacity={selected === 2 ? 1 : 0.6}
-          py="2"
-          flex={1}
-          onPress={() => setSelected(2) & navigation.navigate("Services")}
-        >
-          <View>
+          <TouchableOpacity
+            className=" w-16 h-10 items-center justify-center"
+            style={{ opacity: selected === 1 ? 1 : 0.5 }}
+            onPress={() => setSelected(1) & navigation.navigate("Sobre")}
+          >
             <MaterialCommunityIcons
+              color={"white"}
+              size={38}
+              name="clipboard-text-search"
+            />
+            <Text className="font-default text-white text-center text-xs">
+              Nós
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            className="w-16 h-10 items-center justify-center"
+            style={{ opacity: selected === 2 ? 1 : 0.6 }}
+            opacity={selected === 2 ? 1 : 0.6}
+            py="2"
+            flex={1}
+            onPress={() => setSelected(2) & navigation.navigate("Services")}
+          >
+            <MaterialCommunityIcons
+              color={"white"}
+              size={38}
               name={selected === 2 ? "hand-heart" : "hand-heart-outline"}
             />
 
-            <Text color="white" fontSize="12" fontFamily="Doppio One">
+            <Text className="font-default text-white text-center text-xs">
               Serviços
             </Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          cursor="pointer"
-          opacity={selected === 3 ? 1 : 0.5}
-          py="2"
-          flex={1}
-          onPress={() =>
-            setSelected(3) & navigation.navigate("SolicitationUser")
-          }
-        >
-          <View>
-            <MaterialCommunityIcons name="clipboard-text-search" />
+          </TouchableOpacity>
 
-            <Text color="white" fontSize="12" fontFamily="Doppio One">
+          <TouchableOpacity
+            className="w-17 h-10 items-center justify-center"
+            style={{ opacity: selected === 3 ? 1 : 0.5 }}
+            onPress={() =>
+              setSelected(3) & navigation.navigate("SolicitationUser")
+            }
+          >
+            <MaterialCommunityIcons
+              color={"white"}
+              size={38}
+              name="clipboard-text-search"
+            />
+            <Text className="font-default text-white text-center text-xs">
               Solicitações
             </Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+          </TouchableOpacity>
+        </View>
+   
+      <WaveBottomBackground />
     </View>
   );
 };

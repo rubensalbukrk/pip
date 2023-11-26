@@ -5,7 +5,9 @@ import { UserContext } from '../../src/contexts/UserContext';
 const UserAvatar = ({x,y}) => {
   const {logged} = useContext(UserContext)
   return (
-    <Image style={{width: x, height: y }} source={{ uri: logged?.avatar }} />
+    <Image 
+    resizeMode='cover'
+    style={{width: x, height: y, borderRadius: 100 }} source={require('../../assets/eu.jpeg')} />
   )
 }
 
