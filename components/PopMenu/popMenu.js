@@ -5,9 +5,10 @@ import TopBackgroundPopMenu from "../../assets/svgs/PopMenu-wave-top.svg";
 import { useNavigation } from "@react-navigation/native";
 import { useContext } from "react";
 import { UserContext } from "../../src/contexts/UserContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const PopMenu = () => {
-  const { logged } = useContext(UserContext);
+  const { logged, setLogged } = useContext(UserContext);
   const { navigate,goBack } = useNavigation();
   return (
     <View className="flex-1 w-full h-full bg-black/40">
@@ -159,9 +160,13 @@ export const PopMenu = () => {
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity className="flex-row w-full h-14 gap-2 items-center">
+        <TouchableOpacity className="flex-row w-full h-14 gap-2 items-center"
+        onPress={() => AsyncStorage.clear() && setLogged({}) & navigate("Welcome")}
+        >
           <MaterialIcons name="exit-to-app" size={32} color="black" />
-          <Text className="font-default text-gray-600 text-xl">Sair</Text>
+          <Text className="font-default text-gray-600 text-xl">
+            Sair
+            </Text>
         </TouchableOpacity>
       </View>
     </View>

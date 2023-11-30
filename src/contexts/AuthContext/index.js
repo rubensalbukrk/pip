@@ -7,6 +7,7 @@ export const AuthContext = createContext();
 export default function AuthProvider({ children }) {
   const { users, setLogged, logged } = useContext(UserContext);
   const [auth, setAuth] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
   const [signingAuto, setSigningAuto] = useState(false);
 
   function saveMyLogin(user) {
@@ -34,6 +35,7 @@ export default function AuthProvider({ children }) {
       setAuth(true);
     } else {
       alert("Houve algum problema", "Dados inválidos tente novamente!");
+      setIsLoading(false)
     }
     if (signingAuto){
         saveMyLogin(user)
@@ -41,7 +43,9 @@ export default function AuthProvider({ children }) {
   }
   const contexts = {
     auth,
+    isLoading,
     signingAuto,
+    setIsLoading,
     setAuth,
     saveMyLogin,
     Authentication,

@@ -1,18 +1,36 @@
 import React, { useContext, useRef, useEffect, useState } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
+import Animated, {
+  BounceInDown,
+  BounceInLeft,
+  BounceInRight,
+  Easing,
+  FadeInDown,
+  FadeInRight,
+  FadeInUp,
+  FadeOutDown,
+  FlipInXDown,
+  PinwheelIn,
+  PinwheelOut,
+  StretchInX,
+  ZoomInEasyUp,
+} from "react-native-reanimated";
 import axios from "axios";
-import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../contexts/UserContext";
 import { api } from "../../api/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-const LottieView = require("lottie-react-native")
+import BackgroundWave from "../../../assets/svgs/wave-top-gray.svg";
+import { width, height } from "../../utils/dimensions";
+import { LottieView } from "../../utils/LottieView";
 
 export default function Welcome() {
   const { setUsers, logged, setLogged } = useContext(UserContext);
   const { navigate } = useNavigation();
   const [fogos, setFogos] = useState(false);
+  const [button, setButton] = useState(false);
   const animation = useRef(null);
+  const animationButton = useRef(null);
 
   useEffect(() => {
     getMyLogin();
@@ -25,14 +43,21 @@ export default function Welcome() {
     if (fogos) {
       animation.current?.play(0, 36);
       setTimeout(() => {
-        setFogos(false)
-        navigate("Login")
+        setFogos(false);
+        navigate("Login");
       }, 1000);
     } else {
       animation.current?.play(0, 0);
-      
     }
   }, [fogos]);
+
+  useEffect(() => {
+    if (button) {
+      animationButton.current?.play(0, 57);
+    } else {
+      animationButton.current?.play(0, 0);
+    }
+  }, [button]);
 
   function getMyLogin() {
     AsyncStorage.getItem("token").then((value) => {
@@ -57,50 +82,71 @@ export default function Welcome() {
   };
 
   return (
-    <View className="flex-1 w-full items-center bg-blue-600">
-      <View className="w-full h-52">
-        <Image
-          className="w-60 h-52 mt-5 self-end"
-          alt="pip-logo"
-          resizeMode="cover"
-          source={require("../../../assets/pip-icon.png")}
-        />
-      </View>
+    <View className="flex-1 w-full items-center bg-gray-100">
+      <BackgroundWave style={{ position: "absolute" }} width={width} />
+      <Animated.Image
+        entering={PinwheelIn.duration(2000).easing(Easing.bounce)}
+        exiting={PinwheelOut}
+        style={{ zIndex: 3 }}
+        className="w-60 h-52 mt-5 self-end shadow-md shadow-black"
+        alt="pip-logo"
+        resizeMode="cover"
+        source={require("../../../assets/pip-icon.png")}
+      />
 
-      <View className="w-full h-32 ml-4">
-        <Text className="font-default my-1 mx-2 text-white text-4xl">Olá,</Text>
-        <Text className="font-default w-72 text-4xl text-white mx-2 my-1">
+      <Animated.View
+        entering={ZoomInEasyUp.delay(1000)}
+        style={{ zIndex: 4 }}
+        className="w-full h-32 ml-4"
+      >
+        <Text className="font-default my-1 mx-2 text-black text-4xl">Olá,</Text>
+        <Text className="font-default w-72 text-4xl text-black mx-2 my-1">
           Bem vindo(a)!
         </Text>
-      </View>
+      </Animated.View>
 
-      <View className="w-full h-48 justify-center bg-white/20">
-        <Text className="font-default self-center mx-3 text-white text-2xl">
+      <Animated.View
+        entering={FadeInRight.delay(1400).duration(1600)}
+        className="w-full h-48 justify-center"
+      >
+        <Text className="font-default self-center mx-3 text-black text-2xl">
           Somos o projeto inclusão popular e aqui você vai encontrar serviços,
           notícias e muito mais...
         </Text>
-      </View>
+      </Animated.View>
 
-      <TouchableOpacity
-      style={{zIndex: 10}}
-        className="flex-row relative top-20 w-52 h-16 items-center justify-center rounded-2xl bg-white/10"
-        onPress={() => setFogos(true) & getUsers()}
+      <Animated.View
+        entering={BounceInDown.delay(2000).duration(2000).easing(Easing.circle)}
+        className="h-100 w-100 rounded-full"
       >
-          <Text className="font-default self-center mx-3 text-white text-2xl">
-            Começar
-          </Text>
-          <AntDesign name="arrowright" size={40} color="white" />
-      </TouchableOpacity>
+        <TouchableOpacity
+        style={{zIndex: 3}}
+          className="items-center justify-center"
+          onPress={() => setFogos(true) & setButton(true) & getUsers()}
+        >
+          <LottieView
+            resizeMode="contain"
+            style={{ position: "absolute", width: 180, height: 180 }}
+            ref={animationButton}
+            duration={3000}
+            source={require("../../../assets/animations/animation-butto-welcome-21-57f.json")}
+          />
+          <LottieView
+            style={{ width: 80, height: 80 }}
+            autoPlay={true}
+            loop
+            duration={1700}
+            source={require("../../../assets/animations/button-start-gray-animation-70f.json")}
+          />
+        </TouchableOpacity>
+      </Animated.View>
 
       <LottieView
-        style={{width: '100%', height: 300}}
-        autoPlay={true}
-        loop
-        duration={1000}
+        style={{zIndex:1, position: "absolute", bottom: 0, width: "100%", height: 150 }}
+        duration={1600}
         ref={animation}
         source={require("../../../assets/animations/fogos-animation.json")}
       />
-  
     </View>
   );
 }

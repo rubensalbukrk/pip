@@ -4,24 +4,21 @@ import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../../contexts/AuthContext";
-import { Feather, MaterialIcons } from "@expo/vector-icons";
+import { Feather, Entypo } from "@expo/vector-icons";
 import { UserContext } from "../../contexts/UserContext";
 import InputInfoUser from "../../../components/UserLayout/inputUser";
 import MyParents from "../../../components/UserLayout/userParents";
 import { api } from "../../api/api";
 import * as ImagePicker from "expo-image-picker";
 import UserAvatar from "../../../components/UserAvatar";
-import TopBackground from '../../../assets/svgs/user-wave-top.svg'
-import { width } from "../../utils/dimensions";
+import TopBackground from "../../../assets/svgs/user-wave-background.svg";
+import { height, width } from "../../utils/dimensions";
+import { LottieView } from "../../utils/LottieView";
 
 export const User = () => {
-  const {
-    logged,
-    setAvatar,
-    setLogged,
-  } = useContext(UserContext);
+  const { logged, setAvatar, setLogged } = useContext(UserContext);
   const { auth, setAuth } = useContext(AuthContext);
-  const {navigate} = useNavigation();
+  const { navigate, goBack } = useNavigation();
 
   const pickImageAsync = async () => {
     const { assets, canceled } = await ImagePicker.launchImageLibraryAsync({
@@ -46,26 +43,26 @@ export const User = () => {
           })
         )
       );
-      if (formData){
+      if (formData) {
         axios
-        .post(`${api}/upload`, formData, {
-          method: "POST",
-          headers: {
-            "ngrok-skip-browser-warning": "69421",
-            "Accept": "application/json",
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then(() => {
-          updateUserAvatar(filename);
-        })
-        .then(() => {
-          getUserData();
-        })
-        .then(() => {
-          setAvatar(logged.avatar);
-        })
-        .catch(error => console.log(error));
+          .post(`${api}/upload`, formData, {
+            method: "POST",
+            headers: {
+              "ngrok-skip-browser-warning": "69421",
+              Accept: "application/json",
+              "Content-Type": "multipart/form-data",
+            },
+          })
+          .then(() => {
+            updateUserAvatar(filename);
+          })
+          .then(() => {
+            getUserData();
+          })
+          .then(() => {
+            setAvatar(logged.avatar);
+          })
+          .catch((error) => console.log(error));
       }
     } else {
       alert("Você não escolheu uma imagem!");
@@ -99,35 +96,39 @@ export const User = () => {
 
   return (
     <View className="flex-1 w-full items-center">
-      <View className="w-full bg-blue-400 h-44 items-center justify-between">
-       
+  
+      <View className="w-full h-44 items-center justify-between">
+      
         <View className="flex-row w-full h-14">
-          <TopBackground width={width} />
-          <View className='flex-row w-full h-full top-8 absolute items-center justify-between' style={{zIndex: 1}}>
+        <TopBackground width={width} height={height + 30} />
+          <View
+            className="flex-row w-full h-full top-8 absolute items-center justify-between"
+            style={{ zIndex: 2 }}
+          >
             <TouchableOpacity
-            className="w-20 h-20 items-center justify-center"
-            onPress={() => {
-              navigate("HomeApp");
-            }}
-          >
-            <Feather name="arrow-left-circle" color="white" size={32} />
-          </TouchableOpacity>
+              className="w-20 h-20  items-center justify-center"
+              onPress={() => {
+                goBack();
+              }}
+            >
+              <Feather name="arrow-left-circle" color="white" size={32} />
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            className="w-20 h-20 items-center justify-center opacity-80"
-            onPress={() => navigate("PopMenu")}
-          >
-            <Feather size={32} color="white" name="settings" />
-          </TouchableOpacity>
+            <TouchableOpacity
+              className="w-20 h-20  items-center justify-center opacity-80"
+              onPress={() => navigate("PopMenu")}
+            >
+              <Feather size={32} color="white" name="settings" />
+            </TouchableOpacity>
           </View>
         </View>
 
-        <View className="w-40 h-40 mt-2 absolute">
+        <View style={{zIndex: 2}} className="w-40 h-40 mt-2 absolute">
           <View className="w-full h-full mt-2 items-center justify-center rounded-full">
             <UserAvatar x={130} y={130} />
           </View>
 
-          <View className="w-14 h-7 absolute right-2 top-5 items-center justify-center bg-blue-600 rounded-md">
+          <View className="w-14 h-7 absolute right-1 top-5 items-center justify-center  bg-gray-500 shadow-lg shadow-black rounded-md">
             <Text className="font-default text-center text-xs text-white">
               {logged?.isAdmin == true
                 ? "Admin"
@@ -152,28 +153,22 @@ export const User = () => {
                 : "Membro"}
             </Text>
           </View>
-          <View className="right-0 bottom-1 absolute">
+          <View className=" right-6 self-end bottom-1 absolute">
             <TouchableOpacity
-              className="w-16 h-5 bg-blue-600 rounded-lg"
+              className="h-5 w-5 items-center justify-center bg-gray-400 shadow-md shadow-black rounded-lg"
               onPress={() => pickImageAsync()}
             >
-              <Text className="font-default underline text-center text-md text-white">
-                Alterar
-              </Text>
+              <Entypo name="camera" size={12} color="white" />
             </TouchableOpacity>
           </View>
         </View>
       </View>
 
-      <ScrollView className="w-full px-10 py-5 bg-white" horizontal={false}>
+      <ScrollView
+        className="w-full px-10 py-5 bg-transparent"
+        horizontal={false}
+      >
         <View className="w-full mb-10 rounded-lg">
-          <View className="flex-row w-full h-30 items-center">
-            <MaterialIcons name="info-outline" size={32} color="white" />
-            <Text className="font-default ml-2 text-lg text-blue-600">
-              Meus dados
-            </Text>
-          </View>
-
           <InputInfoUser
             infoLabel="Data de inscrição"
             infoValue={logged.date}
@@ -186,39 +181,34 @@ export const User = () => {
           <InputInfoUser infoLabel="CPF" infoValue={logged.cpf} />
           <InputInfoUser infoLabel="NIS" infoValue={logged.nis} />
           <InputInfoUser infoLabel="Email" infoValue={logged.email} />
-          <InputInfoUser infoLabel="Celular" infoValue={logged?.phone} />
+          <InputInfoUser infoLabel="Telefone" infoValue={logged?.phone} />
           <InputInfoUser
-            infoLabel="Membro PIP"
-            infoValue={logged.question1 ? "SIM" : "NÃO"}
-          />
-          <View className="w-full mt-6 px-3 py-2 rounded-2xl">
-            <View className="w-44">
-              <InputInfoUser
                 infoLabel="Filhos"
                 infoValue={
                   logged.filhos?.length === "0"
                     ? "Não"
                     : `${logged.filhos?.length}`
                 }
-              />
-            </View>
-
+          />
+        </View>
+      </ScrollView>
+      <ScrollView horizontal={true} className='w-full h-48 pb-4 mx-6' >
             {logged?.filhos?.length === 0
               ? "NÃO"
               : logged?.filhos?.map((item) => {
                   return (
-                    <View className="w-full" key={`id-${item.cpf}`}>
-                      <MyParents
+                      <View className="mx-4">
+                        <MyParents
                         nome={item.nome}
                         cpf={item.cpf}
                         idade={item.idade}
                       />
-                    </View>
+                      </View>
+                      
+                   
                   );
                 })}
-          </View>
-        </View>
-      </ScrollView>
+           </ScrollView>
     </View>
   );
 };

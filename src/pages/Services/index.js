@@ -3,6 +3,8 @@ import BackButton from "../../../components/BackButton";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { View, Image, Text, FlatList, TouchableOpacity } from "react-native";
+import BackgroundServices from '../../../assets/svgs/services-wave.svg'
+import { height, width } from "../../utils/dimensions";
 
 export default function Services() {
   const navigation = useNavigation();
@@ -91,15 +93,16 @@ export default function Services() {
     },
   ];
   return (
-    <View className="flex-1 w-full px-5 justify-center items-center bg-blue-600">
-      <View className="flex-row w-full h-full mt-10 self-center">
+    <View className="flex-1 w-full h-full justify-center items-center bg-gray-400">
+      <BackgroundServices style={{position: 'absolute'}} width={width} height={height + 10} />
+      <View className="flex-row w-full self-center">
         <Image
           className="w-36 h-36"
           alt="pip-logo"
           resizeMode="cover"
           source={require("../../../assets/pip-icon.png")}
         />
-        <Text className="font-default right-30 text-lg mt-20 font-bold text-white">
+        <Text className="font-default text-md mt-20 text-gray-800">
           PROJETO INCLUSÃO POPULAR
         </Text>
         <View className="absolute right-1 top-4">
@@ -107,7 +110,7 @@ export default function Services() {
         </View>
       </View>
 
-      <Text className="font-default text-lg text-white my-3 mt-8">
+      <Text className="font-default text-lg text-gray-800 my-3 mt-2">
         Oferecemos serviços gratuitamente de qualidade prestado por
         profissionais qualificados!
       </Text>
@@ -119,15 +122,9 @@ export default function Services() {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => {
           return (
-            <View className="w-full h-180 my-3 rounded-lg bg-white/20">
+            <View>
               <TouchableOpacity
-                style={{
-                  width: "100%",
-                  height: 180,
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
+              className="flex-row justify-around shadow-md shadow-black w-80 self-center h-32 my-2 rounded-lg bg-gray-300"
                 onPress={() =>
                   navigation.navigate("ViewService", {
                     titulo: item.labelTitulo,
@@ -138,14 +135,15 @@ export default function Services() {
                   })
                 }
               >
-                <View className="absolute top-16 left-10">
+                <View className="justify-evenly"> 
+                  <Text className="w-44 h-20 font-default text-md text-gray-800">
+                   {item.labelDesc}
+                  </Text>
                   <SimpleLineIcons name="arrow-right" size={24} color="white" />
                 </View>
-                <Text className="w-44 font-default text-2xl ml-1 mb-10 line-clamp-3 font-bold text-white">
-                  {item.labelDesc}
-                </Text>
+               
                 <Image
-                  className="w-46 h-96 bg-white/10 rounded-full"
+                  className="w-24 h-24 self-center bg-white/10 rounded-full"
                   resizeMode="auto"
                   alt="picture-service"
                   source={item.picture}

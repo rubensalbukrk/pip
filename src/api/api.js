@@ -2,8 +2,8 @@ import { useContext } from "react";
 import axios from "axios";
 import { UserContext } from "../contexts/UserContext";
 
-export const api = "https://a812-45-183-26-11.ngrok-free.app/require";
-export const apiUpload = `${api}upload`;
+export const api = "https://993e-45-183-25-70.ngrok-free.app/require";
+
 
 const config = {
   headers: {

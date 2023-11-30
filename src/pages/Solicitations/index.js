@@ -13,7 +13,8 @@ import { api, deleteAprovado } from "../../api/api";
 import UserAvatar from "../../../components/UserAvatar";
 import { UserContext } from "../../contexts/UserContext";
 import BackButton from "../../../components/BackButton";
-
+import Background from '../../../assets/svgs/welcome-wave-center.svg'
+import { height, width } from "../../utils/dimensions";
 
 export default function SolicitationsUser() {
   const {
@@ -82,10 +83,11 @@ export default function SolicitationsUser() {
           onRefresh={() => getSolicitations() && setRefreshing(true)}
         />
       }
-      className="w-full h-full bg-blue-500"
+      className="w-full h-full"
       horizontal={false}
     >
-      <View className="flex-1 w-full h-full py-12 items-center justify-center bg-blue-600">
+      <Background width={width} height={height + 20} style={{zIndex: 0, position: 'absolute'}} />
+      <View className="flex-1 w-full h-full py-12 items-center justify-center">
         <View className="absolute top-2 left-2">
           <BackButton />
         </View>
@@ -95,12 +97,12 @@ export default function SolicitationsUser() {
 
         <View className="flex-row w-full h-32 pl-5 justify-start items-start">
           <Octicons name="checklist" size={32} color="white" />
-          <Text className="font-default text-2xl ml-3 text-white">
+          <Text className="font-default text-xl ml-3 text-white">
             Suas solicitações
           </Text>
         </View>
 
-        <View className="w-full min-h-300">
+        <View className="w-full h-44">
           <FlatList
             data={userSolicitations}
             horizontal={false}
@@ -114,15 +116,15 @@ export default function SolicitationsUser() {
             renderItem={({ item }) => {
               return (
                 <View className="my-3 w-full">
-                  <View className="w-full h-36 justify-center">
+                  <View className="w-80 h-32 justify-center">
                     <View className="w-80 py-5 px-2 rounded-xl bg-white/20">
-                      <Text className="font-default text-2xl text-white">
+                      <Text className="font-default text-lg text-white">
                         Serviço: {item.service}
                       </Text>
-                      <Text className="font-default text-xl text-white">
+                      <Text className="font-default text-lg text-white">
                         STATUS: {item.status}
                       </Text>
-                      <Text className="font-default text-xl text-white">
+                      <Text className="font-default text-lg text-white">
                         Data: {item.date}
                       </Text>
                       <TouchableOpacity className="w-20 h-20 opacity-80 absolute right-1 top-5"
@@ -138,10 +140,10 @@ export default function SolicitationsUser() {
           />
         </View>
 
-        <View className="flex-row w- h-30 pl-5 self-start items-center justify-center">
+        <View className="flex-row w-full h-12 pl-5 self-start items-center justify-center">
           <Octicons name="checklist" size={32} color="white" />
 
-          <Text className="font-default text-2xl ml-3 font-bold text-white">
+          <Text className="font-default text-xl ml-3 text-white">
             Meus benefícios
           </Text>
         </View>
@@ -158,8 +160,8 @@ export default function SolicitationsUser() {
           }}
           renderItem={({ item }) => {
             return (
-              <View className="w-full my-3">
-                <View className="flex-row w-full h-120 justify-center">
+              <View className="w-full h-30 my-3">
+                <View className="w-full h-22 justify-center">
                   <View className="w-80 px-2 py-5 rounded-xl bg-white/20">
                     <Text className="font-default text-2xl ml-3 font-bold text-white">
                       Serviço: {item.service}

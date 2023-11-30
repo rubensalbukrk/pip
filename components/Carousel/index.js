@@ -10,6 +10,7 @@ import { width } from "../../src/utils/dimensions";
 export const CarouselHome = () => {
   const { setNotices, notices } = useContext(UserContext)
   const navigation = useNavigation()
+
   useEffect(() => {
     axios
       .get(apiNotice, {
@@ -22,10 +23,11 @@ export const CarouselHome = () => {
         const notices = response.data.notices;
         setNotices(notices)
       })
-      .catch((error) => console.log(error));
+      .catch(null);
   }, [notices]);
+  
   return (
-    <View className='w-full h-full mt-2'>
+    <View style={{zIndex: 1}} className='w-full h-60 mt-2 items-center'>
       <Carousel
         loop
         width={width}
@@ -35,10 +37,9 @@ export const CarouselHome = () => {
         overscrollEnabled={true}
         scrollAnimationDuration={1400}
         renderItem={({ index, item }) => (
-          <View className='w-96 h-48'>
-    
+          <View className='w-80 h-48 self-center'>
               <TouchableOpacity
-              className='w-96 h-full items-center justify-center bg-blue-600 rounded-lg'
+              className='w-80 h-full items-center justify-center shadow-md shadow-black bg-blue-600 rounded-lg'
               onPress={() => navigation.navigate('ViewNotice', {
                 title: item.title,
                 mensagem: item.mensagem,
