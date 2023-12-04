@@ -2,25 +2,21 @@ import React, { useContext, useRef, useEffect, useState } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import Animated, {
   BounceInDown,
-  BounceInLeft,
-  BounceInRight,
   Easing,
-  FadeInDown,
   FadeInRight,
-  FadeInUp,
-  FadeOutDown,
-  FlipInXDown,
   PinwheelIn,
   PinwheelOut,
+  ZoomOutDown,
   StretchInX,
   ZoomInEasyUp,
+  Layout
 } from "react-native-reanimated";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../contexts/UserContext";
 import { api } from "../../api/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import BackgroundWave from "../../../assets/svgs/wave-top-gray.svg";
+import BackgroundWave from "../../../assets/svgs/Welcome-wave.svg";
 import { width, height } from "../../utils/dimensions";
 import { LottieView } from "../../utils/LottieView";
 
@@ -60,10 +56,15 @@ export default function Welcome() {
   }, [button]);
 
   function getMyLogin() {
-    AsyncStorage.getItem("token").then((value) => {
-      let dataUser = JSON.parse(value);
-      setLogged(dataUser);
+    try {
+      AsyncStorage.getItem("token")
+       .then((value) => {
+        let dataUser = JSON.parse(value);
+        setLogged(dataUser);
     });
+    } catch (e) {
+      navigate('Login')
+    }
   }
 
   const getUsers = async () => {
@@ -88,7 +89,7 @@ export default function Welcome() {
         entering={PinwheelIn.duration(2000).easing(Easing.bounce)}
         exiting={PinwheelOut}
         style={{ zIndex: 3 }}
-        className="w-60 h-52 mt-5 self-end shadow-md shadow-black"
+        className="w-60 h-52 mt-5 self-end"
         alt="pip-logo"
         resizeMode="cover"
         source={require("../../../assets/pip-icon.png")}
@@ -116,8 +117,10 @@ export default function Welcome() {
       </Animated.View>
 
       <Animated.View
-        entering={BounceInDown.delay(2000).duration(2000).easing(Easing.circle)}
-        className="h-100 w-100 rounded-full"
+        entering={BounceInDown.delay(1700).duration(2000).easing(Easing.circle)}
+        exiting={ZoomOutDown.delay(1000)}
+        layout={Layout}
+        className="h-100 w-100 mt-3 rounded-full"
       >
         <TouchableOpacity
         style={{zIndex: 3}}

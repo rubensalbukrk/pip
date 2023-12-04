@@ -18,6 +18,7 @@ export default function SolicitationInfoUser({ route }) {
   const [status, setStatus] = useState();
   const filhos = route?.params?.userInfo?.filhos;
   console.warn(filhos);
+  
   const handleConfirmSolicitation = () => {
     let userApproved = {
       cpf: route?.params?.cpf,

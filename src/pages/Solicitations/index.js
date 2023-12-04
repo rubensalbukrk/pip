@@ -9,11 +9,11 @@ import {
   RefreshControl,
 } from "react-native";
 import { FontAwesome, Octicons } from "@expo/vector-icons";
-import { api, deleteAprovado } from "../../api/api";
+import { api, deleteSolicitation } from "../../api/api";
 import UserAvatar from "../../../components/UserAvatar";
 import { UserContext } from "../../contexts/UserContext";
 import BackButton from "../../../components/BackButton";
-import Background from '../../../assets/svgs/welcome-wave-center.svg'
+import BackgroundSolicitationUser from "../../../assets/svgs/Homeapp-wave.svg";
 import { height, width } from "../../utils/dimensions";
 
 export default function SolicitationsUser() {
@@ -24,6 +24,7 @@ export default function SolicitationsUser() {
     solicitations,
     setSolicitations,
     aprovados,
+    setAprovados,
   } = useContext(UserContext);
 
   const getSolicitations = async () => {
@@ -42,143 +43,126 @@ export default function SolicitationsUser() {
     }
   };
   const getAprovados = async () => {
-    const { setAprovados } = useContext(UserContext);
     try {
-      const response2 = await axios.get(`${api}/aprovados`, {
+      const response = await axios.get(`${api}/aprovados`, {
         method: "get",
         headers: new Headers({
           "ngrok-skip-browser-warning": "69420",
         }),
       });
-      const aprovados = await response2.data.aprovados;
+      const aprovados = await response.data.aprovados;
       setAprovados(aprovados);
     } catch (error) {
       alert("Houve um problema com o serviço, aguarde um momento!") &
         navigate("HomeApp");
     }
   };
+  if (refreshing) {
+    getAprovados()
+    getSolicitations()
+  }
 
-  useEffect(() => {
-    getSolicitations();
-    getAprovados();
-  }, []);
+  useEffect(() => (
+    getSolicitations(),
+    getAprovados()
+  ),[])
 
   if (solicitations) {
     var userSolicitations = solicitations.filter(
       (item) => String(item.cpf) === String(logged.cpf)
     );
   }
-
   if (aprovados) {
-    var userBeneficiets = aprovados.filter(
-      (item) => String(item.cpf) === String(logged.cpf)
-    );
+      var userBeneficiets = aprovados.filter(
+    (item) => String(item.cpf) === String(logged.cpf)
+  )
   }
 
+
   return (
-    <ScrollView
-      refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={() => getSolicitations() && setRefreshing(true)}
-        />
-      }
-      className="w-full h-full"
-      horizontal={false}
-    >
-      <Background width={width} height={height + 20} style={{zIndex: 0, position: 'absolute'}} />
-      <View className="flex-1 w-full h-full py-12 items-center justify-center">
-        <View className="absolute top-2 left-2">
-          <BackButton />
-        </View>
-        <View className="self-center mb-5">
-          <UserAvatar x={100} y={100} />
-        </View>
-
-        <View className="flex-row w-full h-32 pl-5 justify-start items-start">
-          <Octicons name="checklist" size={32} color="white" />
-          <Text className="font-default text-xl ml-3 text-white">
-            Suas solicitações
-          </Text>
-        </View>
-
-        <View className="w-full h-44">
-          <FlatList
-            data={userSolicitations}
-            horizontal={false}
-            keyExtractor={(item) => item.id}
-            style={{
-              flex: 1,
-              width: "100%",
-              height: 200,
-              borderRadius: 40,
-            }}
-            renderItem={({ item }) => {
-              return (
-                <View className="my-3 w-full">
-                  <View className="w-80 h-32 justify-center">
-                    <View className="w-80 py-5 px-2 rounded-xl bg-white/20">
-                      <Text className="font-default text-lg text-white">
-                        Serviço: {item.service}
-                      </Text>
-                      <Text className="font-default text-lg text-white">
-                        STATUS: {item.status}
-                      </Text>
-                      <Text className="font-default text-lg text-white">
-                        Data: {item.date}
-                      </Text>
-                      <TouchableOpacity className="w-20 h-20 opacity-80 absolute right-1 top-5"
-                        onPress={() => deleteAprovado(item.id)}
-                      >
-                        <FontAwesome name="remove" size={36} color="white" />
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </View>
-              );
-            }}
-          />
-        </View>
-
-        <View className="flex-row w-full h-12 pl-5 self-start items-center justify-center">
-          <Octicons name="checklist" size={32} color="white" />
-
-          <Text className="font-default text-xl ml-3 text-white">
-            Meus benefícios
-          </Text>
-        </View>
-
-        <FlatList
-          data={userBeneficiets}
-          horizontal={false}
-          keyExtractor={(item) => item.id}
-          style={{
-            width: "100%",
-            height: "40%",
-            borderRadius: 40,
-            marginVertical: 6,
-          }}
-          renderItem={({ item }) => {
-            return (
-              <View className="w-full h-30 my-3">
-                <View className="w-full h-22 justify-center">
-                  <View className="w-80 px-2 py-5 rounded-xl bg-white/20">
-                    <Text className="font-default text-2xl ml-3 font-bold text-white">
-                      Serviço: {item.service}
-                    </Text>
-                    <Text className="font-default text-2xl ml-3 font-bold text-white">
-                      STATUS: {item.status}
-                    </Text>
-                    <Text className="font-default text-2xl ml-3 font-bold text-white">
-                      Data: {item.date}
-                    </Text>
-                  </View>
-                </View>
-              </View>
-            );
-          }}
-        />
+    <View className="w-full h-full items-center justify-center">
+      <BackgroundSolicitationUser
+        width={width}
+        height={height + 100}
+        style={{ zIndex: 0, position: "absolute", top: 0 }}
+      />
+      <View className="absolute top-2 left-2">
+        <BackButton />
       </View>
-    </ScrollView>
+      <View className="self-center my-8">
+        <UserAvatar x={100} y={100} />
+      </View>
+
+      <View className="flex-row w-full px-4 h-12 justify-start items-start">
+        <Octicons name="checklist" size={32} color="#3C3C3C" />
+        <Text className="font-default text-xl ml-3 text-gray-900">
+          Suas solicitações
+        </Text>
+      </View>
+
+      <FlatList
+        refreshControl={
+          <RefreshControl
+          refreshing={refreshing}
+          onRefresh={() => setRefreshing(true)}
+          />
+        }
+        className="w-80 h-28"
+        data={userSolicitations}
+        horizontal={false}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => {
+          return (
+            <View className="w-72 px-3 my-2 self-center items-start justify-start py-5 rounded-xl shadow-md shadow-black bg-gray-600">
+              <Text className="font-default text-md text-gray-800">
+                Serviço: {item.service}
+              </Text>
+              <Text className="font-default text-md text-gray-800">
+                STATUS: {item.status}
+              </Text>
+              <Text className="font-default text-md text-gray-800">
+                Data: {item.date}
+              </Text>
+              <TouchableOpacity
+                className="w-8 h-8 items-center justify-center opacity-80 absolute right-1 top-0"
+                onPress={() => deleteSolicitation(item.id)}
+              >
+                <FontAwesome name="remove" size={32} color="white" />
+              </TouchableOpacity>
+            </View>
+          );
+        }}
+      />
+
+      <View className="flex-row w-full mt-3 px-4 h-12 justify-start items-start">
+        <Octicons name="checklist" size={32} color="#3C3C3C" />
+        <Text className="font-default text-xl ml-3 text-gray-900">
+          Meus benefícios
+        </Text>
+      </View>
+      
+        <FlatList
+        className="w-80 h-28 "
+        data={userBeneficiets}
+        horizontal={false}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => {
+          return (
+            <View className="w-72 my-4 px-2 self-center items-start justify-start py-5 rounded-xl shadow-md shadow-black bg-gray-600">
+              <Text className="font-default text-md text-gray-800">
+                Serviço: {item.service}
+              </Text>
+              <Text className="font-default text-md text-gray-800">
+                STATUS: {item.status}
+              </Text>
+              <Text className="font-default text-md text-gray-800">
+                Data: {item.date}
+              </Text>
+            </View>
+          );
+        }}
+      /> 
+      
+    </View>
   );
 }

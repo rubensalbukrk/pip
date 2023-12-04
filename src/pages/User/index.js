@@ -1,18 +1,19 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import axios from "axios";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
-
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../../contexts/AuthContext";
-import { Feather, Entypo } from "@expo/vector-icons";
 import { UserContext } from "../../contexts/UserContext";
-import InputInfoUser from "../../../components/UserLayout/inputUser";
-import MyParents from "../../../components/UserLayout/userParents";
 import { api } from "../../api/api";
 import * as ImagePicker from "expo-image-picker";
+
+import { Feather, Entypo } from "@expo/vector-icons";
+import InputInfoUser from "../../../components/UserLayout/inputUser";
+import MyParents from "../../../components/UserLayout/userParents";
 import UserAvatar from "../../../components/UserAvatar";
-import TopBackground from "../../../assets/svgs/user-wave-background.svg";
-import { height, width } from "../../utils/dimensions";
+import TopBackground from "../../../assets/svgs/User-top-waves.svg";
+import BottomBackground from '../../../assets/svgs/User-bottom-wave.svg'
+import { width } from "../../utils/dimensions";
 import { LottieView } from "../../utils/LottieView";
 
 export const User = () => {
@@ -91,22 +92,22 @@ export const User = () => {
         const user = response.data;
         setLogged(user);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => console.log('Desculpa, o servidor está em manutenção!'));
   }
 
   return (
-    <View className="flex-1 w-full items-center">
-  
+    <View className="flex-1 w-full h-full justify-between items-center">
+        
       <View className="w-full h-44 items-center justify-between">
-      
+
         <View className="flex-row w-full h-14">
-        <TopBackground width={width} height={height + 30} />
+        <TopBackground width={width} style={{zIndex: 0, position: 'absolute', top: -5}} />
           <View
             className="flex-row w-full h-full top-8 absolute items-center justify-between"
             style={{ zIndex: 2 }}
           >
             <TouchableOpacity
-              className="w-20 h-20  items-center justify-center"
+              className="w-20 h-20 items-center justify-center"
               onPress={() => {
                 goBack();
               }}
@@ -124,7 +125,7 @@ export const User = () => {
         </View>
 
         <View style={{zIndex: 2}} className="w-40 h-40 mt-2 absolute">
-          <View className="w-full h-full mt-2 items-center justify-center rounded-full">
+          <View className="w-50 h-50 shadow-xl shadow-black mt-4 items-center justify-center rounded-full">
             <UserAvatar x={130} y={130} />
           </View>
 
@@ -153,7 +154,7 @@ export const User = () => {
                 : "Membro"}
             </Text>
           </View>
-          <View className=" right-6 self-end bottom-1 absolute">
+          <View className=" right-6 self-end bottom-3 absolute">
             <TouchableOpacity
               className="h-5 w-5 items-center justify-center bg-gray-400 shadow-md shadow-black rounded-lg"
               onPress={() => pickImageAsync()}
@@ -165,7 +166,7 @@ export const User = () => {
       </View>
 
       <ScrollView
-        className="w-full px-10 py-5 bg-transparent"
+        className="w-full px-10 py-5 bg-gray-50"
         horizontal={false}
       >
         <View className="w-full mb-10 rounded-lg">
@@ -192,12 +193,12 @@ export const User = () => {
           />
         </View>
       </ScrollView>
-      <ScrollView horizontal={true} className='w-full h-48 pb-4 mx-6' >
+      <ScrollView horizontal={true} style={{zIndex: 2}} className='w-full h-48 pb-4 mx-6' >
             {logged?.filhos?.length === 0
               ? "NÃO"
               : logged?.filhos?.map((item) => {
                   return (
-                      <View className="mx-4">
+                      <View className="mx-3">
                         <MyParents
                         nome={item.nome}
                         cpf={item.cpf}
@@ -209,6 +210,7 @@ export const User = () => {
                   );
                 })}
            </ScrollView>
+           <BottomBackground width={width} style={{zIndex: 0, position: 'absolute', bottom: 0}} />
     </View>
   );
 };

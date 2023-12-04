@@ -12,8 +12,6 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
 
 
 export default function App() {
-
-
   const [fontsLoaded] = useFonts({
     'Doppio One': require('./assets/fonts/DoppioOne.ttf'),
   });
@@ -22,8 +20,6 @@ export default function App() {
     return <Preload />;
   }
  
-  const auth = false;
-
   return (
     <UserProvider>
     <AuthProvider>

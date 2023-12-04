@@ -39,7 +39,7 @@ export default function Solicitation() {
   
       .catch((error) => console.log(error));
   };
- const getSolicitation = () => {
+ const getSolicitations = () => {
     axios
       .get(`${api}/solicitations`, {
         method: "get",
@@ -58,7 +58,7 @@ export default function Solicitation() {
 
 if (refreshing) {
   getAprovados()
-  getSolicitation();
+  getSolicitations();
 }
   return (
 

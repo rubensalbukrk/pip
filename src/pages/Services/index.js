@@ -17,7 +17,7 @@ export default function Services() {
       labelDesc:
         "Além dos encontros com os pais de pessoas com espectro autista para fortalecimento coletivo, essa pasta de atuação tem a missão de potencializar o acesso das pessoas TEA aos serviços básicos como por exemplo: Emissão de RG, Solicitação da Carteira de Identificação da Pessoa com Autismo - CIPTEA que tem funcionalidade de passe livre, orientações psicológicas para os pais e responsáveis, assessoria jurídica e atendimentos com nutricionista.",
       labelRequisite: [
-        "CARTEIRA DE IDENTIFICAÇÃO DA PESSOA COM AUTISMO - CIPTEA",
+        "Carteira de identificação do Autista - CIPTEA",
         "Assessoria jurídica",
         "Emissão de RG do autista",
         "Atendimento nutricional",
@@ -93,7 +93,7 @@ export default function Services() {
     },
   ];
   return (
-    <View className="flex-1 w-full h-full justify-center items-center bg-gray-400">
+    <View className="flex-1 w-full justify-center items-center bg-gray-400">
       <BackgroundServices style={{position: 'absolute'}} width={width} height={height + 10} />
       <View className="flex-row w-full self-center">
         <Image
@@ -135,11 +135,11 @@ export default function Services() {
                   })
                 }
               >
-                <View className="justify-evenly"> 
-                  <Text className="w-44 h-20 font-default text-md text-gray-800">
+                <View className="justify-evenly py-3"> 
+                  <Text numberOfLines={4} className="w-44 font-default text-md text-gray-800">
                    {item.labelDesc}
                   </Text>
-                  <SimpleLineIcons name="arrow-right" size={24} color="white" />
+                 
                 </View>
                
                 <Image
@@ -153,6 +153,7 @@ export default function Services() {
           );
         }}
       />
+     
     </View>
   );
 }

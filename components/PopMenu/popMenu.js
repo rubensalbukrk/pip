@@ -6,8 +6,10 @@ import { useNavigation } from "@react-navigation/native";
 import { useContext } from "react";
 import { UserContext } from "../../src/contexts/UserContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AuthContext } from "../../src/contexts/AuthContext";
 
 export const PopMenu = () => {
+  const {setAuth} = useContext(AuthContext)
   const { logged, setLogged } = useContext(UserContext);
   const { navigate,goBack } = useNavigation();
   return (
@@ -161,7 +163,7 @@ export const PopMenu = () => {
         </TouchableOpacity>
 
         <TouchableOpacity className="flex-row w-full h-14 gap-2 items-center"
-        onPress={() => AsyncStorage.clear() && setLogged({}) & navigate("Welcome")}
+        onPress={() => AsyncStorage.clear() && setLogged([]) & setAuth(false) & navigate("Welcome")}
         >
           <MaterialIcons name="exit-to-app" size={32} color="black" />
           <Text className="font-default text-gray-600 text-xl">

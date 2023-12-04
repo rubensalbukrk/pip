@@ -8,13 +8,16 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "gray": {
-          100: "#E6E9FD",
-          200: "#d3d3d3",
-          600: "#6f6f6f",
-          700: "#767580",
-          900: "#3C3C3C"
-        }
+        gray: {
+          50: "#dbdbdb",
+          100: "#d1d1d1",
+          200: "#E8E8E8",
+          300: "#DFDFDF",
+          400: "#D3D3D3",
+          500: "#C5C5C5",
+          600: "#BDBDBD",
+          700: "#979797",
+        },
       },
       fontFamily: {
         default: ["Doppio One"],
