@@ -24,7 +24,6 @@ import { getNotices } from "../../api/api";
 
 export const Login = () => {
   const [isEnabled, setIsEnable] = useState(false);
-  const { logged } = useContext(UserContext);
   const {
     Authentication,
     setSigningAuto,

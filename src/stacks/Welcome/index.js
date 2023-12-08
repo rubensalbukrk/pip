@@ -19,9 +19,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import BackgroundWave from "../../../assets/svgs/Welcome-wave.svg";
 import { width, height } from "../../utils/dimensions";
 import { LottieView } from "../../utils/LottieView";
+import { AuthContext } from "../../contexts/AuthContext";
 
 export default function Welcome() {
-  const { setUsers, logged, setLogged } = useContext(UserContext);
+  const {auth, setAuth} = useContext(AuthContext)    
+  const { setUsers, setLogged } = useContext(UserContext);
   const { navigate } = useNavigation();
   const [fogos, setFogos] = useState(false);
   const [button, setButton] = useState(false);
@@ -30,7 +32,7 @@ export default function Welcome() {
 
   useEffect(() => {
     getMyLogin();
-    if (logged?.cpf) {
+    if (auth) {
       navigate("HomeApp");
     }
   }, []);
@@ -51,7 +53,7 @@ export default function Welcome() {
     if (button) {
       animationButton.current?.play(0, 57);
     } else {
-      animationButton.current?.play(0, 0);
+      animationButton.current?.pause()
     }
   }, [button]);
 
@@ -59,8 +61,9 @@ export default function Welcome() {
     try {
       AsyncStorage.getItem("token")
        .then((value) => {
-        let dataUser = JSON.parse(value);
+        const dataUser = JSON.parse(value);
         setLogged(dataUser);
+        setAuth(true)
     });
     } catch (e) {
       navigate('Login')
@@ -70,10 +73,7 @@ export default function Welcome() {
   const getUsers = async () => {
     try {
       const response = await axios.get(`${api}/users`, {
-        method: "get",
-        headers: new Headers({
-          "ngrok-skip-browser-warning": "69420",
-        }),
+        method: 'get'
       });
       const data = await response.data.users;
       setUsers(data);

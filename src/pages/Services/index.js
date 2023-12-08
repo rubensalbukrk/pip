@@ -1,6 +1,5 @@
 import React from "react";
 import BackButton from "../../../components/BackButton";
-import { SimpleLineIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { View, Image, Text, FlatList, TouchableOpacity } from "react-native";
 import BackgroundServices from '../../../assets/svgs/services-wave.svg'

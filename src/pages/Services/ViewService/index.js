@@ -22,10 +22,7 @@ export default function ViewService({ route }) {
     };
     axios
       .post(`${api}/solicitations`, newSolicitation, {
-        method: "post",
-        headers: new Headers({
-          "ngrok-skip-browser-warning": "69421",
-        }),
+        method: 'post',
       })
       .then((response) => {
         alert(JSON.stringify(response.data));

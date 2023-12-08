@@ -5,15 +5,13 @@ import { Ionicons, FontAwesome5, Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../../src/contexts/UserContext";
 import { api } from "../../../src/api/api";
-import UserAvatar from "../../UserAvatar";
 
 export default function TabSearch() {
   const { refreshing, setRefreshing, users, setUsers } = useContext(UserContext);
   const [search, setSearch] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [masterData, setMasterData] = useState([users]);
-  const navigation = useNavigation();
-
+  const {navigate} = useNavigation();
 
  if (refreshing){
   getUsers()
@@ -56,23 +54,22 @@ const searchFilter = (text) => {
 
   return (
     <View
-    className="flex-1 w-full px-5 justify-center items-center">
+    className="flex-1 w-full justify-center items-center">
       <View
-      className='w-full gap-5 self-center'
+      className='flex-row w-80 h-14 px-2 self-center items-center rounded-lg border-2 border-white/60 '
       >
         <Ionicons name="ios-search" size={32} color='white' />
         <TextInput
-        className='w-full h-16 font-default rounded-xl text-lg px-2 mb-4 mt-6 border-2 border-white/60'
+        className='w-80 h-12 px-2 font-default rounded-xl text-lg'
           onChangeText={(text) => searchFilter(text)}
           value={search}
           placeholder="Procurar por nome"
           placeholderTextColor={"rgba(255,255,255, 0.65)"}
-          
         />
       </View>
      
       <FlatList
-      className='flex-1 w-full h-300 mb-9 rounded-lg'
+      className='flex-1 w-full h-300 mt-3'
         data={filteredData}
         horizontal={false}
         refreshing={refreshing}
@@ -81,39 +78,25 @@ const searchFilter = (text) => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
           return (
-            <View
-              key={(item) => `key-${item}`}
-              style={{
-                justifyContent: "center",
-                width: "100%",
-                height: 80,
-                borderRadius: 20,
-                marginTop: 10,
-                marginBottom: 10,
-                backgroundColor: "rgba(255,255,255, 0.15)",
-              }}
-            >
-              <View className='flex-row items-center gap-3'>
-                <UserAvatar x={70} y={70} source={{ uri: item.avatar }} />
-                <View className='flex-1'>
-                  <View className='flex-1 rounded-lg mr-16'>
-                    <Text className='font-default line-clamp-1 text-ellipsis text-white'>
+              <View className='flex-row w-80 h-22 py-2 my-2 self-center items-center rounded-lg bg-gray-400/20'>
+                <Image className='w-12 h-12 rounded-full mx-3 bg-gray-600' source={{ uri: item.avatar }} />
+               
+                  <View className='w-80 rounded-lg'>
+                    <Text numberOfLines={1} className='font-default text-white'>
                       {item.nome}
                     </Text>
-                  </View>
-                  <View className='flex-1 mr-16 rounded-lg bg-white/10'>
                     <Text
-                    className='font-default line-clamp-1 text-ellipsis text-white'
+                    numberOfLines={1}
+                    className='font-default text-gray-300'
                     >
                       {item.question2}
                     </Text>
                   </View>
-                </View>
-
+                    
                 <TouchableOpacity
-                className='absolute right-10 bottom-52 opacity-80'
+                className='absolute right-2 top-2 opacity-80'
                   onPress={() =>
-                    navigation.navigate("EditUser", {
+                    navigate("EditUser", {
                       id: item.id,
                       status: item.status,
                       isAutist: item.isAutist,
@@ -145,7 +128,7 @@ const searchFilter = (text) => {
                   <FontAwesome5 name="user-edit" size={24} color="white" />
                 </TouchableOpacity>
               </View>
-            </View>
+            
           );
         }}
       />

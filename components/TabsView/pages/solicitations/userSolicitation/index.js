@@ -17,22 +17,18 @@ import { api, deleteSolicitation } from "../../../../../src/api/api";
 export default function SolicitationInfoUser({ route }) {
   const [status, setStatus] = useState();
   const filhos = route?.params?.userInfo?.filhos;
-  console.warn(filhos);
-  
+
   const handleConfirmSolicitation = () => {
     let userApproved = {
       cpf: route?.params?.cpf,
-      nome: route?.params?.userInfo.nome,
+      nome: route?.params?.userInfo?.nome,
       service: route?.params?.service,
       date: route?.params?.date,
       status: status,
     };
     axios
       .post(`${api}/aprovados`, userApproved, {
-        method: "post",
-        headers: new Headers({
-          "ngrok-skip-browser-warning": "69421",
-        }),
+        method: 'POST'
       })
       .then(deleteSolicitation(route?.params?.id))
       .then((response) => {
@@ -43,34 +39,32 @@ export default function SolicitationInfoUser({ route }) {
   const handleCancelSolicitation = (id) => {
     axios.delete(`${api}/solicitations/${id}`);
   };
-  function handleUpdateStatus() {
-    let updateStatus = {
-      status: status,
-    };
-    axios.put(`${api}/solicitations/${route?.params?.id}`, updateStatus, {
-      method: "put",
-      headers: new Headers({
-        "ngrok-skip-browser-warning": "69421",
-      }),
-    });
-    return alert("Atualizado com sucesso!");
+  
+  async function handleUpdateStatus() {
+    try {
+      let updateStatus = {
+        status: status,
+      };
+      const response = await axios.put(`${api}/solicitations/${route?.params?.id}`, updateStatus, {
+        method:  'PUT'
+      });
+      const message = await response.data
+      return alert(`${message}`)
+    } catch (error) {
+      alert(`Houve um problema: ${error}`)
+    }
   }
   return (
-    <ScrollView 
-    className='flex-1 w-full h-full bg-blue-500'
-    >
-      <View className='flex-row'>
+    <ScrollView className="flex-1 w-full h-full bg-zinc-600">
+      <View className="flex-row">
         <BackButton />
-        <Text
-          className="font-default my-3 text-lg text-white"
-        >
+        <Text className="font-default my-3 text-lg text-white">
           Informações de Solicitação
         </Text>
       </View>
-    
-      <View className='w-full h-full rounded-lg bg-blue-600'>
-        <View className='w-full mx-3 my-2'
-        >
+
+      <View className="w-full h-full rounded-lg bg-blue-600">
+        <View className="w-full mx-3 my-2">
           <InputInfoUser
             infoLabel="Serviço"
             infoValue={route?.params?.service}
@@ -95,9 +89,9 @@ export default function SolicitationInfoUser({ route }) {
           <Text className="font-default text-lg top-3 ml-2 text-white">
             Status
           </Text>
-          <View className='flex-row w-full gap-3 items-center'>
+          <View className="flex-row w-full gap-3 items-center">
             <TextInput
-            className='w-72 bg-blue-400'
+              className="w-72 bg-blue-400"
               value={status}
               onChangeText={(text) => setStatus(text)}
               placeholderTextColor={"#fff"}
@@ -108,31 +102,29 @@ export default function SolicitationInfoUser({ route }) {
             </TouchableOpacity>
           </View>
 
-          <View className='w-full px-3 py-2 mt-6 rounded-2xl bg-white/10'
-          >
+          <View className="w-full px-3 py-2 mt-6 rounded-2xl bg-white/10">
             <InputInfoUser
               infoLabel="Filhos"
               infoValue={
-                route?.params?.userInfo.filhos?.length === 0
+                route?.params?.userInfo?.filhos?.length === 0
                   ? "Não"
-                  : `${route?.params?.userInfo.filhos?.length}`
+                  : `${route?.params?.userInfo?.filhos?.length}`
               }
             />
-            {route?.params?.userInfo.filhos?.length === 0
+            {route?.params?.userInfo?.filhos?.length === 0
               ? "NÃO"
-              : route?.params?.userInfo.filhos?.map((item) => {
+              : route?.params?.userInfo?.filhos?.map((item) => {
                   return (
                     <MyParents
-                      nome={item.nome}
-                      cpf={item.cpf}
-                      idade={item.idade}
+                      nome={item?.nome}
+                      cpf={item?.cpf}
+                      idade={item?.idade}
                     />
                   );
                 })}
           </View>
         </View>
-        <View className='flex-row w-full my-4 mb-10 gap-5 items-center justify-center'
-        >
+        <View className="flex-row w-full my-4 mb-10 gap-5 items-center justify-center">
           <TouchableOpacity onPress={() => handleConfirmSolicitation()}>
             <FontAwesome name="check-circle" size={72} color="white" />
           </TouchableOpacity>

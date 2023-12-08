@@ -12,27 +12,27 @@ export default function Admin() {
 
   return (
       <View
-      className='flex-1 flex-col w-full h-full bg-blue-600'
+      className='flex-1 w-full h-full items-center bg-gray-700'
       >
         <View
-        className='w-full h-20 justify-center items-center'>
+        className='w-full h-32 justify-center items-center'>
           <View 
-          className='absolute bottom-14 left-5'> 
+          className='absolute top-20 left-5'> 
             <BackButton />
           </View>
         
           <Text 
-          className='font-default text-2xl text-white mt-9'
+          className='font-default text-xl text-white mt-12 mb-4'
           >
             PAINEL DE ADMINISTRAÇÃO
           </Text>
           <UserAvatar
-            x={100}
-            y={100}
+            x={70}
+            y={70}
           />
         </View>
 
-        <View className='flex-1 w-full'>
+        <View className='flex-1 w-full mt-10'>
           <TabViewAdmin />
         </View>
       </View>

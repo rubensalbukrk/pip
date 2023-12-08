@@ -1,62 +1,49 @@
 import React from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
-import {
-  Feather,
-  AntDesign,
-  FontAwesome,
-} from "@expo/vector-icons";
+import { Feather, AntDesign, FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
-
 export default function TabManager() {
-  const navigation = useNavigation();
+  const { navigate } = useNavigation();
 
   return (
-    <ScrollView  flex={1} w="100%">
-      <View className='flex-1 w-full px-5'>
-        <View className='w-full max-h-44 mt-4 justify-center items-center gap-2 rounded-lg bg-white/20'
-        >
-          <View className='absolute left-5 top-5'>
-            <FontAwesome name="newspaper-o" size={40} color="white" />
-          </View>
-          <Text className="font-default text-lg text-white">Notícias</Text>
-
-          
-
-          <Text fontSize="xl" className="font-default text-lg text-white">
-            Gerêncie todas as notícias!
-          </Text>
-
-          <TouchableOpacity
-          className='w-64 h-14 my-2 mb-4 rouded-xl'
-            onPress={() => navigation.navigate("NewNotices")}
-          >
-            <Feather name="arrow-right-circle" size={28} color="white" />
-          </TouchableOpacity>
+    <View className="flex-1 w-full items-center px-4 py-5">
+      <View className="w-full my-6 justify-center items-center rounded-lg shadow-lg shadow-black bg-gray-400">
+        <View className="flex-row w-full relative top-3 left-4 items-start">
+          <FontAwesome name="newspaper-o" size={32} color="white" />
+          <Text className="font-default ml-2 text-lg text-white">Notícias</Text>
         </View>
 
+        <Text className="font-default mt-5 text-lg text-zinc-600">
+          Adicione novas notícias, remova e monitore!
+        </Text>
 
-
-        <View className='w-full px-4 justify-center items-center rounded-lg gap-2 bg-white/20'
+        <TouchableOpacity
+          className="w-14 h-14 my-5 rounded-xl justify-center items-center shadow-lg shadow-black bg-gray-500"
+          onPress={() => navigate("NewNotices")}
         >
-          <View 
-          className='absolute top-5 left-5' position={"absolute"}>
-            <AntDesign name="exception1" size={40} color="white" />
-          </View>
-
-          <Text className="font-default text-lg text-white">Solicitações</Text>
-         
-          <Text className="font-default text-lg text-white">
-            Gerêncie todos os pedidos de serviços!
-          </Text>
-          <TouchableOpacity
-          className='w-64 h-14 my-2 mb-4 rouded-xl bg-blue-700'
-            onPress={() => navigation.navigate("Solicitation")}
-          >
-            <Feather name="arrow-right-circle" size={28} color="white" />
-          </TouchableOpacity>
-        </View>
+          <Feather name="arrow-right-circle" size={28} color="white" />
+        </TouchableOpacity>
       </View>
-    </ScrollView>
+
+      <View className="w-full mt-3 justify-center items-center rounded-lg shadow-lg shadow-black bg-gray-400">
+        <View className="flex-row w-full relative top-3 left-4 items-start">
+          <AntDesign name="exception1" size={32} color="white" />
+          <Text className="font-default ml-2 text-lg text-white">
+            Solicitações
+          </Text>
+        </View>
+
+        <Text className="font-default mt-5 text-lg text-zinc-600">
+          Analise todas as solicitações e aprovações dos serviços!
+        </Text>
+        <TouchableOpacity
+          className="w-14 h-14 my-5 rounded-xl justify-center items-center shadow-lg shadow-black bg-gray-500"
+          onPress={() => navigate("Solicitation")}
+        >
+          <Feather name="arrow-right-circle" size={28} color="white" />
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 }

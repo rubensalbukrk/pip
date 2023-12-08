@@ -21,8 +21,9 @@ export const PopMenu = () => {
         <TopBackgroundPopMenu
           height={90}
           style={{
+            overflow: 'hidden',
             position: "absolute",
-            top: 10,
+            top: 8,
           }}
         />
         <TouchableOpacity className='w-9 h-9 absolute top-3 right-3 items-center justify-center'
@@ -30,7 +31,7 @@ export const PopMenu = () => {
         >
         <AntDesign name="closecircle" size={32} color="black" />
         </TouchableOpacity>
-        <Text className="font-default my-7 mx-2 text-gray-600 text-3xl">
+        <Text className="font-default my-7 mx-2 text-gray-800 text-3xl">
           Menu
         </Text>
 
@@ -44,7 +45,7 @@ export const PopMenu = () => {
               size={32}
               color="black"
             />
-            <Text className="font-default text-gray-600 text-xl">
+            <Text className="font-default text-gray-800 text-xl">
               Coordenação dos Autistas
             </Text>
           </TouchableOpacity>
@@ -59,7 +60,7 @@ export const PopMenu = () => {
               size={32}
               color="black"
             />
-            <Text className="font-default text-gray-600 text-xl">
+            <Text className="font-default text-gray-800 text-xl">
               Coordenação das Mulheres
             </Text>
           </TouchableOpacity>
@@ -74,7 +75,7 @@ export const PopMenu = () => {
               size={32}
               color="black"
             />
-            <Text className="font-default text-gray-600 text-xl">
+            <Text className="font-default text-gray-800 text-xl">
               Coordenação da Saúde
             </Text>
           </TouchableOpacity>
@@ -89,7 +90,7 @@ export const PopMenu = () => {
               size={32}
               color="black"
             />
-            <Text className="font-default text-gray-600 text-xl">
+            <Text className="font-default text-gray-800 text-xl">
               Coordenação da Alimentação
             </Text>
           </TouchableOpacity>
@@ -104,7 +105,7 @@ export const PopMenu = () => {
               size={32}
               color="black"
             />
-            <Text className="font-default text-gray-600 text-xl">
+            <Text className="font-default text-gray-800 text-xl">
               Coordenação da Cidadania
             </Text>
           </TouchableOpacity>
@@ -119,7 +120,7 @@ export const PopMenu = () => {
               size={32}
               color="black"
             />
-            <Text className="font-default text-gray-600 text-xl">
+            <Text className="font-default text-gray-800 text-xl">
               Coordenação dos Protagonistas
             </Text>
           </TouchableOpacity>
@@ -134,7 +135,7 @@ export const PopMenu = () => {
               size={32}
               color="black"
             />
-            <Text className="font-default text-gray-600 text-xl">
+            <Text className="font-default text-gray-800 text-xl">
               Coordenação do Passe livre
             </Text>
           </TouchableOpacity>
@@ -149,7 +150,7 @@ export const PopMenu = () => {
               size={32}
               color="black"
             />
-            <Text className="font-default text-gray-600 text-xl">
+            <Text className="font-default text-gray-800 text-xl">
               Painel da Administração
             </Text>
           </TouchableOpacity>
@@ -157,7 +158,7 @@ export const PopMenu = () => {
 
         <TouchableOpacity className="flex-row w-full h-14 gap-2 items-center border-b-2 border-black/10">
           <FontAwesome5 name="user-edit" size={24} color="black" />
-          <Text className="font-default text-gray-600 text-xl">
+          <Text className="font-default text-gray-800 text-xl">
             Alterar dados
           </Text>
         </TouchableOpacity>
@@ -166,7 +167,7 @@ export const PopMenu = () => {
         onPress={() => AsyncStorage.clear() && setLogged([]) & setAuth(false) & navigate("Welcome")}
         >
           <MaterialIcons name="exit-to-app" size={32} color="black" />
-          <Text className="font-default text-gray-600 text-xl">
+          <Text className="font-default text-gray-800 text-xl">
             Sair
             </Text>
         </TouchableOpacity>

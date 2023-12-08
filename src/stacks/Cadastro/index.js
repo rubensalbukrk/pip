@@ -12,32 +12,28 @@ import axios from "axios";
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { api } from "../../api/api";
-import { data } from "../../utils/dateNow.";
 
 export const Cadastro = () => {
   const [updateList, setUpdateList] = useState(false);
-  const [formData, setData] = React.useState({
-    date: data,
-  });
+  const [formData, setData] = React.useState({});
   const [bairro, setBairro] = React.useState("");
   const [dataFilho, setDataFilho] = React.useState({});
   const [autista, setAutista] = useState(false);
   const [filhos, setFilhos] = useState([]);
-  const navigation = useNavigation();
+  const {navigate , goBack} = useNavigation();
 
-  function newUser() {
-    axios
-      .post(`${api}/users`, formData, {
-        method: "post",
-        headers: new Headers({
-          "ngrok-skip-browser-warning": "69421",
-        }),
-      })
-      .then((response) => {
-        alert(JSON.stringify(response.data));
-      })
-      .catch((error) => console.error(error));
-  }
+  const newUser = async () => {
+    try {
+      const response = await axios.post(`${api}/users`, formData, {
+        method: "POST",
+      });
+      const message = await response.data;
+      return alert(`${message}`);
+    } catch (e) {
+      alert(`Houve um problema com o servidor: ${e}`);
+    }
+  };
+
   function addFilhos() {
     filhos?.push({
       nome: dataFilho.nome,
@@ -57,18 +53,19 @@ export const Cadastro = () => {
             data={filhos}
             renderItem={({ item, index }) => {
               return (
-                  <View className="w-80 py-3 px-3 my-2 rounded-2xl bg-white/20">
-                    <Text className="font-default text-lg text-white">
-                      Nome: {item?.nome}
-                    </Text>
-                    <Text className="font-default text-lg text-white">
-                      CPF: {item?.cpf}
-                    </Text>
-                    <Text className="font-default text-lg text-white">
-                      Idade: {item?.idade}
-                    </Text>
+                <View className="w-80 py-3 px-3 my-2 rounded-2xl bg-white/20">
+                  <Text className="font-default text-lg text-white">
+                    Nome: {item?.nome}
+                  </Text>
+                  <Text className="font-default text-lg text-white">
+                    CPF: {item?.cpf}
+                  </Text>
+                  <Text className="font-default text-lg text-white">
+                    Idade: {item?.idade}
+                  </Text>
 
-                    <TouchableOpacity className='w-10 h-10 opacity-60 absolute bottom-0 right-0'
+                  <TouchableOpacity
+                    className="w-10 h-10 opacity-60 absolute bottom-0 right-0"
                     onPress={() => {
                       filhos.splice(index, 1);
                       setUpdateList((previousState) => !previousState);
@@ -76,7 +73,7 @@ export const Cadastro = () => {
                   >
                     <Feather name="user-minus" size={32} color="white" />
                   </TouchableOpacity>
-                  </View>
+                </View>
               );
             }}
           />
@@ -84,7 +81,7 @@ export const Cadastro = () => {
       );
     } catch (error) {
       alert("Dados de usuário não encontrado!");
-      navigation.goBack();
+      goBack();
     }
   };
   useEffect(() => {
@@ -105,7 +102,7 @@ export const Cadastro = () => {
   };
 
   return (
-    <View className="flex-1 w-full h-full bg-blue-600">
+    <View className="flex-1 w-full h-full bg-zinc-500">
       <View className="flex-row w-full mt-16 h-36">
         <Text className="abslute left-2 font-default text-left text-white text-5xl">
           Faça seu cadastro
@@ -118,8 +115,8 @@ export const Cadastro = () => {
         />
       </View>
 
-      <ScrollView className='w-full px-3' showsVerticalScrollIndicator={false}>
-        <View className='w-full h-full'>
+      <ScrollView className="w-full px-3" showsVerticalScrollIndicator={false}>
+        <View className="w-full h-full">
           <View className="w-full mt-4">
             <Text className="font-default text-lg font-bold text-white">
               Nome completo
@@ -151,9 +148,7 @@ export const Cadastro = () => {
           </View>
 
           <View className="mt-4">
-            <Text className="font-default text-lg text-white">
-              NIS
-              </Text>
+            <Text className="font-default text-lg text-white">NIS</Text>
             <TextInput
               className="w-40 h-10 px-2 font-default text-center text-white text-lg rounded-2xl bg-white/10 border-white/20"
               onChangeText={(value) => setData({ ...formData, nis: value })}
@@ -161,9 +156,7 @@ export const Cadastro = () => {
           </View>
 
           <View className="mt-4">
-            <Text className="font-default text-lg text-white">
-              Email
-              </Text>
+            <Text className="font-default text-lg text-white">Email</Text>
             <TextInput
               className="w-64 h-10 px-2 font-default text-center text-white text-lg rounded-2xl bg-white/10 border-white/20"
               onChangeText={(value) => setData({ ...formData, email: value })}
@@ -171,9 +164,7 @@ export const Cadastro = () => {
           </View>
 
           <View className="mt-4">
-            <Text className="font-default text-lg text-white">
-              Endereço
-              </Text>
+            <Text className="font-default text-lg text-white">Endereço</Text>
             <TextInput
               className="w-80 h-10 px-2 font-default text-center text-white text-lg rounded-2xl bg-white/10 border-white/20"
               onChangeText={(value) => setData({ ...formData, address: value })}
@@ -181,15 +172,11 @@ export const Cadastro = () => {
           </View>
 
           <View className="mt-4">
-            <Text className="font-default text-lg text-white">
-              Bairro
-              </Text>
+            <Text className="font-default text-lg text-white">Bairro</Text>
           </View>
 
           <View className="mt-4">
-            <Text className="font-default text-lg text-white">
-              Celular
-              </Text>
+            <Text className="font-default text-lg text-white">Celular</Text>
             <TextInput
               className="w-44 h-10 px-2 font-default text-center text-white text-lg rounded-2xl bg-white/10 border-white/20"
               onChangeText={(value) => setData({ ...formData, phone: value })}
@@ -206,7 +193,7 @@ export const Cadastro = () => {
                 setData({ ...formData, parentsCount: value })
               }
             />
-            
+
             <UserFilhos />
 
             <View className="w-64 rounded-xl my-5 py-3 px-2 bg-white/20">
@@ -255,7 +242,9 @@ export const Cadastro = () => {
             onChangeText={(value) => setData({ ...formData, password: value })}
           />
 
-          <Text className="font-default text-2xl text-white">Confirmar senha*</Text>
+          <Text className="font-default text-2xl text-white">
+            Confirmar senha*
+          </Text>
           <TextInput
             className="w-52 h-10 font-default text-lg text-white px-3 rounded-2xl bg-white/10 border-white/20"
             onChangeText={(value) => setData({ ...formData, password: value })}
@@ -263,16 +252,16 @@ export const Cadastro = () => {
 
           <TouchableOpacity
             className="w-72 h-12 my-3 mt-8 self-center justify-center items-center bg-blue-800 rounded-lg"
-            onPress={() => newUser() & navigation.navigate("Login")}
+            onPress={() => newUser() & navigate("Welcome")}
           >
             <Text className="font-default text-2xl text-white">ENVIAR</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             className="w-72 h-12 my-3 self-center justify-center items-center bg-blue-800/40 rounded-lg"
-            onPress={() => navigation.goBack()}
+            onPress={() => goBack()}
           >
-            <Text className='font-default text-lg text-white'>VOLTAR</Text>
+            <Text className="font-default text-lg text-white">VOLTAR</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

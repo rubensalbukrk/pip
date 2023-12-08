@@ -1,103 +1,132 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { View, Text, FlatList } from "react-native";
 import axios from "axios";
 
 import { UserContext } from "../../contexts/UserContext";
 import { TouchableOpacity, ScrollView, RefreshControl } from "react-native";
-import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome, FontAwesome5, Octicons } from "@expo/vector-icons";
 import BackButton from "../../../components/BackButton";
-import { deleteSolicitation, deleteAprovado } from "../../api/api";
+import { api, deleteSolicitation, deleteAprovado } from "../../api/api";
 import { useNavigation } from "@react-navigation/native";
-import { api } from "../../api/api";
 
 function ListSolicitations(props) {
   const navigation = useNavigation();
   return (
-    <View my="3" w="100%">
-      <View className="flex-row w-full mt-4 h-160">
-        <View className="w-full gap-1 px-3 py-5 rounded-xl bg-white/20">
-          <Text className="font-default text-lg text-white">
-            Nome: {props.nome}{" "}
-          </Text>
-          <Text className="font-default text-lg text-white">
-            CPF: {props.cpf}{" "}
-          </Text>
-          <Text className="font-default text-lg text-white">
-            Serviço: {props.service}{" "}
-          </Text>
-          <Text className="font-default text-lg text-white">
-            STATUS: {props.status}{" "}
-          </Text>
-          <Text className="font-default text-lg text-white">
-            Data: {props.date}{" "}
-          </Text>
-          <TouchableOpacity
-            className="w-22 h-22 absolute top-5 right-1 opacity-80"
-            onPress={() => deleteSolicitation(props.id)}
-          >
-            <FontAwesome name="remove" size={36} color="white" />
-          </TouchableOpacity>
-          <TouchableOpacity
-            className="w-22 h-22 absolute top-5 right-5 opacity-80"
-            onPress={() =>
-              navigation.navigate("SolicitationInfoUser", {
-                id: props.id,
-                userInfo: props.userInfo,
-                cpf: props.cpf,
-                service: props.service,
-                pasta: props.pasta,
-                status: props.status,
-                date: props.date,
-              })
-            }
-          >
-            <FontAwesome5 name="info-circle" size={36} color="white" />
-          </TouchableOpacity>
-        </View>
+      <View className="w-full self-center my-3 px-3 py-2 rounded-xl bg-white/20">
+        <Text className="font-default text-lg text-white">
+          Nome: {props.nome}
+        </Text>
+        <Text className="font-default text-lg text-white">
+          CPF: {props.cpf}
+        </Text>
+        <Text className="font-default text-lg text-white">
+          Serviço: {props.service}
+        </Text>
+        <Text className="font-default text-lg text-white">
+          STATUS: {props.status}
+        </Text>
+        <Text className="font-default text-lg text-white">
+          Data: {props.date}
+        </Text>
+        <TouchableOpacity
+          className="w-22 h-22 absolute top-3 right-3 opacity-80"
+          onPress={() => deleteSolicitation(props.id)}
+        >
+          <FontAwesome name="remove" size={36} color="white" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          className="w-22 h-22 absolute bottom-3 right-3 opacity-80"
+          onPress={() =>
+            navigation.navigate("SolicitationInfoUser", {
+              id: props.id,
+              userInfo: props.userInfo,
+              cpf: props.cpf,
+              service: props.service,
+              pasta: props.pasta,
+              status: props.status,
+              date: props.date,
+            })
+          }
+        >
+          <FontAwesome5 name="info-circle" size={36} color="white" />
+        </TouchableOpacity>
       </View>
-    </View>
+
   );
 }
 
 export default function PageCoordenador({ route }) {
-  const [refreshing, setRefreshing] = useState(false);
   const {
     solicitations,
     users,
+    refreshing,
+    setRefreshing,
     logged,
     aprovados,
     setAprovados,
     setSolicitations,
   } = useContext(UserContext);
-  const [filtred, setFiltred] = useState();
-  const navigation = useNavigation();
+
+  const config = {
+    method: "get",
+  };
+
+  useEffect(() => (getSolicitations(), getAprovados()), []);
+
+  const getAprovados = () => {
+    axios
+      .get(`${api}/aprovados`, {
+        method: "get",
+      })
+      .then((response) => {
+        const aprovados = response.data.aprovados;
+        setAprovados(aprovados);
+      })
+
+      .catch((error) => console.log(error));
+  };
+  const getSolicitations = () => {
+    axios
+      .get(`${api}/solicitations`, {
+        method: "get",
+      })
+      .then((response) => {
+        const solicitations = response.data.solicitations;
+        setSolicitations(solicitations);
+        setRefreshing(false);
+      })
+      .catch((error) => console.log(error));
+  };
+  if (refreshing) {
+    getAprovados(), getSolicitations();
+  }
 
   if (solicitations) {
-    var autistSolicitations = solicitations.filter(
+    var autistSolicitations = solicitations?.filter(
       (item) => String(item.pasta) === "Autistas"
     );
-    var mulherSolicitations = solicitations.filter(
+    var mulherSolicitations = solicitations?.filter(
       (item) => String(item.pasta) === "Mulher"
     );
-    var cidadaniaSolicitations = solicitations.filter(
+    var cidadaniaSolicitations = solicitations?.filter(
       (item) => String(item.pasta) === "Cidadania"
     );
-    var saudeSolicitations = solicitations.filter(
+    var saudeSolicitations = solicitations?.filter(
       (item) => String(item.pasta) === "Saúde Mental"
     );
-    var protagonistaSolicitations = solicitations.filter(
+    var protagonistaSolicitations = solicitations?.filter(
       (item) => String(item.pasta) === "Protagonistas"
     );
-    var alimentarSolicitations = solicitations.filter(
+    var alimentarSolicitations = solicitations?.filter(
       (item) => String(item.pasta) === "Segurança Alimentar"
     );
-    var passeSolicitations = solicitations.filter(
+    var passeSolicitations = solicitations?.filter(
       (item) => String(item.pasta) === "Passe Livre"
     );
     var IsCidadania = () => {
       return (
         <View>
-          {cidadaniaSolicitations.map((item) => {
+          {cidadaniaSolicitations?.map((item) => {
             const { service, nome, status, date } = item;
             return (
               <ListSolicitations
@@ -117,7 +146,7 @@ export default function PageCoordenador({ route }) {
     var IsAutist = () => {
       return (
         <View>
-          {autistSolicitations.map((item) => {
+          {autistSolicitations?.map((item) => {
             const { service, nome, status, date, cpf, id } = item;
             let userInfo = users.find(
               (user) => String(user.cpf) === String(item.cpf)
@@ -140,7 +169,7 @@ export default function PageCoordenador({ route }) {
     var IsMulher = () => {
       return (
         <View>
-          {mulherSolicitations.map((item) => {
+          {mulherSolicitations?.map((item) => {
             const { service, nome, status, date } = item;
             return (
               <ListSolicitations
@@ -160,7 +189,7 @@ export default function PageCoordenador({ route }) {
     var IsSaude = () => {
       return (
         <View>
-          {saudeSolicitations.map((item) => {
+          {saudeSolicitations?.map((item) => {
             const { service, nome, status, date } = item;
             return (
               <ListSolicitations
@@ -180,7 +209,7 @@ export default function PageCoordenador({ route }) {
     var IsProtagonista = () => {
       return (
         <View>
-          {protagonistaSolicitations.map((item) => {
+          {protagonistaSolicitations?.map((item) => {
             const { service, nome, status, date } = item;
             return (
               <ListSolicitations
@@ -200,7 +229,7 @@ export default function PageCoordenador({ route }) {
     var IsAlimentar = () => {
       return (
         <View>
-          {alimentarSolicitations.map((item) => {
+          {alimentarSolicitations?.map((item) => {
             const { service, nome, status, date, cpf, id } = item;
             return (
               <ListSolicitations
@@ -220,7 +249,7 @@ export default function PageCoordenador({ route }) {
     var IsPasse = () => {
       return (
         <View>
-          {passeSolicitations.map((item) => {
+          {passeSolicitations?.map((item) => {
             const { service, nome, status, date } = item;
             return (
               <ListSolicitations
@@ -239,44 +268,8 @@ export default function PageCoordenador({ route }) {
     };
   }
 
-  const getAprovados = () => {
-    axios
-      .get(`${api}/aprovados`, {
-        method: "get",
-        headers: new Headers({
-          "ngrok-skip-browser-warning": "69420",
-        }),
-      })
-      .then((response) => {
-        const aprovados = response.data.aprovados;
-        setAprovados(aprovados);
-      })
-
-      .catch((error) => console.log(error));
-  };
-  const getSolicitation = () => {
-    axios
-      .get(`${api}/solicitations`, {
-        method: "get",
-        headers: new Headers({
-          "ngrok-skip-browser-warning": "69420",
-        }),
-      })
-      .then((response) => {
-        const solicitations = response.data.solicitations;
-        setSolicitations(solicitations);
-        setRefreshing(false);
-      })
-
-      .catch((error) => console.log(error));
-  };
-  if (refreshing) {
-    getAprovados();
-    getSolicitation();
-  }
-
   return (
-    <View className="flex-1 w-full bg-blue-600">
+    <View className="flex-1 w-full bg-zinc-500">
       <ScrollView
         refreshControl={
           <RefreshControl
@@ -295,12 +288,15 @@ export default function PageCoordenador({ route }) {
             {route?.params?.title}
           </Text>
 
-          <View className="w-96 h-400 px-4 py-3 self-center rounded-xl bg-white/20">
-            <Text className="font-default text-start text-md text-white">
-              SOLICITAÇÕES
-            </Text>
+          <View className="w-96 h-400 px-4 py-3 self-center">
+            <View className="flex-row w-full px-4 h-8 justify-start items-start">
+              <Octicons name="checklist" size={32} color="#3C3C3C" />
+              <Text className="font-default text-xl ml-3 text-gray-900">
+                Solicitações
+              </Text>
+            </View>
 
-            <ScrollView className="w-full rounded-md">
+            <ScrollView className="w-full h-60 rounded-md">
               {logged?.isCoordAutist ? <IsAutist /> : null}
 
               {logged?.isCoordMulher ? <IsMulher /> : null}
@@ -317,37 +313,50 @@ export default function PageCoordenador({ route }) {
             </ScrollView>
           </View>
 
-          <View className="w-96 h-300 my-4 py-3 px-4 self-center rounded-xl bg-white/20">
-            <Text className="font-default text-start text-2xl text-white">
-              APROVAÇÕES
-            </Text>
+          <View className="w-96 my-2 py-3 px-4 self-center">
+            <View className="flex-row w-full mt-1 px-4 h-8 justify-start items-start">
+              <Octicons name="checklist" size={32} color="#3C3C3C" />
+              <Text className="font-default text-xl ml-3 text-gray-900">
+                Aprovações
+              </Text>
+            </View>
             <FlatList
-              className="w-full h-40 my-3 rounded-lg"
+              className="w-full h-80 my-1 rounded-lg"
               data={aprovados}
               horizontal={false}
-              keyExtractor={(item) => item.id}
+              keyExtractor={(item) => item.date}
               renderItem={({ item, index }) => {
                 let userInfo = users.find(
-                  (user) => String(user.cpf) === String(item.cpf)
+                  (user) => String(user?.cpf) === String(item?.cpf)
                 );
                 return (
-                  <View className="w-full my-3 justify-center items-center">
-                    <View className="w-full h-120">
-                      <View className="flex-row w-full py-5 px-2 rounded-xl self-center bg-white/20">
+                  <View
+                    key={`id-${index}`}
+                    className="w-full h-20 my-1 items-center justify-center"
+                  >
+                    <View className="flex-row w-full h-20">
+                      <View className="w-full py-3 px-2 self-center bg-white/10 rounded-xl">
                         <Text className="font-default text-lg text-white">
-                          Nome: {item.nome}{" "}
+                          Nome: {item?.nome}
                         </Text>
                         <Text className="font-default text-lg text-white">
-                          Serviço: {item.service}{" "}
+                          Serviço: {item?.service}
                         </Text>
                         <Text className="font-default text-lg text-white">
-                          STATUS: {item.status}{" "}
+                          STATUS: {item?.status}
                         </Text>
                         <Text className="font-default text-lg text-white">
-                          Data: {item.date}{" "}
+                          Data: {item?.date}
                         </Text>
                         <TouchableOpacity
-                          className="w-22 h-22 opacity-75 absolute right-1 top-5"
+                          style={{
+                            position: "absolute",
+                            right: 1,
+                            top: 5,
+                            width: 40,
+                            height: 40,
+                            opacity: 0.8,
+                          }}
                           onPress={() => deleteAprovado(item.id)}
                         >
                           <FontAwesome name="remove" size={36} color="white" />

@@ -10,7 +10,7 @@ export default function MyParents(props) {
     >
       <Text className="font-default ml-2 text-md text-gray-700/70">Nome</Text>
       <Text className="font-default px-4 text-md text-gray-900">
-        {props.nome}
+        {props.name}
       </Text>
       <View className="flex-row items-center justify-between">
         <View>

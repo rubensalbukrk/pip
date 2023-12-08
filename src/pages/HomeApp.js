@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { api } from "../api/api";
 import axios from "axios";
 import {
@@ -32,24 +32,17 @@ export const HomeApp = () => {
     refreshing,
     setRefreshing,
   } = useContext(UserContext);
-  const navigation = useNavigation();
+  const { navigate } = useNavigation();
   const nome = logged?.nome;
   const countSolicitations = solicitations?.length;
   
-
   const config = {
-    headers: {
-      "ngrok-skip-browser-warning": "69421",
-    },
+    method: 'get'
   };
+
   const getSolicitations = async () => {
     try {
-      const response = await axios.get(`${api}/solicitations`, {
-        method: "get",
-        headers: new Headers({
-          "ngrok-skip-browser-warning": "69420",
-        }),
-      });
+      const response = await axios.get(`${api}/solicitations`, config);
       const solicitations = await response.data.solicitations;
       setSolicitations(solicitations);
       setRefreshing(false);
@@ -60,11 +53,11 @@ export const HomeApp = () => {
   const getNotices = async () => {
     try {
       const response = await axios.get(`${api}/notices`, config);
-      const fetchNotices = await response.data.notices;
-      fetchNotices && setNotices(fetchNotices);
+      const dataNotices = await response.data.notices;
+      dataNotices && setNotices(dataNotices);
       setRefreshing(false);
     } catch (e) {
-      console.log(`Não ah novas not ${e}`);
+      console.log(`Não ah novas notícias no momento!`);
       setRefreshing(false);
     }
   };
@@ -80,7 +73,7 @@ export const HomeApp = () => {
         <TouchableOpacity
           style={{ zIndex: 10 }}
           className="absolute top-10 left-5 w-32 h-32 items-center justify-center bg-blue-600 rounded-full"
-          onPress={() => navigation.navigate("User")}
+          onPress={() => navigate("User")}
         >
           <UserAvatar x={124} y={124} />
         </TouchableOpacity>
@@ -163,7 +156,7 @@ export const HomeApp = () => {
 
         <TouchableOpacity
           className="w-17 h-10 items-center justify-center"
-          onPress={() => navigation.navigate("Sobre")}
+          onPress={() => navigate("Sobre")}
         >
           <FontAwesome color={"#3C3C3C"} size={38} name="group" />
           <Text className="font-default text-gray-700 text-center text-xs">
@@ -175,7 +168,7 @@ export const HomeApp = () => {
           className="w-16 h-10 items-center justify-center"
           py="2"
           flex={1}
-          onPress={() => navigation.navigate("Services")}
+          onPress={() => navigate("Services")}
         >
           <MaterialCommunityIcons
             color={"#3C3C3C"}
@@ -191,7 +184,7 @@ export const HomeApp = () => {
         <TouchableOpacity
           className="w-17 h-10 right-2 items-center justify-center"
           onPress={() =>
-           navigation.navigate("SolicitationUser")
+           navigate("SolicitationUser")
           }
         >
           <View

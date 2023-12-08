@@ -4,7 +4,6 @@ import {
   View,
   Text,
   TouchableOpacity,
-  ScrollView,
   FlatList,
   RefreshControl,
 } from "react-native";
@@ -27,14 +26,13 @@ export default function SolicitationsUser() {
     setAprovados,
   } = useContext(UserContext);
 
+const config = {
+  method: 'get'
+}
+
   const getSolicitations = async () => {
     try {
-      const response = await axios.get(`${api}/solicitations`, {
-        method: "get",
-        headers: new Headers({
-          "ngrok-skip-browser-warning": "69420",
-        }),
-      });
+      const response = await axios.get(`${api}/solicitations`, config);
       const solicitations = await response.data.solicitations;
       setSolicitations(solicitations);
       setRefreshing(false);
@@ -44,12 +42,7 @@ export default function SolicitationsUser() {
   };
   const getAprovados = async () => {
     try {
-      const response = await axios.get(`${api}/aprovados`, {
-        method: "get",
-        headers: new Headers({
-          "ngrok-skip-browser-warning": "69420",
-        }),
-      });
+      const response = await axios.get(`${api}/aprovados`, config);
       const aprovados = await response.data.aprovados;
       setAprovados(aprovados);
     } catch (error) {
@@ -61,7 +54,6 @@ export default function SolicitationsUser() {
     getAprovados()
     getSolicitations()
   }
-
   useEffect(() => (
     getSolicitations(),
     getAprovados()

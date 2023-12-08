@@ -16,14 +16,12 @@ import InputInfoUser from "../../../../components/UserLayout/inputUser";
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../../contexts/UserContext";
-import { data } from "../../../utils/dateNow.";
+import data from '../../../utils/dateNow'
 
 export default function EditUser({ route }) {
   const [updateList, setUpdateList] = useState(false);
   const { logged } = useContext(UserContext);
-  const [formData, setData] = React.useState({
-    date: data,
-  });
+  const [formData, setData] = React.useState({});
   const [bairro, setBairro] = React.useState(route?.params?.bairro);
   const [voluntario, setVoluntario] = useState(route?.params?.isVolt);
   const [estagiario, setEstagiario] = useState(route?.params?.isEtg);
@@ -91,9 +89,6 @@ export default function EditUser({ route }) {
     axios
       .put(`${api}/users/${route.params.id}`, UserUpdate, {
         method: "put",
-        headers: new Headers({
-          "ngrok-skip-browser-warning": "69421",
-        }),
       })
       .then(() => {
         setFilhos([""]);
@@ -106,7 +101,7 @@ export default function EditUser({ route }) {
         <View className="flex-1 w-full">
           <FlatList
             refreshing={updateList}
-            keyExtractor={(item) => item.cpf.toString()}
+            keyExtractor={(item => item?.cpf)}
             data={filhos}
             renderItem={({ item, index }) => {
               return (
@@ -232,7 +227,7 @@ export default function EditUser({ route }) {
               </Text>
               <Switch
                 value={voluntario}
-                onValueChange={() => toggleVoluntario}
+                onValueChange={() => toggleVoluntario()}
               />
             </View>
           </View>
@@ -329,8 +324,6 @@ export default function EditUser({ route }) {
 
             <Text color="white">Bairro</Text>
 
-           
-
             <Text className="font-default text-lg text-white">NIS</Text>
             <TextInput
               className="font-default text-lg rounded-xl text-white"
@@ -382,13 +375,10 @@ export default function EditUser({ route }) {
                   setDataFilho({ ...dataFilho, cpf: value })
                 }
               />
-              <TouchableOpacity
-                my="2"
-                size="sm"
-                bg="rgba(255, 255, 255, 0.18)"
+              <TouchableOpacity className='w-36 h-10 my-2 bg-zinc-600'
                 onPress={() => addFilhos()}
               >
-                Adicionar
+                 <Text className='font-default text-white text-md'>Adicionar</Text>
               </TouchableOpacity>
             </View>
 
@@ -436,14 +426,14 @@ export default function EditUser({ route }) {
             />
           </View>
 
-          <Button
-            className="w-72 h-64 mx-5 my-5 bg-blue-700 rounded-full"
+          <TouchableOpacity
+            className="w-72 h-22 mx-5 my-5 bg-zinc-700 rounded-full"
             onPress={() => {
               updateUser() && navigation.goBack();
             }}
           >
-            SALVAR
-          </Button>
+            <Text className='font-default text-white text-lg'>Salvar</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </View>

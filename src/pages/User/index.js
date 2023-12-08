@@ -172,30 +172,30 @@ export const User = () => {
         <View className="w-full mb-10 rounded-lg">
           <InputInfoUser
             infoLabel="Data de inscrição"
-            infoValue={logged.date}
+            infoValue={logged?.date}
           />
-          <InputInfoUser infoLabel="Nome Civil" infoValue={logged.nome} />
-          <InputInfoUser infoLabel="Idade" infoValue={logged.idade} />
-          <InputInfoUser infoLabel="Endereço" infoValue={logged.address} />
-          <InputInfoUser infoLabel="Bairro" infoValue={logged.bairro} />
+          <InputInfoUser infoLabel="Nome Civil" infoValue={logged?.nome} />
+          <InputInfoUser infoLabel="Idade" infoValue={logged?.idade} />
+          <InputInfoUser infoLabel="Endereço" infoValue={logged?.address} />
+          <InputInfoUser infoLabel="Bairro" infoValue={logged?.bairro} />
 
-          <InputInfoUser infoLabel="CPF" infoValue={logged.cpf} />
-          <InputInfoUser infoLabel="NIS" infoValue={logged.nis} />
-          <InputInfoUser infoLabel="Email" infoValue={logged.email} />
+          <InputInfoUser infoLabel="CPF" infoValue={logged?.cpf} />
+          <InputInfoUser infoLabel="NIS" infoValue={logged?.nis} />
+          <InputInfoUser infoLabel="Email" infoValue={logged?.email} />
           <InputInfoUser infoLabel="Telefone" infoValue={logged?.phone} />
           <InputInfoUser
                 infoLabel="Filhos"
                 infoValue={
-                  logged.filhos?.length === "0"
+                  logged?.filhos?.length === "0"
                     ? "Não"
-                    : `${logged.filhos?.length}`
+                    : `${logged?.filhos?.length}`
                 }
           />
         </View>
       </ScrollView>
       <ScrollView horizontal={true} style={{zIndex: 2}} className='w-full h-48 pb-4 mx-6' >
             {logged?.filhos?.length === 0
-              ? "NÃO"
+              ? <Text className='font-default text-center self-center text-white text-xl'> </Text>
               : logged?.filhos?.map((item) => {
                   return (
                       <View className="mx-3">
