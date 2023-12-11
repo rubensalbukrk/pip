@@ -10,21 +10,21 @@ import {
   Switch,
   ScrollView,
   FlatList,
+  Alert,
 } from "react-native";
 import BackButton from "../../../../components/BackButton";
 import InputInfoUser from "../../../../components/UserLayout/inputUser";
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { UserContext } from "../../../contexts/UserContext";
-import data from '../../../utils/dateNow'
+import data from "../../../utils/dateNow";
 
 export default function EditUser({ route }) {
   const [updateList, setUpdateList] = useState(false);
-  const { logged } = useContext(UserContext);
   const [formData, setData] = React.useState({});
   const [bairro, setBairro] = React.useState(route?.params?.bairro);
   const [voluntario, setVoluntario] = useState(route?.params?.isVolt);
   const [estagiario, setEstagiario] = useState(route?.params?.isEtg);
+
   const [isCoordAutist, setIsCoordAutist] = useState(
     route?.params?.isCoordAutist
   );
@@ -45,7 +45,6 @@ export default function EditUser({ route }) {
 
   const [autista, setAutista] = useState(route?.params?.isAutist);
   const [nome, setNome] = useState(route?.params?.nome);
-  const [avatar, setAvatar] = useState(route?.params?.avatar);
   const [idade, setIdade] = useState(route?.params?.idade);
   const [address, setAddress] = useState(route?.params?.address);
   const [cpf, setCpf] = useState(route?.params?.cpf);
@@ -72,7 +71,6 @@ export default function EditUser({ route }) {
     isAutist: autista,
     nome: nome,
     idade: idade,
-    avatar: avatar,
     address: address,
     bairro: bairro,
     cpf: cpf,
@@ -93,7 +91,7 @@ export default function EditUser({ route }) {
       .then(() => {
         setFilhos([""]);
       });
-    return alert("Atualização", "O usuário foi alterado!");
+    return Alert.alert("Atualização", "O usuário foi alterado!");
   }
   const UserFilhos = () => {
     try {
@@ -101,12 +99,12 @@ export default function EditUser({ route }) {
         <View className="flex-1 w-full">
           <FlatList
             refreshing={updateList}
-            keyExtractor={(item => item?.cpf)}
+            keyExtractor={(item) => item?.cpf}
             data={filhos}
             renderItem={({ item, index }) => {
               return (
                 <View className="w-full">
-                  <View className="flex-1 w-80 py-3 px-3 my-2 rounded-2xl bg-white/20">
+                  <View className="flex-1 w-80 py-3 px-3 my-2 rounded-lg bg-white/10">
                     <Text className="font-default text-lg text-white">
                       Nome: {item?.nome}
                     </Text>
@@ -123,9 +121,9 @@ export default function EditUser({ route }) {
                       filhos.splice(index, 1);
                       setUpdateList((previousState) => !previousState);
                     }}
-                    className='w-20 justify-center items-center'
+                    className="w-10 h-10 absolute bottom-3 right-8"
                   >
-                    <Feather name="user-minus" size={42} color="white" />
+                    <Feather name="user-minus" size={32} color="white" />
                   </TouchableOpacity>
                 </View>
               );
@@ -146,13 +144,11 @@ export default function EditUser({ route }) {
         idade: dataFilho.idade,
         cpf: dataFilho.cpf,
       });
-
       alert("Adicionado");
     } catch (error) {
       alert("Dados incorretos, tente novamente");
     }
   }
-
 
   const toggleEstagio = () => {
     setEstagiario((previousState) => !previousState);
@@ -186,253 +182,276 @@ export default function EditUser({ route }) {
   };
 
   return (
-    <View className="flex-1 w-full h-full items-center justify-center bg-blue-500">
+    <View className="flex-1 w-full h-full items-center justify-center bg-zinc-500">
       <View className="w-full h-100 items-center justify-center rounded-lg">
-        <View className="absolute top-2 right-1">
+        <View className="absolute top-10 right-1">
           <BackButton />
         </View>
 
         <Text className="font-default text-start mt-14 text-2xl text-white">
           ALTERAR DADOS
         </Text>
-        <Image
-          className="w-24 h-24 opacity-90 rounded-full bg-blue-500"
-          style={{ zIndex: 10 }}
-          source={
-            avatar
-              ? { uri: route?.params?.avatar }
-              : require("../../../../assets/user.png")
-          }
-        />
       </View>
 
       <ScrollView className="flex-1 w-full">
         <View className="justify-center items-center py-10">
-          <View className="flex-row w-60 h-100 gap-2 my-1 py-5 rounded-lg justify-evenly items-center bg-white/20">
-            <View className="h-full my-4 items-center gap-2">
-              <Text className="font-default text-xs text-white">
+          <View className="flex-row w-full rounded-lg items-center">
+            <Text className="font-default text-start px-3 mr-3 text-white text-md">
+              Selecione o tipo do usuário
+            </Text>
+            <View className="w-20 items-center">
+              <Text className="font-default justify-start text-xs mb-2 text-white">
                 Estagiário
               </Text>
               <Switch
+                style={{ width: 30, height: 15, alignSelf: "center" }}
                 onValueChange={() => {
                   toggleEstagio();
                 }}
                 value={estagiario}
               />
             </View>
-
-            <View className="h-full my-4 items-center gap-2">
-              <Text className="font-default text-xs text-white">
+            <View className="w-20 items-center">
+              <Text className="font-default text-xs mb-2 text-white">
                 Voluntário
               </Text>
               <Switch
+                style={{ width: 30, height: 15, alignSelf: "center" }}
                 value={voluntario}
                 onValueChange={() => toggleVoluntario()}
               />
             </View>
           </View>
 
-          <View className="w-80 h-200 px-4 py-2 my-3 bg-white/20 rounded-2xl items-start">
-            <Text className="font-default text-white text-lg">Coordenador</Text>
+          <Text className="font-default w-full mt-7 text-start px-4 text-white text-2xl">
+            Coordenação
+          </Text>
+          <Text className="font-default w-full text-start px-3 text-white/50 text-sm">
+            Escolha a pasta pela qual ficará responsável
+          </Text>
 
-            <View className="flex-row w-full gap-2 items-start justify-center">
-              <View className="h-14 my-4 items-center gap-2">
-                <Text className="font-default text-white text-xs">
-                  Autistas
-                </Text>
-                <Switch onValueChange={toggleAutist} value={isCoordAutist} />
-              </View>
-
-              <View className="h-14 my-4 items-center gap-2">
-                <Text className="font-default text-white text-xs">Mulher</Text>
-                <Switch onValueChange={toggleMulher} value={isCoordMulher} />
-              </View>
-
-              <View className="h-14 my-4 items-center gap-2">
-                <Text className="font-default text-white text-xs">
-                  Protagonista
+          <View className="w-96 px-5 py-2 my-2 rounded-2xl items-start bg-zinc-700/10">
+            <View className="flex-row w-full flex-wrap gap-y-3 gap-x-4">
+              <View className="">
+                <Text className="font-default text-white text-xs mb-2">
+                  Cidadania
                 </Text>
                 <Switch
-                  onValueChange={toggleProtagonista}
-                  value={isCoordProtagonista}
-                />
-              </View>
-            </View>
-
-            <View className="flex-row w-full gap-2 items-start justify-center">
-              <View className="h-14 my-4 items-center gap-2">
-                <Text className="font-default text-white text-xs">
-                  Passe Livre
-                </Text>
-                <Switch onValueChange={togglePasse} value={isCoordPasse} />
-              </View>
-
-              <View className="h-14 my-4 items-center gap-2">
-                <Text className="font-default text-white text-xs">
-                  Alimentar
-                </Text>
-                <Switch
-                  onValueChange={toggleAlimentar}
-                  value={isCoordAlimentar}
-                />
-              </View>
-
-              <View className="h-14 my-4 items-center gap-2">
-                <Text className="font-default text-white text-xs">Saúde</Text>
-                <Switch onValueChange={toggleSaude} value={isCoordSaude} />
-              </View>
-
-              <View className="h-14 my-4 items-center gap-2">
-                <Text className="font-default text-white text-xs">
-                  Cidadenia
-                </Text>
-                <Switch
+                  style={{ width: 30, height: 15, alignSelf: "center" }}
                   onValueChange={toggleCidadania}
                   value={isCoordCidadania}
                 />
               </View>
-            </View>
-          </View>
-
-          <View className="w-80 py-7 px-5 mx-5 gap-4 bg-white/20 rounded-xl">
-            <Text className="font-default text-lg text-white">Nome</Text>
-            <TextInput
-              className="font-default text-lg rounded-xl text-white"
-              value={nome}
-              onChangeText={(text) => setNome(text)}
-              placeholder={`${nome ? nome : ""}`}
-              placeholderTextColor="#000"
-            />
-
-            <Text className="font-default text-lg text-white">Idade</Text>
-            <TextInput
-              className="font-default text-lg rounded-xl text-white"
-              value={idade}
-              onChangeText={(text) => setIdade(text)}
-              placeholder={`${idade ? idade : ""}`}
-              placeholderTextColor="#000"
-            />
-
-            <Text className="font-default text-lg text-white">Endereço</Text>
-            <TextInput
-              className="font-default text-lg rounded-xl text-white"
-              value={address}
-              onChangeText={(text) => setAddress(text)}
-              placeholder={`${address ? address : ""}`}
-              placeholderTextColor="#000"
-            />
-
-            <Text color="white">Bairro</Text>
-
-            <Text className="font-default text-lg text-white">NIS</Text>
-            <TextInput
-              className="font-default text-lg rounded-xl text-white"
-              value={nis}
-              onChangeText={(text) => setNis(text)}
-              placeholder={`${nis ? nis : ""}`}
-              placeholderTextColor="#000"
-            />
-
-            <Text className="font-default text-lg text-white">CPF</Text>
-            <TextInput
-              className="font-default text-lg rounded-xl text-white"
-              value={cpf}
-              onChangeText={(text) => setCpf(text)}
-              placeholder={`${cpf ? cpf : ""}`}
-              placeholderTextColor="#000"
-            />
-
-            <View className="w-full mt-6 px-3 py-2 bg-white/20 rounded-2xl">
-              <View className="w-36">
-                <InputInfoUser
-                  infoLabel="Filhos"
-                  infoValue={filhos?.length === 0 ? "Não" : `${filhos?.length}`}
+              <View className="items-center">
+                <Text className="font-default text-white text-xs mb-2">
+                  Autistas
+                </Text>
+                <Switch
+                  style={{ width: 30, height: 15, alignSelf: "center" }}
+                  onValueChange={toggleAutist}
+                  value={isCoordAutist}
                 />
               </View>
 
-              {filhos?.length === 0 ? "" : <UserFilhos />}
-            </View>
+              <View className="items-center">
+                <Text className="font-default text-white text-xs mb-2">
+                  Mulher
+                </Text>
+                <Switch
+                  style={{ width: 30, height: 15, alignSelf: "center" }}
+                  onValueChange={toggleMulher}
+                  value={isCoordMulher}
+                />
+              </View>
+              <View className="items-center">
+                <Text className="font-default text-white text-xs mb-2">
+                  Saúde
+                </Text>
+                <Switch
+                  style={{ width: 30, height: 15, alignSelf: "center" }}
+                  onValueChange={toggleSaude}
+                  value={isCoordSaude}
+                />
+              </View>
+              <View className="items-center">
+                <Text className="font-default text-white text-xs mb-2">
+                  Protagonista
+                </Text>
+                <Switch
+                  style={{ width: 30, height: 15, alignSelf: "center" }}
+                  onValueChange={toggleProtagonista}
+                  value={isCoordProtagonista}
+                />
+              </View>
 
-            <View className="w-52 rounded-xl gap-3 px-3 py-2 bg-white/20">
-              <Text className="font-default font-bold text-white">Nome</Text>
-              <TextInput
-                className="rounded-2xl bg-white/10 border-white/20"
-                onChangeText={(value) =>
-                  setDataFilho({ ...dataFilho, nome: value })
-                }
-              />
-              <Text className="font-default font-bold text-white">Idade</Text>
-              <TextInput
-                className="rounded-2xl bg-white/10 border-white/20"
-                onChangeText={(value) =>
-                  setDataFilho({ ...dataFilho, idade: value })
-                }
-              />
-              <Text className="font-default font-bold text-white">CPF</Text>
-              <TextInput
-                className="rounded-2xl bg-white/10 border-white/20"
-                onChangeText={(value) =>
-                  setDataFilho({ ...dataFilho, cpf: value })
-                }
-              />
-              <TouchableOpacity className='w-36 h-10 my-2 bg-zinc-600'
-                onPress={() => addFilhos()}
-              >
-                 <Text className='font-default text-white text-md'>Adicionar</Text>
-              </TouchableOpacity>
-            </View>
+              <View className="items-center">
+                <Text className="font-default text-white text-xs mb-2">
+                  Passe Livre
+                </Text>
 
-            <View className="w-20 h-36 justify-start">
-              <Text className="font-default mb-8 font-bold text-white">
-                Autista
-              </Text>
-              <Switch value={autista} onValueChange={toggleAutista} />
-            </View>
+                <Switch
+                  style={{ width: 30, height: 15, alignSelf: "center" }}
+                  onValueChange={togglePasse}
+                  value={isCoordPasse}
+                />
+              </View>
 
-            <Text className="font-default font-bold text-white">Contato</Text>
+              <View className="items-center">
+                <Text className="font-default text-white text-xs mb-2">
+                  Alimentar
+                </Text>
+                <Switch
+                  style={{ width: 30, height: 15, alignSelf: "center" }}
+                  onValueChange={toggleAlimentar}
+                  value={isCoordAlimentar}
+                />
+              </View>
+            </View>
+          </View>
+          <Text className="font-default w-full mt-7 text-start px-4 text-white text-2xl">
+            Informações do usuário
+          </Text>
+          <Text className="font-default w-full px-3 text-md text-white/50">
+            Altere as informações do usuário
+          </Text>
+
+          <View className="w-96 px-5 my-2 bg-zinc-700/10 rounded-xl">
+            <Text className="font-default text-lg text-white/60">Nome</Text>
             <TextInput
-              className="rounded-2xl bg-white/10 border-white/20"
+              className="font-default text-lg px-2 mb-2 rounded-lg text-white bg-zinc-400/20"
+              value={nome}
+              onChangeText={(text) => setNome(text)}
+              placeholder={`${nome ? nome : ""}`}
+              placeholderTextColor="#fff"
+            />
+
+            <Text className="font-default text-lg text-white/60">Idade</Text>
+            <TextInput
+              className="font-default w-10 text-lg px-2 mb-2 rounded-lg text-white bg-zinc-400/20"
+              value={idade}
+              onChangeText={(text) => setIdade(text)}
+              placeholder={`${idade ? idade : ""}`}
+              placeholderTextColor="#fff"
+            />
+
+            <Text className="font-default text-lg text-white/60">Endereço</Text>
+            <TextInput
+              className="font-default w-68 text-lg px-2 mb-2 rounded-lg text-white bg-zinc-400/20"
+              value={address}
+              onChangeText={(text) => setAddress(text)}
+              placeholder={`${address ? address : ""}`}
+              placeholderTextColor="#fff"
+            />
+
+            <Text className="font-default text-lg text-white/60">Bairro</Text>
+
+            <Text className="font-default text-lg text-white/60">NIS</Text>
+            <TextInput
+              className="font-default w-36 text-lg px-2 mb-2 rounded-lg text-white bg-zinc-400/20"
+              value={nis}
+              onChangeText={(text) => setNis(text)}
+              placeholder={`${nis ? nis : ""}`}
+              placeholderTextColor="#fff"
+            />
+
+            <Text className="font-default text-lg text-white/60">CPF</Text>
+            <TextInput
+              className="font-default w-36 text-lg px-2 mb-2 rounded-lg text-white bg-zinc-400/20"
+              value={cpf}
+              onChangeText={(text) => setCpf(text)}
+              placeholder={`${cpf ? cpf : ""}`}
+              placeholderTextColor="#fff"
+            />
+
+            <Text className="font-default text-lg text-white/60">Contato</Text>
+            <TextInput
+              className="font-default w-36 text-lg px-2 mb-2 rounded-lg text-white bg-zinc-400/20"
               value={phone}
               onChangeText={(text) => setPhone(text)}
               placeholder={`${phone ? phone : ""}`}
-              placeholderTextColor="#000"
+              placeholderTextColor="#fff"
             />
 
-            <Text className="font-default font-bold text-white">Email</Text>
+            <Text className="font-default text-lg text-white/60">Email</Text>
             <TextInput
-              className="rounded-2xl bg-white/10 border-white/20"
+              className="font-default text-lg px-2 mb-2 rounded-lg text-white bg-zinc-400/20"
               value={email}
               onChangeText={(text) => setEmail(text)}
               placeholder={`${email ? email : ""}`}
               placeholderTextColor="#000"
             />
 
-            <Text className="font-default font-bold text-white">Senha</Text>
+            <Text className="font-default text-lg text-white/60">Senha</Text>
             <TextInput
-              className="rounded-2xl bg-white/10 border-white/20"
+              className="font-default w-32 text-lg px-2 mb-2 rounded-lg text-white bg-zinc-400/20"
               value={pass}
               onChangeText={(text) => setPass(text)}
               placeholder={`${pass ? pass : ""}`}
               placeholderTextColor="#000"
             />
 
-            <Text className="font-default font-bold text-white">Opinião</Text>
+            <Text className="font-default text-lg text-white/60">Opinião</Text>
             <TextInput
-              className="rounded-2xl bg-white/10 border-white/20"
+              className="font-default w-full text-lg px-2 mb-2 rounded-lg text-white bg-zinc-400/20"
               value={opnion}
               onChangeText={(text) => setOpnion(text)}
               placeholder={`${opnion ? opnion : ""}`}
               placeholderTextColor="#000"
             />
+
+            <View className="w-full py-2">
+              <View className="my-3">
+                <Text className="font-default text-lg text-white/60">
+                  Filhos
+                </Text>
+                <Text className="font-default text-white text-lg">
+                  {filhos ? filhos.length : "Não tem"}
+                </Text>
+              </View>
+              {filhos?.length === 0 ? "" : <UserFilhos />}
+            </View>
+
+            <View className="w-52 rounded-xl gap-1 mb-5 px-3 py-2 bg-white/10">
+              <Text className="font-default font-bold text-white">Nome</Text>
+              <TextInput
+                className="font-default text-white px-2 rounded-lg bg-white/10 border-white/20"
+                onChangeText={(value) =>
+                  setDataFilho({ ...dataFilho, nome: value })
+                }
+              />
+              <Text className="font-default font-bold text-white">Idade</Text>
+              <TextInput
+                className="font-default text-white px-2 rounded-lg bg-white/10 border-white/20"
+                onChangeText={(value) =>
+                  setDataFilho({ ...dataFilho, idade: value })
+                }
+              />
+              <Text className="font-default font-bold text-white">CPF</Text>
+              <TextInput
+                className="font-default text-white px-2 rounded-lg mb-2 bg-white/10 border-white/20"
+                onChangeText={(value) =>
+                  setDataFilho({ ...dataFilho, cpf: value })
+                }
+              />
+              <TouchableOpacity
+                className="w-28 h-10 my-2 mt-2 items-center justify-center rounded-lg bg-zinc-600"
+                onPress={() => addFilhos()}
+              >
+                <Text className="font-default text-white text-md">
+                  Adicionar
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
 
           <TouchableOpacity
-            className="w-72 h-22 mx-5 my-5 bg-zinc-700 rounded-full"
+            className="flex-row w-48 h-20 mx-5 my-5 justify-evenly items-center bg-zinc-700 rounded-lg"
             onPress={() => {
               updateUser() && navigation.goBack();
             }}
           >
-            <Text className='font-default text-white text-lg'>Salvar</Text>
+            <Feather name="save" size={32} color={"white"}/>
+            <Text className="font-default text-white text-2xl">SALVAR</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

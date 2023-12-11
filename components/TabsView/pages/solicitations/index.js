@@ -61,7 +61,7 @@ export default function Solicitation() {
     getSolicitations();
   }
   return (
-    <View className="flex-1 w-full justify-around px-4 py-10 bg-zinc-400">
+    <View className="flex-1 w-full justify-around px-4 py-10 bg-zinc-500">
       
         <View className="flex-row w-full top-2">
           <FontAwesome5 name="user-clock" size={40} color="white" />

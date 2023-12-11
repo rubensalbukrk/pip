@@ -3,10 +3,9 @@ import { width } from "../../utils/dimensions";
 import { View, Text, TouchableOpacity, TextInput, Switch } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import BackgroundLogin from "../../../assets/svgs/login-center.svg";
-import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 import { TextInputMask } from "react-native-masked-text";
 import { AuthContext } from "../../contexts/AuthContext";
-import { UserContext } from "../../contexts/UserContext";
 import Animated, {
   StretchInX,
   StretchOutX,
@@ -19,7 +18,6 @@ import Animated, {
 } from "react-native-reanimated";
 import { LottieView } from "../../utils/LottieView";
 import PasswordIcon from '../../../assets/svgs/password.svg'
-import { getNotices } from "../../api/api";
 
 
 export const Login = () => {
@@ -40,9 +38,7 @@ export const Login = () => {
   useEffect(() => {
     if (auth) {
       setTimeout(() => {
-        navigate("HomeApp");
-        setIsLoading(false);
-        getNotices();
+        navigate('HomeApp');
       }, 3000);
     } else {
       setIsLoading(false);
@@ -52,6 +48,8 @@ export const Login = () => {
   const toggleSigningAuto = () => {
     setSigningAuto((previousState) => !previousState);
   };
+
+
 
   return (
     <View className="flex-1 px-7 justify-around bg-gray-300 items-center">

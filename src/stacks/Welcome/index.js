@@ -7,7 +7,6 @@ import Animated, {
   PinwheelIn,
   PinwheelOut,
   ZoomOutDown,
-  StretchInX,
   ZoomInEasyUp,
   Layout
 } from "react-native-reanimated";
@@ -17,9 +16,10 @@ import { UserContext } from "../../contexts/UserContext";
 import { api } from "../../api/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import BackgroundWave from "../../../assets/svgs/Welcome-wave.svg";
-import { width, height } from "../../utils/dimensions";
+import { width } from "../../utils/dimensions";
 import { LottieView } from "../../utils/LottieView";
 import { AuthContext } from "../../contexts/AuthContext";
+
 
 export default function Welcome() {
   const {auth, setAuth} = useContext(AuthContext)    
@@ -32,9 +32,6 @@ export default function Welcome() {
 
   useEffect(() => {
     getMyLogin();
-    if (auth) {
-      navigate("HomeApp");
-    }
   }, []);
 
   useEffect(() => {
@@ -64,6 +61,7 @@ export default function Welcome() {
         const dataUser = JSON.parse(value);
         setLogged(dataUser);
         setAuth(true)
+        navigate("HomeApp")
     });
     } catch (e) {
       navigate('Login')
@@ -72,7 +70,7 @@ export default function Welcome() {
 
   const getUsers = async () => {
     try {
-      const response = await axios.get(`${api}/users`, {
+      const response = await axios.get(`${api.BASE_URL}/users`, {
         method: 'get'
       });
       const data = await response.data.users;

@@ -4,8 +4,8 @@ import { View, Text } from "react-native";
 
 export default function InputInfoUser(props) {
   return (
-    <View className='w-full h-10 mb-1 '>
-      <Text className='font-default text-gray-700/80 text-md'>
+    <View className='w-full h-10 mb-3'>
+      <Text className='font-default text-zinc-600/60 text-lg'>
         {props.infoLabel}
       </Text>
      

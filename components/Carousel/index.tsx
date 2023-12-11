@@ -1,39 +1,29 @@
-import React, {useContext, useEffect} from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
 import Carousel from "react-native-reanimated-carousel";
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import { UserContext } from "../../src/contexts/UserContext";
-import { apiNotice } from "../../src/api/api";
 import { useNavigation } from "@react-navigation/native";
 import { width } from "../../src/utils/dimensions";
+import { useFetchData } from "../../src/hooks/useFetchData";
+import { api } from "../../src/api/api";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../src/stacks/mainStack";
 
 export const CarouselHome = () => {
-  const { setNotices, notices } = useContext(UserContext)
-  const navigation = useNavigation()
+  const {list, getData} = useFetchData(api.getNotices)
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   useEffect(() => {
-    axios
-      .get(apiNotice, {
-        method: "get",
-        headers: new Headers({
-          "ngrok-skip-browser-warning": "69420",
-        }),
-      })
-      .then((response) => {
-        const notices = response.data.notices;
-        setNotices(notices)
-      })
-      .catch(null);
-  }, [notices]);
+    getData()
+  },[])
   
   return (
-    <View style={{zIndex: 1}} className='w-full h-60 mt-2 items-center'>
+    <View style={{zIndex: 3}} className='w-full h-64 mt-2 items-center'>
       <Carousel
         loop
         width={width}
         height={200}
         autoPlay={true}
-        data={notices}
+        data={list}
         overscrollEnabled={true}
         scrollAnimationDuration={1400}
         renderItem={({ index, item }) => (

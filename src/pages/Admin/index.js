@@ -12,7 +12,7 @@ export default function Admin() {
 
   return (
       <View
-      className='flex-1 w-full h-full items-center bg-gray-700'
+      className='flex-1 w-full h-full items-center bg-zinc-500'
       >
         <View
         className='w-full h-32 justify-center items-center'>

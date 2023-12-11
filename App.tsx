@@ -8,9 +8,6 @@ import UserProvider from './src/contexts/UserContext';
 import { LogBox } from 'react-native';
 
 
-LogBox.ignoreAllLogs();//Ignore all log notifications
-
-
 export default function App() {
   const [fontsLoaded] = useFonts({
     'Doppio One': require('./assets/fonts/DoppioOne.ttf'),

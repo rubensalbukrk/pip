@@ -29,14 +29,15 @@ export default function AuthProvider({ children }) {
         String(user.cpf) === String(userCpf) &&
         String(user.password) === String(userPassword)
     );
+    
     if (user) {
       setLogged(user);
       setAuth(true);
-  
     } else {
       alert("Houve algum problema", "Dados inválidos tente novamente!");
       setIsLoading(false)
     }
+
     if (signingAuto){
         saveMyLogin(user)
     }

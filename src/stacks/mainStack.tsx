@@ -19,6 +19,14 @@ import PageCoordenador from '../pages/Coordenador'
 import SolicitationsUser from "../pages/Solicitations";
 import { PopMenu } from "../../components/PopMenu/popMenu";
 
+export type RootStackParamList = {
+  ViewNotice: {
+    date: string,
+    title: string,
+    mensagem: string,
+    img: string,
+  } | undefined;
+};
 
 const Stack = createNativeStackNavigator();
 

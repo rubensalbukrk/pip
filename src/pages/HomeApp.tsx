@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { api } from "../api/api";
-import axios from "axios";
 import {
   View,
   Text,
@@ -23,44 +22,16 @@ import Background from "../../assets/svgs/Homeapp-wave.svg";
 import { height, width } from "../utils/dimensions";
 import { LottieView } from "../utils/LottieView";
 
+
 export const HomeApp = () => {
   const {
     logged,
     solicitations,
-    setSolicitations,
-    setNotices,
     refreshing,
     setRefreshing,
-  } = useContext(UserContext);
-  const { navigate } = useNavigation();
-  const nome = logged?.nome;
+  } = useContext<any>(UserContext);
+  const { navigate } = useNavigation<any>();
   const countSolicitations = solicitations?.length;
-  
-  const config = {
-    method: 'get'
-  };
-
-  const getSolicitations = async () => {
-    try {
-      const response = await axios.get(`${api}/solicitations`, config);
-      const solicitations = await response.data.solicitations;
-      setSolicitations(solicitations);
-      setRefreshing(false);
-    } catch (error) {
-      alert("Não ah novas solicitações!");
-    }
-  };
-  const getNotices = async () => {
-    try {
-      const response = await axios.get(`${api}/notices`, config);
-      const dataNotices = await response.data.notices;
-      dataNotices && setNotices(dataNotices);
-      setRefreshing(false);
-    } catch (e) {
-      console.log(`Não ah novas notícias no momento!`);
-      setRefreshing(false);
-    }
-  };
 
   return (
     <View className="flex-1 w-full">
@@ -69,6 +40,7 @@ export const HomeApp = () => {
         width={width + 30}
         height={height + 25}
       />
+
       <View className="flex-row w-full my-2 h-40">
         <TouchableOpacity
           style={{ zIndex: 10 }}
@@ -91,21 +63,13 @@ export const HomeApp = () => {
 
       <ScrollView
         className="w-full h-full px-3 py-5"
-        onScrollBeginDrag={() => console.log("descendo") & setRefreshing(true)}
-        refreshControl={
-          <RefreshControl
-            progressViewOffset={2000}
-            tintColor="transparent"
-            colors={["rgba(255,255,255,0)"]}
-            progressBackgroundColor={"#fff0"}
-            refreshing={refreshing}
-            onRefresh={() =>
-              setRefreshing(true) & getSolicitations() & getNotices()
-            }
-          />
-        }
+        onScrollBeginDrag={() => setRefreshing(true)}
         horizontal={false}
         showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl 
+          refreshing={refreshing} />
+        }
       >
         <View className="w-full h-96">
           <View
@@ -116,6 +80,8 @@ export const HomeApp = () => {
           </View>
          
           <CarouselHome />
+
+  
         </View>
         {refreshing ? (
             <LottieView
@@ -166,8 +132,6 @@ export const HomeApp = () => {
 
         <TouchableOpacity
           className="w-16 h-10 items-center justify-center"
-          py="2"
-          flex={1}
           onPress={() => navigate("Services")}
         >
           <MaterialCommunityIcons
