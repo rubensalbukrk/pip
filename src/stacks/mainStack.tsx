@@ -19,14 +19,34 @@ import PageCoordenador from '../pages/Coordenador'
 import SolicitationsUser from "../pages/Solicitations";
 import { PopMenu } from "../../components/PopMenu/popMenu";
 
-export type RootStackParamList = {
-  ViewNotice: {
-    date: string,
-    title: string,
-    mensagem: string,
-    img: string,
-  } | undefined;
-};
+declare global {
+  namespace ReactNavigation {
+    interface RootParamList {
+      Welcome: undefined,
+      Login: undefined,
+      Cadastrar: any,
+      HomeApp: undefined,
+      User: any,
+      Sobre: any,
+      Services: any,
+      ViewServices: any,
+      SolicitationUser: any,
+      SolicitationInfoUser: any,
+      ViewNotice: {
+        date: string,
+        title: string,
+        mensagem: string,
+        img: string,
+      } | undefined,
+      Solicitation: any,
+      PageCoordenador: any,
+      Admin: any,
+      EditUser: any,
+      NewNotices: any,
+      PopMenu: any
+    }
+  }
+}
 
 const Stack = createNativeStackNavigator();
 

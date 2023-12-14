@@ -1,32 +1,43 @@
 import axios from "axios";
 import { NoticesProps } from "../interfaces/Notices";
 import { SolicitationsProps } from "../interfaces/Solicitations";
+import { AprovadosProps } from "../interfaces/Aprovados";
+import { PageProps } from "../interfaces/Page";
 
-const BASE_URL = "https://pip-server.vercel.app/api";
-
-interface Page<T> {
-  notices: Array<T>
-}
-
+const BASE_URL = "https://pip-server.vercel.app/api"
 const config = {
   method: 'get'
   }
 
 const getNotices = async (): Promise<NoticesProps[]> => {
-    const response = await axios.get<Page<NoticesProps>>(`${BASE_URL}/notices`, config)
-    return response.data.notices
-}
-
-const getSolicitations = async (): Promise<SolicitationsProps[]> => {
   try {
-    const response = await axios.get<SolicitationsProps[]>(`${BASE_URL}/solicitations`, config);
-    return response?.data
+    const response = await axios.get<PageProps<NoticesProps>>(`${BASE_URL}/notices`, config)
+    return response.data.results.notices
   } catch (error) {
     alert('O servidor não responde, tente novamente mas tarde!')
   }
 }
 
-function deleteUser(id) {
+const getSolicitations = async (): Promise<SolicitationsProps[]> => {
+  try {
+    const response = await axios.get<PageProps<SolicitationsProps>>(`${BASE_URL}/solicitations`, config);
+    return response.data.results.solicitations
+  } catch (error) {
+    alert('O servidor não responde, tente novamente mas tarde!')
+  }
+}
+
+const getAprovados = async (): Promise<AprovadosProps[]> => {
+  try {
+    const response = await axios.get<PageProps<AprovadosProps>>(`${BASE_URL}/aprovados`, config);
+    return response.data.results.aprovados
+  } catch (error) {
+    alert('O servidor não responde, tente novamente mas tarde!')
+  }
+}
+
+
+function deleteUser(id: number) {
   axios
     .delete(`${BASE_URL}/users/${id}`, {
       method: "delete",
@@ -36,7 +47,7 @@ function deleteUser(id) {
     })
     .catch((error) => console.error(error));
 }
-function deleteNotice(id) {
+function deleteNotice(id: number) {
   axios
     .delete(`${BASE_URL}/notices/${id}`, {
       method: "delete"
@@ -46,7 +57,7 @@ function deleteNotice(id) {
     })
     .catch((error) => console.error(error));
 }
-function deleteSolicitation(id) {
+function deleteSolicitation(id: number) {
   axios
     .delete(`${BASE_URL}/solicitations/${id}`, {
       method: "delete",
@@ -56,7 +67,7 @@ function deleteSolicitation(id) {
     })
     .catch((error) => console.error(error));
 }
-function deleteAprovado(id) {
+function deleteAprovado(id: number) {
   axios
     .delete(`${BASE_URL}/aprovados/${id}`, {
       method: "delete"
@@ -72,6 +83,6 @@ export const api = {
   getNotices,
   deleteNotice,
   getSolicitations,
-  deleteSolicitation
- 
+  deleteSolicitation,
+  getAprovados
 }

@@ -143,7 +143,7 @@ export default function Services() {
                
                 <Image
                   className="w-24 h-24 self-center bg-white/10 rounded-full"
-                  resizeMode="auto"
+                  resizeMode="cover"
                   alt="picture-service"
                   source={item.picture}
                 />
@@ -152,7 +152,7 @@ export default function Services() {
           );
         }}
       />
-     
+
     </View>
   );
 }

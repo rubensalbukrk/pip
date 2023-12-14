@@ -6,7 +6,7 @@ import { UserContext } from "../../../contexts/UserContext";
 import { api } from "../../../api/api";
 import BackgroundTop from "../../../../assets/svgs/User-top-waves.svg";
 import BackgroundBottom from ".../../../assets/svgs/User-bottom-wave.svg";
-import { height, width } from "../../../utils/dimensions";
+import { width } from "../../../utils/dimensions";
 
 export default function ViewService({ route }) {
   const { logged } = useContext(UserContext);
@@ -21,7 +21,7 @@ export default function ViewService({ route }) {
       status: "Aguardando analise...",
     };
     axios
-      .post(`${api}/solicitations`, newSolicitation, {
+      .post(`${api.BASE_URL}/solicitations`, newSolicitation, {
         method: 'post',
       })
       .then((response) => {

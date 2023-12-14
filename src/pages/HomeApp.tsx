@@ -22,7 +22,6 @@ import Background from "../../assets/svgs/Homeapp-wave.svg";
 import { height, width } from "../utils/dimensions";
 import { LottieView } from "../utils/LottieView";
 
-
 export const HomeApp = () => {
   const {
     logged,
@@ -30,7 +29,7 @@ export const HomeApp = () => {
     refreshing,
     setRefreshing,
   } = useContext<any>(UserContext);
-  const { navigate } = useNavigation<any>();
+  const { navigate } = useNavigation();
   const countSolicitations = solicitations?.length;
 
   return (

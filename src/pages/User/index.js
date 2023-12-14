@@ -203,10 +203,9 @@ export const User = () => {
                         nome={item.nome}
                         cpf={item.cpf}
                         idade={item.idade}
+                        isAutist={item.isAutist}
                       />
                       </View>
-                      
-                   
                   );
                 })}
            </ScrollView>

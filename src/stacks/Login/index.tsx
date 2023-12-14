@@ -10,6 +10,7 @@ import Animated, {
   StretchInX,
   StretchOutX,
   Easing,
+  EasingFn,
   PinwheelIn,
   PinwheelOut,
   BounceInDown,
@@ -104,7 +105,6 @@ export const Login = () => {
             onChangeText={(pass) => setPassword(pass)}
             placeholderTextColor={"#bdbdbd"}
             selectionColor={"#9f9f9f"}
-            type={show ? "text" : "password"}
             secureTextEntry={true}
             placeholder="******"
           />
@@ -154,7 +154,7 @@ export const Login = () => {
                 Esqueci minha senha
                 </Text>
       <Animated.View
-        entering={BounceInDown.duration(1400).easing(Easing.bounce)}
+        entering={BounceInDown.duration(1400)}
       >
         <TouchableOpacity
           className="w-48 h-14 my-5 rounded-2xl items-center justify-center shadow-md shadow-black bg-gray-600"

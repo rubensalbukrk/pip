@@ -1,5 +1,5 @@
 export interface SolicitationsProps {
-    id: number
+    id?: number
     date: string
     nome: string
     cpf: string

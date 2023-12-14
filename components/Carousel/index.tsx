@@ -5,12 +5,10 @@ import { useNavigation } from "@react-navigation/native";
 import { width } from "../../src/utils/dimensions";
 import { useFetchData } from "../../src/hooks/useFetchData";
 import { api } from "../../src/api/api";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../src/stacks/mainStack";
 
 export const CarouselHome = () => {
   const {list, getData} = useFetchData(api.getNotices)
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigation = useNavigation();
 
   useEffect(() => {
     getData()

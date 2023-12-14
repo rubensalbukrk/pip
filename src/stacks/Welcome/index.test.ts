@@ -13,7 +13,8 @@ describe('Async test', () => {
             nome: 'Rubens',
             cpf: "111.222.333-12",
             email: "rubiinho@live.it",
-            idade: 23
+            idade: 23,
+            filhos: []
         }
        await AsyncStorage.setItem('token', JSON.stringify(user))
        expect(AsyncStorage.getItem).toBeTruthy

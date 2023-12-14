@@ -19,7 +19,7 @@ import { useFetchData } from "../../../../src/hooks/useFetchData";
 
 
 export default function NewNotice() {
-  const [dataNotice, setData] = useState({});
+  var [dataNotice, setData] = useState({});
   const {list, getData} = useFetchData(api.getNotices)
 
   useEffect(() => {
@@ -57,7 +57,7 @@ export default function NewNotice() {
         data={list}
         keyExtractor={(item) => item.id.toString()}
 
-        renderItem={({ item, index }) => {
+        renderItem={({item}) => {
           return (
             <View className="w-80 h-24 my-2 px-2 py-4 self-center justify-center rounded-xl bg-white/20 ">
                 <Text className="font-default text-lg text-white">

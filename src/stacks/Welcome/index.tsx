@@ -19,11 +19,14 @@ import BackgroundWave from "../../../assets/svgs/Welcome-wave.svg";
 import { width } from "../../utils/dimensions";
 import { LottieView } from "../../utils/LottieView";
 import { AuthContext } from "../../contexts/AuthContext";
+import { UserProps } from "../../interfaces/User";
+import data from "../../utils/dateNow";
 
 
 export default function Welcome() {
+  
   const {auth, setAuth} = useContext(AuthContext)    
-  const { setUsers, setLogged } = useContext(UserContext);
+  const { setUsers, setLogged } = useContext<any>(UserContext);
   const { navigate } = useNavigation();
   const [fogos, setFogos] = useState(false);
   const [button, setButton] = useState(false);
@@ -58,10 +61,11 @@ export default function Welcome() {
     try {
       AsyncStorage.getItem("token")
        .then((value) => {
-        const dataUser = JSON.parse(value);
-        setLogged(dataUser);
-        setAuth(true)
-        navigate("HomeApp")
+        const dataUser: UserProps = JSON.parse(value);
+        dataUser.cpf &&
+        dataUser && 
+        setLogged(dataUser) &&
+        setAuth(true) && navigate('HomeApp')
     });
     } catch (e) {
       navigate('Login')
@@ -73,7 +77,7 @@ export default function Welcome() {
       const response = await axios.get(`${api.BASE_URL}/users`, {
         method: 'get'
       });
-      const data = await response.data.users;
+      const data = await response.data.results;
       setUsers(data);
     } catch (error) {
       alert("Não houve respostas do servidor, tente novamente!");
@@ -115,7 +119,7 @@ export default function Welcome() {
       </Animated.View>
 
       <Animated.View
-        entering={BounceInDown.delay(1700).duration(2000).easing(Easing.circle)}
+        entering={BounceInDown.delay(1700).duration(2000)}
         exiting={ZoomOutDown.delay(1000)}
         layout={Layout}
         className="h-100 w-100 mt-3 rounded-full"
@@ -123,7 +127,7 @@ export default function Welcome() {
         <TouchableOpacity
         style={{zIndex: 3}}
           className="items-center justify-center"
-          onPress={() => setFogos(true) & setButton(true) & getUsers()}
+          onPress={() => [setFogos(true), setButton(true), getUsers()]}
         >
           <LottieView
             resizeMode="contain"

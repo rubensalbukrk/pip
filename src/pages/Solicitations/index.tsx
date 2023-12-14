@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from "react";
-import axios from "axios";
 import {
   View,
   Text,
@@ -8,68 +7,28 @@ import {
   RefreshControl,
 } from "react-native";
 import { FontAwesome, Octicons } from "@expo/vector-icons";
-import { api, deleteSolicitation } from "../../api/api";
+import { api } from "../../api/api";
 import UserAvatar from "../../../components/UserAvatar";
 import { UserContext } from "../../contexts/UserContext";
 import BackButton from "../../../components/BackButton";
 import BackgroundSolicitationUser from "../../../assets/svgs/Homeapp-wave.svg";
 import { height, width } from "../../utils/dimensions";
+import { useFetchData } from "../../hooks/useFetchData";
 
 export default function SolicitationsUser() {
-  const {
-    refreshing,
-    setRefreshing,
-    logged,
-    solicitations,
-    setSolicitations,
-    aprovados,
-    setAprovados,
-  } = useContext(UserContext);
+  const {list: solicitations, getData: getSolicitations} = useFetchData(api.getSolicitations)
+  const {list: aprovados, getData: getAprovados} = useFetchData(api.getAprovados)
+  const {logged} = useContext<any>(UserContext)
 
-const config = {
-  method: 'get'
-}
-
-  const getSolicitations = async () => {
-    try {
-      const response = await axios.get(`${api}/solicitations`, config);
-      const solicitations = await response.data.solicitations;
-      setSolicitations(solicitations);
-      setRefreshing(false);
-    } catch (error) {
-      alert("Houve um problema com o servidor, aguarde um momento!");
-    }
-  };
-  const getAprovados = async () => {
-    try {
-      const response = await axios.get(`${api}/aprovados`, config);
-      const aprovados = await response.data.aprovados;
-      setAprovados(aprovados);
-    } catch (error) {
-      alert("Houve um problema com o serviço, aguarde um momento!") &
-        navigate("HomeApp");
-    }
-  };
-  if (refreshing) {
-    getAprovados()
-    getSolicitations()
-  }
-  useEffect(() => (
+  useEffect(() => {
     getSolicitations(),
-    getAprovados()
-  ),[])
+    setTimeout(() => {
+      getAprovados()
+    },1500)
+  },[])
 
-  if (solicitations) {
-    var userSolicitations = solicitations.filter(
-      (item) => String(item.cpf) === String(logged.cpf)
-    );
-  }
-  if (aprovados) {
-      var userBeneficiets = aprovados.filter(
-    (item) => String(item.cpf) === String(logged.cpf)
-  )
-  }
-
+  var userSolicitations = solicitations?.filter((item) => String(item.cpf) === String(logged.cpf));
+  var userBeneficiets = aprovados?.filter((item) => String(item.cpf) === String(logged.cpf))
 
   return (
     <View className="w-full h-full items-center justify-center">
@@ -93,16 +52,9 @@ const config = {
       </View>
 
       <FlatList
-        refreshControl={
-          <RefreshControl
-          refreshing={refreshing}
-          onRefresh={() => setRefreshing(true)}
-          />
-        }
         className="w-80 h-28"
         data={userSolicitations}
         horizontal={false}
-        keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
           return (
             <View className="w-72 px-3 my-2 self-center items-start justify-start py-5 rounded-xl shadow-md shadow-black bg-gray-600">
@@ -117,7 +69,7 @@ const config = {
               </Text>
               <TouchableOpacity
                 className="w-8 h-8 items-center justify-center opacity-80 absolute right-1 top-0"
-                onPress={() => deleteSolicitation(item.id)}
+                onPress={() => api.deleteSolicitation(item.id)}
               >
                 <FontAwesome name="remove" size={32} color="white" />
               </TouchableOpacity>
@@ -137,10 +89,9 @@ const config = {
         className="w-80 h-28 "
         data={userBeneficiets}
         horizontal={false}
-        keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
           return (
-            <View className="w-72 my-4 px-2 self-center items-start justify-start py-5 rounded-xl shadow-md shadow-black bg-gray-600">
+            <View  className="w-72 my-4 px-2 self-center items-start justify-start py-5 rounded-xl shadow-md shadow-black bg-gray-600">
               <Text className="font-default text-md text-gray-800">
                 Serviço: {item.service}
               </Text>

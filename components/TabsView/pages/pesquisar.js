@@ -22,9 +22,6 @@ async function getUsers(){
   try {
     const response = await axios.get(`${api}/users`, {
     method: "get",
-    headers: new Headers({
-      "ngrok-skip-browser-warning": "69420",
-    }),
   })
     const data = await response.data.users;
     setUsers(data);

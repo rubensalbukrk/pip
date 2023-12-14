@@ -1,34 +1,62 @@
 import React from "react";
 import { View, Text } from "react-native";
+import { TextLarge } from "../TextLg/Text";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function MyParents(props) {
   return (
     <View
-    style={{elevation: 3, shadowColor: '#000'}}
-      className="w-48 h-30 mt-1 px-1 py-3 rounded-lg bg-gray-500"
+      style={{ elevation: 3, shadowColor: "#000" }}
+      className="w-48 h-30 mt-1 px-1 py-1 rounded-lg bg-gray-500"
       key={props.keyId}
     >
-      <Text className="font-default ml-2 text-md text-gray-700/70">Nome</Text>
-      <Text className="font-default px-4 text-md text-gray-900">
-        {props.name}
-      </Text>
+      <TextLarge
+            text="Nome"
+            className="ml-2 mt-1 text-xs text-zinc-700/70"
+          />
+          <TextLarge text={props.nome}
+          className="px-2 text-xs text-gray-800" />
+
       <View className="flex-row items-center justify-between">
         <View>
-          <Text className="font-default ml-2 mt-1 text-md text-gray-700/70">
-            CPF
-          </Text>
-          <Text className="font-default px-4 text-md text-gray-800">
-            {props.cpf}
-          </Text>
+          <TextLarge
+            text="CPF"
+            className="ml-2 mt-1 text-xs text-zinc-700/70"
+          />
+          <TextLarge text={props.cpf}
+          className="px-2 text-xs text-gray-800" />
         </View>
+
         <View className="mr-8">
-          <Text className="font-default ml-2 mt-1 text-md text-gray-700/70">Idade</Text>
-          <Text className="font-default mr-3 px-4 text-md text-gray-800">
-            {props.idade}
-          </Text>
+          <TextLarge
+            text={"Idade"}
+            className="ml-2 mt-1 text-xs text-zinc-700/70"
+          />
+          <TextLarge
+            text={props.idade}
+            className="px-2 text-xs text-gray-800"
+          />
         </View>
       </View>
-      <Text className="font-default ml-2 mt-2 text-md text-gray-700">Autista</Text>
+      <View className="flex-row my-1 items-center">
+          <TextLarge 
+          text={"Autista"} 
+          className="px-2 text-xs text-zinc-700/70"
+          />
+          {props.isAutist ? (
+            <MaterialCommunityIcons
+              name="check-circle"
+              size={14}
+              color={"green"}
+            />
+          ) : (
+            <MaterialCommunityIcons
+              name="close-circle"
+              size={14}
+              color={"white"}
+            />
+          )}
+        </View>
     </View>
   );
 }
