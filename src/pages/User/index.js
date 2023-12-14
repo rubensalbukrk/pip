@@ -198,7 +198,7 @@ export const User = () => {
               ? <Text className='font-default text-center self-center text-white text-xl'> </Text>
               : logged?.filhos?.map((item) => {
                   return (
-                      <View className="mx-3">
+                      <View key={item.id} className="mx-3">
                         <MyParents
                         nome={item.nome}
                         cpf={item.cpf}

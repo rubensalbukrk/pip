@@ -1,60 +1,15 @@
-import React, { useContext, useState, useEffect } from "react";
-import { View, Text, FlatList } from "react-native";
+import React, { useContext, useEffect } from "react";
+import { View, Text, FlatList, ListRenderItemInfo } from "react-native";
 import axios from "axios";
-
 import { UserContext } from "../../contexts/UserContext";
-import { TouchableOpacity, ScrollView, RefreshControl } from "react-native";
+import { TouchableOpacity, ScrollView } from "react-native";
 import { FontAwesome, FontAwesome5, Octicons } from "@expo/vector-icons";
 import BackButton from "../../../components/BackButton";
 import { api, deleteSolicitation, deleteAprovado } from "../../api/api";
 import { useNavigation } from "@react-navigation/native";
+import { SolicitationsProps } from "../../interfaces/Solicitations";
+import { AprovadosProps } from "../../interfaces/Aprovados";
 
-function ListSolicitations(props) {
-  const navigation = useNavigation();
-  return (
-      <View className="w-full self-center my-3 px-3 py-2 rounded-xl bg-white/20">
-        <Text className="font-default text-lg text-white">
-          Nome: {props.nome}
-        </Text>
-        <Text className="font-default text-lg text-white">
-          CPF: {props.cpf}
-        </Text>
-        <Text className="font-default text-lg text-white">
-          Serviço: {props.service}
-        </Text>
-        <Text className="font-default text-lg text-white">
-          STATUS: {props.status}
-        </Text>
-        <Text className="font-default text-lg text-white">
-          Data: {props.date}
-        </Text>
-        <TouchableOpacity
-          className="w-22 h-22 absolute top-3 right-3 opacity-80"
-          onPress={() => deleteSolicitation(props.id)}
-        >
-          <FontAwesome name="remove" size={36} color="white" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          className="w-22 h-22 absolute bottom-3 right-3 opacity-80"
-          onPress={() =>
-            navigation.navigate("SolicitationInfoUser", {
-              id: props.id,
-              nome: props.nome,
-              userInfo: props?.userInfo,
-              cpf: props.cpf,
-              service: props.service,
-              pasta: props.pasta,
-              status: props.status,
-              date: props.date,
-            })
-          }
-        >
-          <FontAwesome5 name="info-circle" size={36} color="white" />
-        </TouchableOpacity>
-      </View>
-
-  );
-}
 
 export default function PageCoordenador({ route }) {
   const {
@@ -66,10 +21,6 @@ export default function PageCoordenador({ route }) {
     setSolicitations,
   } = useContext<any>(UserContext);
 
-  const config = {
-    method: "get",
-  };
-
 
   const getAprovados = () => {
     axios
@@ -77,8 +28,8 @@ export default function PageCoordenador({ route }) {
         method: "get",
       })
       .then((response) => {
-        const aprovados = response.data.results.aprovados;
-        setAprovados(aprovados);
+        const aprovados2 = response.data.results.aprovados;
+        setAprovados(aprovados2);
       })
 
       .catch((error) => console.log(error));
@@ -89,8 +40,8 @@ export default function PageCoordenador({ route }) {
         method: "get",
       })
       .then((response) => {
-        const solicitations = response.data.results.solicitations;
-        setSolicitations(solicitations)
+        const solicitations2 = response.data.results.solicitations;
+        setSolicitations(solicitations2)
 
       })
       .catch((error) => console.log(error));
@@ -100,6 +51,53 @@ export default function PageCoordenador({ route }) {
     getSolicitations(),
     getAprovados()
     ), []);
+
+  function ItemSolicitation(props: SolicitationsProps) {
+      const navigation = useNavigation();
+      return (
+          <View className="w-full self-center my-3 px-3 py-2 rounded-xl bg-white/20">
+            <Text className="font-default text-lg text-white">
+              Nome: {props.nome}
+            </Text>
+            <Text className="font-default text-lg text-white">
+              CPF: {props.cpf}
+            </Text>
+            <Text className="font-default text-lg text-white">
+              Serviço: {props.service}
+            </Text>
+            <Text className="font-default text-lg text-white">
+              STATUS: {props.status}
+            </Text>
+            <Text className="font-default text-lg text-white">
+              Data: {props.date}
+            </Text>
+            <TouchableOpacity
+              className="w-22 h-22 absolute top-3 right-3 opacity-80"
+              onPress={() => deleteSolicitation(props.id)}
+            >
+              <FontAwesome name="remove" size={36} color="white" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              className="w-22 h-22 absolute bottom-3 right-3 opacity-80"
+              onPress={() =>
+                navigation.navigate("SolicitationInfoUser", {
+                  id: props.id,
+                  nome: props.nome,
+                  userInfo: props.userInfo,
+                  cpf: props.cpf,
+                  pasta: props.pasta,
+                  service: props.service,
+                  status: props.status,
+                  date: props.date,
+                })
+              }
+            >
+              <FontAwesome5 name="info-circle" size={36} color="white" />
+            </TouchableOpacity>
+          </View>
+    
+      );
+  }
 
   if (solicitations) {
     var autistSolicitations = solicitations?.filter(
@@ -126,17 +124,18 @@ export default function PageCoordenador({ route }) {
     var IsCidadania = () => {
       return (
         <View>
-          {cidadaniaSolicitations?.map((item) => {
-            const { service, nome, status, date } = item;
+          {cidadaniaSolicitations?.map((item: SolicitationsProps) => {
+            const { service, pasta, nome, status, date, cpf, id, userInfo } = item;
             return (
-              <ListSolicitations
-                id={item.id}
-                nome={item.nome}
-                cpf={item.cpf}
-                service={item.service}
-                status={item.status}
-                date={item.date}
-                userInfo={item.userInfo}
+              <ItemSolicitation
+                id={id}
+                nome={nome}
+                cpf={cpf}
+                service={service}
+                status={status}
+                date={date}
+                userInfo={userInfo}
+                pasta={pasta}
               />
             );
           })}
@@ -146,21 +145,18 @@ export default function PageCoordenador({ route }) {
     var IsAutist = () => {
       return (
         <View>
-          {autistSolicitations?.map((item) => {
-            const { service, nome, status, date, cpf, id } = item;
-            let userInfo = users.find(
-              (user) => String(user.cpf) === String(item.cpf)
-            );
+          {autistSolicitations?.map((item: SolicitationsProps) => {
+            const { id, date, cpf, nome, pasta, service, status, userInfo } = item;
             return (
-              <ListSolicitations
-                id={item.id}
-                nome={item.nome}
-                cpf={item.cpf}
-                service={item.service}
-                status={item.status}
-                date={item.date}
+              <ItemSolicitation
+                id={id}
+                nome={nome}
+                cpf={cpf}
+                service={service}
+                status={status}
+                date={date}
                 userInfo={userInfo}
-                pasta={item.pasta}
+                pasta={pasta}
               />
             );
           })}
@@ -170,17 +166,18 @@ export default function PageCoordenador({ route }) {
     var IsMulher = () => {
       return (
         <View>
-          {mulherSolicitations?.map((item) => {
-            const { service, nome, status, date } = item;
+          {mulherSolicitations?.map((item: SolicitationsProps) => {
+            const { service, pasta, nome, status, date, cpf, id, userInfo } = item;
             return (
-              <ListSolicitations
-                id={item.id}
-                nome={item.nome}
-                cpf={item.cpf}
-                service={item.service}
-                status={item.status}
-                date={item.date}
-                userInfo={item.userInfo}
+              <ItemSolicitation
+                id={id}
+                nome={nome}
+                cpf={cpf}
+                service={service}
+                status={status}
+                date={date}
+                userInfo={userInfo}
+                pasta={pasta}
               />
             );
           })}
@@ -190,17 +187,18 @@ export default function PageCoordenador({ route }) {
     var IsSaude = () => {
       return (
         <View>
-          {saudeSolicitations?.map((item) => {
-            const { service, nome, status, date } = item;
+          {saudeSolicitations?.map((item: SolicitationsProps) => {
+            const { service, pasta, nome, status, date, cpf, id, userInfo } = item;
             return (
-              <ListSolicitations
-                id={item.id}
-                nome={item.nome}
-                cpf={item.cpf}
-                service={item.service}
-                status={item.status}
-                date={item.date}
-                userInfo={item.userInfo}
+              <ItemSolicitation
+                id={id}
+                nome={nome}
+                cpf={cpf}
+                service={service}
+                status={status}
+                date={date}
+                userInfo={userInfo}
+                pasta={pasta}
               />
             );
           })}
@@ -210,17 +208,18 @@ export default function PageCoordenador({ route }) {
     var IsProtagonista = () => {
       return (
         <View>
-          {protagonistaSolicitations?.map((item) => {
-            const { service, nome, status, date } = item;
+          {protagonistaSolicitations?.map((item: SolicitationsProps) => {
+            const { service, pasta, nome, status, date, cpf, id, userInfo } = item;
             return (
-              <ListSolicitations
-                id={item.id}
-                nome={item.nome}
-                cpf={item.cpf}
-                service={item.service}
-                status={item.status}
-                date={item.date}
-                userInfo={item.userInfo}
+              <ItemSolicitation
+                id={id}
+                nome={nome}
+                cpf={cpf}
+                service={service}
+                status={status}
+                date={date}
+                userInfo={userInfo}
+                pasta={pasta}
               />
             );
           })}
@@ -230,17 +229,18 @@ export default function PageCoordenador({ route }) {
     var IsAlimentar = () => {
       return (
         <View>
-          {alimentarSolicitations?.map((item) => {
-            const { service, nome, status, date, cpf, id } = item;
+          {alimentarSolicitations?.map((item: SolicitationsProps) => {
+            const { service, pasta, nome, status, date, cpf, id, userInfo } = item;
             return (
-              <ListSolicitations
-                id={item.id}
-                nome={item.nome}
-                cpf={item.cpf}
-                service={item.service}
-                status={item.status}
-                date={item.date}
-                userInfo={item.userInfo}
+              <ItemSolicitation
+                id={id}
+                nome={nome}
+                cpf={cpf}
+                service={service}
+                status={status}
+                date={date}
+                userInfo={userInfo}
+                pasta={pasta}
               />
             );
           })}
@@ -250,17 +250,18 @@ export default function PageCoordenador({ route }) {
     var IsPasse = () => {
       return (
         <View>
-          {passeSolicitations?.map((item) => {
-            const { service, nome, status, date } = item;
+          {passeSolicitations?.map((item: SolicitationsProps) => {
+            const { service, pasta, nome, status, date, cpf, id, userInfo } = item;
             return (
-              <ListSolicitations
-                id={item.id}
-                nome={item.nome}
-                cpf={item.cpf}
-                service={item.service}
-                status={item.status}
-                date={item.date}
-                userInfo={item.userInfo}
+              <ItemSolicitation
+                id={id}
+                nome={nome}
+                cpf={cpf}
+                service={service}
+                status={status}
+                date={date}
+                userInfo={userInfo}
+                pasta={pasta}
               />
             );
           })}
@@ -271,9 +272,7 @@ export default function PageCoordenador({ route }) {
 
   return (
     <View className="flex-1 w-full bg-zinc-500">
-      <ScrollView
-        horizontal={false}
-      >
+ 
         <View className="mt-5">
           <View className="absolute top-2 left-3">
             <BackButton />
@@ -319,10 +318,7 @@ export default function PageCoordenador({ route }) {
               className="w-full h-80 my-1 rounded-lg"
               data={aprovados}
               horizontal={false}
-              renderItem={({ item, index }) => {
-                let userInfo = users.find(
-                  (user) => String(user?.cpf) === String(item?.cpf)
-                );
+              renderItem={({ item }) => {
                 return (
                   <View
                     className="w-full h-20 my-1 items-center justify-center"
@@ -330,16 +326,16 @@ export default function PageCoordenador({ route }) {
                     <View className="flex-row w-full h-20">
                       <View className="w-full py-3 px-2 self-center bg-white/10 rounded-xl">
                         <Text className="font-default text-lg text-white">
-                          Nome: {item?.nome}
+                          Nome: {item.nome}
                         </Text>
                         <Text className="font-default text-lg text-white">
-                          Serviço: {item?.service}
+                          Serviço: {item.service}
                         </Text>
                         <Text className="font-default text-lg text-white">
-                          STATUS: {item?.status}
+                          STATUS: {item.status}
                         </Text>
                         <Text className="font-default text-lg text-white">
-                          Data: {item?.date}
+                          Data: {item.date}
                         </Text>
                         <TouchableOpacity
                           style={{
@@ -362,7 +358,7 @@ export default function PageCoordenador({ route }) {
             />
           </View>
         </View>
-      </ScrollView>
+
     </View>
   );
 }

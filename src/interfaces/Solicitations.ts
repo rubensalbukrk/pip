@@ -1,8 +1,7 @@
-export interface SolicitationsProps {
-    id?: number
-    date: string
-    nome: string
-    cpf: string
-    service: string
-    status: string | undefined
+import { AprovadosProps } from "./Aprovados"
+
+export interface SolicitationsProps extends AprovadosProps {
+    id: number
+    pasta: string
+    userInfo?: object
 }

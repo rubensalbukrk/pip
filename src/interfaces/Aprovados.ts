@@ -1,6 +1,8 @@
-import { SolicitationsProps } from "./Solicitations";
-
-export interface AprovadosProps extends SolicitationsProps {
-    pasta: string
-    userInfo: object
+export interface AprovadosProps {
+    id: number
+    date: string
+    nome: string
+    cpf: string
+    service: string
+    status: string | null
 }
