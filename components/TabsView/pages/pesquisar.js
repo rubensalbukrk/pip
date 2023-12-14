@@ -20,10 +20,10 @@ export default function TabSearch() {
 
 async function getUsers(){
   try {
-    const response = await axios.get(`${api}/users`, {
+    const response = await axios.get(`${api.BASE_URL}/users`, {
     method: "get",
   })
-    const data = await response.data.users;
+    const data = await response.data.results;
     setUsers(data);
     setFilteredData(data);
     setMasterData(data);
@@ -35,7 +35,7 @@ async function getUsers(){
 
 const searchFilter = (text) => {
     if (text) {
-      const newData = masterData.filter(function (item) {
+      const newData = masterData?.filter(function (item) {
         if (item.nome) {
           const itemData = item.nome.toUpperCase();
           const textData = text.toUpperCase();
@@ -111,7 +111,7 @@ const searchFilter = (text) => {
                       idade: item.idade,
                       filhos: item.filhos,
                       address: item.address,
-                      bairro: item.bairro,
+                      bairro: item?.bairro,
                       phone: item.phone,
                       cpf: item.cpf,
                       nis: item.nis,

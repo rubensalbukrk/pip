@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { View, Text, FlatList, ScrollView, } from "react-native";
-
 import { UserContext } from "../../../src/contexts/UserContext";
 
 import PieChartWithDynamicSlices from "../../Graphics/DinamicGraphic";
@@ -8,27 +7,27 @@ import PieChartWithDynamicSlices from "../../Graphics/DinamicGraphic";
 export default function TabCadastros() {
   const { users } = useContext(UserContext);
   let tibiri = users?.filter((item) => {
-    if (item.bairro === String("Tibiri")) {
+    if (item?.bairro === String("Tibiri")) {
       return item;
     }
   });
   let santaRita = users?.filter((item) => {
-    if (item.bairro === String("Santa Rita")) {
+    if (item?.bairro === String("Santa Rita")) {
       return item;
     }
   });
   let marcosMoura = users?.filter((item) => {
-    if (item.bairro === "Marcos Moura") {
+    if (item?.bairro === "Marcos Moura") {
       return item;
     }
   });
   let varzeaNova = users?.filter((item) => {
-    if (item.bairro === "Varzea Nova") {
+    if (item?.bairro === "Varzea Nova") {
       return item;
     }
   });
   let cruzEspiritoSanto = users?.filter((item) => {
-    if (item.bairro === "Cruz do Espirito Santo") {
+    if (item?.bairro === "Cruz do Espirito Santo") {
       return item;
     }
   });

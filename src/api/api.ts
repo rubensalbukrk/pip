@@ -57,7 +57,7 @@ function deleteNotice(id: number) {
     })
     .catch((error) => console.error(error));
 }
-function deleteSolicitation(id: number) {
+export function deleteSolicitation(id: number) {
   axios
     .delete(`${BASE_URL}/solicitations/${id}`, {
       method: "delete",
@@ -67,7 +67,7 @@ function deleteSolicitation(id: number) {
     })
     .catch((error) => console.error(error));
 }
-function deleteAprovado(id: number) {
+export function deleteAprovado(id: number) {
   axios
     .delete(`${BASE_URL}/aprovados/${id}`, {
       method: "delete"

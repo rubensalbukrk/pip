@@ -39,7 +39,8 @@ function ListSolicitations(props) {
           onPress={() =>
             navigation.navigate("SolicitationInfoUser", {
               id: props.id,
-              userInfo: props.userInfo,
+              nome: props.nome,
+              userInfo: props?.userInfo,
               cpf: props.cpf,
               service: props.service,
               pasta: props.pasta,
@@ -59,27 +60,24 @@ export default function PageCoordenador({ route }) {
   const {
     solicitations,
     users,
-    refreshing,
-    setRefreshing,
     logged,
     aprovados,
     setAprovados,
     setSolicitations,
-  } = useContext(UserContext);
+  } = useContext<any>(UserContext);
 
   const config = {
     method: "get",
   };
 
-  useEffect(() => (getSolicitations(), getAprovados()), []);
 
   const getAprovados = () => {
     axios
-      .get(`${api}/aprovados`, {
+      .get(`${api.BASE_URL}/aprovados`, {
         method: "get",
       })
       .then((response) => {
-        const aprovados = response.data.aprovados;
+        const aprovados = response.data.results.aprovados;
         setAprovados(aprovados);
       })
 
@@ -87,19 +85,21 @@ export default function PageCoordenador({ route }) {
   };
   const getSolicitations = () => {
     axios
-      .get(`${api}/solicitations`, {
+      .get(`${api.BASE_URL}/solicitations`, {
         method: "get",
       })
       .then((response) => {
-        const solicitations = response.data.solicitations;
-        setSolicitations(solicitations);
-        setRefreshing(false);
+        const solicitations = response.data.results.solicitations;
+        setSolicitations(solicitations)
+
       })
       .catch((error) => console.log(error));
-  };
-  if (refreshing) {
-    getAprovados(), getSolicitations();
-  }
+  }; 
+  
+  useEffect(() => (
+    getSolicitations(),
+    getAprovados()
+    ), []);
 
   if (solicitations) {
     var autistSolicitations = solicitations?.filter(
@@ -159,7 +159,8 @@ export default function PageCoordenador({ route }) {
                 service={item.service}
                 status={item.status}
                 date={item.date}
-                userInfo={item.userInfo}
+                userInfo={userInfo}
+                pasta={item.pasta}
               />
             );
           })}
@@ -271,12 +272,6 @@ export default function PageCoordenador({ route }) {
   return (
     <View className="flex-1 w-full bg-zinc-500">
       <ScrollView
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={() => setRefreshing(true)}
-          />
-        }
         horizontal={false}
       >
         <View className="mt-5">
@@ -324,14 +319,12 @@ export default function PageCoordenador({ route }) {
               className="w-full h-80 my-1 rounded-lg"
               data={aprovados}
               horizontal={false}
-              keyExtractor={(item) => item.date}
               renderItem={({ item, index }) => {
                 let userInfo = users.find(
                   (user) => String(user?.cpf) === String(item?.cpf)
                 );
                 return (
                   <View
-                    key={`id-${index}`}
                     className="w-full h-20 my-1 items-center justify-center"
                   >
                     <View className="flex-row w-full h-20">

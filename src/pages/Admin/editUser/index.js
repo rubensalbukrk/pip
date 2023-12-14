@@ -3,20 +3,17 @@ import axios from "axios";
 import { api } from "../../../api/api";
 import {
   View,
-  Image,
   Text,
   TextInput,
   TouchableOpacity,
   Switch,
   ScrollView,
-  FlatList,
   Alert,
 } from "react-native";
 import BackButton from "../../../../components/BackButton";
-import InputInfoUser from "../../../../components/UserLayout/inputUser";
-import { Feather } from "@expo/vector-icons";
+import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import data from "../../../utils/dateNow";
+import { TextLarge } from "../../../../components/TextLg/Text";
 
 export default function EditUser({ route }) {
   const [updateList, setUpdateList] = useState(false);
@@ -49,7 +46,7 @@ export default function EditUser({ route }) {
   const [address, setAddress] = useState(route?.params?.address);
   const [cpf, setCpf] = useState(route?.params?.cpf);
   const [nis, setNis] = useState(route?.params?.nis);
-  const [dataFilho, setDataFilho] = React.useState({});
+  const [dataFilho, setDataFilho] = useState({});
   const [filhos, setFilhos] = useState(route?.params?.filhos);
   const [phone, setPhone] = useState(route?.params?.phone);
   const [email, setEmail] = useState(route?.params?.email);
@@ -85,7 +82,7 @@ export default function EditUser({ route }) {
 
   function updateUser() {
     axios
-      .put(`${api}/users/${route.params.id}`, UserUpdate, {
+      .put(`${api.BASE_URL}/users/${route.params.id}`, UserUpdate, {
         method: "put",
       })
       .then(() => {
@@ -96,44 +93,50 @@ export default function EditUser({ route }) {
   const UserFilhos = () => {
     try {
       return (
-        <View className="flex-1 w-full">
-          <FlatList
-            refreshing={updateList}
-            keyExtractor={(item) => item?.cpf}
-            data={filhos}
-            renderItem={({ item, index }) => {
+        <View className="w-full">
+          {filhos &&
+            filhos.map((item, index) => {
               return (
-                <View className="w-full">
-                  <View className="flex-1 w-80 py-3 px-3 my-2 rounded-lg bg-white/10">
-                    <Text className="font-default text-lg text-white">
-                      Nome: {item?.nome}
-                    </Text>
-                    <Text className="font-default text-lg text-white">
-                      CPF: {item?.cpf}
-                    </Text>
-                    <Text className="font-default text-lg text-white">
-                      Idade: {item?.idade}
-                    </Text>
+                <View
+                  key={index}
+                  className="w-80 py-3 px-3 my-2 rounded-2xl bg-white/20"
+                >
+                  <TextLarge text={`Nome: ${item.nome}`} />
+                  <TextLarge text={`CPF: ${item.cpf}`} />
+                  <TextLarge text={`Idade: ${item.idade}`} />
+                  <View className="w-full flex-row gap-x-2 items-center">
+                    <TextLarge text={"Autista"} />
+                    {item.isAutist ? (
+                      <MaterialCommunityIcons
+                        name="check-circle"
+                        size={16}
+                        color={"green"}
+                      />
+                    ) : (
+                      <MaterialCommunityIcons
+                        name="close-circle"
+                        size={16}
+                        color={"white"}
+                      />
+                    )}
                   </View>
 
                   <TouchableOpacity
+                    className="w-10 h-10 opacity-60 absolute bottom-0 right-0"
                     onPress={() => {
                       filhos.splice(index, 1);
                       setUpdateList((previousState) => !previousState);
                     }}
-                    className="w-10 h-10 absolute bottom-3 right-8"
                   >
                     <Feather name="user-minus" size={32} color="white" />
                   </TouchableOpacity>
                 </View>
               );
-            }}
-          />
+            })}
         </View>
       );
     } catch (error) {
-      alert("Dados de usuário não encontrado!");
-      navigation.goBack();
+      alert("Não tem filhos");
     }
   };
 
@@ -143,12 +146,19 @@ export default function EditUser({ route }) {
         nome: dataFilho.nome,
         idade: dataFilho.idade,
         cpf: dataFilho.cpf,
+        isAutist: dataFilho.isAutist
       });
       alert("Adicionado");
     } catch (error) {
       alert("Dados incorretos, tente novamente");
     }
   }
+  const toggleFilhoAutista = () => {
+    setDataFilho(({ isAutist: previus }) => ({
+      ...dataFilho,
+      isAutist: !previus,
+    }));
+  };
 
   const toggleEstagio = () => {
     setEstagiario((previousState) => !previousState);
@@ -188,7 +198,7 @@ export default function EditUser({ route }) {
           <BackButton />
         </View>
 
-        <Text className="font-default text-start mt-14 text-2xl text-white">
+        <Text className="w-full font-default px-3 text-start mt-14 text-2xl text-white">
           ALTERAR DADOS
         </Text>
       </View>
@@ -411,35 +421,48 @@ export default function EditUser({ route }) {
               {filhos?.length === 0 ? "" : <UserFilhos />}
             </View>
 
-            <View className="w-52 rounded-xl gap-1 mb-5 px-3 py-2 bg-white/10">
-              <Text className="font-default font-bold text-white">Nome</Text>
+            <View className="w-64 rounded-xl my-5 py-3 px-2 bg-white/20">
+              <TextLarge text="Nome" />
               <TextInput
-                className="font-default text-white px-2 rounded-lg bg-white/10 border-white/20"
+                className="w-full h-10 px-2 mb-1 font-default text-start text-white text-lg rounded-2xl bg-white/10 border-white/20"
                 onChangeText={(value) =>
                   setDataFilho({ ...dataFilho, nome: value })
                 }
               />
-              <Text className="font-default font-bold text-white">Idade</Text>
+
+              <TextLarge text="CPF" />
               <TextInput
-                className="font-default text-white px-2 rounded-lg bg-white/10 border-white/20"
-                onChangeText={(value) =>
-                  setDataFilho({ ...dataFilho, idade: value })
-                }
-              />
-              <Text className="font-default font-bold text-white">CPF</Text>
-              <TextInput
-                className="font-default text-white px-2 rounded-lg mb-2 bg-white/10 border-white/20"
+                className="w-full h-10 px-2 mb-1 font-default text-start text-white text-lg rounded-2xl bg-white/10 border-white/9ss0"
                 onChangeText={(value) =>
                   setDataFilho({ ...dataFilho, cpf: value })
                 }
               />
+
+              <View className="flex-row w-full items-center justify-between">
+                <View className="mb-3">
+                  <TextLarge text="Idade" />
+                  <TextInput
+                    className="w-14 h-10 px-2 font-default text-center text-white text-lg rounded-2xl bg-white/10 border-white/20"
+                    keyboardType="number-pad"
+                    onChangeText={(value) =>
+                      setDataFilho({ ...dataFilho, idade: value })
+                    }
+                  />
+                </View>
+                <View className="items-center px-2">
+                  <TextLarge text="Autista" />
+                  <Switch
+                    value={dataFilho.isAutist}
+                    trackColor={{ false: "#9f9f9f", true: "#767590" }}
+                    onValueChange={toggleFilhoAutista}
+                  />
+                </View>
+              </View>
               <TouchableOpacity
-                className="w-28 h-10 my-2 mt-2 items-center justify-center rounded-lg bg-zinc-600"
+                className="w-28 h-11 top-1 justify-center items-center rounded-lg bg-white/30"
                 onPress={() => addFilhos()}
               >
-                <Text className="font-default text-white text-md">
-                  Adicionar
-                </Text>
+                <TextLarge text="Adicionar" />
               </TouchableOpacity>
             </View>
           </View>

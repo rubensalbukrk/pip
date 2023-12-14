@@ -9,15 +9,16 @@ import Sobre from "../pages/Sobre";
 import NoticeView from "../../components/ViewNotices";
 
 import Admin from "../pages/Admin";
+import PageCoordenador from "../pages/Coordenador";
 import EditUser from "../pages/Admin/editUser";
 import NewNotice from "../../components/TabsView/pages/notices";
 import Solicitation from "../../components/TabsView/pages/solicitations";
 import Services from "../pages/Services";
 import ViewService from "../pages/Services/ViewService";
 import SolicitationInfoUser from "../../components/TabsView/pages/solicitations/userSolicitation";
-import PageCoordenador from '../pages/Coordenador'
 import SolicitationsUser from "../pages/Solicitations";
 import { PopMenu } from "../../components/PopMenu/popMenu";
+
 
 declare global {
   namespace ReactNavigation {

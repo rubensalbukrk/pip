@@ -22,17 +22,17 @@ import { UserContext } from '../../src/contexts/UserContext';
   render() {
 
     const {users} = this.context
-    let voluntarios = users.filter((item) => {
+    let voluntarios = users?.filter((item) => {
       if (item.isVolt == true) {
         return item;
       }
     });
-    let autistas = users.filter((item) => {
+    let autistas = users?.filter((item) => {
       if (item.isAutist == true) {
         return item;
       }
     });
-    let coordenadores = users.filter((item) => {
+    let coordenadores = users?.filter((item) => {
       if (item.isCoordAutist == true) {
         return item;
       }
@@ -56,10 +56,10 @@ import { UserContext } from '../../src/contexts/UserContext';
       }
     });
     
-    let voluntariosCount = voluntarios.length;
-    let pessoasCount = users.length
-    let autistasCount = autistas.length;
-    let coordenadoresCount = coordenadores.length;
+    let voluntariosCount = voluntarios?.length;
+    let pessoasCount = users?.length
+    let autistasCount = autistas?.length;
+    let coordenadoresCount = coordenadores?.length;
 
     const { labelWidth, selectedSlice } = this.state;
     const { label, value } = selectedSlice;

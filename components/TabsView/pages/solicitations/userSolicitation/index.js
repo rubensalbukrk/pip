@@ -27,7 +27,7 @@ export default function SolicitationInfoUser({ route }) {
       status: status,
     };
     axios
-      .post(`${api}/aprovados`, userApproved, {
+      .post(`${api.BASE_URL}/aprovados`, userApproved, {
         method: 'POST'
       })
       .then(deleteSolicitation(route?.params?.id))
@@ -37,7 +37,7 @@ export default function SolicitationInfoUser({ route }) {
       .catch((error) => console.error(error));
   };
   const handleCancelSolicitation = (id) => {
-    axios.delete(`${api}/solicitations/${id}`);
+    axios.delete(`${api.BASE_URL}/solicitations/${id}`);
   };
   
   async function handleUpdateStatus() {
@@ -45,7 +45,7 @@ export default function SolicitationInfoUser({ route }) {
       let updateStatus = {
         status: status,
       };
-      const response = await axios.put(`${api}/solicitations/${route?.params?.id}`, updateStatus, {
+      const response = await axios.put(`${api.BASE_URL}/solicitations/${route?.params?.id}`, updateStatus, {
         method:  'PUT'
       });
       const message = await response.data
