@@ -75,7 +75,9 @@ export const User = () => {
       <View className="w-full h-44 items-center justify-between">
 
         <View className="flex-row w-full h-14">
-        <TopBackground width={width} style={{zIndex: 0, position: 'absolute', top: -5}} />
+        <TopBackground 
+          width={width} 
+          style={{zIndex: 0, position: 'absolute', top: -5}} />
           <View
             className="flex-row w-full h-full top-8 absolute items-center justify-between"
             style={{ zIndex: 2 }}

@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useEffect, useState } from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import Animated, {
   BounceInDown,
   Easing,
@@ -8,32 +8,27 @@ import Animated, {
   PinwheelOut,
   ZoomOutDown,
   ZoomInEasyUp,
-  Layout
+  Layout,
 } from "react-native-reanimated";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../contexts/UserContext";
 import { api } from "../../api/api";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import BackgroundWave from "../../../assets/svgs/Welcome-wave.svg";
-import { width } from "../../utils/dimensions";
+import { height, width } from "../../utils/dimensions";
 import { LottieView } from "../../utils/LottieView";
 import { AuthContext } from "../../contexts/AuthContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { UserProps } from "../../interfaces/User";
 
 export default function Welcome() {
-  
-  const {auth, setAuth} = useContext(AuthContext)    
+  const { auth, setAuth } = useContext(AuthContext);
   const { setUsers, setLogged } = useContext<any>(UserContext);
   const { navigate } = useNavigation();
   const [fogos, setFogos] = useState(false);
   const [button, setButton] = useState(false);
   const animation = useRef(null);
   const animationButton = useRef(null);
-
-  useEffect(() => {
-    getMyLogin();
-  }, []);
 
   useEffect(() => {
     if (fogos) {
@@ -51,26 +46,31 @@ export default function Welcome() {
     if (button) {
       animationButton.current?.play(0, 57);
     } else {
-      animationButton.current?.pause()
+      animationButton.current?.pause();
     }
   }, [button]);
 
-  function getMyLogin() {
+  async function getMyLogin() {
     try {
-      AsyncStorage.getItem("token")
-       .then((value) => {
-        const dataUser: UserProps = JSON.parse(value);
-        dataUser ??  [setLogged(dataUser) && setAuth(true) && navigate('HomeApp')]
+      const token = await AsyncStorage.getItem("token").then((value) => {
+        const user: UserProps = JSON.parse(value);
+        setLogged(user);
+        setAuth(true)
+        navigate('HomeApp')
       })
     } catch (e) {
-      navigate('Login')
+      alert("Falha ao obter usuário salvo!");
     }
   }
+
+  useEffect(() => {
+    getMyLogin();
+  }, []);
 
   const getUsers = async () => {
     try {
       const response = await axios.get(`${api.BASE_URL}/users`, {
-        method: 'get'
+        method: "get",
       });
       const data = await response.data.results;
       setUsers(data);
@@ -81,7 +81,7 @@ export default function Welcome() {
 
   return (
     <View className="flex-1 w-full items-center bg-gray-100">
-      <BackgroundWave style={{ position: "absolute" }} width={width} />
+      <BackgroundWave style={{ position: "absolute" }} width={width} height={height + 50} />
       <Animated.Image
         entering={PinwheelIn.duration(2000).easing(Easing.bounce)}
         exiting={PinwheelOut}
@@ -120,7 +120,7 @@ export default function Welcome() {
         className="h-100 w-100 mt-3 rounded-full"
       >
         <TouchableOpacity
-        style={{zIndex: 3}}
+          style={{ zIndex: 3 }}
           className="items-center justify-center"
           onPress={() => [setFogos(true), setButton(true), getUsers()]}
         >
@@ -142,7 +142,13 @@ export default function Welcome() {
       </Animated.View>
 
       <LottieView
-        style={{zIndex:1, position: "absolute", bottom: 0, width: "100%", height: 150 }}
+        style={{
+          zIndex: 1,
+          position: "absolute",
+          bottom: 0,
+          width: "100%",
+          height: 150,
+        }}
         duration={1600}
         ref={animation}
         source={require("../../../assets/animations/fogos-animation.json")}

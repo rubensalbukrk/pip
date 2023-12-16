@@ -8,7 +8,7 @@ export default function MyParents(props) {
     <View
       style={{ elevation: 3, shadowColor: "#000" }}
       className="w-48 h-30 mt-1 px-1 py-1 rounded-lg bg-gray-500"
-      key={props.keyId}
+      key={props.id}
     >
       <TextLarge
             text="Nome"

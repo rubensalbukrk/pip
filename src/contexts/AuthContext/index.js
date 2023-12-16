@@ -1,7 +1,7 @@
 import React, { createContext, useState, useContext, ReactNode } from "react";
 import { UserContext } from "../UserContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
+
 
 export const AuthContext = createContext();
 
@@ -11,10 +11,10 @@ export default function AuthProvider({ children }) {
   const [isLoading, setIsLoading] = useState(false)
   const [signingAuto, setSigningAuto] = useState(false);
 
-  function saveMyLogin(user) {
+  const saveMyLogin = async(user) => {
     if (user) {
-      let data = JSON.stringify(user);
-      AsyncStorage.setItem("token", data);
+      const data = JSON.stringify(user);
+      await AsyncStorage.setItem("token", data);
     } else {
       alert("Houve um problema ao salvar o usuário!");
     }

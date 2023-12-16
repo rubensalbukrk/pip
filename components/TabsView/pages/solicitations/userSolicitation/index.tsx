@@ -12,7 +12,7 @@ import InputInfoUser from "../../../../UserLayout/inputUser";
 import MyParents from "../../../../UserLayout/userParents";
 import { FontAwesome } from "@expo/vector-icons";
 import { api, deleteSolicitation } from "../../../../../src/api/api";
-import { TextLarge } from "../../../../TextLg/Text";
+import { TextLarge, TextMedium } from "../../../../TextLg/Text";
 
 export default function SolicitationInfoUser({ route }) {
   const [status, setStatus] = useState<string>();
@@ -30,7 +30,8 @@ export default function SolicitationInfoUser({ route }) {
       .post(`${api.BASE_URL}/aprovados`, userApproved, {
         method: "POST",
       })
-      .then((response) => deleteSolicitation(route?.params?.id))
+      .then(response => alert(`${response.data}`))
+      .then(response => deleteSolicitation(route?.params?.id))
       .catch((error) => console.error(error));
   };
   const handleCancelSolicitation = (id) => {
@@ -57,10 +58,11 @@ export default function SolicitationInfoUser({ route }) {
   }
   return (
     <View className="flex-1 w-full h-full bg-zinc-500">
-      <View className="flex-row bg-zinc-500 mt-4 my-5">
+      <View className="flex-row bg-zinc-500 mt-8 px-2 pt-4 my-5 items-center">
+        <TextMedium text="Informações de Solicitação" />
         <BackButton />
-        <TextLarge text="Informações de Solicitação" />
       </View>
+
 
       <ScrollView className="flex-1 w-full rounded-lg bg-zinc-300/30">
         <View className="w-full mx-3 my-2">
@@ -112,6 +114,7 @@ export default function SolicitationInfoUser({ route }) {
             : route?.params?.userInfo?.filhos?.map((item) => {
                 return (
                   <MyParents
+                    id={item.id}
                     nome={item?.nome}
                     cpf={item?.cpf}
                     idade={item?.idade}

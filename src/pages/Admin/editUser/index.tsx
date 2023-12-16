@@ -18,8 +18,8 @@ import { FilhosProps } from "../../../interfaces/Filhos";
 
 export default function EditUser({ route }) {
   const [updateList, setUpdateList] = useState(false);
-  const [formData, setData] = React.useState({});
-  const [bairro, setBairro] = React.useState(route?.params?.bairro);
+  const [formData, setData] = useState({});
+  const [bairro, setBairro] = useState(route?.params?.bairro);
   const [voluntario, setVoluntario] = useState(route?.params?.isVolt);
   const [estagiario, setEstagiario] = useState(route?.params?.isEtg);
 
@@ -43,7 +43,7 @@ export default function EditUser({ route }) {
   const [nome, setNome] = useState(route?.params?.nome);
   const [idade, setIdade] = useState<string>(route?.params?.idade);
   const [address, setAddress] = useState(route?.params?.address);
-  const [cpf, setCpf] = useState(route?.params?.cpf);
+  const [cpf, setCpf] = useState<string>(route?.params?.cpf);
   const [nis, setNis] = useState<string>(route?.params?.nis);
   const [dataFilho, setDataFilho] = useState<FilhosProps>();
   const [filhos, setFilhos] = useState<FilhosProps[]>(route?.params?.filhos);

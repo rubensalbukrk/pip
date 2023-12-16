@@ -47,16 +47,6 @@ const getUsers = async (): Promise<UserProps[]> => {
 }
 
 
-function deleteUser(id: number) {
-  axios
-    .delete(`${BASE_URL}/users/${id}`, {
-      method: "delete",
-    })
-    .then((response) => {
-      alert(JSON.stringify(response.data));
-    })
-    .catch((error) => console.error(error));
-}
 function deleteNotice(id: number) {
   axios
     .delete(`${BASE_URL}/notices/${id}`, {
@@ -67,7 +57,7 @@ function deleteNotice(id: number) {
     })
     .catch((error) => console.error(error));
 }
-export function deleteSolicitation(id) {
+export function deleteSolicitation(id: number | string) {
   axios
     .delete(`${BASE_URL}/solicitations/${id}`, {
       method: "delete",

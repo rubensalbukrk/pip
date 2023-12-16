@@ -37,7 +37,7 @@ export const HomeApp = () => {
       <Background
         style={{ zIndex: 0, position: "absolute", alignSelf: 'center' }}
         width={width + 30}
-        height={height + 25}
+        height={height + 40}
       />
 
       <View className="flex-row w-full my-2 h-40">
