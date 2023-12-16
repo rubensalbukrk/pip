@@ -43,7 +43,7 @@ export const HomeApp = () => {
       <View className="flex-row w-full my-2 h-40">
         <TouchableOpacity
           style={{ zIndex: 10 }}
-          className="absolute top-10 left-5 w-32 h-32 items-center justify-center bg-blue-600 rounded-full"
+          className="absolute top-10 shadow-xl shadow-black left-5 w-32 h-32 items-center justify-center bg-zinc-500/60 rounded-full"
           onPress={() => navigate("User")}
         >
           <UserAvatar x={124} y={124} />

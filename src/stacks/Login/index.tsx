@@ -10,7 +10,6 @@ import Animated, {
   StretchInX,
   StretchOutX,
   Easing,
-  EasingFn,
   PinwheelIn,
   PinwheelOut,
   BounceInDown,
@@ -49,8 +48,6 @@ export const Login = () => {
   const toggleSigningAuto = () => {
     setSigningAuto((previousState) => !previousState);
   };
-
-
 
   return (
     <View className="flex-1 px-7 justify-around bg-gray-300 items-center">

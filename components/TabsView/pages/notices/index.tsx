@@ -16,7 +16,7 @@ import {
 } from "@expo/vector-icons";
 import BackButton from "../../../BackButton";
 import { useFetchData } from "../../../../src/hooks/useFetchData";
-
+import { TextExtra, TextLarge, TextMedium } from "../../../TextLg/Text";
 
 export default function NewNotice() {
   var [dataNotice, setData] = useState({});
@@ -38,46 +38,32 @@ export default function NewNotice() {
   }
 
   return (
-    <View className="flex-1 w-full pt-10 justify-center bg-zinc-600">
+    <View className="flex-1 w-full pt-10 justify-center bg-zinc-500">
       <View className="flex-row ml-4 mb-5 top-2">
         <FontAwesome name="newspaper-o" size={40} color="white" />
-        <Text className="font-default px-3 text-2xl text-white">
-          Gerênciador de Notícias
-        </Text>
+        <TextMedium text="Gerênciador de Notícias" />
       </View>
       <View className="absolute top-20 right-3">
       <BackButton />
       </View>
-      <Text className="font-default my-3 px-3 text-2xl text-white">
-        Atuais
-      </Text>
+      <TextMedium text="Atuais" />
 
       <FlatList
-        className="w-full py-3 h-64 bg-zinc-700/30 mb-3 rounded-xl"
+        className="w-full h-64 mb-3 rounded-xl"
         data={list}
-        keyExtractor={(item) => item.id.toString()}
-
         renderItem={({item}) => {
           return (
             <View className="w-80 h-24 my-2 px-2 py-4 self-center justify-center rounded-xl bg-white/20 ">
-                <Text className="font-default text-lg text-white">
-                  Titulo: {item.title}
-                </Text>
-                <Text
-                  className="font-default text-lg text-white"
+                <TextLarge text={`Titulo: ${item.title}`} />
+                <TextLarge text={`Mensagem: ${item.mensagem}`}
                   numberOfLines={1}
-                  ellipsizeMode="tail"
-                >
-                  Descrição: {item.mensagem}
-                </Text>
-                <Text className="font-default text-lg text-white">
-                  Data: {item.date}
-                </Text>
+                  ellipsizeMode="tail" />
+                <TextLarge text={`Data: ${item.date}`} />
                 <TouchableOpacity
-                className="absolute top-1 right-1 w-12 h-12 opacity-80"
+                className="absolute top-1 right-1 w-8 h-8 opacity-80"
                 onPress={() => api.deleteNotice(item.id)}
               >
-                <MaterialIcons name="delete-forever" size={40} color="white" />
+                <MaterialIcons name="delete-forever" size={32} color="white" />
               </TouchableOpacity>
               </View>
 
@@ -85,38 +71,34 @@ export default function NewNotice() {
           );
         }}
       />
-      <Text className="font-default mb-2 px-3 text-2xl text-white">
-        Nova notícia
-      </Text>
-      <View className="py-2 px-5 rounded-xl bg-white/20">
-        <Text className="font-default text-lg text-white">Titulo</Text>
+      <TextMedium text="Nova notícia" />
+      <View className="py-2 px-5 rounded-xl mb-2 bg-white/20">
+        <TextLarge text="Título"/>
         <TextInput
-          className="w-72 h-10 text-lg text-white font-default px-2 bg-white/20 rounded-md opacity-80"
+          className="w-full h-8 text-lg text-white font-default px-2 bg-white/20 rounded-md opacity-80"
           onChangeText={(value) => setData({ ...dataNotice, title: value })}
         />
-        <Text className="font-default text-lg text-white">Descrição</Text>
+        <TextLarge text="Link de imagem" />
         <TextInput
-          className="w-full h-40 mb-4 text-inherit text-white font-default px-2 rounded-md bg-white/20 opacity-80"
+          className="w-full h-8 text-lg text-white font-default px-2 bg-white/20 rounded-md opacity-80"
+          onChangeText={(value) => setData({ ...dataNotice, img: value })}
+        />
+        <TextLarge text="Descrição"/>
+        <TextInput
+          className="w-full h-32 mb-4 text-inherit text-white font-default px-2 rounded-md bg-white/20 opacity-80"
           onChangeText={(value) => setData({ ...dataNotice, mensagem: value })}
         />
-        <View className="flex-row mb-2 items-center justify-between">
-          <TouchableOpacity
-            className="w-20 h-10 justify-center items-center rounded-xl bg-white/25"
-            
-          >
-            <Feather name="image" size={32} color="white" />
-          </TouchableOpacity>
-
+      
           <TouchableOpacity
             className="w-44 h-10 justify-center items-center rounded-lg bg-white/25"
             onPress={() => addNotice()}
           >
             <View className="flex-row">
               <FontAwesome5 name="check" size={24} color="white" />
-              <Text className="font-default text-lg text-white">Adicionar</Text>
+              <TextLarge text="Adicionar" />
             </View>
           </TouchableOpacity>
-        </View>
+        
       </View>
     </View>
   );

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   View,
-  Text,
   TextInput,
   TouchableOpacity,
   ScrollView,
@@ -13,57 +12,57 @@ import InputInfoUser from "../../../../UserLayout/inputUser";
 import MyParents from "../../../../UserLayout/userParents";
 import { FontAwesome } from "@expo/vector-icons";
 import { api, deleteSolicitation } from "../../../../../src/api/api";
+import { TextLarge } from "../../../../TextLg/Text";
 
 export default function SolicitationInfoUser({ route }) {
-  const [status, setStatus] = useState();
+  const [status, setStatus] = useState<string>();
   const filhos = route?.params?.userInfo?.filhos;
 
   const handleConfirmSolicitation = () => {
     let userApproved = {
       cpf: route?.params?.cpf,
-      nome: route?.params?.userInfo?.nome,
+      nome: route?.params?.nome,
       service: route?.params?.service,
       date: route?.params?.date,
       status: status,
     };
     axios
       .post(`${api.BASE_URL}/aprovados`, userApproved, {
-        method: 'POST'
+        method: "POST",
       })
-      .then(deleteSolicitation(route?.params?.id))
-      .then((response) => {
-        alert(JSON.stringify(response.data));
-      })
+      .then((response) => deleteSolicitation(route?.params?.id))
       .catch((error) => console.error(error));
   };
   const handleCancelSolicitation = (id) => {
     axios.delete(`${api.BASE_URL}/solicitations/${id}`);
   };
-  
+
   async function handleUpdateStatus() {
     try {
       let updateStatus = {
         status: status,
       };
-      const response = await axios.put(`${api.BASE_URL}/solicitations/${route?.params?.id}`, updateStatus, {
-        method:  'PUT'
-      });
-      const message = await response.data
-      return alert(`${message}`)
+      const response = await axios.put(
+        `${api.BASE_URL}/solicitations/${route?.params?.id}`,
+        updateStatus,
+        {
+          method: "PUT",
+        }
+      );
+      const message = await response.data;
+      return alert(`${message}`);
     } catch (error) {
-      alert(`Houve um problema: ${error}`)
+      alert(`Houve um problema: ${error}`);
     }
   }
   return (
-    <ScrollView className="flex-1 w-full h-full bg-zinc-600">
-      <View className="flex-row">
+    <View className="flex-1 w-full h-full bg-zinc-500">
+      <View className="flex-row bg-zinc-500 mt-4 my-5">
         <BackButton />
-        <Text className="font-default my-3 text-lg text-white">
-          Informações de Solicitação
-        </Text>
+        <TextLarge text="Informações de Solicitação" />
       </View>
 
-      <View className="w-full h-full rounded-lg bg-blue-600">
+      <ScrollView className="flex-1 w-full rounded-lg bg-zinc-300/30">
         <View className="w-full mx-3 my-2">
           <InputInfoUser
             infoLabel="Serviço"
@@ -86,12 +85,10 @@ export default function SolicitationInfoUser({ route }) {
             infoLabel="Data de entrada"
             infoValue={route?.params?.date}
           />
-          <Text className="font-default text-lg top-3 ml-2 text-white">
-            Status
-          </Text>
+          <TextLarge text="Status" />
           <View className="flex-row w-full gap-3 items-center">
             <TextInput
-              className="w-72 bg-blue-400"
+              className="w-72 px-2 bg-zinc-500 rounded-lg"
               value={status}
               onChangeText={(text) => setStatus(text)}
               placeholderTextColor={"#fff"}
@@ -102,29 +99,28 @@ export default function SolicitationInfoUser({ route }) {
             </TouchableOpacity>
           </View>
 
-          <View className="w-full px-3 py-2 mt-6 rounded-2xl bg-white/10">
-            <InputInfoUser
-              infoLabel="Filhos"
-              infoValue={
-                route?.params?.userInfo?.filhos?.length === 0
-                  ? "Não"
-                  : `${route?.params?.userInfo?.filhos?.length}`
-              }
-            />
-            {route?.params?.userInfo?.filhos?.length === 0
-              ? "NÃO"
-              : route?.params?.userInfo?.filhos?.map((item) => {
-                  return (
-                    <MyParents
-                      nome={item?.nome}
-                      cpf={item?.cpf}
-                      idade={item?.idade}
-                    />
-                  );
-                })}
-          </View>
+          <InputInfoUser
+            infoLabel="Filhos"
+            infoValue={
+              route?.params?.userInfo?.filhos?.length === 0
+                ? "Não"
+                : `${route?.params?.userInfo?.filhos?.length}`
+            }
+          />
+          {route?.params?.userInfo?.filhos?.length === 0
+            ? "NÃO"
+            : route?.params?.userInfo?.filhos?.map((item) => {
+                return (
+                  <MyParents
+                    nome={item?.nome}
+                    cpf={item?.cpf}
+                    idade={item?.idade}
+                    isAutist={item?.isAutist}
+                  />
+                );
+              })}
         </View>
-        <View className="flex-row w-full my-4 mb-10 gap-5 items-center justify-center">
+        <View className="flex-row w-full self-center gap-x-12 mt-3 my-4 items-center justify-center">
           <TouchableOpacity onPress={() => handleConfirmSolicitation()}>
             <FontAwesome name="check-circle" size={72} color="white" />
           </TouchableOpacity>
@@ -134,7 +130,7 @@ export default function SolicitationInfoUser({ route }) {
             <FontAwesome name="times-circle" size={72} color="white" />
           </TouchableOpacity>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 }

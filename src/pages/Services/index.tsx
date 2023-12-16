@@ -118,7 +118,6 @@ export default function Services() {
         className="flex-1 w-full mb-10"
         data={items}
         showsVerticalScrollIndicator={false}
-        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => {
           return (
             <View>
@@ -126,9 +125,9 @@ export default function Services() {
               className="flex-row justify-around shadow-md shadow-black w-80 self-center h-32 my-2 rounded-lg bg-gray-300"
                 onPress={() =>
                   navigation.navigate("ViewService", {
-                    titulo: item.labelTitulo,
+                    title: item.labelTitulo,
                     picture: item.picture,
-                    descricao: item.labelDesc,
+                    descrition: item.labelDesc,
                     requisite: item.labelRequisite,
                     pasta: item.pasta,
                   })

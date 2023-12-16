@@ -18,7 +18,7 @@ import { useFetchData } from "../../hooks/useFetchData";
 export default function SolicitationsUser() {
   const {list: solicitations, getData: getSolicitations} = useFetchData(api.getSolicitations)
   const {list: aprovados, getData: getAprovados} = useFetchData(api.getAprovados)
-  const {logged} = useContext<any>(UserContext)
+  const {logged, setSolicitations} = useContext<any>(UserContext)
 
   useEffect(() => {
     getSolicitations(),
@@ -27,6 +27,12 @@ export default function SolicitationsUser() {
     },1500)
   },[])
 
+  useEffect(() => {
+    if (solicitations) {
+      setSolicitations(solicitations)
+    }
+  },[solicitations])
+  
   var userSolicitations = solicitations?.filter((item) => String(item.cpf) === String(logged.cpf));
   var userBeneficiets = aprovados?.filter((item) => String(item.cpf) === String(logged.cpf))
 

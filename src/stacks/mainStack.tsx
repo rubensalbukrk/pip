@@ -29,8 +29,20 @@ declare global {
       HomeApp: undefined,
       User: any,
       Sobre: any,
-      Services: any,
-      ViewServices: any,
+      Services: {
+        title: string,
+        picture: string,
+        descrition: string,
+        requisite: string[],
+        pasta: string
+      },
+      ViewService: {
+        title: string,
+        picture: string,
+        descrition: string,
+        requisite: string[],
+        pasta: string
+      },
       SolicitationUser: any,
       SolicitationInfoUser: any,
       ViewNotice: {

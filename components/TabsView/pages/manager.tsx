@@ -1,7 +1,8 @@
 import React from "react";
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { Feather, AntDesign, FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { TextExtra, TextLarge, TextMedium } from "../../TextLg/Text";
 
 export default function TabManager() {
   const { navigate } = useNavigation();
@@ -9,14 +10,15 @@ export default function TabManager() {
   return (
     <View className="flex-1 w-full items-center px-4 py-5">
       <View className="w-full my-6 justify-center items-center rounded-lg shadow-lg shadow-black bg-zinc-400">
-        <View className="flex-row w-full relative top-3 left-4 items-start">
-          <FontAwesome name="newspaper-o" size={32} color="white" />
-          <Text className="font-default ml-2 text-lg text-white">Notícias</Text>
+        
+        <View className="flex-row w-full relative top-3 left-4 items-center">
+          <FontAwesome name="newspaper-o" size={36} color="white" />
+          <TextMedium text="Notícias" />
         </View>
 
-        <Text className="font-default mt-5 text-lg text-zinc-600">
-          Adicione novas notícias, remova e monitore!
-        </Text>
+        <TextLarge
+        className="text-zinc-700 mt-8"
+        text="Adicione novas notícias, remova e monitore!" />
 
         <TouchableOpacity
           className="w-14 h-14 my-5 rounded-xl justify-center items-center shadow-lg shadow-black bg-zinc-500"
@@ -27,11 +29,9 @@ export default function TabManager() {
       </View>
 
       <View className="w-full mt-3 justify-center items-center rounded-lg shadow-lg shadow-black bg-zinc-400">
-        <View className="flex-row w-full relative top-3 left-4 items-start">
-          <AntDesign name="exception1" size={32} color="white" />
-          <Text className="font-default ml-2 text-lg text-white">
-            Solicitações
-          </Text>
+        <View className="flex-row w-full relative top-3 left-4 items-center">
+          <AntDesign name="exception1" size={36} color="white" />
+          <TextMedium text="Solicitações" />
         </View>
 
         <Text className="font-default mt-5 text-lg text-zinc-600">

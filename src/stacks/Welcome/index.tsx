@@ -20,8 +20,6 @@ import { width } from "../../utils/dimensions";
 import { LottieView } from "../../utils/LottieView";
 import { AuthContext } from "../../contexts/AuthContext";
 import { UserProps } from "../../interfaces/User";
-import data from "../../utils/dateNow";
-
 
 export default function Welcome() {
   
@@ -62,11 +60,8 @@ export default function Welcome() {
       AsyncStorage.getItem("token")
        .then((value) => {
         const dataUser: UserProps = JSON.parse(value);
-        dataUser.cpf &&
-        dataUser && 
-        setLogged(dataUser) &&
-        setAuth(true) && navigate('HomeApp')
-    });
+        dataUser ??  [setLogged(dataUser) && setAuth(true) && navigate('HomeApp')]
+      })
     } catch (e) {
       navigate('Login')
     }

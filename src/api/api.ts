@@ -3,6 +3,7 @@ import { NoticesProps } from "../interfaces/Notices";
 import { SolicitationsProps } from "../interfaces/Solicitations";
 import { AprovadosProps } from "../interfaces/Aprovados";
 import { PageProps } from "../interfaces/Page";
+import { UserProps } from "../interfaces/User";
 
 const BASE_URL = "https://pip-server.vercel.app/api"
 const config = {
@@ -36,6 +37,15 @@ const getAprovados = async (): Promise<AprovadosProps[]> => {
   }
 }
 
+const getUsers = async (): Promise<UserProps[]> => {
+  try {
+      const response = await axios.get(`${BASE_URL}/users`, config)
+      return response.data.results
+  } catch (error) {
+    alert('Houve um problema na conexão, tente novamente!')
+  }
+}
+
 
 function deleteUser(id: number) {
   axios
@@ -57,13 +67,10 @@ function deleteNotice(id: number) {
     })
     .catch((error) => console.error(error));
 }
-export function deleteSolicitation(id: number) {
+export function deleteSolicitation(id) {
   axios
     .delete(`${BASE_URL}/solicitations/${id}`, {
       method: "delete",
-    })
-    .then((response) => {
-      alert(JSON.stringify(response.data));
     })
     .catch((error) => console.error(error));
 }
@@ -80,6 +87,7 @@ export function deleteAprovado(id: number) {
 
 export const api = {
   BASE_URL,
+  getUsers,
   getNotices,
   deleteNotice,
   getSolicitations,

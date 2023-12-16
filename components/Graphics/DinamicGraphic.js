@@ -7,7 +7,9 @@ import {
 import { PieChart } from 'react-native-svg-charts'
 import { UserContext } from '../../src/contexts/UserContext';
 
- class PieChartWithDynamicSlices extends React.PureComponent {
+import colors from 'tailwindcss/colors';
+
+class PieChartWithDynamicSlices extends React.PureComponent {
 
   constructor(props) {
     super(props);
@@ -56,6 +58,7 @@ import { UserContext } from '../../src/contexts/UserContext';
       }
     });
     
+   
     let voluntariosCount = voluntarios?.length;
     let pessoasCount = users?.length
     let autistasCount = autistas?.length;
@@ -65,7 +68,7 @@ import { UserContext } from '../../src/contexts/UserContext';
     const { label, value } = selectedSlice;
     const keys = ['Pessoas', 'Autistas', 'Voluntários', 'Coordenador'];
     const values = [pessoasCount, autistasCount, voluntariosCount, coordenadoresCount];
-    const colors = ['#0017FF','#0068FF','#008DFF', '#00CCD9']
+    const colors = ['#4f494a','#6a6162','#847a7b', '#9d9495']
     const data = keys.map((key, index) => {
         return {
           key,

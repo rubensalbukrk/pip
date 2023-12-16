@@ -7,7 +7,7 @@ import TabSearch from './pages/pesquisar';
 import TabManager from './pages/manager';
 
 
-const FirstRoute = () => <View className='flex-1 h-full w-full my-4'>
+const FirstRoute = () => <View className='flex-1 h-full w-full'>
     <TabCadastros />
   </View>;
 

@@ -9,7 +9,7 @@ import BackgroundBottom from ".../../../assets/svgs/User-bottom-wave.svg";
 import { width } from "../../../utils/dimensions";
 
 export default function ViewService({ route }) {
-  const { logged } = useContext(UserContext);
+  const { logged } = useContext<any>(UserContext);
 
   function handleSolicitation(service) {
     let newSolicitation = {
@@ -48,11 +48,11 @@ export default function ViewService({ route }) {
       />
       <View className="w-full px-3">
         <Text className="font-default self-start text-2xl text-gray-800">
-          {route?.params?.titulo}
+          {route?.params?.title}
         </Text>
 
         <Text className="font-default text-md text-gray-800">
-          {route?.params?.descricao}
+          {route?.params?.descrition}
         </Text>
 
         <Text className="font-default self-start text-2xl mt-6 text-gray-800">

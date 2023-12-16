@@ -2,11 +2,9 @@ import React, { useContext } from "react";
 import axios from "axios";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { AuthContext } from "../../contexts/AuthContext";
 import { UserContext } from "../../contexts/UserContext";
 import { api } from "../../api/api";
 import * as ImagePicker from "expo-image-picker";
-
 import { Feather, Entypo } from "@expo/vector-icons";
 import InputInfoUser from "../../../components/UserLayout/inputUser";
 import MyParents from "../../../components/UserLayout/userParents";
@@ -14,11 +12,9 @@ import UserAvatar from "../../../components/UserAvatar";
 import TopBackground from "../../../assets/svgs/User-top-waves.svg";
 import BottomBackground from '../../../assets/svgs/User-bottom-wave.svg'
 import { width } from "../../utils/dimensions";
-import { LottieView } from "../../utils/LottieView";
 
 export const User = () => {
-  const { logged, setAvatar, setLogged } = useContext(UserContext);
-  const { auth, setAuth } = useContext(AuthContext);
+  const { logged, setAvatar } = useContext<any>(UserContext);
   const { navigate, goBack } = useNavigation();
 
   const pickImageAsync = async () => {
@@ -58,9 +54,6 @@ export const User = () => {
             updateUserAvatar(filename);
           })
           .then(() => {
-            getUserData();
-          })
-          .then(() => {
             setAvatar(logged.avatar);
           })
           .catch((error) => console.log(error));
@@ -74,30 +67,11 @@ export const User = () => {
       ...logged,
       avatar: `${api}/files/${fileName}`,
     };
-    axios.put(`${api}/users/${logged.id}`, userUpdate, {
-      headers: new Headers({
-        "ngrok-skip-browser-warning": "69421",
-      }),
-    });
-  }
-  function getUserData() {
-    axios
-      .get(`${api}/users/${logged.id}`, {
-        method: "get",
-        headers: new Headers({
-          "ngrok-skip-browser-warning": "69420",
-        }),
-      })
-      .then((response) => {
-        const user = response.data;
-        setLogged(user);
-      })
-      .catch((error) => console.log('Desculpa, o servidor está em manutenção!'));
+    axios.put(`${api}/users/${logged.id}`, userUpdate);
   }
 
   return (
     <View className="flex-1 w-full h-full justify-between items-center">
-        
       <View className="w-full h-44 items-center justify-between">
 
         <View className="flex-row w-full h-14">
@@ -125,7 +99,7 @@ export const User = () => {
         </View>
 
         <View style={{zIndex: 2}} className="w-40 h-40 mt-2 absolute">
-          <View className="w-50 h-50 shadow-xl shadow-black mt-4 items-center justify-center rounded-full">
+          <View className="w-50 h-50  mt-4 items-center justify-center rounded-full">
             <UserAvatar x={130} y={130} />
           </View>
 

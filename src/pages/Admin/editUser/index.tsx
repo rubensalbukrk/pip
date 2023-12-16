@@ -14,6 +14,7 @@ import BackButton from "../../../../components/BackButton";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { TextLarge } from "../../../../components/TextLg/Text";
+import { FilhosProps } from "../../../interfaces/Filhos";
 
 export default function EditUser({ route }) {
   const [updateList, setUpdateList] = useState(false);
@@ -35,24 +36,22 @@ export default function EditUser({ route }) {
     route?.params?.isCoordAlimentar
   );
   const [isCoordSaude, setIsCoordSaude] = useState(route?.params?.isCoordSaude);
-  const [isCoordProtagonista, setIsCoordProtagonista] = useState(
-    route?.params?.isCoordProtagonista
-  );
+  const [isCoordProtagonista, setIsCoordProtagonista] = useState(route?.params?.isCoordProtagonista);
   const [isCoordPasse, setIsCoordPasse] = useState(route?.params?.isCoordPasse);
 
   const [autista, setAutista] = useState(route?.params?.isAutist);
   const [nome, setNome] = useState(route?.params?.nome);
-  const [idade, setIdade] = useState(route?.params?.idade);
+  const [idade, setIdade] = useState<string>(route?.params?.idade);
   const [address, setAddress] = useState(route?.params?.address);
   const [cpf, setCpf] = useState(route?.params?.cpf);
-  const [nis, setNis] = useState(route?.params?.nis);
-  const [dataFilho, setDataFilho] = useState({});
-  const [filhos, setFilhos] = useState(route?.params?.filhos);
-  const [phone, setPhone] = useState(route?.params?.phone);
+  const [nis, setNis] = useState<string>(route?.params?.nis);
+  const [dataFilho, setDataFilho] = useState<FilhosProps>();
+  const [filhos, setFilhos] = useState<FilhosProps[]>(route?.params?.filhos);
+  const [phone, setPhone] = useState<string>(route?.params?.phone);
   const [email, setEmail] = useState(route?.params?.email);
   const [member, setMember] = useState(route?.params?.question1);
   const [opnion, setOpnion] = useState(route?.params?.question2);
-  const [pass, setPass] = useState(route?.params?.password);
+  const [pass, setPass] = useState<string>(route?.params?.password);
   const navigation = useNavigation();
 
   let UserUpdate = {
@@ -80,13 +79,13 @@ export default function EditUser({ route }) {
     password: pass,
   };
 
-  function updateUser() {
+  function updateUser(): void {
     axios
       .put(`${api.BASE_URL}/users/${route.params.id}`, UserUpdate, {
         method: "put",
       })
       .then(() => {
-        setFilhos([""]);
+        setFilhos([]);
       });
     return Alert.alert("Atualização", "O usuário foi alterado!");
   }
@@ -204,29 +203,30 @@ export default function EditUser({ route }) {
       </View>
 
       <ScrollView className="flex-1 w-full">
-        <View className="justify-center items-center py-10">
+
+        <View className="w-full px-2 justify-center items-center py-10">
           <View className="flex-row w-full rounded-lg items-center">
-            <Text className="font-default text-start px-3 mr-3 text-white text-md">
+            <Text className="font-default text-start px-2 mr-3 text-white text-md">
               Selecione o tipo do usuário
             </Text>
-            <View className="w-20 items-center">
+            <View className="w-18 items-center">
               <Text className="font-default justify-start text-xs mb-2 text-white">
                 Estagiário
               </Text>
               <Switch
-                style={{ width: 30, height: 15, alignSelf: "center" }}
+                style={{ width: 30, height: 20, alignSelf: "center" }}
                 onValueChange={() => {
                   toggleEstagio();
                 }}
                 value={estagiario}
               />
             </View>
-            <View className="w-20 items-center">
+            <View className="w-20 ml-1 items-center">
               <Text className="font-default text-xs mb-2 text-white">
                 Voluntário
               </Text>
               <Switch
-                style={{ width: 30, height: 15, alignSelf: "center" }}
+                style={{ width: 30, height: 20, alignSelf: "center" }}
                 value={voluntario}
                 onValueChange={() => toggleVoluntario()}
               />
@@ -338,7 +338,7 @@ export default function EditUser({ route }) {
             <Text className="font-default text-lg text-white/60">Idade</Text>
             <TextInput
               className="font-default w-10 text-lg px-2 mb-2 rounded-lg text-white bg-zinc-400/20"
-              value={idade}
+              value={idade.toString()}
               onChangeText={(text) => setIdade(text)}
               placeholder={`${idade ? idade : ""}`}
               placeholderTextColor="#fff"
@@ -452,7 +452,7 @@ export default function EditUser({ route }) {
                 <View className="items-center px-2">
                   <TextLarge text="Autista" />
                   <Switch
-                    value={dataFilho.isAutist}
+                    value={dataFilho && dataFilho?.isAutist}
                     trackColor={{ false: "#9f9f9f", true: "#767590" }}
                     onValueChange={toggleFilhoAutista}
                   />
@@ -469,9 +469,9 @@ export default function EditUser({ route }) {
 
           <TouchableOpacity
             className="flex-row w-48 h-20 mx-5 my-5 justify-evenly items-center bg-zinc-700 rounded-lg"
-            onPress={() => {
-              updateUser() && navigation.goBack();
-            }}
+            onPress={() => 
+              updateUser && navigation.goBack()
+            }
           >
             <Feather name="save" size={32} color={"white"}/>
             <Text className="font-default text-white text-2xl">SALVAR</Text>

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { View, Text, FlatList, ListRenderItemInfo } from "react-native";
+import { View, Text, FlatList } from "react-native";
 import axios from "axios";
 import { UserContext } from "../../contexts/UserContext";
 import { TouchableOpacity, ScrollView } from "react-native";
@@ -8,13 +8,11 @@ import BackButton from "../../../components/BackButton";
 import { api, deleteSolicitation, deleteAprovado } from "../../api/api";
 import { useNavigation } from "@react-navigation/native";
 import { SolicitationsProps } from "../../interfaces/Solicitations";
-import { AprovadosProps } from "../../interfaces/Aprovados";
 
 
 export default function PageCoordenador({ route }) {
   const {
     solicitations,
-    users,
     logged,
     aprovados,
     setAprovados,
