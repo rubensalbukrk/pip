@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-
+import React, { useState, useEffect, useContext } from "react";
+import axios from "axios";
 import {
   View,
   Text,
@@ -12,19 +12,24 @@ import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { api } from "../../../src/api/api";
 import { useFetchData } from "../../../src/hooks/useFetchData";
+import { AuthContext } from "../../../src/contexts/AuthContext";
+import { UserProps } from "../../../src/interfaces/User";
+import { UserContext } from "../../../src/contexts/UserContext";
+
 
 export default function TabSearch() {
-  const { list, getData } = useFetchData(api.getUsers);
+  const {token} = useContext(AuthContext)
+  const {setUsers, users} = useContext<any>(UserContext)
   const [filteredData, setFilteredData] = useState([]);
   const { navigate } = useNavigation();
-
+  
   useEffect(() => {
-    getData();
+    getUsers();
   }, []);
 
   const searchFilter = (text) => {
     if (text) {
-      const newData = list?.filter(function (item) {
+      const newData = users?.filter(function (item) {
         if (item.nome) {
           const itemData = item.nome.toUpperCase();
           const textData = text.toUpperCase();
@@ -33,9 +38,24 @@ export default function TabSearch() {
       });
       setFilteredData(newData);
     } else {
-      setFilteredData(list);
+      setFilteredData(users);
     }
   };
+  const getUsers = async (): Promise<UserProps[]> => {
+    try {
+        const response = await axios.get(`${api.BASE_URL}/users`, {
+          method: 'get',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        })
+        setUsers(response.data.results)
+        return response.data.results
+    } catch (error) {
+      alert('Houve um problema na conexão, tente novamente!')
+    }
+  }
 
   return (
     <View className="flex-1 w-full justify-center items-center">

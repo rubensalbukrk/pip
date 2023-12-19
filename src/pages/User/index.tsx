@@ -3,7 +3,6 @@ import axios from "axios";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../contexts/UserContext";
-import { api } from "../../api/api";
 import * as ImagePicker from "expo-image-picker";
 import { Feather, Entypo } from "@expo/vector-icons";
 import InputInfoUser from "../../../components/UserLayout/inputUser";
@@ -12,6 +11,7 @@ import UserAvatar from "../../../components/UserAvatar";
 import TopBackground from "../../../assets/svgs/User-top-waves.svg";
 import BottomBackground from '../../../assets/svgs/User-bottom-wave.svg'
 import { width } from "../../utils/dimensions";
+import { TextSmall } from "../../../components/TextLg/Text";
 
 export const User = () => {
   const { logged, setAvatar } = useContext<any>(UserContext);
@@ -41,34 +41,12 @@ export const User = () => {
         )
       );
       if (formData) {
-        axios
-          .post(`${api}/upload`, formData, {
-            method: "POST",
-            headers: {
-              "ngrok-skip-browser-warning": "69421",
-              Accept: "application/json",
-              "Content-Type": "multipart/form-data",
-            },
-          })
-          .then(() => {
-            updateUserAvatar(filename);
-          })
-          .then(() => {
-            setAvatar(logged.avatar);
-          })
-          .catch((error) => console.log(error));
+        setAvatar(assets[0].uri);
       }
     } else {
-      alert("Você não escolheu uma imagem!");
+      alert("O Perfil não foi alterado!");
     }
   };
-  function updateUserAvatar(fileName) {
-    let userUpdate = {
-      ...logged,
-      avatar: `${api}/files/${fileName}`,
-    };
-    axios.put(`${api}/users/${logged.id}`, userUpdate);
-  }
 
   return (
     <View className="flex-1 w-full h-full justify-between items-center">
@@ -105,9 +83,10 @@ export const User = () => {
             <UserAvatar x={130} y={130} />
           </View>
 
-          <View className="w-14 h-7 absolute right-1 top-5 items-center justify-center  bg-gray-500 shadow-lg shadow-black rounded-md">
-            <Text className="font-default text-center text-xs text-white">
-              {logged?.isAdmin == true
+          <View className="h-7 absolute self-center bottom-0 items-center justify-center  bg-gray-500 shadow-lg shadow-black rounded-md">
+            <TextSmall 
+            className="px-1"
+            text={logged?.isAdmin == true
                 ? "Admin"
                 : "Membro" && logged?.isEtg == true
                 ? "Estágiario"
@@ -127,10 +106,9 @@ export const User = () => {
                 ? "Coord Protagonista"
                 : "Membro" && logged?.isCoordPasse == true
                 ? "Coord Passe"
-                : "Membro"}
-            </Text>
+                : "Membro"} />
           </View>
-          <View className=" right-6 self-end bottom-3 absolute">
+          <View className="right-6 self-end top-5 absolute">
             <TouchableOpacity
               className="h-5 w-5 items-center justify-center bg-gray-400 shadow-md shadow-black rounded-lg"
               onPress={() => pickImageAsync()}

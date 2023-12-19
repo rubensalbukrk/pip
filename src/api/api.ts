@@ -4,6 +4,8 @@ import { SolicitationsProps } from "../interfaces/Solicitations";
 import { AprovadosProps } from "../interfaces/Aprovados";
 import { PageProps } from "../interfaces/Page";
 import { UserProps } from "../interfaces/User";
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 
 const BASE_URL = "https://pip-server.vercel.app/api"
 const config = {
@@ -37,9 +39,15 @@ const getAprovados = async (): Promise<AprovadosProps[]> => {
   }
 }
 
-const getUsers = async (): Promise<UserProps[]> => {
+const getUsers = async (token: any): Promise<UserProps[]> => {
   try {
-      const response = await axios.get(`${BASE_URL}/users`, config)
+      const response = await axios.get(`${BASE_URL}/users`, {
+        method: 'get',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      })
       return response.data.results
   } catch (error) {
     alert('Houve um problema na conexão, tente novamente!')

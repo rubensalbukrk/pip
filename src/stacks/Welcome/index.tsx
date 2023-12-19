@@ -10,10 +10,8 @@ import Animated, {
   ZoomInEasyUp,
   Layout,
 } from "react-native-reanimated";
-import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../contexts/UserContext";
-import { api } from "../../api/api";
 import BackgroundWave from "../../../assets/svgs/Welcome-wave.svg";
 import { height, width } from "../../utils/dimensions";
 import { LottieView } from "../../utils/LottieView";
@@ -67,18 +65,6 @@ export default function Welcome() {
     getMyLogin();
   }, []);
 
-  const getUsers = async () => {
-    try {
-      const response = await axios.get(`${api.BASE_URL}/users`, {
-        method: "get",
-      });
-      const data = await response.data.results;
-      setUsers(data);
-    } catch (error) {
-      alert("Não houve respostas do servidor, tente novamente!");
-    }
-  };
-
   return (
     <View className="flex-1 w-full items-center bg-gray-100">
       <BackgroundWave style={{ position: "absolute" }} width={width} height={height + 50} />
@@ -122,7 +108,7 @@ export default function Welcome() {
         <TouchableOpacity
           style={{ zIndex: 3 }}
           className="items-center justify-center"
-          onPress={() => [setFogos(true), setButton(true), getUsers()]}
+          onPress={() => [setFogos(true), setButton(true)]}
         >
           <LottieView
             resizeMode="contain"

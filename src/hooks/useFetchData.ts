@@ -4,7 +4,7 @@ export const useFetchData = <T>(fetchData: () => Promise<T[]>) => {
     const [list, setList] = useState<T[]>([]);
     
     async function getData() {
-        const list = await fetchData()
+        const list = await fetchData();
         setList(list)
     }
 

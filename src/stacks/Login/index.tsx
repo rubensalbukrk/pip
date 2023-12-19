@@ -36,14 +36,10 @@ export const Login = () => {
   const {navigate} = useNavigation();
 
   useEffect(() => {
-    if (auth) {
-      setTimeout(() => {
-        navigate('HomeApp');
-      }, 3000);
-    } else {
-      setIsLoading(false);
+    if(auth){
+      navigate('HomeApp')
     }
-  }, [auth]);
+  },[auth])
 
   const toggleSigningAuto = () => {
     setSigningAuto((previousState) => !previousState);

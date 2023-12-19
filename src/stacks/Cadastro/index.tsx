@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -5,16 +6,17 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
-  FlatList,
   ScrollView,
   Switch,
 } from "react-native";
-import axios from "axios";
+import SelectDrop from 'react-native-select-dropdown'
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { api } from "../../api/api";
 import { FilhosProps } from "../../interfaces/Filhos";
 import { TextLarge } from "../../../components/TextLg/Text";
+
+const citys = ["Santa Rita", "Varzea Nova", "Tibiri", "Marcos Moura", "Cruz Espirito Santo"]
 
 export const Cadastro = () => {
   const [updateList, setUpdateList] = useState(false);
@@ -26,6 +28,7 @@ export const Cadastro = () => {
     cpf: undefined,
     isAutist: false,
   });
+
   const [filhos, setFilhos] = useState<FilhosProps[]>([]);
   const { navigate, goBack } = useNavigation();
 
@@ -34,8 +37,7 @@ export const Cadastro = () => {
       const response = await axios.post(`${api.BASE_URL}/users`, formData, {
         method: "POST",
       });
-      const message = await response.data;
-      return alert(`${message}`);
+      return alert(response.data);
     } catch (e) {
       alert(`Houve um problema com o servidor: ${e}`);
     }
@@ -119,7 +121,7 @@ export const Cadastro = () => {
   };
 
   return (
-    <View className="flex-1 w-full h-full bg-zinc-500">
+    <View className="flex-1 w-full h-full bg-zinc-400">
       <View className="flex-row w-full mt-16 h-36">
         <TextLarge
           text="Faça seu cadastro"
@@ -185,6 +187,20 @@ export const Cadastro = () => {
 
           <View className="mt-4">
             <TextLarge text="Bairro" />
+            <SelectDrop
+            
+            data={citys}
+            onSelect={(selectedItem, index) => {
+              setBairro(selectedItem)
+              console.log(selectedItem)
+            }}
+            buttonTextAfterSelection={(selectedItem, index) => {
+              return selectedItem
+            }}
+            rowTextForSelection={(item, index) => {
+              return item
+            }}
+            />
           </View>
 
           <View className="mt-4">

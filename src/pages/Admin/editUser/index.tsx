@@ -15,8 +15,10 @@ import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { TextLarge } from "../../../../components/TextLg/Text";
 import { FilhosProps } from "../../../interfaces/Filhos";
+import { AuthContext } from "../../../contexts/AuthContext";
 
 export default function EditUser({ route }) {
+  const {token} = useContext(AuthContext)
   const [updateList, setUpdateList] = useState(false);
   const [formData, setData] = useState({});
   const [bairro, setBairro] = useState(route?.params?.bairro);
@@ -38,9 +40,9 @@ export default function EditUser({ route }) {
   const [isCoordSaude, setIsCoordSaude] = useState(route?.params?.isCoordSaude);
   const [isCoordProtagonista, setIsCoordProtagonista] = useState(route?.params?.isCoordProtagonista);
   const [isCoordPasse, setIsCoordPasse] = useState(route?.params?.isCoordPasse);
-
   const [autista, setAutista] = useState(route?.params?.isAutist);
   const [nome, setNome] = useState(route?.params?.nome);
+  const [avatar, setAvatar] = useState(route?.params?.avatar)
   const [idade, setIdade] = useState<string>(route?.params?.idade);
   const [address, setAddress] = useState(route?.params?.address);
   const [cpf, setCpf] = useState<string>(route?.params?.cpf);
@@ -67,6 +69,7 @@ export default function EditUser({ route }) {
     isAutist: autista,
     nome: nome,
     idade: idade,
+    avatar: avatar,
     address: address,
     bairro: bairro,
     cpf: cpf,
@@ -79,10 +82,14 @@ export default function EditUser({ route }) {
     password: pass,
   };
 
-  function updateUser(): void {
+  function updateUser() {
     axios
       .put(`${api.BASE_URL}/users/${route.params.id}`, UserUpdate, {
         method: "put",
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
       })
       .then(() => {
         setFilhos([]);
@@ -469,9 +476,7 @@ export default function EditUser({ route }) {
 
           <TouchableOpacity
             className="flex-row w-48 h-20 mx-5 my-5 justify-evenly items-center bg-zinc-700 rounded-lg"
-            onPress={() => 
-              updateUser && navigation.goBack()
-            }
+            onPress={() => updateUser()}
           >
             <Feather name="save" size={32} color={"white"}/>
             <Text className="font-default text-white text-2xl">SALVAR</Text>
