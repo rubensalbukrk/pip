@@ -15,3 +15,6 @@ export const TextExtra = ({...props}) => {
 export const TextSmall = ({...props}) => {
     return <Text {...props} className="font-default text-sm text-white">{props.text}</Text>
 }
+export const TextXl = ({...props}) => {
+    return <Text {...props} className="font-default text-xl text-white">{props.text}</Text>
+}

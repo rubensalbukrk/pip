@@ -14,7 +14,7 @@ import { width } from "../../utils/dimensions";
 import { TextSmall } from "../../../components/TextLg/Text";
 
 export const User = () => {
-  const { logged, setAvatar } = useContext<any>(UserContext);
+  const { logged, setAvatar, avatar } = useContext<any>(UserContext);
   const { navigate, goBack } = useNavigation();
 
   const pickImageAsync = async () => {

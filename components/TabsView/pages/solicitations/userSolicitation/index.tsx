@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   TextInput,
@@ -13,8 +13,10 @@ import MyParents from "../../../../UserLayout/userParents";
 import { FontAwesome } from "@expo/vector-icons";
 import { api, deleteSolicitation } from "../../../../../src/api/api";
 import { TextLarge, TextMedium } from "../../../../TextLg/Text";
+import { AuthContext } from "../../../../../src/contexts/AuthContext";
 
 export default function SolicitationInfoUser({ route }) {
+  const {token} = useContext(AuthContext)
   const [status, setStatus] = useState<string>();
   const filhos = route?.params?.userInfo?.filhos;
 
@@ -29,13 +31,23 @@ export default function SolicitationInfoUser({ route }) {
     axios
       .post(`${api.BASE_URL}/aprovados`, userApproved, {
         method: "POST",
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
       })
       .then(response => alert(`${response.data}`))
-      .then(response => deleteSolicitation(route?.params?.id))
+      .then(response => handleCancelSolicitation(route?.params?.id))
       .catch((error) => console.error(error));
   };
-  const handleCancelSolicitation = (id) => {
-    axios.delete(`${api.BASE_URL}/solicitations/${id}`);
+  const handleCancelSolicitation = (id: number) => {
+    axios.delete(`${api.BASE_URL}/solicitations/${id}`,{
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
   };
 
   async function handleUpdateStatus() {
@@ -48,6 +60,10 @@ export default function SolicitationInfoUser({ route }) {
         updateStatus,
         {
           method: "PUT",
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
         }
       );
       const message = await response.data;
@@ -58,8 +74,8 @@ export default function SolicitationInfoUser({ route }) {
   }
   return (
     <View className="flex-1 w-full h-full bg-zinc-500">
-      <View className="flex-row bg-zinc-500 mt-8 px-2 pt-4 my-5 items-center">
-        <TextMedium text="Informações de Solicitação" />
+      <View className="flex-row bg-zinc-500 mt-8 px-2 pt-4 my-5 justify-between items-center">
+        <TextLarge text="Informações de Solicitação" />
         <BackButton />
       </View>
 
@@ -109,19 +125,24 @@ export default function SolicitationInfoUser({ route }) {
                 : `${route?.params?.userInfo?.filhos?.length}`
             }
           />
+          <ScrollView className='w-full right-3' showsHorizontalScrollIndicator={false} horizontal={true}>
           {route?.params?.userInfo?.filhos?.length === 0
             ? "NÃO"
             : route?.params?.userInfo?.filhos?.map((item) => {
                 return (
+                  <View key={item.id} className="mx-2">
                   <MyParents
+                    
                     id={item.id}
                     nome={item?.nome}
                     cpf={item?.cpf}
                     idade={item?.idade}
                     isAutist={item?.isAutist}
                   />
+                  </View>
                 );
               })}
+          </ScrollView>
         </View>
         <View className="flex-row w-full self-center gap-x-12 mt-3 my-4 items-center justify-center">
           <TouchableOpacity onPress={() => handleConfirmSolicitation()}>

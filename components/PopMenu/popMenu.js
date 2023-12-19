@@ -38,7 +38,7 @@ export const PopMenu = () => {
         {logged?.isCoordAutist == true && (
           <TouchableOpacity
             className="flex-row w-full h-14 gap-2 items-center border-b-2 border-black/10"
-            onPress={() => navigate("PageCoordenador")}
+            onPress={() => navigate("PageCoordenador", {title: 'Coordenação dos Autistas' })}
           >
             <MaterialIcons
               name="admin-panel-settings"
@@ -53,7 +53,7 @@ export const PopMenu = () => {
         {logged?.isCoordMulher == true && (
           <TouchableOpacity
             className="flex-row w-full h-14 gap-2 items-center border-b-2 border-black/10"
-            onPress={() => navigate("PageCoordenador")}
+            onPress={() => navigate("PageCoordenador", {title: 'Coordenação das Mulheres' })}
           >
             <MaterialIcons
               name="admin-panel-settings"
@@ -68,7 +68,7 @@ export const PopMenu = () => {
         {logged?.isCoordSaude == true && (
           <TouchableOpacity
             className="flex-row w-full h-14 gap-2 items-center border-b-2 border-black/10"
-            onPress={() => navigate("PageCoordenador")}
+            onPress={() => navigate("PageCoordenador", {title: 'Coordenação da Saúde' })}
           >
             <MaterialIcons
               name="admin-panel-settings"
@@ -83,7 +83,7 @@ export const PopMenu = () => {
         {logged?.isCoordAlimentar== true && (
           <TouchableOpacity
             className="flex-row w-full h-14 gap-2 items-center border-b-2 border-black/10"
-            onPress={() => navigate("PageCoordenador")}
+            onPress={() => navigate("PageCoordenador", {title: 'Coordenação da Alimentação' })}
           >
             <MaterialIcons
               name="admin-panel-settings"
@@ -98,7 +98,7 @@ export const PopMenu = () => {
         {logged?.isCoordCidadania == true && (
           <TouchableOpacity
             className="flex-row w-full h-14 gap-2 items-center border-b-2 border-black/10"
-            onPress={() => navigate("PageCoordenador")}
+            onPress={() => navigate("PageCoordenador", {title: 'Coordenação da Cidadania' })}
           >
             <MaterialIcons
               name="admin-panel-settings"
@@ -113,7 +113,7 @@ export const PopMenu = () => {
         {logged?.isCoordProtagonista == true && (
           <TouchableOpacity
             className="flex-row w-full h-14 gap-2 items-center border-b-2 border-black/10"
-            onPress={() => navigate("PageCoordenador")}
+            onPress={() => navigate("PageCoordenador", {title: 'Coordenação dos Protagonistas' })}
           >
             <MaterialIcons
               name="admin-panel-settings"
@@ -128,7 +128,7 @@ export const PopMenu = () => {
         {logged?.isCoordPasse == true && (
           <TouchableOpacity
             className="flex-row w-full h-14 gap-2 items-center border-b-2 border-black/10"
-            onPress={() => navigate("PageCoordenador")}
+            onPress={() => navigate("PageCoordenador", {title: 'Coordenação do Passe Livre' })}
           >
             <MaterialIcons
               name="admin-panel-settings"
@@ -156,12 +156,6 @@ export const PopMenu = () => {
           </TouchableOpacity>
         )}
 
-        <TouchableOpacity className="flex-row w-full h-14 gap-2 items-center border-b-2 border-black/10">
-          <FontAwesome5 name="user-edit" size={24} color="black" />
-          <Text className="font-default text-gray-800 text-xl">
-            Alterar dados
-          </Text>
-        </TouchableOpacity>
 
         <TouchableOpacity className="flex-row w-full h-14 gap-2 items-center"
         onPress={() => AsyncStorage.clear() && setLogged([]) & setAuth(false) & navigate("Welcome")}

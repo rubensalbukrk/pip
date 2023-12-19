@@ -7,8 +7,10 @@ import { api } from "../../../api/api";
 import BackgroundTop from "../../../../assets/svgs/User-top-waves.svg";
 import BackgroundBottom from ".../../../assets/svgs/User-bottom-wave.svg";
 import { width } from "../../../utils/dimensions";
+import { AuthContext } from "../../../contexts/AuthContext";
 
 export default function ViewService({ route }) {
+  const {token} = useContext(AuthContext)
   const { logged } = useContext<any>(UserContext);
 
   function handleSolicitation(service) {
@@ -23,6 +25,10 @@ export default function ViewService({ route }) {
     axios
       .post(`${api.BASE_URL}/solicitations`, newSolicitation, {
         method: 'post',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
       })
       .then((response) => {
         alert(JSON.stringify(response.data));
