@@ -10,15 +10,13 @@ import Animated, {
   StretchInX,
   StretchOutX,
   Easing,
-  PinwheelIn,
-  PinwheelOut,
   BounceInDown,
   ZoomOutDown,
   Layout,
 } from "react-native-reanimated";
 import { LottieView } from "../../utils/LottieView";
-import PasswordIcon from '../../../assets/svgs/password.svg'
-
+import PasswordIcon from "../../../assets/svgs/password.svg";
+import { TextLarge, TextMedium } from "../../../components/TextLg/Text";
 
 export const Login = () => {
   const [isEnabled, setIsEnable] = useState(false);
@@ -33,43 +31,46 @@ export const Login = () => {
   const [cpf, setCpf] = useState(String);
   const [password, setPassword] = useState(String);
   const [show, setShow] = useState(false);
-  const {navigate} = useNavigation();
+  const { navigate } = useNavigation();
 
   useEffect(() => {
-    if(auth){
-      navigate('HomeApp')
+    if (auth) {
+      navigate("HomeApp");
     }
-  },[auth])
+  }, [auth]);
 
   const toggleSigningAuto = () => {
-    setSigningAuto((previousState) => !previousState);
+    setSigningAuto((previousState) => !previousState)
+    setIsEnable(previousState => !previousState)
   };
 
   return (
-    <View className="flex-1 px-7 justify-around bg-gray-300 items-center">
+    <View className="flex-1 bg-white items-center">
       <BackgroundLogin
         style={{ position: "absolute", top: "40%", alignSelf: "center" }}
         width={width}
         opacity={1}
       />
-      <Animated.Image
-        entering={PinwheelIn.duration(2000).easing(Easing.bounce)}
-        exiting={PinwheelOut}
-        style={{
-          resizeMode: "cover",
-          width: "90%",
-          height: "30%",
-        }}
-        alt="pip-logo"
-        source={require("../../../assets/pip-icon.png")}
+      <LottieView
+        style={{position: 'absolute', opacity: 0.7, bottom: '40%', width: '100%' }}
+        autoPlay={true}
+        loop
+        source={require("../../../assets/animations/teste/Animation - WAVE BLUE TESTAR HOJE.json")}
+        />
+      <LottieView
+      autoPlay={true}
+      loop
+      style={{width: '100%'}} 
+        source={require('../../../assets/animations/Animation - login 2.json')}
       />
-      <Text className="font-default text-stone-800 text-lg">
-        PROJETO INCLUSÃO POPULAR
+      <Text className="font-default text-lg">
+        ÀREA DE ACESSO
       </Text>
+
       <Animated.View
         entering={StretchInX.duration(1400).easing(Easing.bounce)}
         exiting={StretchOutX}
-        className="w-72 shadow-lg pt-3 shadow-black justify-between items-center rounded-2xl bg-gray-200"
+        className="w-72 shadow-lg my-5 pt-3 shadow-black justify-between items-center rounded-2xl bg-gray-200"
       >
         <View className="flex-row w-64 gap-x-3 h-12 mb-5 self-center items-center rounded-2xl border-2 border-gray-600/30">
           <FontAwesome5 name="user-alt" size={28} color={"#c5c5c5"} />
@@ -110,8 +111,8 @@ export const Login = () => {
             </Text>
             <Switch
               className="self-start "
-              trackColor={{ false: "#9f9f9f", true: "#767590" }}
-              thumbColor={isEnabled ? "#767580" : "#f4f3f4"}
+              trackColor={{ false: "#cfcfcf", true: "#bebebe" }}
+              thumbColor={isEnabled ? "#217aff" : "#cecece"}
               value={signingAuto}
               onValueChange={toggleSigningAuto}
             />
@@ -131,29 +132,23 @@ export const Login = () => {
             </Animated.View>
           ) : (
             <TouchableOpacity
-              className="w-32 h-14 rounded-2xl shadow-lg shadow-gray-800 items-center justify-center bg-gray-600"
+              className="w-32 h-14 rounded-2xl shadow-lg shadow-gray-800 items-center justify-center bg-blue-600"
               onPress={() => {
                 setIsLoading(true) & Authentication(cpf, password);
               }}
             >
-              <Text className="font-default self-center text-2xl text-white">
-                Entrar
-              </Text>
+              <TextLarge text="Entrar" />
             </TouchableOpacity>
           )}
         </View>
       </Animated.View>
-              <Text className='font-default underline underline-offset-1 text-gray-700'>
-                Esqueci minha senha
-                </Text>
-      <Animated.View
-        entering={BounceInDown.duration(1400)}
-      >
+      
+      <Animated.View entering={BounceInDown.duration(1400)}>
         <TouchableOpacity
-          className="w-48 h-14 my-5 rounded-2xl items-center justify-center shadow-md shadow-black bg-gray-600"
+          className="w-48 h-14 my-2 rounded-2xl items-center justify-center shadow-md shadow-black bg-blue-500"
           onPress={() => navigate("Cadastrar")}
         >
-          <Text className="font-default text-xl text-white">REGISTRAR</Text>
+          <TextMedium text="Registrar-me" />
         </TouchableOpacity>
       </Animated.View>
     </View>

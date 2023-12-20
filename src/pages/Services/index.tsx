@@ -2,8 +2,9 @@ import React from "react";
 import BackButton from "../../../components/BackButton";
 import { useNavigation } from "@react-navigation/native";
 import { View, Image, Text, FlatList, TouchableOpacity } from "react-native";
-import BackgroundServices from '../../../assets/svgs/services-wave.svg'
+import BackgroundServices from "../../../assets/svgs/Solicitation-waves.svg";
 import { height, width } from "../../utils/dimensions";
+import { TextLarge } from "../../../components/TextLg/Text";
 
 export default function Services() {
   const navigation = useNavigation();
@@ -92,9 +93,13 @@ export default function Services() {
     },
   ];
   return (
-    <View className="flex-1 w-full justify-center items-center bg-gray-400">
-      <BackgroundServices style={{position: 'absolute'}} width={width} height={height + 10} />
-      <View className="flex-row w-full self-center">
+    <View className="flex-1 w-full justify-center items-center bg-white">
+      <BackgroundServices
+        style={{ position: "absolute" }}
+        width={width}
+        height={height + 50}
+      />
+      <View className="flex-row w-full">
         <Image
           className="w-36 h-36"
           alt="pip-logo"
@@ -109,49 +114,49 @@ export default function Services() {
         </View>
       </View>
 
-      <Text className="font-default text-lg text-gray-800 my-3 mt-2">
-        Oferecemos serviços gratuitamente de qualidade prestado por
-        profissionais qualificados!
-      </Text>
+      <TextLarge
+        text="Oferecemos serviços gratuitamente de qualidade prestado por
+        profissionais qualificados!"
+        className="text-black"
+      />
 
       <FlatList
-        className="flex-1 w-full mb-10"
+        className="flex-1 w-full mb-3"
         data={items}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => {
           return (
-            <View>
-              <TouchableOpacity
-              className="flex-row justify-around shadow-md shadow-black w-80 self-center h-32 my-2 rounded-lg bg-gray-300"
-                onPress={() =>
-                  navigation.navigate("ViewService", {
-                    title: item.labelTitulo,
-                    picture: item.picture,
-                    descrition: item.labelDesc,
-                    requisite: item.labelRequisite,
-                    pasta: item.pasta,
-                  })
-                }
-              >
-                <View className="justify-evenly py-3"> 
-                  <Text numberOfLines={4} className="w-44 font-default text-md text-gray-800">
-                   {item.labelDesc}
-                  </Text>
-                 
-                </View>
-               
-                <Image
-                  className="w-24 h-24 self-center bg-white/10 rounded-full"
-                  resizeMode="cover"
-                  alt="picture-service"
-                  source={item.picture}
-                />
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+              className="flex-row justify-around shadow-md shadow-black w-80 self-center h-32 my-3 rounded-lg bg-slate-200"
+              onPress={() =>
+                navigation.navigate("ViewService", {
+                  title: item.labelTitulo,
+                  picture: item.picture,
+                  descrition: item.labelDesc,
+                  requisite: item.labelRequisite,
+                  pasta: item.pasta,
+                })
+              }
+            >
+              <View className="justify-evenly py-3">
+                <Text
+                  numberOfLines={4}
+                  className="w-44 font-default text-md text-gray-800"
+                >
+                  {item.labelDesc}
+                </Text>
+              </View>
+
+              <Image
+                className="w-24 h-24 self-center bg-white/10 rounded-full"
+                resizeMode="cover"
+                alt="picture-service"
+                source={item.picture}
+              />
+            </TouchableOpacity>
           );
         }}
       />
-
     </View>
   );
 }

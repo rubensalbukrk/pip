@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import axios from "axios";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../contexts/UserContext";
@@ -12,6 +11,8 @@ import TopBackground from "../../../assets/svgs/User-top-waves.svg";
 import BottomBackground from '../../../assets/svgs/User-bottom-wave.svg'
 import { width } from "../../utils/dimensions";
 import { TextSmall } from "../../../components/TextLg/Text";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 export const User = () => {
   const { logged, setAvatar, avatar } = useContext<any>(UserContext);
@@ -42,6 +43,7 @@ export const User = () => {
       );
       if (formData) {
         setAvatar(assets[0].uri);
+        AsyncStorage.setItem("picture", JSON.stringify(assets[0]))
       }
     } else {
       alert("O Perfil não foi alterado!");
@@ -83,34 +85,34 @@ export const User = () => {
             <UserAvatar x={130} y={130} />
           </View>
 
-          <View className="h-7 absolute self-center bottom-0 items-center justify-center  bg-gray-500 shadow-lg shadow-black rounded-md">
+          <View className="h-7 absolute self-center bottom-0 items-center justify-center  bg-blue-400 shadow-lg shadow-black rounded-md">
             <TextSmall 
             className="px-1"
             text={logged?.isAdmin == true
-                ? "Admin"
+                ? "CEO Fundador"
                 : "Membro" && logged?.isEtg == true
                 ? "Estágiario"
                 : "Membro" && logged?.isVolt == true
                 ? "Voluntário"
                 : "Membro" && logged?.isCoordCidadania == true
-                ? "Coord Cidadania"
+                ? "Coordenação da Cidadania"
                 : "Membro" && logged?.isCoordAutist == true
-                ? "Coord Autistas"
+                ? "Coordenação dos Autistas"
                 : "Membro" && logged?.isCoordMulher == true
-                ? "Coord Mulher"
+                ? "Coordenação das Mulheres"
                 : "Membro" && logged?.isCoordSaude == true
-                ? "Coord Saúde"
+                ? "Coordenação da Saúde"
                 : "Membro" && logged?.isCoordAlimentar == true
-                ? "Coord Alimentar"
+                ? "Coordenação da Alimentação"
                 : "Membro" && logged?.isCoordProtagonista == true
-                ? "Coord Protagonista"
+                ? "Coordenação dos Protagonistas"
                 : "Membro" && logged?.isCoordPasse == true
-                ? "Coord Passe"
+                ? "Coordenação dos Passes"
                 : "Membro"} />
           </View>
           <View className="right-6 self-end top-5 absolute">
             <TouchableOpacity
-              className="h-5 w-5 items-center justify-center bg-gray-400 shadow-md shadow-black rounded-lg"
+              className="h-5 w-5 items-center justify-center bg-blue-400 shadow-md shadow-black rounded-lg"
               onPress={() => pickImageAsync()}
             >
               <Entypo name="camera" size={12} color="white" />
@@ -120,7 +122,8 @@ export const User = () => {
       </View>
 
       <ScrollView
-        className="w-full px-10 py-5 bg-gray-50"
+      style={{zIndex: 10}}
+        className="w-full px-10 py-5 bg-white"
         horizontal={false}
       >
         <View className="w-full mb-10 rounded-lg">

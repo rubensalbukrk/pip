@@ -1,18 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import Carousel from "react-native-reanimated-carousel";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { width } from "../../src/utils/dimensions";
 import { useFetchData } from "../../src/hooks/useFetchData";
 import { api } from "../../src/api/api";
+import { UserContext } from "../../src/contexts/UserContext";
 
 export const CarouselHome = () => {
+  const {refreshing,setRefreshing} = useContext<any>(UserContext)
   const {list, getData} = useFetchData(api.getNotices)
   const navigation = useNavigation();
 
   useEffect(() => {
     getData()
-  },[])
+    setRefreshing(false)
+  },[refreshing])
   
   return (
     <View style={{zIndex: 3}} className='w-full h-64 mt-2 items-center'>

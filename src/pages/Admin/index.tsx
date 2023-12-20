@@ -9,7 +9,7 @@ export default function Admin() {
 
   return (
     <View className="flex-1 w-full h-full items-center bg-zinc-400">
-      <View className="w-full h-32 justify-center pt-12 items-center">
+      <View style={{zIndex: 5,backgroundColor: '#979797'}} className="w-full h-36 justify-center pt-8 items-center">
         <View className="absolute top-20 left-5">
           <BackButton />
         </View>
@@ -18,7 +18,7 @@ export default function Admin() {
         <UserAvatar x={70} y={70} />
       </View>
 
-      <View className="flex-1 w-full mt-6">
+      <View className="flex-1 w-full">
         <TabViewAdmin />
       </View>
     </View>

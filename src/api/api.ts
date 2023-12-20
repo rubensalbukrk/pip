@@ -4,8 +4,7 @@ import { SolicitationsProps } from "../interfaces/Solicitations";
 import { AprovadosProps } from "../interfaces/Aprovados";
 import { PageProps } from "../interfaces/Page";
 import { UserProps } from "../interfaces/User";
-import { useContext } from "react";
-import { AuthContext } from "../contexts/AuthContext";
+import { Alert } from "react-native";
 
 const BASE_URL = "https://pip-server.vercel.app/api"
 const config = {
@@ -17,7 +16,7 @@ const getNotices = async (): Promise<NoticesProps[]> => {
     const response = await axios.get<PageProps<NoticesProps>>(`${BASE_URL}/notices`, config)
     return response.data.results.notices
   } catch (error) {
-    alert('O servidor não responde, tente novamente mas tarde!')
+    Alert.alert('Atenção', 'Tente novamente mais tarde!')
   }
 }
 
@@ -26,7 +25,7 @@ const getSolicitations = async (): Promise<SolicitationsProps[]> => {
     const response = await axios.get<PageProps<SolicitationsProps>>(`${BASE_URL}/solicitations`, config);
     return response.data.results.solicitations
   } catch (error) {
-    alert('O servidor não responde, tente novamente mas tarde!')
+    Alert.alert('Atenção', 'Tente novamente mais tarde!')
   }
 }
 
@@ -35,7 +34,7 @@ const getAprovados = async (): Promise<AprovadosProps[]> => {
     const response = await axios.get<PageProps<AprovadosProps>>(`${BASE_URL}/aprovados`, config);
     return response.data.results.aprovados
   } catch (error) {
-    alert('O servidor não responde, tente novamente mas tarde!')
+    Alert.alert('Atenção', 'Tente novamente mais tarde!')
   }
 }
 
@@ -50,7 +49,7 @@ const getUsers = async (token: any): Promise<UserProps[]> => {
       })
       return response.data.results
   } catch (error) {
-    alert('Houve um problema na conexão, tente novamente!')
+    Alert.alert('Atenção', 'Tente novamente mais tarde!')
   }
 }
 

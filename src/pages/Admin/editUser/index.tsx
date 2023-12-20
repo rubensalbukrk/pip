@@ -21,7 +21,7 @@ export default function EditUser({ route }) {
   const {token} = useContext(AuthContext)
   const [updateList, setUpdateList] = useState(false);
   const [formData, setData] = useState({});
-  const [bairro, setBairro] = useState(route?.params?.bairro);
+  const [bairro, setBairro] = useState<string>(route?.params?.bairro);
   const [voluntario, setVoluntario] = useState(route?.params?.isVolt);
   const [estagiario, setEstagiario] = useState(route?.params?.isEtg);
 
@@ -41,10 +41,10 @@ export default function EditUser({ route }) {
   const [isCoordProtagonista, setIsCoordProtagonista] = useState(route?.params?.isCoordProtagonista);
   const [isCoordPasse, setIsCoordPasse] = useState(route?.params?.isCoordPasse);
   const [autista, setAutista] = useState(route?.params?.isAutist);
-  const [nome, setNome] = useState(route?.params?.nome);
-  const [avatar, setAvatar] = useState(route?.params?.avatar)
+  const [nome, setNome] = useState<string>(route?.params?.nome);
+  const [avatar, setAvatar] = useState<string>(route?.params?.avatar)
   const [idade, setIdade] = useState<string>(route?.params?.idade);
-  const [address, setAddress] = useState(route?.params?.address);
+  const [address, setAddress] = useState<string>(route?.params?.address);
   const [cpf, setCpf] = useState<string>(route?.params?.cpf);
   const [nis, setNis] = useState<string>(route?.params?.nis);
   const [dataFilho, setDataFilho] = useState<FilhosProps>();

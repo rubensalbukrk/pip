@@ -158,7 +158,7 @@ export const PopMenu = () => {
 
 
         <TouchableOpacity className="flex-row w-full h-14 gap-2 items-center"
-        onPress={() => AsyncStorage.clear() && setLogged([]) & setAuth(false) & navigate("Welcome")}
+        onPress={() => AsyncStorage.clear() & setLogged({}) & setAuth(false) & navigate("Welcome")}
         >
           <MaterialIcons name="exit-to-app" size={32} color="black" />
           <Text className="font-default text-gray-800 text-xl">

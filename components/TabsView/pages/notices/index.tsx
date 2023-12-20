@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import {
   View,
@@ -17,8 +17,10 @@ import {
 import BackButton from "../../../BackButton";
 import { useFetchData } from "../../../../src/hooks/useFetchData";
 import { TextExtra, TextLarge, TextMedium } from "../../../TextLg/Text";
+import { AuthContext } from "../../../../src/contexts/AuthContext";
 
 export default function NewNotice() {
+  const {token} = useContext(AuthContext)
   var [dataNotice, setData] = useState({});
   const {list, getData} = useFetchData(api.getNotices)
 
@@ -30,6 +32,10 @@ export default function NewNotice() {
     axios
       .post(`${api.BASE_URL}/notices`, dataNotice, {
         method: "post",
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
       })
       .then((response) => {
         alert(JSON.stringify(response.data));

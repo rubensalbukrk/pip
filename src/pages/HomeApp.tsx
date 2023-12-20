@@ -1,5 +1,4 @@
-import React, { useContext, useEffect } from "react";
-import { api } from "../api/api";
+import React, { useContext } from "react";
 import {
   View,
   Text,
@@ -10,7 +9,6 @@ import {
 } from "react-native";
 import { UserContext } from "../contexts/UserContext";
 import {
-  Feather,
   MaterialCommunityIcons,
   Ionicons,
   FontAwesome,
@@ -18,13 +16,13 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { CarouselHome } from "../../components/Carousel";
 import UserAvatar from "../../components/UserAvatar";
-import Background from "../../assets/svgs/Homeapp-wave.svg";
+import Background from "../../assets/svgs/Solicitation-waves.svg";
 import { height, width } from "../utils/dimensions";
 import { LottieView } from "../utils/LottieView";
+import { TextMedium } from "../../components/TextLg/Text";
 
 export const HomeApp = () => {
   const {
-    logged,
     solicitations,
     refreshing,
     setRefreshing,
@@ -43,14 +41,14 @@ export const HomeApp = () => {
       <View className="flex-row w-full my-2 h-40">
         <TouchableOpacity
           style={{ zIndex: 10 }}
-          className="absolute top-10 shadow-xl shadow-black left-5 w-32 h-32 items-center justify-center bg-zinc-500/60 rounded-full"
+          className="absolute top-10 shadow-xl shadow-black left-5 w-32 h-32 items-center justify-center bg-slate-300/70 rounded-full"
           onPress={() => navigate("User")}
         >
           <UserAvatar x={124} y={124} />
         </TouchableOpacity>
 
         <View className="w-full h-38 justify-center">
-  
+          <TextMedium className="absolute top-3 right-5" text="PIP" />
           <Image
             className="absolute top-1 right-0 w-32 h-32"
             alt="pip-logo"
@@ -67,7 +65,9 @@ export const HomeApp = () => {
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl 
-          refreshing={refreshing} />
+          refreshing={refreshing} 
+          onRefresh={() => setRefreshing(true)}
+          />
         }
       >
         <View className="w-full h-96">
@@ -75,31 +75,10 @@ export const HomeApp = () => {
           className='flex-row w-full  justify-between items-center'
           >
              <Text className="font-default text-gray-700 text-2xl">Notícias</Text>
-             <Feather name="info" size={24} color="black" />
           </View>
-         
           <CarouselHome />
-
-  
         </View>
-        {refreshing ? (
-            <LottieView
-            autoPlay
-            loop
-            duration={500}
-            resizeMode='contain'
-            style={{ zIndex: 3, position: "absolute", width: '100%'}}
-            source={require("../../assets/animations/animation-skeleton-notices.json")}
-          />
-        ) : null}
-        {refreshing ? (
-          <LottieView
-            autoPlay
-            loop
-            style={{ zIndex: 5, position: "absolute", width: "100%" }}
-            source={require("../../assets/animations/animation-pip-balls-286f.json")}
-          />
-        ) : null}
+        
       </ScrollView>
 
       <View
@@ -110,11 +89,11 @@ export const HomeApp = () => {
           className="w-16 h-10 items-center justify-center"
         >
           <Ionicons
-            color={"#3C3C3C"}
+            color={"white"}
             size={38}
             name={"home"}
           />
-          <Text className="font-default text-gray-700 text-center text-xs">
+          <Text className="font-default text-white text-center text-xs">
             Inicio
           </Text>
         </TouchableOpacity>
@@ -123,8 +102,8 @@ export const HomeApp = () => {
           className="w-17 h-10 items-center justify-center"
           onPress={() => navigate("Sobre")}
         >
-          <FontAwesome color={"#3C3C3C"} size={38} name="group" />
-          <Text className="font-default text-gray-700 text-center text-xs">
+          <FontAwesome color={"white"} size={38} name="group" />
+          <Text className="font-default text-white text-center text-xs">
             Nós
           </Text>
         </TouchableOpacity>
@@ -134,12 +113,12 @@ export const HomeApp = () => {
           onPress={() => navigate("Services")}
         >
           <MaterialCommunityIcons
-            color={"#3C3C3C"}
+            color={"white"}
             size={40}
             name={"hand-heart"}
           />
 
-          <Text className="font-default text-gray-700 text-center text-xs">
+          <Text className="font-default text-white text-center text-xs">
             Serviços
           </Text>
         </TouchableOpacity>
@@ -165,7 +144,7 @@ export const HomeApp = () => {
             style={{ width: 45, marginBottom: 10, height: 70 }}
             source={require("../../assets/animations/notify2.json")}
           />
-          <Text className="absolute top-8 font-default text-gray-700 text-center text-xs">
+          <Text className="absolute top-8 font-default text-white text-center text-xs">
             Solicitações
           </Text>
         </TouchableOpacity>
@@ -174,8 +153,8 @@ export const HomeApp = () => {
         autoPlay
         loop
         duration={11999}
-        style={{ position: "absolute", bottom: 0, width: width , opacity: 0.7}}
-        source={require("../../assets/animations/animation-waves-gray.json")}
+        style={{zIndex:0, position: "absolute", bottom: 0, width: width , opacity: 1}}
+        source={require("../../assets/animations/teste/Animation - WAVE BLUE 2 TESTA HOJE.json")}
       />
     </View>
   );

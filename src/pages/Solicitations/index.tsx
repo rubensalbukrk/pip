@@ -3,15 +3,14 @@ import {
   View,
   Text,
   TouchableOpacity,
-  FlatList,
-  RefreshControl,
+  FlatList
 } from "react-native";
 import { FontAwesome, Octicons } from "@expo/vector-icons";
 import { api } from "../../api/api";
 import UserAvatar from "../../../components/UserAvatar";
 import { UserContext } from "../../contexts/UserContext";
 import BackButton from "../../../components/BackButton";
-import BackgroundSolicitationUser from "../../../assets/svgs/Homeapp-wave.svg";
+import BackgroundSolicitation from "../../../assets/svgs/Home-waves.svg";
 import { height, width } from "../../utils/dimensions";
 import { useFetchData } from "../../hooks/useFetchData";
 
@@ -38,12 +37,12 @@ export default function SolicitationsUser() {
 
   return (
     <View className="w-full h-full items-center justify-center">
-      <BackgroundSolicitationUser
+      <BackgroundSolicitation
         width={width}
         height={height + 100}
         style={{ zIndex: 0, position: "absolute", top: 0 }}
       />
-      <View className="absolute top-2 left-2">
+      <View className="absolute top-4 left-2">
         <BackButton />
       </View>
       <View className="self-center my-8">
@@ -51,7 +50,7 @@ export default function SolicitationsUser() {
       </View>
 
       <View className="flex-row w-full px-4 h-12 justify-start items-start">
-        <Octicons name="checklist" size={32} color="#3C3C3C" />
+        <Octicons name="log" size={32} color="#3C3C3C" />
         <Text className="font-default text-xl ml-3 text-gray-900">
           Suas solicitações
         </Text>

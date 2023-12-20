@@ -1,9 +1,9 @@
-import React, { createContext, useState, useContext, ReactNode } from "react";
+import React, { createContext, useState, useContext, ReactNode, ContextType } from "react";
 import { UserContext } from "../UserContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { api } from "../../api/api";
-
+import { Alert } from "react-native";
 
 export const AuthContext = createContext();
 
@@ -37,14 +37,15 @@ export default function AuthProvider({ children }) {
         setLogged(response?.data?.user); 
         setToken(response?.data?.token);
         setAuth(true);
+        if (signingAuto){
+          saveMyLogin(response?.data?.user)
+     }
     } catch (error) {
-      alert("Erro na autenticação",);
+      Alert.alert("Aviso","CPF e/ou senha inválida!",);
       setIsLoading(false)
     }
 
-    // if (signingAuto){
-    //     saveMyLogin(user)
-    // }
+   
   }
   
   const contexts = {

@@ -6,7 +6,7 @@ const UserAvatar = ({x,y}) => {
   const {logged, avatar} = useContext<any>(UserContext)
   return (
     <View 
-    className='rounded-full items-center justify-center border-white bg-zinc-400'
+    className='rounded-full items-center justify-center border-white bg-slate-200'
     style={{width: x , height: y }}>
     <Image
     className='rounded-full'

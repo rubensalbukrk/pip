@@ -85,6 +85,8 @@ export default function SolicitationInfoUser({ route }) {
           <InputInfoUser
             infoLabel="Serviço"
             infoValue={route?.params?.service}
+            numberOfLines={1}
+            className="w-80"
           />
           <InputInfoUser
             infoLabel="Nome"
