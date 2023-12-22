@@ -8,12 +8,25 @@ import BackgroundTop from "../../../../assets/svgs/User-top-waves.svg";
 import BackgroundBottom from ".../../../assets/svgs/User-bottom-wave.svg";
 import { width } from "../../../utils/dimensions";
 import { AuthContext } from "../../../contexts/AuthContext";
-import { TextLarge, TextSmall } from "../../../../components/TextLg/Text";
+import {
+  TextExtra,
+  TextLarge,
+  TextMedium,
+  TextSmall,
+} from "../../../../components/TextLg/Text";
+
+interface ServicesProps {
+  title: string;
+  picture: any;
+  descrition: any;
+  requisite: string;
+}
 
 export default function ViewService({ route }) {
   const { token } = useContext(AuthContext);
   const { logged } = useContext<any>(UserContext);
-
+  const { title, picture, descrition, requisite }: ServicesProps =
+    route?.params;
   function handleSolicitation(service) {
     let newSolicitation = {
       userInfo: logged,
@@ -43,34 +56,29 @@ export default function ViewService({ route }) {
         style={{ zIndex: 0, position: "absolute", top: -10 }}
         width={width}
       />
-      <View style={{ zIndex: 3 }} className="absolute top-9 left-4">
+      <View className="flex-row absolute w-full pl-3 top-0 justify-between">
+        <TextMedium className="text-3xl" text={route?.params?.title} />
         <BackButton />
       </View>
       <Image
-        style={{ zIndex: 2, alignSelf: "center", marginVertical: "10%" }}
-        className=" w-40 h-40 my- rounded-full"
+        style={{ zIndex: 1, alignSelf: "center", marginVertical: "10%" }}
+        className=" w-40 h-40 mt-12 rounded-full"
         resizeMode="cover"
         alt="pip-service"
-        source={route?.params?.picture}
+        source={picture}
       />
-      <View style={{zIndex: 4}} className="w-full px-3 bg-transparent">
-        <Text className="font-default self-start text-2xl text-gray-800">
-          {route?.params?.title}
-        </Text>
-
-        <Text className="font-default text-md text-gray-800">
-          {route?.params?.descrition}
-        </Text>
-
-        <Text className="font-default self-start text-2xl mt-6 text-gray-800">
-          Serviços disponíveis
-        </Text>
+      <View style={{ zIndex: 2 }} className="w-full h-full px-3 bg-transparent">
         <ScrollView
-          showsVerticalScrollIndicator={false}
-          style={{width: '100%', backgroundColor: 'transparent' }}
+          style={{flex: 3,  maxHeight: 450, width: "100%", backgroundColor: "transparent" }}
         >
-          
-            <View className="w-full h-full items-center">
+          <TextLarge text={descrition} className="text-black text-base" />
+
+          <TextLarge
+            text="Serviços disponíveis"
+            className="self-start text-2xl mt-6 text-black"
+          />
+
+          <View className="w-full h-full items-center">
             {route?.params?.requisite[0] ? (
               <TouchableOpacity
                 className="w-80 h-10 shadow-lg shadow-black my-2 rounded-lg justify-center px-3 bg-blue-400"
@@ -103,8 +111,7 @@ export default function ViewService({ route }) {
                 <TextSmall text={route?.params?.requisite[3]} />
               </TouchableOpacity>
             ) : null}
-            </View>
-          
+          </View>
         </ScrollView>
       </View>
       <BackgroundBottom

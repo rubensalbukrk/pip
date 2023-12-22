@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useEffect, useState } from "react";
-import { View, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity, StatusBar } from "react-native";
 import Animated, {
   BounceInDown,
   Easing,
@@ -42,7 +42,6 @@ export default function Welcome() {
     }
   }, [fogos]);
 
-
   async function getMyLogin() {
     try {
       const token = await AsyncStorage.getItem("token").then((value) => {
@@ -69,7 +68,7 @@ export default function Welcome() {
   }, []);
 
   return (
-    <View className="flex-1 w-full items-center bg-gray-100">
+    <View className="flex-1 w-full items-center bg-white">
       <BackgroundWave
         style={{ position: "absolute" }}
         width={width}
@@ -141,6 +140,8 @@ export default function Welcome() {
         ref={animation}
         source={require("../../../assets/animations/fogos-animation.json")}
       />
+
+      <StatusBar backgroundColor="#fff" />
     </View>
   );
 }

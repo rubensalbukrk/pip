@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { View, Image, Text, FlatList, TouchableOpacity } from "react-native";
 import BackgroundServices from "../../../assets/svgs/Solicitation-waves.svg";
 import { height, width } from "../../utils/dimensions";
-import { TextLarge } from "../../../components/TextLg/Text";
+import { TextExtra, TextLarge } from "../../../components/TextLg/Text";
 
 export default function Services() {
   const navigation = useNavigation();
@@ -99,19 +99,20 @@ export default function Services() {
         width={width}
         height={height + 50}
       />
-      <View className="flex-row w-full">
+      <View className="flex-row absolute w-full pl-3 top-0 justify-between">
+        <TextExtra text="Serviços" />
+        <BackButton />
+      </View>
+      <View className="flex-row mt-20 w-full">
         <Image
-          className="w-36 h-36"
+          className="absolute w-24 h-24 ml-3"
           alt="pip-logo"
           resizeMode="cover"
           source={require("../../../assets/pip-icon.png")}
         />
-        <Text className="font-default text-md mt-20 text-gray-800">
+        <Text className="font-default ml-20 bottom-3 text-md mt-20 text-gray-800">
           PROJETO INCLUSÃO POPULAR
         </Text>
-        <View className="absolute right-1 top-4">
-          <BackButton />
-        </View>
       </View>
 
       <TextLarge

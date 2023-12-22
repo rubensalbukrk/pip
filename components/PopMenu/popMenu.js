@@ -15,17 +15,10 @@ export const PopMenu = () => {
   return (
     <View className="flex-1 w-full h-full bg-black/40">
       <View
-        style={{ width: width, height: height / 3, backgroundColor: "#dadada" }}
-        className="absolute bottom-0 px-3 rounded-t-xl"
+        style={{ width: width, height: height / 3}}
+        className="absolute bg-slate-100 bottom-0 px-3 rounded-t-xl"
       >
-        <TopBackgroundPopMenu
-          height={90}
-          style={{
-            overflow: 'hidden',
-            position: "absolute",
-            top: 8,
-          }}
-        />
+
         <TouchableOpacity className='w-9 h-9 absolute top-3 right-3 items-center justify-center'
         onPress={() => goBack() }
         >

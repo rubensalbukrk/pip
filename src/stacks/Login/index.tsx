@@ -60,7 +60,7 @@ export const Login = () => {
       <LottieView
       autoPlay={true}
       loop
-      style={{width: '100%'}} 
+      style={{width: '70%',}} 
         source={require('../../../assets/animations/Animation - login 2.json')}
       />
       <Text className="font-default text-lg">
@@ -132,7 +132,7 @@ export const Login = () => {
             </Animated.View>
           ) : (
             <TouchableOpacity
-              className="w-32 h-14 rounded-2xl shadow-lg shadow-gray-800 items-center justify-center bg-blue-600"
+              className="w-32 h-12 rounded-2xl shadow-lg shadow-black items-center justify-center bg-blue-600"
               onPress={() => {
                 setIsLoading(true) & Authentication(cpf, password);
               }}

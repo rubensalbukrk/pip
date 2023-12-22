@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   RefreshControl,
+  StatusBar,
 } from "react-native";
 import { UserContext } from "../contexts/UserContext";
 import {
@@ -47,12 +48,12 @@ export const HomeApp = () => {
           <UserAvatar x={124} y={124} />
         </TouchableOpacity>
 
-        <View className="w-full h-38 justify-center">
-          <TextMedium className="absolute top-3 right-5" text="PIP" />
+        <View className="w-full bottom-3 h-38 justify-center">
+          <TextMedium className="absolute top-1 text-3xl right-1" text="PIP" />
           <Image
-            className="absolute top-1 right-0 w-32 h-32"
+            className="absolute top-6 right-3 w-24 h-24"
             alt="pip-logo"
-            resizeMode="contain"
+            resizeMode="cover"
             source={require("../../assets/pip-icon.png")}
           />
         </View>
@@ -156,6 +157,7 @@ export const HomeApp = () => {
         style={{zIndex:0, position: "absolute", bottom: 0, width: width , opacity: 1}}
         source={require("../../assets/animations/teste/Animation - WAVE BLUE 2 TESTA HOJE.json")}
       />
+      <StatusBar backgroundColor='#3d82ea' />
     </View>
   );
 };

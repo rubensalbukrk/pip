@@ -46,7 +46,7 @@ export default function SolicitationsUser() {
         <BackButton />
       </View>
       <View className="self-center my-8">
-        <UserAvatar x={100} y={100} />
+        <UserAvatar x={180} y={180} />
       </View>
 
       <View className="flex-row w-full px-4 h-12 justify-start items-start">

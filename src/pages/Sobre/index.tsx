@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Image, ScrollView } from "react-native";
+import { View, Image, ScrollView, Touchable, TouchableOpacity } from "react-native";
 import BackButton from "../../../components/BackButton";
 import { width, height } from "../../utils/dimensions";
 import { LottieView } from "../../utils/LottieView";
@@ -55,13 +55,13 @@ export default function Sobre() {
             coordenações das pastas de atuação."
           />
         </View>
-        <View className="self-center mt-3">
-          <BackButton />
-        </View>
+        <TouchableOpacity className="w-48 h-11 items-center justify-center self-center my-4 bg-blue-500 rounded-lg">
+          <TextLarge text="Voltar" />
+        </TouchableOpacity>
 
         <TextLarge
           text="Todos os direitos reservados 2023."
-          className="text-black text-base my-2"
+          className="text-black self-center text-base my-2"
         />
       </ScrollView>
     </View>

@@ -45,7 +45,7 @@ export default function MyParents(props) {
           <MaterialCommunityIcons
             name="close-circle"
             size={14}
-            color={"white"}
+            color={"gray"}
           />
         )}
       </View>

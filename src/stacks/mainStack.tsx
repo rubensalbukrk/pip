@@ -18,6 +18,7 @@ import ViewService from "../pages/Services/ViewService";
 import SolicitationInfoUser from "../../components/TabsView/pages/solicitations/userSolicitation";
 import SolicitationsUser from "../pages/Solicitations";
 import { PopMenu } from "../../components/PopMenu/popMenu";
+import { Policys } from "./Cadastro/Policy";
 
 
 declare global {
@@ -56,7 +57,8 @@ declare global {
       Admin: any,
       EditUser: any,
       NewNotices: any,
-      PopMenu: any
+      PopMenu: any,
+      Policys: any
     }
   }
 }
@@ -112,7 +114,7 @@ export default function MainStack() {
       }}
       > 
         <Stack.Screen name="PopMenu" component={PopMenu} />
-       
+        <Stack.Screen name="Policys" component={Policys} />
       </Stack.Group>
 
     </Stack.Navigator>

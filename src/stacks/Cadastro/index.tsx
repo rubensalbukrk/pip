@@ -13,7 +13,7 @@ import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { TextInputMask } from "react-native-masked-text";
 import { FilhosProps } from "../../interfaces/Filhos";
-import { TextLarge } from "../../../components/TextLg/Text";
+import { TextLarge, TextSmall } from "../../../components/TextLg/Text";
 import { LottieView } from "../../utils/LottieView";
 import colors from "tailwindcss/colors";
 
@@ -27,6 +27,7 @@ const citys = [
 
 export const Cadastro = () => {
   const [isEnabled, setIsEnabled] = useState(false);
+  const [policy, setPolicy] = useState(false);
   const [updateList, setUpdateList] = useState(false);
   const [formData, setData] = useState(null);
   const [bairro, setBairro] = useState("");
@@ -140,6 +141,10 @@ export const Cadastro = () => {
     }));
     setIsEnabled((previus) => !previus);
   };
+  const togglePolicy = (): void => {
+    setPolicy((previus) => !previus);
+    navigate("Policys");
+  };
 
   return (
     <View className="flex-1 w-full h-full bg-slate-200">
@@ -181,7 +186,6 @@ export const Cadastro = () => {
               type="cpf"
               selectionColor={"#9f9f9f"}
               placeholderTextColor={"#bdbdbd"}
-              value={formData.cpf}
               placeholder="000.000.000-00"
               onChangeText={(value) => setData({ ...formData, cpf: value })}
             />
@@ -307,7 +311,10 @@ export const Cadastro = () => {
               </TouchableOpacity>
             </View>
           </View>
-
+          <TextSmall
+            className="text-zinc-400"
+            text="Cuidado, você precisa dessa senha para acessar, caso esqueça será necessário entrar em contato com nossa coordenação."
+          />
           <TextLarge text="Digite uma senha" className="text-black" />
           <TextInput
             className="w-52 h-10 px-2 font-default text-start text-lg rounded-2xl bg-blue-500/10"
@@ -319,16 +326,27 @@ export const Cadastro = () => {
             className="w-52 h-10 px-2 font-default text-start text-lg rounded-2xl bg-blue-500/10"
             onChangeText={(value) => setData({ ...formData, password: value })}
           />
-
+          <TextLarge
+            className="mt-4 underline text-blue-700 text-base"
+            text="Concordo e aceito com os termos de políticas"
+          />
+          <Switch
+            value={policy}
+            className="self-start ml-3"
+            trackColor={{ false: "#cfcfcf", true: "#bebebe" }}
+            thumbColor={policy ? "#217aff" : "#cecece"}
+            onValueChange={togglePolicy}
+          />
           <TouchableOpacity
-            className="w-72 h-12 my-3 mt-8 self-center justify-center items-center bg-blue-600 rounded-lg"
+            disabled={!policy}
+            className="w-72 h-12 my-3 mt-8 shadow-lg shadow-black self-center justify-center items-center bg-blue-600 rounded-lg"
             onPress={() => [newUser(), navigate("Welcome")]}
           >
             <TextLarge text="Enviar" className="text-white" />
           </TouchableOpacity>
 
           <TouchableOpacity
-            className="w-72 h-12 my-3 self-center justify-center items-center bg-blue-500/40 rounded-lg"
+            className="w-72 h-12 my-3 self-center shadow-lg shadow-black justify-center items-center bg-blue-400 rounded-lg"
             onPress={() => goBack()}
           >
             <TextLarge text="Voltar" className="text-black" />
