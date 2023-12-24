@@ -78,8 +78,6 @@ export default function SolicitationInfoUser({ route }) {
         <TextLarge text="Informações de Solicitação" />
         <BackButton />
       </View>
-
-
       <ScrollView className="flex-1 w-full rounded-lg bg-zinc-300/30">
         <View className="w-full mx-3 my-2">
           <InputInfoUser

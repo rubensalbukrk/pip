@@ -115,12 +115,6 @@ export default function Services() {
         </Text>
       </View>
 
-      <TextLarge
-        text="Oferecemos serviços gratuitamente de qualidade prestado por
-        profissionais qualificados!"
-        className="text-black"
-      />
-
       <FlatList
         className="flex-1 w-full mb-3"
         data={items}

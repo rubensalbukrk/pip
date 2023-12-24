@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { width } from "../../utils/dimensions";
-import { View, Text, TouchableOpacity, TextInput, Switch } from "react-native";
+import { View, Text, TouchableOpacity, TextInput, Switch, StatusBar } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import BackgroundLogin from "../../../assets/svgs/login-center.svg";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -13,10 +13,12 @@ import Animated, {
   BounceInDown,
   ZoomOutDown,
   Layout,
+  ZoomOut,
+  FadeInLeft,
 } from "react-native-reanimated";
 import { LottieView } from "../../utils/LottieView";
 import PasswordIcon from "../../../assets/svgs/password.svg";
-import { TextLarge, TextMedium } from "../../../components/TextLg/Text";
+import { TextLarge, TextMedium, TextSmall } from "../../../components/TextLg/Text";
 
 export const Login = () => {
   const [isEnabled, setIsEnable] = useState(false);
@@ -57,13 +59,14 @@ export const Login = () => {
       style={{width: '70%',}} 
         source={require('../../../assets/animations/Animation - login 2.json')}
       />
-      <Text className="font-default text-lg">
-        ÀREA DE ACESSO
+      <Text className="font-default text-blue-400 text-lg">
+        ÁREA DE ACESSO
       </Text>
 
       <Animated.View
         entering={StretchInX.duration(1400).easing(Easing.bounce)}
-        exiting={StretchOutX}
+        exiting={FadeInLeft.delay(100)}
+        layout={Layout}
         className="w-72 shadow-lg my-5 pt-3 shadow-black justify-between items-center rounded-2xl bg-gray-200"
       >
         <View className="flex-row w-64 gap-x-3 h-12 mb-5 self-center items-center rounded-2xl border-2 border-gray-600/30">
@@ -114,7 +117,7 @@ export const Login = () => {
 
           {isLoading ? (
             <Animated.View
-              exiting={ZoomOutDown.delay(2000)}
+              exiting={ZoomOut.delay(2000)}
               layout={Layout}
               className="w-24 h-24 items-center justify-center"
             >
@@ -136,16 +139,16 @@ export const Login = () => {
           )}
         </View>
       </Animated.View>
-      
+      <TextSmall text="Ainda não tem uma conta?" className="text-blue-400 my-2" />
       <Animated.View entering={BounceInDown.duration(1400)}>
         <TouchableOpacity
-          className="w-48 h-14 my-2 rounded-2xl items-center justify-center shadow-md shadow-black bg-blue-500"
+          className="w-48 h-14 my-3 rounded-2xl items-center justify-center shadow-md shadow-black bg-blue-500"
           onPress={() => navigate("Cadastrar")}
         >
           <TextMedium text="Registrar-me" />
         </TouchableOpacity>
       </Animated.View>
-      
+      <StatusBar barStyle="dark-content" />
     </View>
   );
 };

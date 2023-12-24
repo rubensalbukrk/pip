@@ -18,29 +18,29 @@ import { FilhosProps } from "../../../interfaces/Filhos";
 import { AuthContext } from "../../../contexts/AuthContext";
 
 export default function EditUser({ route }) {
-  const {token} = useContext(AuthContext)
+  const {token} = useContext<any>(AuthContext)
   const [updateList, setUpdateList] = useState(false);
   const [formData, setData] = useState({});
   const [bairro, setBairro] = useState<string>(route?.params?.bairro);
-  const [voluntario, setVoluntario] = useState(route?.params?.isVolt);
-  const [estagiario, setEstagiario] = useState(route?.params?.isEtg);
+  const [voluntario, setVoluntario] = useState<boolean>(route?.params?.isVolt);
+  const [estagiario, setEstagiario] = useState<boolean>(route?.params?.isEtg);
 
-  const [isCoordAutist, setIsCoordAutist] = useState(
+  const [isCoordAutist, setIsCoordAutist] = useState<boolean>(
     route?.params?.isCoordAutist
   );
-  const [isCoordMulher, setIsCoordMulher] = useState(
+  const [isCoordMulher, setIsCoordMulher] = useState<boolean>(
     route?.params?.isCoordMulher
   );
-  const [isCoordCidadania, setIsCoordCidadania] = useState(
+  const [isCoordCidadania, setIsCoordCidadania] = useState<boolean>(
     route?.params?.isCoordCidadania
   );
-  const [isCoordAlimentar, setIsCoordAlimentar] = useState(
+  const [isCoordAlimentar, setIsCoordAlimentar] = useState<boolean>(
     route?.params?.isCoordAlimentar
   );
-  const [isCoordSaude, setIsCoordSaude] = useState(route?.params?.isCoordSaude);
-  const [isCoordProtagonista, setIsCoordProtagonista] = useState(route?.params?.isCoordProtagonista);
-  const [isCoordPasse, setIsCoordPasse] = useState(route?.params?.isCoordPasse);
-  const [autista, setAutista] = useState(route?.params?.isAutist);
+  const [isCoordSaude, setIsCoordSaude] = useState<boolean>(route?.params?.isCoordSaude);
+  const [isCoordProtagonista, setIsCoordProtagonista] = useState<boolean>(route?.params?.isCoordProtagonista);
+  const [isCoordPasse, setIsCoordPasse] = useState<boolean>(route?.params?.isCoordPasse);
+  const [autista, setAutista] = useState<boolean>(route?.params?.isAutist);
   const [nome, setNome] = useState<string>(route?.params?.nome);
   const [avatar, setAvatar] = useState<string>(route?.params?.avatar)
   const [idade, setIdade] = useState<string>(route?.params?.idade);
@@ -50,9 +50,8 @@ export default function EditUser({ route }) {
   const [dataFilho, setDataFilho] = useState<FilhosProps>();
   const [filhos, setFilhos] = useState<FilhosProps[]>(route?.params?.filhos);
   const [phone, setPhone] = useState<string>(route?.params?.phone);
-  const [email, setEmail] = useState(route?.params?.email);
-  const [member, setMember] = useState(route?.params?.question1);
-  const [opnion, setOpnion] = useState(route?.params?.question2);
+  const [email, setEmail] = useState<string>(route?.params?.email);
+  const [opnion, setOpnion] = useState<string>(route?.params?.question2);
   const [pass, setPass] = useState<string>(route?.params?.password);
   const navigation = useNavigation();
 
@@ -77,7 +76,7 @@ export default function EditUser({ route }) {
     filhos: filhos,
     phone: phone,
     email: email,
-    question1: member,
+    question1: true,
     question2: opnion,
     password: pass,
   };

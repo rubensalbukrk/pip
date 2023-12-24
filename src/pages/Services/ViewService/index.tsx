@@ -51,15 +51,15 @@ export default function ViewService({ route }) {
         },
       })
       .then(() => {
-        setIsOk(true)
+        setIsOk(true);
       })
-      .catch((error) => setIsError(true));
+      .catch(() => setIsError(true));
   }
 
   return (
     <View className="flex-1 w-full h-full items-center bg-white">
       
-      {isOk && <View style={{zIndex: 20, height: '100%'}} className="w-full absolute self-center bg-white"><WarningSucess /></View> }
+      {isOk && <View style={{zIndex: 20, height: '100%'}} className="w-full absolute self-center bg-white"><WarningSucess title="Agora você pode acompanhar o andamento na aba 'Solicitações'" /></View> }
       {isError && <View style={{zIndex: 20, height: '100%'}} className="w-full absolute self-center bg-white"><WarningError/></View>}
 
       <BackgroundTop

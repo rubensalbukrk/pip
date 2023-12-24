@@ -12,6 +12,12 @@ import BottomBackground from "../../../assets/svgs/User-bottom-wave.svg";
 import { width } from "../../utils/dimensions";
 import { TextSmall } from "../../../components/TextLg/Text";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { FilhosProps } from "../../interfaces/Filhos";
+import Animated, {
+  BounceInDown,
+  BounceInUp,
+  FadeInUp,
+} from "react-native-reanimated";
 
 export const User = () => {
   const { logged, setAvatar, avatar } = useContext<any>(UserContext);
@@ -52,75 +58,84 @@ export const User = () => {
   return (
     <View className="flex-1 w-full h-full justify-between items-center">
       <View className="w-full h-44 items-center justify-between">
-        <View className="flex-row w-full h-14">
-          <TopBackground
-            width={width}
-            style={{ zIndex: 0, position: "absolute", top: -5 }}
-          />
-          <View
-            className="flex-row w-full h-full top-2 absolute items-center justify-between"
-            style={{ zIndex: 2 }}
-          >
-            <TouchableOpacity
-              className="w-20 h-20 items-center justify-center"
-              onPress={() => {
-                goBack();
-              }}
-            >
-              <Feather name="arrow-left-circle" color="white" size={32} />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              className="w-20 h-20  items-center justify-center opacity-80"
-              onPress={() => navigate("PopMenu")}
-            >
-              <Feather size={32} color="white" name="settings" />
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <View style={{ zIndex: 2 }} className="w-40 h-40 mt-2 absolute">
-          <View className="w-50 h-50  mt-4 items-center justify-center rounded-full">
-            <UserAvatar x={130} y={130} />
-          </View>
-
-          <View className="h-7 absolute self-center bottom-0 items-center justify-center  bg-blue-400 shadow-lg shadow-black rounded-md">
-            <TextSmall
-              className="px-1"
-              text={
-                logged?.isAdmin == true
-                  ? "CEO Fundador"
-                  : "Membro" && logged?.isEtg == true
-                  ? "Estágiario"
-                  : "Membro" && logged?.isVolt == true
-                  ? "Voluntário"
-                  : "Membro" && logged?.isCoordCidadania == true
-                  ? "Coordenação da Cidadania"
-                  : "Membro" && logged?.isCoordAutist == true
-                  ? "Coordenação dos Autistas"
-                  : "Membro" && logged?.isCoordMulher == true
-                  ? "Coordenação das Mulheres"
-                  : "Membro" && logged?.isCoordSaude == true
-                  ? "Coordenação da Saúde"
-                  : "Membro" && logged?.isCoordAlimentar == true
-                  ? "Coordenação da Alimentação"
-                  : "Membro" && logged?.isCoordProtagonista == true
-                  ? "Coordenação dos Protagonistas"
-                  : "Membro" && logged?.isCoordPasse == true
-                  ? "Coordenação dos Passes"
-                  : "Membro"
-              }
+        <Animated.View
+          style={{ zIndex: 0, width: "100%", backgroundColor: "#fff" }}
+          entering={FadeInUp.duration(1000)}
+        >
+          <View className="flex-row w-full h-14">
+            <TopBackground
+              width={width}
+              style={{ zIndex: 0, position: "absolute", top: -5 }}
             />
-          </View>
-          <View className="right-6 self-end top-5 absolute">
-            <TouchableOpacity
-              className="h-5 w-5 items-center justify-center bg-blue-400 shadow-md shadow-black rounded-lg"
-              onPress={() => pickImageAsync()}
+            <View
+              className="flex-row w-full h-full top-2 absolute items-center justify-between"
+              style={{ zIndex: 2 }}
             >
-              <Entypo name="camera" size={12} color="white" />
-            </TouchableOpacity>
+              <TouchableOpacity
+                className="w-20 h-20 items-center justify-center"
+                onPress={() => {
+                  goBack();
+                }}
+              >
+                <Feather name="arrow-left-circle" color="white" size={32} />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                className="w-20 h-20  items-center justify-center opacity-80"
+                onPress={() => navigate("PopMenu")}
+              >
+                <Feather size={32} color="white" name="settings" />
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
+        </Animated.View>
+
+        
+          <Animated.View 
+          entering={BounceInUp.duration(2000).delay(400)}
+          style={{ zIndex: 2 }} className="w-40 h-40 mt-2 absolute">
+            <View className="w-50 h-50  mt-4 items-center justify-center rounded-full">
+              <UserAvatar x={130} y={130} />
+            </View>
+
+            <View className="h-7 absolute self-center bottom-0 items-center justify-center  bg-blue-400 shadow-lg shadow-black rounded-md">
+              <TextSmall
+                className="px-1"
+                text={
+                  logged?.isAdmin == true
+                    ? "CEO Fundador"
+                    : "Membro" && logged?.isEtg == true
+                    ? "Estágiario"
+                    : "Membro" && logged?.isVolt == true
+                    ? "Voluntário"
+                    : "Membro" && logged?.isCoordCidadania == true
+                    ? "Coordenação da Cidadania"
+                    : "Membro" && logged?.isCoordAutist == true
+                    ? "Coordenação dos Autistas"
+                    : "Membro" && logged?.isCoordMulher == true
+                    ? "Coordenação das Mulheres"
+                    : "Membro" && logged?.isCoordSaude == true
+                    ? "Coordenação da Saúde"
+                    : "Membro" && logged?.isCoordAlimentar == true
+                    ? "Coordenação da Alimentação"
+                    : "Membro" && logged?.isCoordProtagonista == true
+                    ? "Coordenação dos Protagonistas"
+                    : "Membro" && logged?.isCoordPasse == true
+                    ? "Coordenação dos Passes"
+                    : "Membro"
+                }
+              />
+            </View>
+            <View className="right-6 self-end top-5 absolute">
+              <TouchableOpacity
+                className="h-5 w-5 items-center justify-center bg-blue-400 shadow-md shadow-black rounded-lg"
+                onPress={() => pickImageAsync()}
+              >
+                <Entypo name="camera" size={12} color="white" />
+              </TouchableOpacity>
+            </View>
+          </Animated.View>
+        
       </View>
 
       <ScrollView
@@ -162,10 +177,11 @@ export const User = () => {
             {" "}
           </Text>
         ) : (
-          logged?.filhos?.map((item) => {
+          logged?.filhos?.map((item: FilhosProps) => {
             return (
               <View key={item.id} className="mx-3">
                 <MyParents
+                  key={item.cpf}
                   nome={item.nome}
                   cpf={item.cpf}
                   idade={item.idade}

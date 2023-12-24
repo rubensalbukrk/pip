@@ -31,7 +31,7 @@ export default function Sobre() {
           className="text-black text-base"
         />
 
-        <View className="w-80 mt-2 py-2 px-3">
+        <View className="w-full mt-2 py-2">
           <TextLarge
             text="O PIP é uma associação sem fins lucrativos, inscrito no CNPJ :
             46.612.280/0001-90 e atuando no município de Santa Rita -PB. Somo
@@ -40,7 +40,7 @@ export default function Sobre() {
             mais vulneráveis. Nossas ações são realizadas em parcerias com poder
             público e uma rede de empresas privadas que tem como alvo minorar as
             vulnerabilidades sociais."
-            className="text-zinc-800"
+            className="text-zinc-800 text-sm"
           />
         </View>
 
@@ -49,7 +49,7 @@ export default function Sobre() {
           className="text-black text-2xl mt-4"
         />
 
-        <View className="w-80 mt-2 py-2 px-3 rounded-lg">
+        <View className="w-full mt-2 py-2 px-3 rounded-lg">
           <TextLarge
             className="text-black text-base"
             text=" O PIP é composto por 04 coordenações de cunho administrativo e 10

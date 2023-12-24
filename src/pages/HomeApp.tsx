@@ -19,7 +19,7 @@ import { CarouselHome } from "../../components/Carousel";
 import UserAvatar from "../../components/UserAvatar";
 import { LottieView } from "../utils/LottieView";
 import { TextLarge, TextMedium, TextSmall } from "../../components/TextLg/Text";
-
+import Animated, { Easing, FadeInDown, FadeInUp, ZoomIn } from "react-native-reanimated";
 export const HomeApp = () => {
   const { logged, solicitations, refreshing, setRefreshing } =
     useContext<any>(UserContext);
@@ -35,6 +35,9 @@ export const HomeApp = () => {
 
   return (
     <View className="flex-1 w-full bg-slate-200">
+      <Animated.View
+       style={{ zIndex: 0, width: "100%" }}
+      entering={FadeInUp.duration(2000)}>
       <LottieView
         className="w-full absolute rotate-90"
         autoPlay={true}
@@ -55,7 +58,7 @@ export const HomeApp = () => {
           <UserAvatar x={124} y={124} />
         </TouchableOpacity>
 
-        <View className="w-full bottom-3 h-38 justify-center">
+        <View className="w-full bottom-3 right-2 h-38 justify-center">
           <TextMedium className="absolute top-1 text-3xl right-1" text="PIP" />
           <Image
             className="absolute top-6 right-3 w-24 h-24"
@@ -65,9 +68,13 @@ export const HomeApp = () => {
           />
         </View>
       </View>
-
+</Animated.View>
       <ScrollView
-        style={{width: '100%', minHeight: 240, backgroundColor: 'transparent'}}
+        style={{
+          width: "100%",
+          minHeight: 240,
+          backgroundColor: "transparent",
+        }}
         onScrollBeginDrag={() => setRefreshing(true)}
         horizontal={false}
         showsVerticalScrollIndicator={false}
@@ -77,11 +84,13 @@ export const HomeApp = () => {
             onRefresh={() => setRefreshing(true)}
           />
         }
-      ><TextLarge text="Notícias" className="px-6 mt-3 text-zinc-400" />
+      >
+        <TextLarge text="Notícias" className="px-6 mt-3 text-zinc-400" />
         <CarouselHome />
       </ScrollView>
 
-      <View
+      <Animated.View
+        entering={ZoomIn.delay(1400).duration(1000)}
         style={{ zIndex: 20 }}
         className="absolute bottom-2 flex-row w-full px-3 h-14 rounded-lg justify-between"
       >
@@ -118,7 +127,7 @@ export const HomeApp = () => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          className="w-17 h-10 right-2 items-center justify-center"
+          className="w-20 h-10 right-2 items-center justify-center"
           onPress={() => navigate("SolicitationUser")}
         >
           <View
@@ -140,14 +149,25 @@ export const HomeApp = () => {
             Solicitações
           </Text>
         </TouchableOpacity>
-      </View>
-      <LottieView
-        autoPlay={true}
-        loop
-        style={{ zIndex: 0, width: "100%" }}
-        source={require("../../assets/animations/teste/Animation - WAVE BLUE 2 TESTA HOJE.json")}
+      </Animated.View>
+
+      <Animated.View
+       style={{ zIndex: 0}}
+      entering={FadeInDown.duration(2000)}>
+        <LottieView
+          autoPlay={true}
+          loop
+          style={{ zIndex: 0, width: "100%" }}
+          source={require("../../assets/animations/teste/Animation - WAVE BLUE 2 TESTA HOJE.json")}
+        />
+      </Animated.View>
+
+      <StatusBar
+        backgroundColor="#3d82ea"
+        barStyle="light-content" 
+        translucent={false}
+        animated={true}
       />
-      <StatusBar backgroundColor="#3d82ea" />
     </View>
   );
 };

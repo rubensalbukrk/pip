@@ -1,9 +1,8 @@
 import React from "react";
-import { View, Image } from "react-native";
+import { View, Image, StatusBar } from "react-native";
 import BackButton from "../BackButton";
-import { SimpleLineIcons } from "@expo/vector-icons";
 import { TextLarge } from "../TextLg/Text";
-
+import Animated,{ FadeInUp } from "react-native-reanimated";
 interface NoticesProps {
   date: string
   title: string
@@ -13,7 +12,9 @@ interface NoticesProps {
 export default function NoticeView({ route }) {
   const {date, title, mensagem, img}: NoticesProps = route?.params
   return (
-    <View className="flex-1 w-full h-full bg-slate-200">
+    <Animated.View
+    entering={FadeInUp.duration(1000)}
+     className="flex-1 w-full h-full bg-slate-200">
       <View className="w-full h-64 top-0">
         <Image
           className="w-full h-full rounded-b-xl"
@@ -33,6 +34,7 @@ export default function NoticeView({ route }) {
       <View className="w-72 px-3 h-8 align-self my-5 justify-center rounded-lg bg-zinc-400/20">
         <TextLarge text={date} className="text-black" />
       </View>
-    </View>
+      <StatusBar backgroundColor="#3d82ea" />
+    </Animated.View>
   );
 }

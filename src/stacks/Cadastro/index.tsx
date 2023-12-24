@@ -17,6 +17,8 @@ import { FilhosProps } from "../../interfaces/Filhos";
 import { TextLarge, TextSmall } from "../../../components/TextLg/Text";
 import { LottieView } from "../../utils/LottieView";
 import colors from "tailwindcss/colors";
+import { WarningError } from "../../../components/Warnings/isError";
+import { WarningSucess } from "../../../components/Warnings/isSucess";
 
 const citys = [
   "Santa Rita",
@@ -27,6 +29,7 @@ const citys = [
 ];
 
 export const Cadastro = () => {
+  const [isOk, setIsOk] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
   const [policy, setPolicy] = useState(false);
   const [updateList, setUpdateList] = useState(false);
@@ -47,9 +50,9 @@ export const Cadastro = () => {
       const response = await axios.post(`${api.BASE_URL}/users`, formData, {
         method: "POST",
       });
-      return alert(response.data);
+      setIsOk(true)
     } catch (e) {
-      alert(`Houve um problema com o servidor: ${e}`);
+      return <WarningError />
     }
   };
 
@@ -149,6 +152,7 @@ export const Cadastro = () => {
 
   return (
     <View className="flex-1 w-full h-full bg-slate-200">
+      {isOk && <View style={{zIndex: 20, width: '100%', height: '100%'}} className="w-full absolute self-center bg-white"><WarningSucess title="Agora você pode acessar nosso app!" /></View> }
       <View className="w-full">
         <LottieView
           autoPlay={true}
@@ -231,7 +235,6 @@ export const Cadastro = () => {
               data={citys}
               onSelect={(selectedItem, index) => {
                 setBairro(selectedItem);
-                console.log(selectedItem);
               }}
               buttonTextAfterSelection={(selectedItem, index) => {
                 return selectedItem;
@@ -341,7 +344,7 @@ export const Cadastro = () => {
           <TouchableOpacity
             disabled={!policy}
             className="w-72 h-12 my-3 mt-8 shadow-lg shadow-black self-center justify-center items-center bg-blue-600 rounded-lg"
-            onPress={() => [newUser(), navigate("Welcome")]}
+            onPress={newUser}
           >
             <TextLarge text="Enviar" className="text-white" />
           </TouchableOpacity>

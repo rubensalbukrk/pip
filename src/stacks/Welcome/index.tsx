@@ -60,7 +60,7 @@ export default function Welcome() {
         }
       })
     } catch (e) {
-      console.log(e);
+      return alert('Não foi encontrado dados de usuário salvo.')
     }
   }
   useEffect(() => {
@@ -141,7 +141,7 @@ export default function Welcome() {
         source={require("../../../assets/animations/fogos-animation.json")}
       />
 
-      <StatusBar backgroundColor="#fff" />
+      <StatusBar backgroundColor="#fff" barStyle="dark-content" />
     </View>
   );
 }
