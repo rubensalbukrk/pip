@@ -17,29 +17,36 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { CarouselHome } from "../../components/Carousel";
 import UserAvatar from "../../components/UserAvatar";
-import Background from "../../assets/svgs/Solicitation-waves.svg";
-import { height, width } from "../utils/dimensions";
 import { LottieView } from "../utils/LottieView";
-import { TextMedium } from "../../components/TextLg/Text";
+import { TextLarge, TextMedium, TextSmall } from "../../components/TextLg/Text";
 
 export const HomeApp = () => {
-  const {
-    solicitations,
-    refreshing,
-    setRefreshing,
-  } = useContext<any>(UserContext);
+  const { logged, solicitations, refreshing, setRefreshing } =
+    useContext<any>(UserContext);
   const { navigate } = useNavigation();
   const countSolicitations = solicitations?.length;
 
-  return (
-    <View className="flex-1 w-full">
-      <Background
-        style={{ zIndex: 0, position: "absolute", alignSelf: 'center' }}
-        width={width + 30}
-        height={height + 40}
-      />
+  const firstName = (): String => {
+    const { nome } = logged;
+    const tmpName = nome?.split(" ");
+    const myName = tmpName[0];
+    return myName;
+  };
 
+  return (
+    <View className="flex-1 w-full bg-slate-200">
+      <LottieView
+        className="w-full absolute rotate-90"
+        autoPlay={true}
+        loop
+        style={{ zIndex: 0, width: "100%" }}
+        source={require("../../assets/animations/teste/Animation - WAVE BLUE 2 TESTA HOJE.json")}
+      />
       <View className="flex-row w-full my-2 h-40">
+        <TextSmall
+          text={`Olá ${firstName()}`}
+          className="absolute top-0 left-4"
+        />
         <TouchableOpacity
           style={{ zIndex: 10 }}
           className="absolute top-10 shadow-xl shadow-black left-5 w-32 h-32 items-center justify-center bg-slate-300/70 rounded-full"
@@ -60,40 +67,26 @@ export const HomeApp = () => {
       </View>
 
       <ScrollView
-        className="w-full h-full px-3 py-5"
+        style={{width: '100%', minHeight: 240, backgroundColor: 'transparent'}}
         onScrollBeginDrag={() => setRefreshing(true)}
         horizontal={false}
         showsVerticalScrollIndicator={false}
         refreshControl={
-          <RefreshControl 
-          refreshing={refreshing} 
-          onRefresh={() => setRefreshing(true)}
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={() => setRefreshing(true)}
           />
         }
-      >
-        <View className="w-full h-96">
-          <View
-          className='flex-row w-full  justify-between items-center'
-          >
-             <Text className="font-default text-gray-700 text-2xl">Notícias</Text>
-          </View>
-          <CarouselHome />
-        </View>
-        
+      ><TextLarge text="Notícias" className="px-6 mt-3 text-zinc-400" />
+        <CarouselHome />
       </ScrollView>
 
       <View
         style={{ zIndex: 20 }}
         className="absolute bottom-2 flex-row w-full px-3 h-14 rounded-lg justify-between"
       >
-        <TouchableOpacity
-          className="w-16 h-10 items-center justify-center"
-        >
-          <Ionicons
-            color={"white"}
-            size={38}
-            name={"home"}
-          />
+        <TouchableOpacity className="w-16 h-10 items-center justify-center">
+          <Ionicons color={"white"} size={38} name={"home"} />
           <Text className="font-default text-white text-center text-xs">
             Inicio
           </Text>
@@ -126,9 +119,7 @@ export const HomeApp = () => {
 
         <TouchableOpacity
           className="w-17 h-10 right-2 items-center justify-center"
-          onPress={() =>
-           navigate("SolicitationUser")
-          }
+          onPress={() => navigate("SolicitationUser")}
         >
           <View
             style={{ zIndex: 10 }}
@@ -151,13 +142,12 @@ export const HomeApp = () => {
         </TouchableOpacity>
       </View>
       <LottieView
-        autoPlay
+        autoPlay={true}
         loop
-        duration={11999}
-        style={{zIndex:0, position: "absolute", bottom: 0, width: width , opacity: 1}}
+        style={{ zIndex: 0, width: "100%" }}
         source={require("../../assets/animations/teste/Animation - WAVE BLUE 2 TESTA HOJE.json")}
       />
-      <StatusBar backgroundColor='#3d82ea' />
+      <StatusBar backgroundColor="#3d82ea" />
     </View>
   );
 };

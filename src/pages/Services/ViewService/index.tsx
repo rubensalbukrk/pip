@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { View, Image, Text, TouchableOpacity, ScrollView } from "react-native";
 import axios from "axios";
 import BackButton from "../../../../components/BackButton";
@@ -9,31 +9,37 @@ import BackgroundBottom from ".../../../assets/svgs/User-bottom-wave.svg";
 import { width } from "../../../utils/dimensions";
 import { AuthContext } from "../../../contexts/AuthContext";
 import {
-  TextExtra,
   TextLarge,
   TextMedium,
   TextSmall,
 } from "../../../../components/TextLg/Text";
+import { WarningSucess } from "../../../../components/Warnings/isSucess";
+import { WarningError } from "../../../../components/Warnings/isError";
 
 interface ServicesProps {
   title: string;
   picture: any;
   descrition: any;
-  requisite: string;
+  requisite: any;
+  pasta: string
 }
 
+
 export default function ViewService({ route }) {
+  const [isOk, setIsOk] = useState(false);
+  const [isError, setIsError] = useState(false);
   const { token } = useContext(AuthContext);
   const { logged } = useContext<any>(UserContext);
-  const { title, picture, descrition, requisite }: ServicesProps =
+  const { title, picture, descrition, requisite, pasta }: ServicesProps =
     route?.params;
-  function handleSolicitation(service) {
+ 
+  function handleSolicitation(service: ServicesProps) {
     let newSolicitation = {
       userInfo: logged,
       nome: logged?.nome,
       cpf: logged?.cpf,
       service: service,
-      pasta: `${route?.params?.pasta}`,
+      pasta: `${pasta}`,
       status: "Aguardando analise...",
     };
     axios
@@ -44,20 +50,24 @@ export default function ViewService({ route }) {
           "Content-Type": "application/json",
         },
       })
-      .then((response) => {
-        alert(JSON.stringify(response.data));
+      .then(() => {
+        setIsOk(true)
       })
-      .catch((error) => console.error(error));
+      .catch((error) => setIsError(true));
   }
 
   return (
     <View className="flex-1 w-full h-full items-center bg-white">
+      
+      {isOk && <View style={{zIndex: 20, height: '100%'}} className="w-full absolute self-center bg-white"><WarningSucess /></View> }
+      {isError && <View style={{zIndex: 20, height: '100%'}} className="w-full absolute self-center bg-white"><WarningError/></View>}
+
       <BackgroundTop
         style={{ zIndex: 0, position: "absolute", top: -10 }}
         width={width}
       />
       <View className="flex-row absolute w-full pl-3 top-0 justify-between">
-        <TextMedium className="text-3xl" text={route?.params?.title} />
+        <TextMedium className="text-3xl" text={title} />
         <BackButton />
       </View>
       <Image
@@ -79,36 +89,36 @@ export default function ViewService({ route }) {
           />
 
           <View className="w-full h-full items-center">
-            {route?.params?.requisite[0] ? (
+            {requisite[0] ? (
               <TouchableOpacity
                 className="w-80 h-10 shadow-lg shadow-black my-2 rounded-lg justify-center px-3 bg-blue-400"
-                onPress={() => handleSolicitation(route?.params?.requisite[0])}
+                onPress={() => handleSolicitation(requisite[0])}
               >
-                <TextSmall text={route?.params?.requisite[0]} />
+                <TextSmall text={requisite[0]} />
               </TouchableOpacity>
             ) : null}
-            {route?.params?.requisite[1] ? (
+            {requisite[1] ? (
               <TouchableOpacity
                 className="w-80 h-10 shadow-md shadow-black my-3 rounded-md justify-center px-3 bg-blue-500"
-                onPress={() => handleSolicitation(route?.params?.requisite[1])}
+                onPress={() => handleSolicitation(requisite[1])}
               >
-                <TextSmall text={route?.params?.requisite[1]} />
+                <TextSmall text={requisite[1]} />
               </TouchableOpacity>
             ) : null}
-            {route?.params?.requisite[2] ? (
+            {requisite[2] ? (
               <TouchableOpacity
                 className="w-80 h-10 shadow-md shadow-black my-3 rounded-md justify-center px-3 bg-blue-400"
-                onPress={() => handleSolicitation(route?.params?.requisite[2])}
+                onPress={() => handleSolicitation(requisite[2])}
               >
-                <TextSmall text={route?.params?.requisite[2]} />
+                <TextSmall text={requisite[2]} />
               </TouchableOpacity>
             ) : null}
-            {route?.params?.requisite[3] ? (
+            {requisite[3] ? (
               <TouchableOpacity
                 className="w-80 h-10 shadow-md shadow-black my-3 rounded-md justify-center px-3 bg-blue-500"
-                onPress={() => handleSolicitation(route?.params?.requisite[3])}
+                onPress={() => handleSolicitation(requisite[3])}
               >
-                <TextSmall text={route?.params?.requisite[3]} />
+                <TextSmall text={requisite[3]} />
               </TouchableOpacity>
             ) : null}
           </View>

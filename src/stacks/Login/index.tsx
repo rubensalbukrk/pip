@@ -52,12 +52,6 @@ export const Login = () => {
         opacity={1}
       />
       <LottieView
-        style={{position: 'absolute', opacity: 0.7, bottom: '40%', width: '100%' }}
-        autoPlay={true}
-        loop
-        source={require("../../../assets/animations/teste/Animation - WAVE BLUE TESTAR HOJE.json")}
-        />
-      <LottieView
       autoPlay={true}
       loop
       style={{width: '70%',}} 
@@ -151,6 +145,7 @@ export const Login = () => {
           <TextMedium text="Registrar-me" />
         </TouchableOpacity>
       </Animated.View>
+      
     </View>
   );
 };

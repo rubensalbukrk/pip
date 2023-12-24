@@ -3,7 +3,8 @@ import {
   View,
   Text,
   TouchableOpacity,
-  FlatList
+  FlatList,
+  Alert
 } from "react-native";
 import { FontAwesome, Octicons } from "@expo/vector-icons";
 import { api } from "../../api/api";
@@ -13,17 +14,26 @@ import BackButton from "../../../components/BackButton";
 import BackgroundSolicitation from "../../../assets/svgs/Home-waves.svg";
 import { height, width } from "../../utils/dimensions";
 import { useFetchData } from "../../hooks/useFetchData";
+import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function SolicitationsUser() {
   const {list: solicitations, getData: getSolicitations} = useFetchData(api.getSolicitations)
   const {list: aprovados, getData: getAprovados} = useFetchData(api.getAprovados)
   const {logged, setSolicitations} = useContext<any>(UserContext)
-
+  const {navigate} = useNavigation()
+  
   useEffect(() => {
-    getSolicitations(),
+    try {
+      getSolicitations(),
     setTimeout(() => {
       getAprovados()
     },1500)
+    } catch (error) {
+      Alert.alert("Sessão expirada", "Faça login novamente!")
+      AsyncStorage.removeItem("token");
+      navigate('Login');
+    }
   },[])
 
   useEffect(() => {
@@ -36,7 +46,7 @@ export default function SolicitationsUser() {
   var userBeneficiets = aprovados?.filter((item) => String(item.cpf) === String(logged.cpf))
 
   return (
-    <View className="w-full h-full items-center justify-center">
+    <View className="w-full h-full items-center justify-center bg-slate-200">
       <BackgroundSolicitation
         width={width}
         height={height + 100}

@@ -18,7 +18,7 @@ export const CarouselHome = () => {
   },[refreshing])
   
   return (
-    <View style={{zIndex: 3}} className='w-full h-64 mt-2 items-center'>
+    <View style={{zIndex: 99}} className='w-full items-center'>
       <Carousel
         loop
         width={width}
@@ -30,7 +30,7 @@ export const CarouselHome = () => {
         renderItem={({ index, item }) => (
           <View className='w-80 h-48 self-center'>
               <TouchableOpacity
-              className='w-80 h-full items-center justify-center shadow-md shadow-black bg-blue-600 rounded-lg'
+              className='w-80 items-center justify-center shadow-md shadow-black bg-blue-600 rounded-lg'
               onPress={() => navigation.navigate('ViewNotice', {
                 title: item.title,
                 mensagem: item.mensagem,
@@ -38,7 +38,6 @@ export const CarouselHome = () => {
                 date: item.date
               })}
               >
-                
               <View className='w-full h-full rounded-lg'>
                   <Image className='w-full h-full rounded-lg'
                   resizeMode="cover"

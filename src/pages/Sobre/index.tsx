@@ -1,11 +1,12 @@
 import React from "react";
 import { View, Image, ScrollView, Touchable, TouchableOpacity } from "react-native";
-import BackButton from "../../../components/BackButton";
 import { width, height } from "../../utils/dimensions";
 import { LottieView } from "../../utils/LottieView";
 import { TextExtra, TextLarge } from "../../../components/TextLg/Text";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Sobre() {
+  const {goBack} = useNavigation()
   return (
     <View className="w-full h-full bg-slate-200 items-center justify-center">
       <LottieView
@@ -30,7 +31,7 @@ export default function Sobre() {
           className="text-black text-base"
         />
 
-        <View className="w-80 mt-2 py-2 px-3 bg-blue-400/20 rounded-lg">
+        <View className="w-80 mt-2 py-2 px-3">
           <TextLarge
             text="O PIP é uma associação sem fins lucrativos, inscrito no CNPJ :
             46.612.280/0001-90 e atuando no município de Santa Rita -PB. Somo
@@ -48,14 +49,16 @@ export default function Sobre() {
           className="text-black text-2xl mt-4"
         />
 
-        <View className="w-80 mt-2 py-2 px-3 bg-blue-400/20 rounded-lg">
+        <View className="w-80 mt-2 py-2 px-3 rounded-lg">
           <TextLarge
             className="text-black text-base"
             text=" O PIP é composto por 04 coordenações de cunho administrativo e 10
             coordenações das pastas de atuação."
           />
         </View>
-        <TouchableOpacity className="w-48 h-11 items-center justify-center self-center my-4 bg-blue-500 rounded-lg">
+        <TouchableOpacity className="w-48 h-11 items-center justify-center self-center my-4 bg-blue-500 rounded-lg"
+        onPress={goBack}
+        >
           <TextLarge text="Voltar" />
         </TouchableOpacity>
 

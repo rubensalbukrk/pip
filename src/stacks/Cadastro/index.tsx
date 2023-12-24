@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Switch,
+  StatusBar,
 } from "react-native";
 import SelectDrop from "react-native-select-dropdown";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
@@ -152,7 +153,7 @@ export const Cadastro = () => {
         <LottieView
           autoPlay={true}
           loop
-          style={{ width: "100%" }}
+          style={{ width: "70%", alignSelf: 'center' }}
           source={require("../../../assets/animations/Animation - Cadastro.json")}
         />
         <TextLarge
@@ -304,10 +305,10 @@ export const Cadastro = () => {
                 </View>
               </View>
               <TouchableOpacity
-                className="w-28 h-11 top-1 justify-center items-center rounded-lg bg-blue-400"
+                className="w-11 h-11 top-1 justify-center items-center rounded-lg bg-blue-400"
                 onPress={() => addFilhos()}
               >
-                <TextLarge text="Adicionar" />
+                <TextLarge text=" + " />
               </TouchableOpacity>
             </View>
           </View>
@@ -353,6 +354,7 @@ export const Cadastro = () => {
           </TouchableOpacity>
         </View>
       </ScrollView>
+      <StatusBar backgroundColor={'#e2e8f0'} barStyle="dark-content" translucent={true}/>
     </View>
   );
 };
