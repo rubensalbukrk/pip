@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useEffect, useState } from "react";
-import { View, TouchableOpacity, StatusBar } from "react-native";
+import { View, TouchableOpacity, StatusBar, Image } from "react-native";
 import Animated, {
   BounceInDown,
   Easing,
@@ -8,6 +8,7 @@ import Animated, {
   Layout,
   FadeInLeft,
   FadeInUp,
+  BounceInUp,
 } from "react-native-reanimated";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../contexts/UserContext";
@@ -53,14 +54,14 @@ export default function Welcome() {
       });
       const picture = await AsyncStorage.getItem("picture").then((value) => {
         const picture = JSON.parse(value);
-        if(!picture?.uri){
+        if (!picture?.uri) {
         }
         if (picture?.uri) {
-          setAvatar(picture.uri)
+          setAvatar(picture.uri);
         }
-      })
+      });
     } catch (e) {
-      return alert('Não foi encontrado dados de usuário salvo.')
+      return alert("Não foi encontrado dados de usuário salvo.");
     }
   }
   useEffect(() => {
@@ -78,21 +79,25 @@ export default function Welcome() {
         entering={FadeInUp.delay(1000).duration(2000)}
         style={{ zIndex: 4 }}
         className="w-full mt-16"
-      > 
-      <TextXl className="text-black self-center" text="PROJETO INCLUSÃO POPULAR" />
+      >
+        <TextXl
+          className="text-black self-center"
+          text="Projeto Inclusão Popular"
+        />
       </Animated.View>
-      <LottieView
-        style={{ width: "100%" }}
-        autoPlay={true}
-        loop
-        source={require("../../../assets/animations/welcome-pip.json")}
+      <Animated.Image
+      entering={BounceInUp.duration(2000)}
+        alt="pip-logo"
+        resizeMode="contain"
+        style={{ width: "70%", height: "40%" }}
+        source={require("../../../assets/pip-icon.png")}
       />
       <Animated.View
         entering={FadeInLeft.delay(1800).duration(2000)}
         style={{ zIndex: 4 }}
         className="w-full ml-4"
-      > 
-      <TextExtra text="Bem vindo(a)!" className="text-zinc-800" />
+      >
+        <TextExtra text="Bem vindo(a)!" className="text-zinc-800" />
       </Animated.View>
 
       <Animated.View
@@ -101,7 +106,7 @@ export default function Welcome() {
       >
         <TextXl
           className="text-zinc-800 self-center mb-20"
-          text="Somos o projeto inclusão popular e aqui você vai encontrar serviços,
+          text="Somos o Projeto Inclusão Popular e aqui você vai encontrar serviços,
           notícias e muito mais..."
         />
       </Animated.View>
@@ -110,7 +115,7 @@ export default function Welcome() {
         entering={BounceInDown.delay(1700).duration(2000)}
         exiting={ZoomOutDown.delay(1000)}
         layout={Layout}
-        style={{zIndex:9}}
+        style={{ zIndex: 9 }}
         className="w-100 rounded-full"
       >
         <TouchableOpacity
@@ -134,7 +139,7 @@ export default function Welcome() {
           position: "absolute",
           bottom: 0,
           width: "100%",
-          height:240,
+          height: 240,
         }}
         duration={1600}
         ref={animation}

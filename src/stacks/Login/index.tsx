@@ -1,6 +1,14 @@
 import React, { useContext, useState, useEffect } from "react";
 import { width } from "../../utils/dimensions";
-import { View, Text, TouchableOpacity, TextInput, Switch, StatusBar } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  Switch,
+  StatusBar,
+  Image,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import BackgroundLogin from "../../../assets/svgs/login-center.svg";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -8,17 +16,20 @@ import { TextInputMask } from "react-native-masked-text";
 import { AuthContext } from "../../contexts/AuthContext";
 import Animated, {
   StretchInX,
-  StretchOutX,
   Easing,
   BounceInDown,
-  ZoomOutDown,
   Layout,
   ZoomOut,
   FadeInLeft,
 } from "react-native-reanimated";
 import { LottieView } from "../../utils/LottieView";
 import PasswordIcon from "../../../assets/svgs/password.svg";
-import { TextLarge, TextMedium, TextSmall } from "../../../components/TextLg/Text";
+import {
+  TextLarge,
+  TextMedium,
+  TextSmall,
+} from "../../../components/TextLg/Text";
+import RandomAnimatedImage from "../../../components/AnimatedImagesLogo/animatedImages";
 
 export const Login = () => {
   const [isEnabled, setIsEnable] = useState(false);
@@ -42,8 +53,8 @@ export const Login = () => {
   }, [auth]);
 
   const toggleSigningAuto = () => {
-    setSigningAuto((previousState) => !previousState)
-    setIsEnable(previousState => !previousState)
+    setSigningAuto((previousState) => !previousState);
+    setIsEnable((previousState) => !previousState);
   };
 
   return (
@@ -53,15 +64,58 @@ export const Login = () => {
         width={width}
         opacity={1}
       />
-      <LottieView
-      autoPlay={true}
-      loop
-      style={{width: '70%',}} 
-        source={require('../../../assets/animations/Animation - login 2.json')}
+      <View
+        style={{ zIndex: 2 }}
+        className="flex-row flex-wrap absolute mt-40 w-full h-40"
+      >
+        <RandomAnimatedImage
+          repeatCount={Infinity}
+          duration={700}
+          source={require("../../../assets/imgs/pip-autistas.png")}
+        />
+        <RandomAnimatedImage
+          repeatCount={Infinity}
+          duration={700}
+          source={require("../../../assets/imgs/pip-cidadania.png")}
+        />
+        <RandomAnimatedImage
+          repeatCount={Infinity}
+          duration={800}
+          source={require("../../../assets/imgs/pip-mulher.png")}
+        />
+      </View>
+      <View
+        style={{ zIndex: 2 }}
+        className="flex-row flex-wrap absolute mt-30 w-full h-40"
+      >
+        <RandomAnimatedImage
+          repeatCount={Infinity}
+          duration={600}
+          source={require("../../../assets/imgs/pip-saudemental.png")}
+        />
+        <RandomAnimatedImage
+          repeatCount={Infinity}
+          duration={600}
+          source={require("../../../assets/imgs/pip-passelivre.png")}
+        />
+        <RandomAnimatedImage
+          repeatCount={Infinity}
+          duration={600}
+          source={require("../../../assets/imgs/pip-protagonista.png")}
+        />
+        <RandomAnimatedImage
+          repeatCount={Infinity}
+          duration={600}
+          source={require("../../../assets/imgs/pip-sgralimentar.png")}
+        />
+      </View>
+
+      <Image
+        resizeMode="contain"
+        style={{ width: "70%", height: "40%" }}
+        source={require("../../../assets/pip-icon.png")}
       />
-      <Text className="font-default text-blue-400 text-lg">
-        ÁREA DE ACESSO
-      </Text>
+      <Text className="font-default text-blue-400 text-lg">ÁREA DE ACESSO</Text>
 
       <Animated.View
         entering={StretchInX.duration(1400).easing(Easing.bounce)}
@@ -139,7 +193,10 @@ export const Login = () => {
           )}
         </View>
       </Animated.View>
-      <TextSmall text="Ainda não tem uma conta?" className="text-blue-400 my-2" />
+      <TextSmall
+        text="Ainda não tem uma conta?"
+        className="text-blue-400 my-2"
+      />
       <Animated.View entering={BounceInDown.duration(1400)}>
         <TouchableOpacity
           className="w-48 h-14 my-3 rounded-2xl items-center justify-center shadow-md shadow-black bg-blue-500"
