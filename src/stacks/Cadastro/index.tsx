@@ -13,7 +13,7 @@ import SelectDrop from "react-native-select-dropdown";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { TextInputMask } from "react-native-masked-text";
-import { FilhosProps } from "../../interfaces/Filhos";
+import { FilhosProps } from "../../interfaces/Parents";
 import { TextLarge, TextSmall } from "../../../components/TextLg/Text";
 import { LottieView } from "../../utils/LottieView";
 import colors from "tailwindcss/colors";

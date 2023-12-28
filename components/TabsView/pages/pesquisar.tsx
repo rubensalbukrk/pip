@@ -111,7 +111,7 @@ export default function TabSearch() {
                     avatar: item?.avatar,
                     nome: item.nome,
                     idade: item.idade,
-                    filhos: item.filhos,
+                    parents: item.parents,
                     address: item.address,
                     bairro: item?.bairro,
                     phone: item.phone,

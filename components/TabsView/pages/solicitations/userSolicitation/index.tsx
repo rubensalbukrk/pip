@@ -18,7 +18,7 @@ import { AuthContext } from "../../../../../src/contexts/AuthContext";
 export default function SolicitationInfoUser({ route }) {
   const {token} = useContext(AuthContext)
   const [status, setStatus] = useState<string>();
-  const filhos = route?.params?.userInfo?.filhos;
+  const parents = route?.params?.userInfo?.parents;
 
   const handleConfirmSolicitation = () => {
     let userApproved = {
@@ -118,17 +118,17 @@ export default function SolicitationInfoUser({ route }) {
           </View>
 
           <InputInfoUser
-            infoLabel="Filhos"
+            infoLabel="Parentes"
             infoValue={
-              route?.params?.userInfo?.filhos?.length === 0
+              route?.params?.userInfo?.parents?.length === 0
                 ? "Não"
-                : `${route?.params?.userInfo?.filhos?.length}`
+                : `${route?.params?.userInfo?.parents?.length}`
             }
           />
           <ScrollView className='w-full right-3' showsHorizontalScrollIndicator={false} horizontal={true}>
-          {route?.params?.userInfo?.filhos?.length === 0
+          {route?.params?.userInfo?.parents?.length === 0
             ? "NÃO"
-            : route?.params?.userInfo?.filhos?.map((item) => {
+            : route?.params?.userInfo?.parents?.map((item) => {
                 return (
                   <View key={item.id} className="mx-2">
                   <MyParents

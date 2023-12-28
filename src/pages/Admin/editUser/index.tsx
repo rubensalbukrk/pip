@@ -14,7 +14,7 @@ import BackButton from "../../../../components/BackButton";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { TextLarge } from "../../../../components/TextLg/Text";
-import { FilhosProps } from "../../../interfaces/Filhos";
+import { ParentsProps } from "../../../interfaces/Parents";
 import { AuthContext } from "../../../contexts/AuthContext";
 
 export default function EditUser({ route }) {
@@ -47,8 +47,8 @@ export default function EditUser({ route }) {
   const [address, setAddress] = useState<string>(route?.params?.address);
   const [cpf, setCpf] = useState<string>(route?.params?.cpf);
   const [nis, setNis] = useState<string>(route?.params?.nis);
-  const [dataFilho, setDataFilho] = useState<FilhosProps>();
-  const [filhos, setFilhos] = useState<FilhosProps[]>(route?.params?.filhos);
+  const [dataParents, setDataParents] = useState<ParentsProps>();
+  const [parents, setParents] = useState<ParentsProps[]>(route?.params?.parents);
   const [phone, setPhone] = useState<string>(route?.params?.phone);
   const [email, setEmail] = useState<string>(route?.params?.email);
   const [opnion, setOpnion] = useState<string>(route?.params?.question2);
@@ -73,7 +73,7 @@ export default function EditUser({ route }) {
     bairro: bairro,
     cpf: cpf,
     nis: nis,
-    filhos: filhos,
+    parents: parents,
     phone: phone,
     email: email,
     question1: true,
@@ -91,16 +91,16 @@ export default function EditUser({ route }) {
         }
       })
       .then(() => {
-        setFilhos([]);
+        setParents([]);
       });
     return Alert.alert("Atualização", "O usuário foi alterado!");
   }
-  const UserFilhos = () => {
+  const UserParents = () => {
     try {
       return (
         <View className="w-full">
-          {filhos &&
-            filhos.map((item, index) => {
+          {parents &&
+            parents.map((item, index) => {
               return (
                 <View
                   key={index}
@@ -129,7 +129,7 @@ export default function EditUser({ route }) {
                   <TouchableOpacity
                     className="w-10 h-10 opacity-60 absolute bottom-0 right-0"
                     onPress={() => {
-                      filhos.splice(index, 1);
+                      parents.splice(index, 1);
                       setUpdateList((previousState) => !previousState);
                     }}
                   >
@@ -141,17 +141,17 @@ export default function EditUser({ route }) {
         </View>
       );
     } catch (error) {
-      alert("Não tem filhos");
+      alert("Não tem parents");
     }
   };
 
-  function addFilhos() {
+  function addParents() {
     try {
-      filhos?.push({
-        nome: dataFilho.nome,
-        idade: dataFilho.idade,
-        cpf: dataFilho.cpf,
-        isAutist: dataFilho.isAutist
+      parents?.push({
+        nome: dataParents.nome,
+        idade: dataParents.idade,
+        cpf: dataParents.cpf,
+        isAutist: dataParents.isAutist
       });
       alert("Adicionado");
     } catch (error) {
@@ -159,8 +159,8 @@ export default function EditUser({ route }) {
     }
   }
   const toggleFilhoAutista = () => {
-    setDataFilho(({ isAutist: previus }) => ({
-      ...dataFilho,
+    setDataParents(({ isAutist: previus }) => ({
+      ...dataParents,
       isAutist: !previus,
     }));
   };
@@ -418,13 +418,13 @@ export default function EditUser({ route }) {
             <View className="w-full py-2">
               <View className="my-3">
                 <Text className="font-default text-lg text-white/60">
-                  Filhos
+                  Parentes
                 </Text>
                 <Text className="font-default text-white text-lg">
-                  {filhos ? filhos.length : "Não tem"}
+                  {setParents ? setParents.length : "Não tem"}
                 </Text>
               </View>
-              {filhos?.length === 0 ? "" : <UserFilhos />}
+              {setParents?.length === 0 ? "" : <UserParents />}
             </View>
 
             <View className="w-64 rounded-xl my-5 py-3 px-2 bg-white/20">
@@ -432,7 +432,7 @@ export default function EditUser({ route }) {
               <TextInput
                 className="w-full h-10 px-2 mb-1 font-default text-start text-white text-lg rounded-2xl bg-white/10 border-white/20"
                 onChangeText={(value) =>
-                  setDataFilho({ ...dataFilho, nome: value })
+                  setDataParents({ ...dataParents, nome: value })
                 }
               />
 
@@ -440,7 +440,7 @@ export default function EditUser({ route }) {
               <TextInput
                 className="w-full h-10 px-2 mb-1 font-default text-start text-white text-lg rounded-2xl bg-white/10 border-white/9ss0"
                 onChangeText={(value) =>
-                  setDataFilho({ ...dataFilho, cpf: value })
+                  setDataParents({ ...dataParents, cpf: value })
                 }
               />
 
@@ -451,14 +451,14 @@ export default function EditUser({ route }) {
                     className="w-14 h-10 px-2 font-default text-center text-white text-lg rounded-2xl bg-white/10 border-white/20"
                     keyboardType="number-pad"
                     onChangeText={(value) =>
-                      setDataFilho({ ...dataFilho, idade: value })
+                      setDataParents({ ...dataParents, idade: value })
                     }
                   />
                 </View>
                 <View className="items-center px-2">
                   <TextLarge text="Autista" />
                   <Switch
-                    value={dataFilho && dataFilho?.isAutist}
+                    value={dataParents && dataParents?.isAutist}
                     trackColor={{ false: "#9f9f9f", true: "#767590" }}
                     onValueChange={toggleFilhoAutista}
                   />
@@ -466,7 +466,7 @@ export default function EditUser({ route }) {
               </View>
               <TouchableOpacity
                 className="w-28 h-11 top-1 justify-center items-center rounded-lg bg-white/30"
-                onPress={() => addFilhos()}
+                onPress={() => addParents()}
               >
                 <TextLarge text="Adicionar" />
               </TouchableOpacity>

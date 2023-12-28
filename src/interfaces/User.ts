@@ -1,4 +1,4 @@
-import { FilhosProps } from "./Filhos"
+import {ParentsProps} from "./Parents"
 
 export interface UserProps {
     id: number
@@ -8,7 +8,7 @@ export interface UserProps {
     email: string
     nis: string
     cpf: string
-    filhos: Array<FilhosProps>
+    parents: Array<ParentsProps>
     question1: string
     question2: string
 

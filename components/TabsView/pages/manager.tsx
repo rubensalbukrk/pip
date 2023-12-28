@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { Feather, AntDesign, FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { TextExtra, TextLarge, TextMedium } from "../../TextLg/Text";
+import { TextLarge, TextMedium } from "../../TextLg/Text";
 
 export default function TabManager() {
   const { navigate } = useNavigation();

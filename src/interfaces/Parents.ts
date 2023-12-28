@@ -1,4 +1,4 @@
-export interface FilhosProps {
+export interface ParentsProps {
     id?: number
     cpf: string
     nome: string
