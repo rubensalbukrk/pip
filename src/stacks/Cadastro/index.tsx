@@ -13,7 +13,7 @@ import SelectDrop from "react-native-select-dropdown";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { TextInputMask } from "react-native-masked-text";
-import { FilhosProps } from "../../interfaces/Parents";
+import { ParentsProps } from "../../interfaces/Parents";
 import { TextLarge, TextSmall } from "../../../components/TextLg/Text";
 import { LottieView } from "../../utils/LottieView";
 import colors from "tailwindcss/colors";
@@ -35,14 +35,14 @@ export const Cadastro = () => {
   const [updateList, setUpdateList] = useState(false);
   const [formData, setData] = useState(null);
   const [bairro, setBairro] = useState("");
-  const [dataFilho, setDataFilho] = useState<FilhosProps>({
+  const [dataParents, setDataParents] = useState<ParentsProps>({
     nome: undefined,
     idade: undefined,
     cpf: undefined,
     isAutist: false,
   });
 
-  const [filhos, setFilhos] = useState<FilhosProps[]>([]);
+  const [parents, setparents] = useState<ParentsProps[]>([]);
   const { navigate, goBack } = useNavigation();
 
   const newUser = async () => {
@@ -56,27 +56,27 @@ export const Cadastro = () => {
     }
   };
 
-  function addFilhos() {
+  function addParents() {
     try {
-      const lastId = filhos[filhos.length - 1]?.id;
-      filhos?.push({
-        nome: dataFilho.nome,
-        idade: dataFilho.idade,
-        cpf: dataFilho.cpf,
-        isAutist: dataFilho.isAutist,
+      const lastId = parents[parents.length - 1]?.id;
+      parents?.push({
+        nome: dataParents.nome,
+        idade: dataParents.idade,
+        cpf: dataParents.cpf,
+        isAutist: dataParents.isAutist,
       });
-      setData({ ...formData, filhos });
+      setData({ ...formData, parents });
     } catch (error) {
       alert("Tente novamente!");
     }
   }
 
-  const UserFilhos = () => {
+  const UserParents = () => {
     try {
       return (
         <View className="w-full">
-          {filhos &&
-            filhos.map((item, index) => {
+          {parents &&
+            parents.map((item, index) => {
               return (
                 <View
                   key={index}
@@ -117,7 +117,7 @@ export const Cadastro = () => {
                   <TouchableOpacity
                     className="w-10 h-10 opacity-60 absolute bottom-0 right-0"
                     onPress={() => {
-                      filhos.splice(index, 1);
+                      parents.splice(index, 1);
                       setUpdateList((previousState) => !previousState);
                     }}
                   >
@@ -129,7 +129,7 @@ export const Cadastro = () => {
         </View>
       );
     } catch (error) {
-      alert("sem filhos");
+      alert("sem parents");
       goBack();
     }
   };
@@ -139,8 +139,8 @@ export const Cadastro = () => {
   }, [bairro]);
 
   const toggleAutista = () => {
-    setDataFilho(({ isAutist: previus }) => ({
-      ...dataFilho,
+    setDataParents(({ isAutist: previus }) => ({
+      ...dataParents,
       isAutist: !previus,
     }));
     setIsEnabled((previus) => !previus);
@@ -254,7 +254,7 @@ export const Cadastro = () => {
           </View>
 
           <View className="mt-5">
-            <TextLarge text="Quantos filhos ?" className="text-black" />
+            <TextLarge text="Quantos parentes ?" className="text-black" />
             <TextInput
               className="w-16 h-10 px-2 font-default text-start text-lg rounded-2xl bg-blue-500/10"
               onChangeText={(value) =>
@@ -262,14 +262,14 @@ export const Cadastro = () => {
               }
             />
 
-            <UserFilhos />
+            <UserParents />
 
             <View className="w-64 rounded-xl my-5 ml-3 py-3 px-2 bg-slate-100 shadow-md shadow-black">
               <TextLarge text="Nome" className="text-black text-base" />
               <TextInput
                 className="w-full h-10 px-2 mb-1 font-default text-start text-black text-lg rounded-2xl bg-slate-200"
                 onChangeText={(value) =>
-                  setDataFilho({ ...dataFilho, nome: value })
+                  setDataParents({ ...dataParents, nome: value })
                 }
               />
 
@@ -279,10 +279,10 @@ export const Cadastro = () => {
                 type="cpf"
                 selectionColor={"#9f9f9f"}
                 placeholderTextColor={"#bdbdbd"}
-                value={dataFilho.cpf}
+                value={dataParents.cpf}
                 placeholder="000.000.000-00"
                 onChangeText={(value) =>
-                  setDataFilho({ ...dataFilho, cpf: value })
+                  setDataParents({ ...dataParents, cpf: value })
                 }
               />
 
@@ -293,14 +293,14 @@ export const Cadastro = () => {
                     className="w-14 h-10 px-2 mb-1 font-default text-start text-black text-lg rounded-2xl bg-slate-200"
                     keyboardType="number-pad"
                     onChangeText={(value) =>
-                      setDataFilho({ ...dataFilho, idade: value })
+                      setDataParents({ ...dataParents, idade: value })
                     }
                   />
                 </View>
                 <View className="items-center px-2">
                   <TextLarge text="Autista" className="text-black text-base" />
                   <Switch
-                    value={dataFilho.isAutist}
+                    value={dataParents.isAutist}
                     trackColor={{ false: "#cfcfcf", true: "#bebebe" }}
                     thumbColor={isEnabled ? "#217aff" : "#cecece"}
                     onValueChange={toggleAutista}
@@ -309,7 +309,7 @@ export const Cadastro = () => {
               </View>
               <TouchableOpacity
                 className="w-11 h-11 top-1 justify-center items-center rounded-lg bg-blue-400"
-                onPress={() => addFilhos()}
+                onPress={() => addParents()}
               >
                 <TextLarge text=" + " />
               </TouchableOpacity>

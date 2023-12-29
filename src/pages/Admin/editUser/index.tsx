@@ -24,6 +24,7 @@ export default function EditUser({ route }) {
   const [bairro, setBairro] = useState<string>(route?.params?.bairro);
   const [voluntario, setVoluntario] = useState<boolean>(route?.params?.isVolt);
   const [estagiario, setEstagiario] = useState<boolean>(route?.params?.isEtg);
+  const [isBusiness, setBusiness] = useState<boolean>(route?.params?.isBusiness);
 
   const [isCoordAutist, setIsCoordAutist] = useState<boolean>(
     route?.params?.isCoordAutist
@@ -40,7 +41,6 @@ export default function EditUser({ route }) {
   const [isCoordSaude, setIsCoordSaude] = useState<boolean>(route?.params?.isCoordSaude);
   const [isCoordProtagonista, setIsCoordProtagonista] = useState<boolean>(route?.params?.isCoordProtagonista);
   const [isCoordPasse, setIsCoordPasse] = useState<boolean>(route?.params?.isCoordPasse);
-  const [autista, setAutista] = useState<boolean>(route?.params?.isAutist);
   const [nome, setNome] = useState<string>(route?.params?.nome);
   const [avatar, setAvatar] = useState<string>(route?.params?.avatar)
   const [idade, setIdade] = useState<string>(route?.params?.idade);
@@ -65,7 +65,7 @@ export default function EditUser({ route }) {
     isCoordPasse: isCoordPasse,
     isCoordCidadania: isCoordCidadania,
     isCoordProtagonista: isCoordProtagonista,
-    isAutist: autista,
+    isBusiness: isBusiness,
     nome: nome,
     idade: idade,
     avatar: avatar,
@@ -151,14 +151,21 @@ export default function EditUser({ route }) {
         nome: dataParents.nome,
         idade: dataParents.idade,
         cpf: dataParents.cpf,
-        isAutist: dataParents.isAutist
+        isAutist: dataParents.isAutist,
+        isPcd: dataParents.isPcd
       });
       alert("Adicionado");
     } catch (error) {
       alert("Dados incorretos, tente novamente");
     }
   }
-  const toggleFilhoAutista = () => {
+  const toggleParentsPcd = () => {
+    setDataParents(({ isPcd: previus }) => ({
+      ...dataParents,
+      isPcd: !previus,
+    }));
+  };
+  const toggleParentAutist = () => {
     setDataParents(({ isAutist: previus }) => ({
       ...dataParents,
       isAutist: !previus,
@@ -170,9 +177,6 @@ export default function EditUser({ route }) {
   };
   const toggleVoluntario = () => {
     setVoluntario((previousState) => !previousState);
-  };
-  const toggleAutista = () => {
-    setAutista((previousState) => !previousState);
   };
   const toggleCidadania = () => {
     setIsCoordCidadania((previousState) => !previousState);
@@ -460,15 +464,21 @@ export default function EditUser({ route }) {
                   <Switch
                     value={dataParents && dataParents?.isAutist}
                     trackColor={{ false: "#9f9f9f", true: "#767590" }}
-                    onValueChange={toggleFilhoAutista}
+                    onValueChange={toggleParentAutist}
+                  />
+                  <TextLarge text="PCD" />
+                  <Switch
+                    value={dataParents && dataParents?.isPcd}
+                    trackColor={{ false: "#9f9f9f", true: "#767590" }}
+                    onValueChange={toggleParentsPcd}
                   />
                 </View>
               </View>
               <TouchableOpacity
-                className="w-28 h-11 top-1 justify-center items-center rounded-lg bg-white/30"
+                className="w-11 h-11 top-1 justify-center items-center rounded-lg bg-white/30"
                 onPress={() => addParents()}
               >
-                <TextLarge text="Adicionar" />
+                <TextLarge text="+" />
               </TouchableOpacity>
             </View>
           </View>

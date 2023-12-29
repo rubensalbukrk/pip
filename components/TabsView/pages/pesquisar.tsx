@@ -50,8 +50,8 @@ export default function TabSearch() {
             'Content-Type': 'application/json'
           }
         })
-        setUsers(response.data.results)
-        return response.data.results
+        setUsers(response.data)
+        return response.data
     } catch (error) {
       alert('Houve um problema na conexão, tente novamente!')
     }
@@ -111,7 +111,6 @@ export default function TabSearch() {
                     avatar: item?.avatar,
                     nome: item.nome,
                     idade: item.idade,
-                    parents: item.parents,
                     address: item.address,
                     bairro: item?.bairro,
                     phone: item.phone,
@@ -121,6 +120,7 @@ export default function TabSearch() {
                     password: item.password,
                     question1: item.question1,
                     question2: item.question2,
+                    parents: item.parents,
                   })
                 }
               >
