@@ -33,7 +33,7 @@ export default function Services() {
         "Visando potencializar os cuidados com as mulheres cadastradas e em parceria com o Sesc Saúde Mulher, ofertamos mensalmente citológicos e mamografias, como também grupos de orientações em saúde coletiva e gestacional.",
       labelRequisite: [
         "Solicitar Citológico ",
-        "Solicitar Mamogragia",
+        "Solicitar Mamografia",
         "Participar do grupo de gestantes",
       ],
       pasta: "Mulher",

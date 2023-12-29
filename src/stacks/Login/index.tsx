@@ -64,55 +64,10 @@ export const Login = () => {
         width={width}
         opacity={1}
       />
-      <View
-        style={{ zIndex: 2 }}
-        className="flex-row flex-wrap absolute mt-40 w-full h-40"
-      >
-        <RandomAnimatedImage
-          repeatCount={Infinity}
-          duration={700}
-          source={require("../../../assets/imgs/pip-autistas.png")}
-        />
-        <RandomAnimatedImage
-          repeatCount={Infinity}
-          duration={700}
-          source={require("../../../assets/imgs/pip-cidadania.png")}
-        />
-        <RandomAnimatedImage
-          repeatCount={Infinity}
-          duration={800}
-          source={require("../../../assets/imgs/pip-mulher.png")}
-        />
-      </View>
-      <View
-        style={{ zIndex: 2 }}
-        className="flex-row flex-wrap absolute mt-30 w-full h-40"
-      >
-        <RandomAnimatedImage
-          repeatCount={Infinity}
-          duration={600}
-          source={require("../../../assets/imgs/pip-saudemental.png")}
-        />
-        <RandomAnimatedImage
-          repeatCount={Infinity}
-          duration={600}
-          source={require("../../../assets/imgs/pip-passelivre.png")}
-        />
-        <RandomAnimatedImage
-          repeatCount={Infinity}
-          duration={600}
-          source={require("../../../assets/imgs/pip-protagonista.png")}
-        />
-        <RandomAnimatedImage
-          repeatCount={Infinity}
-          duration={600}
-          source={require("../../../assets/imgs/pip-sgralimentar.png")}
-        />
-      </View>
-
+      <TextMedium text="PIP" className="text-black" />
       <Image
         resizeMode="contain"
-        style={{ width: "70%", height: "40%" }}
+        style={{ width: "50%"}}
         source={require("../../../assets/pip-icon.png")}
       />
       <Text className="font-default text-blue-400 text-lg">ÁREA DE ACESSO</Text>

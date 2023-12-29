@@ -80,16 +80,13 @@ export default function Welcome() {
         style={{ zIndex: 4 }}
         className="w-full mt-16"
       >
-        <TextXl
-          className="text-black self-center"
-          text="Projeto Inclusão Popular"
-        />
+
       </Animated.View>
       <Animated.Image
       entering={BounceInUp.duration(2000)}
         alt="pip-logo"
         resizeMode="contain"
-        style={{ width: "70%", height: "40%" }}
+        style={{ width: "50%" }}
         source={require("../../../assets/pip-icon.png")}
       />
       <Animated.View

@@ -21,12 +21,42 @@ import { WarningError } from "../../../components/Warnings/isError";
 import { WarningSucess } from "../../../components/Warnings/isSucess";
 
 const citys = [
-  "Santa Rita",
-  "Varzea Nova",
-  "Tibiri",
-  "Marcos Moura",
-  "Cruz Espirito Santo",
+"MIRIRI",
+"LEROLÂNDIA",
+"FORTE VELHO",
+"RIBEIRA",
+"LIVRAMENTO",
+"BEBELÂNDIA",
+"USINA SÃO JOÃO",
+"CENTRO",
+"SANTA CRUZ",
+"VIDAL DE NEGREIROS",
+"POPULAR",
+"AÇUDE",
+"TIBIRI II",
+"VÁRZEA NOVA",
+"HEITEL",
+"MARCOS MOURA",
+"CICEROLÂNDIA",
+"ODILÂNDIA"
 ];
+const grauParents = [
+  "Pai",
+  "Mãe",
+  "Filho(a)",
+  "Sobrinho(a)",
+  "Esposo(a)",
+  "Companheiro(a)",
+  "Avó",
+  "Avô",
+  "Primo(a)",
+  "Genro",
+  "Nora",
+  "Cunhado(a)",
+  "Neto(a)",
+  "Tio(a)",
+  "Amigo(a) da família"
+]
 
 export const Cadastro = () => {
   const [isOk, setIsOk] = useState(false);
@@ -36,10 +66,12 @@ export const Cadastro = () => {
   const [formData, setData] = useState(null);
   const [bairro, setBairro] = useState("");
   const [dataParents, setDataParents] = useState<ParentsProps>({
+    parentesco: undefined,
     nome: undefined,
     idade: undefined,
     cpf: undefined,
     isAutist: false,
+    isPcd: false
   });
 
   const [parents, setparents] = useState<ParentsProps[]>([]);
@@ -60,10 +92,12 @@ export const Cadastro = () => {
     try {
       const lastId = parents[parents.length - 1]?.id;
       parents?.push({
+        parentesco: dataParents.parentesco,
         nome: dataParents.nome,
         idade: dataParents.idade,
         cpf: dataParents.cpf,
         isAutist: dataParents.isAutist,
+        isPcd: dataParents.isPcd,
       });
       setData({ ...formData, parents });
     } catch (error) {
@@ -82,6 +116,10 @@ export const Cadastro = () => {
                   key={index}
                   className="w-80 self-center py-3 px-3 my-2 rounded-2xl shadow-md shadow-black bg-slate-300"
                 >
+                  <TextLarge
+                    text={`Grau Parentesco: ${item.parentesco}`}
+                    className="text-black text-base"
+                  />
                   <TextLarge
                     text={`Nome: ${item.nome}`}
                     className="text-black text-base"
@@ -265,6 +303,29 @@ export const Cadastro = () => {
             <UserParents />
 
             <View className="w-64 rounded-xl my-5 ml-3 py-3 px-2 bg-slate-100 shadow-md shadow-black">
+
+            <SelectDrop
+              defaultButtonText="Selecionar"
+              dropdownIconPosition="right"
+              renderDropdownIcon={() => (
+                <Feather name="arrow-down" size={28} color="black" />
+              )}
+              buttonStyle={{
+                borderRadius: 30,
+                backgroundColor: `${colors.blue[200]}`,
+              }}
+              data={grauParents}
+              onSelect={(selectedItem, index) => {
+                setDataParents({...dataParents, parentesco: selectedItem})
+              }}
+              buttonTextAfterSelection={(selectedItem, index) => {
+                return selectedItem;
+              }}
+              rowTextForSelection={(item, index) => {
+                return item;
+              }}
+            />
+
               <TextLarge text="Nome" className="text-black text-base" />
               <TextInput
                 className="w-full h-10 px-2 mb-1 font-default text-start text-black text-lg rounded-2xl bg-slate-200"
