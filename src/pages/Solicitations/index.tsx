@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from "react";
+import axios from "axios";
 import {
   View,
   Text,
@@ -9,23 +10,55 @@ import {
 import { FontAwesome, Octicons } from "@expo/vector-icons";
 import { api } from "../../api/api";
 import UserAvatar from "../../../components/UserAvatar";
+import { SolicitationsProps } from "../../interfaces/Solicitations";
 import { UserContext } from "../../contexts/UserContext";
 import BackButton from "../../../components/BackButton";
 import BackgroundSolicitation from "../../../assets/svgs/Home-waves.svg";
 import { height, width } from "../../utils/dimensions";
-import { useFetchData } from "../../hooks/useFetchData";
+
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AuthContext } from "../../contexts/AuthContext";
+import { AprovadosProps } from "../../interfaces/Aprovados";
 
 export default function SolicitationsUser() {
-  const {list: solicitations, getData: getSolicitations} = useFetchData(api.getSolicitations)
-  const {list: aprovados, getData: getAprovados} = useFetchData(api.getAprovados)
-  const {logged, setSolicitations} = useContext<any>(UserContext)
+  const {token} = useContext(AuthContext)
+
+  const {logged,solicitations, aprovados, setAprovados, setSolicitations} = useContext<any>(UserContext)
   const {navigate} = useNavigation()
   
+  const getSolicitations = async () => {
+    try {
+      const solicitations = await axios.get<SolicitationsProps>(`${api.BASE_URL}/solicitations`,{
+        method: 'get',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+      });
+      setSolicitations(solicitations.data.results)
+      
+    } catch (error) {
+      Alert.alert('Atenção', 'Tente novamente mais tarde!')
+    }
+  }
+
+  const getAprovados = async () => {
+    try {
+      const aprovados = await axios.get<AprovadosProps>(`${api.BASE_URL}/aprovados`, {
+       method: 'get',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }});
+      setAprovados(aprovados.data.results)
+    } catch (error) {
+      Alert.alert('Atenção', 'Tente novamente mais tarde!')
+    }
+  }
   useEffect(() => {
     try {
-      getSolicitations(),
+     getSolicitations()
     setTimeout(() => {
       getAprovados()
     },1500)
@@ -43,7 +76,9 @@ export default function SolicitationsUser() {
   },[solicitations])
   
   var userSolicitations = solicitations?.filter((item) => String(item.cpf) === String(logged.cpf));
-  var userBeneficiets = aprovados?.filter((item) => String(item.cpf) === String(logged.cpf))
+  if(aprovados && aprovados.length > 0){
+    var userBeneficiets = aprovados?.filter((item) => String(item.cpf) === String(logged.cpf))
+  }
 
   return (
     <View className="w-full h-full items-center justify-center bg-slate-200">

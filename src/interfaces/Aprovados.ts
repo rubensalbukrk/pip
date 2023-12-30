@@ -5,4 +5,5 @@ export interface AprovadosProps {
     cpf: string
     service: string
     status: string | null
+    results?
 }

@@ -20,10 +20,16 @@ const getNotices = async (): Promise<NoticesProps[]> => {
   }
 }
 
-const getSolicitations = async (): Promise<SolicitationsProps[]> => {
+const getSolicitations = async (token): Promise<SolicitationsProps[]> => {
   try {
-    const response = await axios.get<PageProps<SolicitationsProps>>(`${BASE_URL}/solicitations`, config);
-    return response.data.results.solicitations
+    const response = await axios.get<SolicitationsProps>(`${BASE_URL}/solicitations`,{
+      method: 'get',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+    });
+    return response.data.results
   } catch (error) {
     Alert.alert('Atenção', 'Tente novamente mais tarde!')
   }

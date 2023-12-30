@@ -4,4 +4,5 @@ export interface SolicitationsProps extends AprovadosProps {
     id: number
     pasta: string
     userInfo?: object
+    results?
 }
