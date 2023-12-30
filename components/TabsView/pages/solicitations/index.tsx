@@ -1,10 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import axios from "axios";
 import {
   View,
-  Text,
   TouchableOpacity,
-  ScrollView,
   FlatList,
   RefreshControl,
 } from "react-native";

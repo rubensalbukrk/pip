@@ -16,7 +16,7 @@ import {
 } from "@expo/vector-icons";
 import BackButton from "../../../BackButton";
 import { useFetchData } from "../../../../src/hooks/useFetchData";
-import { TextExtra, TextLarge, TextMedium } from "../../../TextLg/Text";
+import { TextLarge, TextMedium } from "../../../TextLg/Text";
 import { AuthContext } from "../../../../src/contexts/AuthContext";
 
 export default function NewNotice() {

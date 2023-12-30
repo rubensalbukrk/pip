@@ -29,7 +29,6 @@ import {
   TextMedium,
   TextSmall,
 } from "../../../components/TextLg/Text";
-import RandomAnimatedImage from "../../../components/AnimatedImagesLogo/animatedImages";
 
 export const Login = () => {
   const [isEnabled, setIsEnable] = useState(false);

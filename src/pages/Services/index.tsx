@@ -21,6 +21,7 @@ export default function Services() {
         "Assessoria jurídica",
         "Emissão de RG do autista",
         "Atendimento nutricional",
+        "Solicitar inscrição arteterapia"
       ],
       pasta: "Autistas",
     },
@@ -45,7 +46,11 @@ export default function Services() {
       labelTitulo: "PIP CIDADANIA",
       labelDesc:
         "O acesso à documentação básica é de extrema importância para que a população consiga acessar outros serviços públicos. Dessa forma, essa pasta viabiliza o agendamento de RG, CPF e Carteira De Trabalho Digital.",
-      labelRequisite: ["Agendar emissão de RG"],
+      labelRequisite: [
+        "Agendar emissão de RG",
+        "Agendar emissão CPF",
+        "Agendar emissão CTPS"
+      ],
       pasta: "Cidadania",
     },
     {
@@ -57,7 +62,8 @@ export default function Services() {
         "O acesso à alimentação é direito de todos e todas. Diante do cenário de vulnerabilidade social que foi potencializado com a pandemia, nós estamos comprometidos em cooperar com a missão mundial de erradicar a pobreza e fome extrema.",
       labelRequisite: [
         "Solicitar Cesta básica",
-        "Solicitar Cartão Alimentação",
+        "Cadastro do PAA - Leite",
+        "Cadastro do PAA - Alimentos"
       ],
       pasta: "Segurança Alimentar",
     },
@@ -68,7 +74,12 @@ export default function Services() {
       labelTitulo: "PIP SAÚDE MENTAL",
       labelDesc:
         "Uma das maiores problemáticas na sociedade são as doenças psicossomáticas e por isso queremos contribuir para que as famílias cadastradas tenham acesso à atendimentos de psicologia para garantir sua saúde mental.",
-      labelRequisite: ["Solicitar atendimento de psicologia"],
+      labelRequisite: [
+        "Solicitar atendimento de psicologia",
+        "Solicitar terápia em grupo / pais de TEA",
+        "Solicitar Auriculoterapia",
+        "Solicitar Ventosaterapia"
+      ],
       pasta: "Saúde Mental",
     },
     {
@@ -78,7 +89,11 @@ export default function Services() {
       labelTitulo: "PIP PROTAGONISMO JUVENIL",
       labelDesc:
         "Em parceria com o Centro de Integração Empresa Escola - CIEE, encaminhamos jovens de 14 á 23 anos para o cadastro de prioridade por estarem em situação de vulnerabilidade social.",
-      labelRequisite: ["Solicitar encaminhamento ao CIEE"],
+      labelRequisite: [
+        "Solicitar encaminhamento ao CIEE",
+        "Solicitar construção de currículo",
+        "Solicitar treinamento para entrevista de emprego"
+    ],
       pasta: "Protagonistas",
     },
     {
@@ -90,6 +105,32 @@ export default function Services() {
         "O passe livre estadual é direito garantido pela Lei 18.419/2015 para pessoas com deficiência que assegura a isenção das taxas nos transportes coletivos intermunicipais. O Projeto Inclusão Popular é credenciado na FUNAD para solicitar o PASSE LIVRE PCD.",
       labelRequisite: ["Solicitar o PASSE LIVRE PCD"],
       pasta: "Passe Livre",
+    },
+    {
+      id: 8,
+      title: "CURSOS",
+      picture: require("../../../assets/imgs/pip-passelivre.png"),
+      labelTitulo: "PIP CURSOS",
+      labelDesc:
+        "Aqui temos CURSOS DE VÁRIOS TIPOS",
+      labelRequisite: [
+        "Solicitar inscrição para Jiu-jítsu / crianças de 10 à 15",
+        "Solicitar inscrição para Jiu-jítsu / crianças autistas"
+      ],
+      pasta: "Cursos",
+    },
+    {
+      id: 9,
+      title: "OPTOMETRIA",
+      picture: require("../../../assets/imgs/pip-passelivre.png"),
+      labelTitulo: "PIP OPTOMETRIA",
+      labelDesc:
+        "O exame de vista é essencial e direito garantido pela Lei 18.419/2015 para pessoas com deficiência que assegura a isenção das taxas nos transportes coletivos intermunicipais. O Projeto Inclusão Popular é credenciado na FUNAD para solicitar o PASSE LIVRE PCD.",
+      labelRequisite: [
+        "Solicitar exame de vista",
+        "Solicitar exame de vista de rotina"
+      ],
+      pasta: "Optometria",
     },
   ];
   return (
