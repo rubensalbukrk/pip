@@ -109,7 +109,7 @@ export default function Services() {
     {
       id: 8,
       title: "CURSOS",
-      picture: require("../../../assets/imgs/pip-passelivre.png"),
+      picture: require("../../../assets/imgs/pip-cursos.png"),
       labelTitulo: "PIP CURSOS",
       labelDesc:
         "Aqui temos CURSOS DE VÁRIOS TIPOS",
@@ -122,7 +122,7 @@ export default function Services() {
     {
       id: 9,
       title: "OPTOMETRIA",
-      picture: require("../../../assets/imgs/pip-passelivre.png"),
+      picture: require("../../../assets/imgs/pip-optometria.png"),
       labelTitulo: "PIP OPTOMETRIA",
       labelDesc:
         "O exame de vista é essencial e direito garantido pela Lei 18.419/2015 para pessoas com deficiência que assegura a isenção das taxas nos transportes coletivos intermunicipais. O Projeto Inclusão Popular é credenciado na FUNAD para solicitar o PASSE LIVRE PCD.",

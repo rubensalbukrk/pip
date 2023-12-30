@@ -121,6 +121,14 @@ export default function ViewService({ route }) {
                 <TextSmall text={requisite[3]} />
               </TouchableOpacity>
             ) : null}
+            {requisite[4] ? (
+              <TouchableOpacity
+                className="w-80 h-10 shadow-md shadow-black my-3 rounded-md justify-center px-3 bg-blue-500"
+                onPress={() => handleSolicitation(requisite[4])}
+              >
+                <TextSmall text={requisite[4]} />
+              </TouchableOpacity>
+            ) : null}
           </View>
         </ScrollView>
       </View>
