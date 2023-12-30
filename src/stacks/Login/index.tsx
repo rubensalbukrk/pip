@@ -21,10 +21,14 @@ import Animated, {
   Layout,
   ZoomOut,
   FadeInLeft,
+  BounceInUp,
+  FadeOut,
+  FadeIn,
 } from "react-native-reanimated";
 import { LottieView } from "../../utils/LottieView";
 import PasswordIcon from "../../../assets/svgs/password.svg";
 import {
+  TextExtra,
   TextLarge,
   TextMedium,
   TextSmall,
@@ -63,16 +67,26 @@ export const Login = () => {
         width={width}
         opacity={1}
       />
-      <TextMedium text="PIP" className="text-black" />
-      <Image
+      
+      <Animated.Image
+      entering={BounceInUp.duration(2000)}
+      exiting={BounceInDown}
+      layout={Layout}
+      
+      fadeDuration={2000}
         resizeMode="contain"
-        style={{ width: "50%"}}
+        style={{ width: "50%", height: "20%"}}
         source={require("../../../assets/pip-icon.png")}
       />
+      <Animated.View 
+      className={"w-full items-center justify-center self-center"}
+      entering={FadeIn.delay(1000).duration(2000)}>
+        <TextExtra text="PIP" className="text-black text-5xl" />
       <Text className="font-default text-blue-400 text-lg">ÁREA DE ACESSO</Text>
-
+      </Animated.View>
+      
       <Animated.View
-        entering={StretchInX.duration(1400).easing(Easing.bounce)}
+        entering={StretchInX.delay(2000).duration(1400).easing(Easing.bounce)}
         exiting={FadeInLeft.delay(100)}
         layout={Layout}
         className="w-72 shadow-lg my-5 pt-3 shadow-black justify-between items-center rounded-2xl bg-gray-200"

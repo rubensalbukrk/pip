@@ -46,12 +46,12 @@ export default function TabSearch() {
         const response = await axios.get(`${api.BASE_URL}/users`, {
           method: 'get',
           headers: {
-            'Authorization': `Bearer ${token}`,
+            //'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
           }
         })
-        setUsers(response.data)
-        return response.data
+        setUsers(response.data.results)
+        return response.data.results
     } catch (error) {
       alert('Houve um problema na conexão, tente novamente!')
     }

@@ -13,8 +13,8 @@ const config = {
 
 const getNotices = async (): Promise<NoticesProps[]> => {
   try {
-    const response = await axios.get<PageProps<NoticesProps>>(`${BASE_URL}/notices`, config)
-    return response.data.results.notices
+    const response = await axios.get<NoticesProps>(`${BASE_URL}/notices`, config)
+    return response.data.results
   } catch (error) {
     Alert.alert('Atenção', 'Tente novamente mais tarde!')
   }
@@ -54,10 +54,15 @@ const getUsers = async (token: any): Promise<UserProps[]> => {
 }
 
 
-function deleteNotice(id: number) {
+function deleteNotice(id: number, token: any) {
+
   axios
     .delete(`${BASE_URL}/notices/${id}`, {
-      method: "delete"
+      method: "delete",
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
     })
     .then((response) => {
       alert(JSON.stringify(response.data));

@@ -114,6 +114,12 @@ export default function PageCoordenador({ route }) {
     var passeSolicitations = solicitations?.filter(
       (item) => String(item.pasta) === "Passe Livre"
     );
+    var cursoSolicitations = solicitations?.filter(
+      (item) => String(item.pasta) === "Cursos"
+    );
+    var optometriaSolicitations = solicitations?.filter(
+      (item) => String(item.pasta) === "Optometria"
+    );
     var IsCidadania = () => {
       return (
         <View>
@@ -275,6 +281,52 @@ export default function PageCoordenador({ route }) {
         </View>
       );
     };
+    var IsCursos = () => {
+      return (
+        <View>
+          {cursoSolicitations?.map((item: SolicitationsProps) => {
+            const { service, pasta, nome, status, date, cpf, id, userInfo } =
+              item;
+            return (
+              <ItemSolicitation
+                key={id}
+                id={id}
+                nome={nome}
+                cpf={cpf}
+                service={service}
+                status={status}
+                date={date}
+                userInfo={userInfo}
+                pasta={pasta}
+              />
+            );
+          })}
+        </View>
+      );
+    };
+    var IsOptometria = () => {
+      return (
+        <View>
+          {optometriaSolicitations?.map((item: SolicitationsProps) => {
+            const { service, pasta, nome, status, date, cpf, id, userInfo } =
+              item;
+            return (
+              <ItemSolicitation
+                key={id}
+                id={id}
+                nome={nome}
+                cpf={cpf}
+                service={service}
+                status={status}
+                date={date}
+                userInfo={userInfo}
+                pasta={pasta}
+              />
+            );
+          })}
+        </View>
+      );
+    };
   }
 
   return (
@@ -306,6 +358,10 @@ export default function PageCoordenador({ route }) {
             {logged?.isCoordPasse ? <IsPasse /> : null}
 
             {logged?.isCoordAlimentar ? <IsAlimentar /> : null}
+
+            {logged?.isCoordCursos ? <IsCursos /> : null}
+
+            {logged?.isCoordOptometria ? <IsOptometria /> : null}
           </ScrollView>
         </View>
 

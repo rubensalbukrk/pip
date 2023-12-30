@@ -16,6 +16,10 @@ import { useNavigation } from "@react-navigation/native";
 import { TextLarge } from "../../../../components/TextLg/Text";
 import { ParentsProps } from "../../../interfaces/Parents";
 import { AuthContext } from "../../../contexts/AuthContext";
+import { citys, grauParents } from "../../../stacks/Cadastro";
+import colors from "tailwindcss/colors";
+import SelectDropdown from "react-native-select-dropdown";
+import { TextInputMask } from "react-native-masked-text";
 
 export default function EditUser({ route }) {
   const {token} = useContext<any>(AuthContext)
@@ -41,6 +45,8 @@ export default function EditUser({ route }) {
   const [isCoordSaude, setIsCoordSaude] = useState<boolean>(route?.params?.isCoordSaude);
   const [isCoordProtagonista, setIsCoordProtagonista] = useState<boolean>(route?.params?.isCoordProtagonista);
   const [isCoordPasse, setIsCoordPasse] = useState<boolean>(route?.params?.isCoordPasse);
+  const [isCoordCursos, setIsCoordCursos] = useState<boolean>(route?.params?.isCoordCursos);
+  const [isCoordOptometria, setIsCoordOptometria] = useState<boolean>(route?.params?.isCoordOptometria);
   const [nome, setNome] = useState<string>(route?.params?.nome);
   const [avatar, setAvatar] = useState<string>(route?.params?.avatar)
   const [idade, setIdade] = useState<string>(route?.params?.idade);
@@ -65,6 +71,8 @@ export default function EditUser({ route }) {
     isCoordPasse: isCoordPasse,
     isCoordCidadania: isCoordCidadania,
     isCoordProtagonista: isCoordProtagonista,
+    isCoordOptometria: isCoordOptometria,
+    isCoordCursos: isCoordCursos,
     isBusiness: isBusiness,
     nome: nome,
     idade: idade,
@@ -106,12 +114,29 @@ export default function EditUser({ route }) {
                   key={index}
                   className="w-80 py-3 px-3 my-2 rounded-2xl bg-white/20"
                 >
+                  <TextLarge text={`Parentesco: ${item.parentesco}`} />
                   <TextLarge text={`Nome: ${item.nome}`} />
                   <TextLarge text={`CPF: ${item.cpf}`} />
                   <TextLarge text={`Idade: ${item.idade}`} />
                   <View className="w-full flex-row gap-x-2 items-center">
                     <TextLarge text={"Autista"} />
                     {item.isAutist ? (
+                      <MaterialCommunityIcons
+                        name="check-circle"
+                        size={16}
+                        color={"green"}
+                      />
+                    ) : (
+                      <MaterialCommunityIcons
+                        name="close-circle"
+                        size={16}
+                        color={"white"}
+                      />
+                    )}
+                  </View>
+                  <View className="w-full flex-row gap-x-2 items-center">
+                    <TextLarge text={"PCD"} />
+                    {item.isPcd ? (
                       <MaterialCommunityIcons
                         name="check-circle"
                         size={16}
@@ -148,6 +173,7 @@ export default function EditUser({ route }) {
   function addParents() {
     try {
       parents?.push({
+        parentesco: dataParents.parentesco,
         nome: dataParents.nome,
         idade: dataParents.idade,
         cpf: dataParents.cpf,
@@ -364,7 +390,27 @@ export default function EditUser({ route }) {
             />
 
             <Text className="font-default text-lg text-white/60">Bairro</Text>
-
+            <SelectDropdown
+              defaultButtonText="Selecionar"
+              dropdownIconPosition="right"
+              renderDropdownIcon={() => (
+                <Feather name="arrow-down" size={28} color="black"></Feather>
+              )}
+              buttonStyle={{
+                borderRadius: 30,
+                backgroundColor: `${colors.blue[200]}`,
+              }}
+              data={citys}
+              onSelect={(selectedItem, index) => {
+                setBairro(selectedItem);
+              }}
+              buttonTextAfterSelection={(selectedItem, index) => {
+                return selectedItem;
+              }}
+              rowTextForSelection={(item, index) => {
+                return item;
+              }}
+            />
             <Text className="font-default text-lg text-white/60">NIS</Text>
             <TextInput
               className="font-default w-36 text-lg px-2 mb-2 rounded-lg text-white bg-zinc-400/20"
@@ -375,12 +421,13 @@ export default function EditUser({ route }) {
             />
 
             <Text className="font-default text-lg text-white/60">CPF</Text>
-            <TextInput
-              className="font-default w-36 text-lg px-2 mb-2 rounded-lg text-white bg-zinc-400/20"
-              value={cpf}
+            <TextInputMask
+              className="w-56 h-10 px-2 font-default text-start text-lg rounded-2xl bg-blue-500/10"
+              type="cpf"
+              selectionColor={"#9f9f9f"}
+              placeholderTextColor={"#bdbdbd"}
+              placeholder={`${cpf ? cpf : "000.000.000-00"}`}
               onChangeText={(text) => setCpf(text)}
-              placeholder={`${cpf ? cpf : ""}`}
-              placeholderTextColor="#fff"
             />
 
             <Text className="font-default text-lg text-white/60">Contato</Text>
@@ -432,6 +479,28 @@ export default function EditUser({ route }) {
             </View>
 
             <View className="w-64 rounded-xl my-5 py-3 px-2 bg-white/20">
+              <TextLarge text="Parentesco" />
+              <SelectDropdown
+              defaultButtonText="Selecionar"
+              dropdownIconPosition="right"
+              renderDropdownIcon={() => (
+                <Feather name="arrow-down" size={28} color="black" />
+              )}
+              buttonStyle={{
+                borderRadius: 30,
+                backgroundColor: `${colors.blue[200]}`,
+              }}
+              data={grauParents}
+              onSelect={(selectedItem, index) => {
+                setDataParents({...dataParents, parentesco: selectedItem})
+              }}
+              buttonTextAfterSelection={(selectedItem, index) => {
+                return selectedItem;
+              }}
+              rowTextForSelection={(item, index) => {
+                return item;
+              }}
+            />
               <TextLarge text="Nome" />
               <TextInput
                 className="w-full h-10 px-2 mb-1 font-default text-start text-white text-lg rounded-2xl bg-white/10 border-white/20"
@@ -441,8 +510,13 @@ export default function EditUser({ route }) {
               />
 
               <TextLarge text="CPF" />
-              <TextInput
-                className="w-full h-10 px-2 mb-1 font-default text-start text-white text-lg rounded-2xl bg-white/10 border-white/9ss0"
+              <TextInputMask
+                className="w-56 h-10 px-2 font-default text-start text-lg rounded-2xl bg-blue-500/10"
+                type="cpf"
+                selectionColor={"#9f9f9f"}
+                placeholderTextColor={"#bdbdbd"}
+               
+                placeholder="000.000.000-00"
                 onChangeText={(value) =>
                   setDataParents({ ...dataParents, cpf: value })
                 }

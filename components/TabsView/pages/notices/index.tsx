@@ -18,10 +18,17 @@ import BackButton from "../../../BackButton";
 import { useFetchData } from "../../../../src/hooks/useFetchData";
 import { TextLarge, TextMedium } from "../../../TextLg/Text";
 import { AuthContext } from "../../../../src/contexts/AuthContext";
+import data from '../../../../src/utils/dateNow'
+
 
 export default function NewNotice() {
-  const {token} = useContext(AuthContext)
-  var [dataNotice, setData] = useState({});
+  const {token} = useContext<any>(AuthContext)
+  const [dataNotice, setData] = useState({
+    date: data,
+    title: undefined,
+    mensagem: undefined,
+    img: undefined
+  });
   const {list, getData} = useFetchData(api.getNotices)
 
   useEffect(() => {
@@ -67,7 +74,7 @@ export default function NewNotice() {
                 <TextLarge text={`Data: ${item.date}`} />
                 <TouchableOpacity
                 className="absolute top-1 right-1 w-8 h-8 opacity-80"
-                onPress={() => api.deleteNotice(item.id)}
+                onPress={() => api.deleteNotice(item.id, token)}
               >
                 <MaterialIcons name="delete-forever" size={32} color="white" />
               </TouchableOpacity>

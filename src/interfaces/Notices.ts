@@ -4,4 +4,5 @@ export interface NoticesProps {
     mensagem: string
     date: string
     img: string
+    results?
 }

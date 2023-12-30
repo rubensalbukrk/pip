@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { formToJSON } from "axios";
 import { api } from "../../api/api";
 import React, { useEffect, useState } from "react";
 import {
@@ -20,27 +20,27 @@ import colors from "tailwindcss/colors";
 import { WarningError } from "../../../components/Warnings/isError";
 import { WarningSucess } from "../../../components/Warnings/isSucess";
 
-const citys = [
-"MIRIRI",
-"LEROLÂNDIA",
-"FORTE VELHO",
-"RIBEIRA",
-"LIVRAMENTO",
-"BEBELÂNDIA",
-"USINA SÃO JOÃO",
-"CENTRO",
-"SANTA CRUZ",
-"VIDAL DE NEGREIROS",
-"POPULAR",
-"AÇUDE",
-"TIBIRI II",
-"VÁRZEA NOVA",
-"HEITEL",
-"MARCOS MOURA",
-"CICEROLÂNDIA",
-"ODILÂNDIA"
+export const citys = [
+  "MIRIRI",
+  "LEROLÂNDIA",
+  "FORTE VELHO",
+  "RIBEIRA",
+  "LIVRAMENTO",
+  "BEBELÂNDIA",
+  "USINA SÃO JOÃO",
+  "CENTRO",
+  "SANTA CRUZ",
+  "VIDAL DE NEGREIROS",
+  "POPULAR",
+  "AÇUDE",
+  "TIBIRI II",
+  "VÁRZEA NOVA",
+  "HEITEL",
+  "MARCOS MOURA",
+  "CICEROLÂNDIA",
+  "ODILÂNDIA",
 ];
-const grauParents = [
+export const grauParents = [
   "Pai",
   "Mãe",
   "Filho(a)",
@@ -55,11 +55,12 @@ const grauParents = [
   "Cunhado(a)",
   "Neto(a)",
   "Tio(a)",
-  "Amigo(a) da família"
-]
+  "Amigo(a) da família",
+];
 
 export const Cadastro = () => {
   const [isOk, setIsOk] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
   const [policy, setPolicy] = useState(false);
   const [updateList, setUpdateList] = useState(false);
@@ -71,26 +72,29 @@ export const Cadastro = () => {
     idade: undefined,
     cpf: undefined,
     isAutist: false,
-    isPcd: false
+    isPcd: false,
   });
 
-  const [parents, setparents] = useState<ParentsProps[]>([]);
+  const [parents, setParents] = useState<ParentsProps[]>([]);
   const { navigate, goBack } = useNavigation();
 
-  const newUser = async () => {
+  const newUser = () => {
+    
     try {
-      const response = await axios.post(`${api.BASE_URL}/users`, formData, {
-        method: "POST",
+      axios.post(`${api.BASE_URL}/users`, formData, {
+        headers: {
+          "Content-Type": "application/json"
+        }
       });
       setIsOk(true)
-    } catch (e) {
-      return <WarningError />
+    } catch (error){
+      () => [console.log(error), setIsError(true)];
     }
   };
 
   function addParents() {
     try {
-      const lastId = parents[parents.length - 1]?.id;
+      const lastId = parents[parents.length - 1]?.id
       parents?.push({
         parentesco: dataParents.parentesco,
         nome: dataParents.nome,
@@ -150,6 +154,23 @@ export const Cadastro = () => {
                         color={"white"}
                       />
                     )}
+                     <TextLarge
+                      text={"PCD"}
+                      className="text-black text-base"
+                    />
+                    {item.isPcd ? (
+                      <MaterialCommunityIcons
+                        name="check-circle"
+                        size={16}
+                        color={"green"}
+                      />
+                    ) : (
+                      <MaterialCommunityIcons
+                        name="close-circle"
+                        size={16}
+                        color={"white"}
+                      />
+                    )}
                   </View>
 
                   <TouchableOpacity
@@ -172,10 +193,12 @@ export const Cadastro = () => {
     }
   };
 
-  useEffect(() => {
-    bairro && setData({ ...formData, bairro: bairro });
-  }, [bairro]);
-
+  const togglePcd = () => {
+    setDataParents(({ isPcd: previus }) => ({
+      ...dataParents,
+      isPcd: !previus,
+    }));
+  };
   const toggleAutista = () => {
     setDataParents(({ isAutist: previus }) => ({
       ...dataParents,
@@ -190,12 +213,27 @@ export const Cadastro = () => {
 
   return (
     <View className="flex-1 w-full h-full bg-slate-200">
-      {isOk && <View style={{zIndex: 20, width: '100%', height: '100%'}} className="w-full absolute self-center bg-white"><WarningSucess title="Agora você pode acessar nosso app!" /></View> }
+      {isOk && (
+        <View
+          style={{ zIndex: 20, height: "100%" }}
+          className="w-full absolute self-center bg-white"
+        >
+          <WarningSucess title="Seja bem vindo, agora você tem acesso ao nosso aplicativo!" />
+        </View>
+      )}
+      {isError && (
+        <View
+          style={{ zIndex: 20, height: "100%" }}
+          className="w-full absolute self-center bg-white"
+        >
+          <WarningError />
+        </View>
+      )}
       <View className="w-full">
         <LottieView
           autoPlay={true}
           loop
-          style={{ width: "70%", alignSelf: 'center' }}
+          style={{ width: "70%", alignSelf: "center" }}
           source={require("../../../assets/animations/Animation - Cadastro.json")}
         />
         <TextLarge
@@ -272,7 +310,7 @@ export const Cadastro = () => {
               }}
               data={citys}
               onSelect={(selectedItem, index) => {
-                setBairro(selectedItem);
+                setData({ ...formData, bairro: selectedItem})
               }}
               buttonTextAfterSelection={(selectedItem, index) => {
                 return selectedItem;
@@ -295,36 +333,33 @@ export const Cadastro = () => {
             <TextLarge text="Quantos parentes ?" className="text-black" />
             <TextInput
               className="w-16 h-10 px-2 font-default text-start text-lg rounded-2xl bg-blue-500/10"
-              onChangeText={(value) =>
-                setData({ ...formData, parentsCount: value })
-              }
+              
             />
 
             <UserParents />
 
             <View className="w-64 rounded-xl my-5 ml-3 py-3 px-2 bg-slate-100 shadow-md shadow-black">
-
-            <SelectDrop
-              defaultButtonText="Selecionar"
-              dropdownIconPosition="right"
-              renderDropdownIcon={() => (
-                <Feather name="arrow-down" size={28} color="black" />
-              )}
-              buttonStyle={{
-                borderRadius: 30,
-                backgroundColor: `${colors.blue[200]}`,
-              }}
-              data={grauParents}
-              onSelect={(selectedItem, index) => {
-                setDataParents({...dataParents, parentesco: selectedItem})
-              }}
-              buttonTextAfterSelection={(selectedItem, index) => {
-                return selectedItem;
-              }}
-              rowTextForSelection={(item, index) => {
-                return item;
-              }}
-            />
+              <SelectDrop
+                defaultButtonText="Selecionar"
+                dropdownIconPosition="right"
+                renderDropdownIcon={() => (
+                  <Feather name="arrow-down" size={28} color="black" />
+                )}
+                buttonStyle={{
+                  borderRadius: 30,
+                  backgroundColor: `${colors.blue[200]}`,
+                }}
+                data={grauParents}
+                onSelect={(selectedItem, index) => {
+                  setDataParents({ ...dataParents, parentesco: selectedItem });
+                }}
+                buttonTextAfterSelection={(selectedItem, index) => {
+                  return selectedItem;
+                }}
+                rowTextForSelection={(item, index) => {
+                  return item;
+                }}
+              />
 
               <TextLarge text="Nome" className="text-black text-base" />
               <TextInput
@@ -366,6 +401,12 @@ export const Cadastro = () => {
                     thumbColor={isEnabled ? "#217aff" : "#cecece"}
                     onValueChange={toggleAutista}
                   />
+                  <TextLarge text="PCD" />
+                  <Switch
+                    value={dataParents && dataParents?.isPcd}
+                    trackColor={{ false: "#9f9f9f", true: "#767590" }}
+                    onValueChange={togglePcd}
+                  />
                 </View>
               </View>
               <TouchableOpacity
@@ -405,7 +446,7 @@ export const Cadastro = () => {
           <TouchableOpacity
             disabled={!policy}
             className="w-72 h-12 my-3 mt-8 shadow-lg shadow-black self-center justify-center items-center bg-blue-600 rounded-lg"
-            onPress={newUser}
+            onPress={() => newUser()}
           >
             <TextLarge text="Enviar" className="text-white" />
           </TouchableOpacity>
@@ -418,7 +459,11 @@ export const Cadastro = () => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-      <StatusBar backgroundColor={'#e2e8f0'} barStyle="dark-content" translucent={true}/>
+      <StatusBar
+        backgroundColor={"#e2e8f0"}
+        barStyle="dark-content"
+        translucent={true}
+      />
     </View>
   );
 };

@@ -14,13 +14,12 @@ import { TextSmall } from "../../../components/TextLg/Text";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ParentsProps } from "../../interfaces/Parents";
 import Animated, {
-  BounceInDown,
   BounceInUp,
   FadeInUp,
 } from "react-native-reanimated";
 
 export const User = () => {
-  const { logged, setAvatar, avatar } = useContext<any>(UserContext);
+  const { logged, setAvatar } = useContext<any>(UserContext);
   const { navigate, goBack } = useNavigation();
 
   const pickImageAsync = async () => {
@@ -98,7 +97,7 @@ export const User = () => {
               <UserAvatar x={130} y={130} />
             </View>
 
-            <View className="h-7 absolute self-center bottom-0 items-center justify-center  bg-blue-400 shadow-lg shadow-black rounded-md">
+            <View className="w-auto h-7 absolute self-center bottom-0 items-center justify-center bg-blue-400 shadow-lg shadow-black rounded-md">
               <TextSmall
                 className="px-1"
                 text={
@@ -122,6 +121,12 @@ export const User = () => {
                     ? "Coordenação dos Protagonistas"
                     : "Membro" && logged?.isCoordPasse == true
                     ? "Coordenação dos Passes"
+                    : "Membro" && logged?.isCoordCursos == true
+                    ? "Coordenação dos Cursos"
+                    : "Membro" && logged?.isCoordOptometria == true
+                    ? "Coordenação da Optometria"
+                    : "Membro" && logged?.isBusiness == true
+                    ? "Empresa"
                     : "Membro"
                 }
               />

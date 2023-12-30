@@ -1,14 +1,15 @@
 import React, { useContext, useRef, useEffect, useState } from "react";
-import { View, TouchableOpacity, StatusBar, Image } from "react-native";
+import { View, TouchableOpacity, StatusBar } from "react-native";
 import Animated, {
   BounceInDown,
-  Easing,
   FadeInRight,
   ZoomOutDown,
   Layout,
   FadeInLeft,
   FadeInUp,
   BounceInUp,
+  FadeIn,
+  FadeOut,
 } from "react-native-reanimated";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../contexts/UserContext";
@@ -78,7 +79,7 @@ export default function Welcome() {
       <Animated.View
         entering={FadeInUp.delay(1000).duration(2000)}
         style={{ zIndex: 4 }}
-        className="w-full mt-16"
+        className="w-full mt-8"
       >
 
       </Animated.View>
@@ -86,9 +87,17 @@ export default function Welcome() {
       entering={BounceInUp.duration(2000)}
         alt="pip-logo"
         resizeMode="contain"
-        style={{ width: "50%" }}
+        style={{ width: "50%", height: "30%" }}
         source={require("../../../assets/pip-icon.png")}
       />
+      <Animated.Text
+      className={"self-center my-2 text-6xl text-black font-default"}
+      entering={FadeIn.delay(1000).duration(2000)}
+      exiting={FadeOut}
+      layout={Layout}
+      >
+        PIP
+      </Animated.Text>
       <Animated.View
         entering={FadeInLeft.delay(1800).duration(2000)}
         style={{ zIndex: 4 }}

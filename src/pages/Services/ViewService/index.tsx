@@ -34,26 +34,35 @@ export default function ViewService({ route }) {
     route?.params;
  
   function handleSolicitation(service: ServicesProps) {
+    const myInfo = {
+      nome: logged.nome,
+      idade: logged.idade,
+      phone: logged.phone,
+      address: logged.address,
+      bairro: logged.bairro,
+      cpf: logged.cpf,
+      password: "undefined"
+    }
     let newSolicitation = {
-      userInfo: logged,
-      nome: logged?.nome,
-      cpf: logged?.cpf,
+      nome: logged.nome,
+      cpf: logged.cpf,
       service: service,
       pasta: `${pasta}`,
       status: "Aguardando analise...",
-    };
+      userInfo: myInfo,
+    }
     axios
       .post(`${api.BASE_URL}/solicitations`, newSolicitation, {
         method: "post",
         headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
       })
       .then(() => {
         setIsOk(true);
       })
-      .catch(() => setIsError(true));
+      .catch(() => [console.log(logged), setIsError(true)]);
   }
 
   return (

@@ -8,7 +8,7 @@ import { Alert } from "react-native";
 export const AuthContext = createContext();
 
 export default function AuthProvider({ children }) {
-  const { users, setLogged } = useContext(UserContext);
+  const { setLogged } = useContext(UserContext);
   const [auth, setAuth] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
   const [signingAuto, setSigningAuto] = useState(false);
