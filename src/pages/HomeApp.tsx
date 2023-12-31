@@ -20,6 +20,7 @@ import UserAvatar from "../../components/UserAvatar";
 import { LottieView } from "../utils/LottieView";
 import { TextLarge, TextMedium, TextSmall } from "../../components/TextLg/Text";
 import Animated, { Easing, FadeInDown, FadeInUp, ZoomIn } from "react-native-reanimated";
+
 export const HomeApp = () => {
   const { logged, solicitations, refreshing, setRefreshing } =
     useContext<any>(UserContext);
@@ -135,7 +136,7 @@ export const HomeApp = () => {
             className="absolute w-4 h-4 items-center justify-center bottom-2 right-4 mb-2 bg-red-600/100 rounded-full"
           >
             <Text className="font-default text-center self-center text-white text-xs">
-              {countSolicitations ? countSolicitations - 1 : "0"}
+              {countSolicitations ? countSolicitations : "0"}
             </Text>
           </View>
           <LottieView
