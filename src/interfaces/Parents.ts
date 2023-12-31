@@ -4,6 +4,7 @@ export interface ParentsProps {
     cpf: string
     nome: string
     idade: number | string
-    isAutist: boolean | false,
+    isAutist: boolean | false
     isPcd: boolean | false
+    useId?
 }

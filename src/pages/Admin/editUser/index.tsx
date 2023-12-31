@@ -60,6 +60,12 @@ export default function EditUser({ route }) {
   const [opnion, setOpnion] = useState<string>(route?.params?.question2);
   const [pass, setPass] = useState<string>(route?.params?.password);
   const navigation = useNavigation();
+  
+  function copiarSemUserId(parents) {
+    const { userId, ...copiaParent } = parents;
+    return copiaParent;
+  }
+  let parentsWithID = parents.map(copiarSemUserId);
 
   let UserUpdate = {
     isVolt: voluntario,
@@ -81,7 +87,7 @@ export default function EditUser({ route }) {
     bairro: bairro,
     cpf: cpf,
     nis: nis,
-    parents: parents,
+    parents: parentsWithID,
     phone: phone,
     email: email,
     question1: true,
@@ -401,6 +407,7 @@ export default function EditUser({ route }) {
                 backgroundColor: `${colors.blue[200]}`,
               }}
               data={citys}
+              defaultValue={bairro}
               onSelect={(selectedItem, index) => {
                 setBairro(selectedItem);
               }}

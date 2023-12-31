@@ -15,6 +15,7 @@ import {
 } from "../../../../components/TextLg/Text";
 import { WarningSucess } from "../../../../components/Warnings/isSucess";
 import { WarningError } from "../../../../components/Warnings/isError";
+import data from "../../../utils/dateNow";
 
 interface ServicesProps {
   title: string;
@@ -47,8 +48,9 @@ export default function ViewService({ route }) {
       nome: logged.nome,
       cpf: logged.cpf,
       service: service,
-      pasta: `${pasta}`,
       status: "Aguardando analise...",
+      pasta: `${pasta}`,
+      date: `${data}`,
       userInfo: myInfo,
     }
     axios
@@ -62,7 +64,7 @@ export default function ViewService({ route }) {
       .then(() => {
         setIsOk(true);
       })
-      .catch(() => [console.log(logged), setIsError(true)]);
+      .catch(() => setIsError(true));
   }
 
   return (

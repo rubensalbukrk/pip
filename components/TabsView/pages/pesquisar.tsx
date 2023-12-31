@@ -46,7 +46,7 @@ export default function TabSearch() {
         const response = await axios.get(`${api.BASE_URL}/users`, {
           method: 'get',
           headers: {
-            //'Authorization': `Bearer ${token}`,
+            'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
           }
         })

@@ -5,4 +5,5 @@ export interface SolicitationsProps extends AprovadosProps {
     pasta: string
     userInfo?: object
     results?
+    token?
 }

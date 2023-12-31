@@ -48,6 +48,20 @@ export default function MyParents(props) {
             color={"gray"}
           />
         )}
+        <TextLarge text={"PCD"} className="px-2 text-xs text-zinc-700/70" />
+        {props.isPcd ? (
+          <MaterialCommunityIcons
+            name="check-circle"
+            size={14}
+            color={"green"}
+          />
+        ) : (
+          <MaterialCommunityIcons
+            name="close-circle"
+            size={14}
+            color={"gray"}
+          />
+        )}
       </View>
     </View>
   );

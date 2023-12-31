@@ -97,9 +97,8 @@ export const User = () => {
               <UserAvatar x={130} y={130} />
             </View>
 
-            <View className="w-auto h-7 absolute self-center bottom-0 items-center justify-center bg-blue-400 shadow-lg shadow-black rounded-md">
+            <View className="w-52 h-7 absolute self-center bottom-0 items-center justify-center bg-blue-400 shadow-md shadow-black rounded-md">
               <TextSmall
-                className="px-1"
                 text={
                   logged?.isAdmin == true
                     ? "CEO Fundador"

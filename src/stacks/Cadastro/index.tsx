@@ -61,7 +61,8 @@ export const grauParents = [
 export const Cadastro = () => {
   const [isOk, setIsOk] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [isEnabled, setIsEnabled] = useState(false);
+  const [isAutistEnabled, setAutistEnabled] = useState(false);
+  const [isPcdEnabled, setPcdEnabled] = useState(false);
   const [policy, setPolicy] = useState(false);
   const [updateList, setUpdateList] = useState(false);
   const [formData, setData] = useState(null);
@@ -198,13 +199,14 @@ export const Cadastro = () => {
       ...dataParents,
       isPcd: !previus,
     }));
+    setPcdEnabled((previus) => !previus)
   };
   const toggleAutista = () => {
     setDataParents(({ isAutist: previus }) => ({
       ...dataParents,
       isAutist: !previus,
     }));
-    setIsEnabled((previus) => !previus);
+    setAutistEnabled((previus) => !previus);
   };
   const togglePolicy = (): void => {
     setPolicy((previus) => !previus);
@@ -339,6 +341,7 @@ export const Cadastro = () => {
             <UserParents />
 
             <View className="w-64 rounded-xl my-5 ml-3 py-3 px-2 bg-slate-100 shadow-md shadow-black">
+            <TextLarge text="Grau parentesco" className="text-black text-base" />
               <SelectDrop
                 defaultButtonText="Selecionar"
                 dropdownIconPosition="right"
@@ -393,20 +396,25 @@ export const Cadastro = () => {
                     }
                   />
                 </View>
-                <View className="items-center px-2">
+                <View className="flex-row items-center px-2">
+                  <View>
                   <TextLarge text="Autista" className="text-black text-base" />
                   <Switch
                     value={dataParents.isAutist}
                     trackColor={{ false: "#cfcfcf", true: "#bebebe" }}
-                    thumbColor={isEnabled ? "#217aff" : "#cecece"}
+                    thumbColor={isAutistEnabled ? "#217aff" : "#cecece"}
                     onValueChange={toggleAutista}
                   />
-                  <TextLarge text="PCD" />
+                  </View>
+                  <View>
+                  <TextLarge text="PCD" className="text-black" />
                   <Switch
                     value={dataParents && dataParents?.isPcd}
-                    trackColor={{ false: "#9f9f9f", true: "#767590" }}
+                    trackColor={{ false: "#cfcfcf", true: "#bebebe" }}
+                    thumbColor={isPcdEnabled ? "#217aff" : "#cecece"}
                     onValueChange={togglePcd}
                   />
+                  </View>
                 </View>
               </View>
               <TouchableOpacity

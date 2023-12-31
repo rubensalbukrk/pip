@@ -4,8 +4,9 @@ import {
   TouchableOpacity,
   FlatList,
   RefreshControl,
+  Alert,
 } from "react-native";
-import { Feather, FontAwesome, FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import { UserContext } from "../../../../src/contexts/UserContext";
 import { useNavigation } from "@react-navigation/native";
 import {
@@ -14,30 +15,60 @@ import {
   deleteAprovado,
 } from "../../../../src/api/api";
 import BackButton from "../../../BackButton";
-import { useFetchData } from "../../../../src/hooks/useFetchData";
-import { TextLarge, TextMedium, TextSmall } from "../../../TextLg/Text";
+import { TextMedium, TextSmall } from "../../../TextLg/Text";
+import { AuthContext } from "../../../../src/contexts/AuthContext";
+import axios from "axios";
+import { SolicitationsProps } from "../../../../src/interfaces/Solicitations";
+import { AprovadosProps } from "../../../../src/interfaces/Aprovados";
 
 export default function Solicitation() {
-  const { list: aprovados, getData: getAprovados } = useFetchData(
-    api.getAprovados
-  );
-  const { list: solicitations, getData: getSolicitations } = useFetchData(
-    api.getSolicitations
-  );
+  const { token } = useContext(AuthContext);
   const [refreshing, setRefreshing] = useState(false);
-  const { users } = useContext<any>(UserContext);
+  const { users, setAprovados, setSolicitations, solicitations, aprovados } = useContext<any>(UserContext);
   const navigation = useNavigation();
 
+  const config = {
+    method: "get",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  const getSolicitations = async (): Promise<SolicitationsProps[]> => {
+    try {
+      const response = await axios.get<SolicitationsProps>(
+        `${api.BASE_URL}/solicitations`,
+        config
+      );
+      setSolicitations(response.data.results)
+      return
+    } catch (error) {
+      Alert.alert("Atenção", "Tente novamente mais tarde!");
+    }
+  };
+
+  const getAprovados = async (): Promise<AprovadosProps[]> => {
+    try {
+      const response = await axios.get<AprovadosProps>(
+        `${api.BASE_URL}/aprovados`,
+        config
+      );
+      setAprovados(response.data.results)
+      return 
+    } catch (error) {
+      Alert.alert("Atenção", "Tente novamente mais tarde!");
+    }
+  };
+  if (refreshing) {
+    getAprovados(), getSolicitations(), setRefreshing(false);
+  }
   useEffect(() => {
     getSolicitations();
     setTimeout(() => {
       getAprovados();
     }, 1300);
   }, []);
-
-  if (refreshing) {
-    getAprovados(), getSolicitations(), setRefreshing(false);
-  }
 
   return (
     <View className="flex-1 w-full justify-around px-4 py-10 bg-zinc-500">

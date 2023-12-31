@@ -1,12 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import axios from "axios";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  FlatList,
-  Alert
-} from "react-native";
+import { View, Text, TouchableOpacity, FlatList, Alert } from "react-native";
 import { FontAwesome, Octicons } from "@expo/vector-icons";
 import { api } from "../../api/api";
 import UserAvatar from "../../../components/UserAvatar";
@@ -22,62 +16,74 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { AprovadosProps } from "../../interfaces/Aprovados";
 
 export default function SolicitationsUser() {
-  const {token} = useContext(AuthContext)
+  const { token } = useContext(AuthContext);
+  const { logged, solicitations, aprovados, setAprovados, setSolicitations } =
+    useContext<any>(UserContext);
+  const { navigate } = useNavigation();
 
-  const {logged,solicitations, aprovados, setAprovados, setSolicitations} = useContext<any>(UserContext)
-  const {navigate} = useNavigation()
-  
   const getSolicitations = async () => {
     try {
-      const solicitations = await axios.get<SolicitationsProps>(`${api.BASE_URL}/solicitations`,{
-        method: 'get',
+      const solicitations = await axios.get<SolicitationsProps>(
+        `${api.BASE_URL}/solicitations`,
+        {
+          method: "get",
           headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
-      });
-      setSolicitations(solicitations.data.results)
-      
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setSolicitations(solicitations.data.results);
     } catch (error) {
-      Alert.alert('Atenção', 'Tente novamente mais tarde!')
+      Alert.alert("Atenção", "Tente novamente em alguns instantes!");
     }
-  }
+  };
 
   const getAprovados = async () => {
     try {
-      const aprovados = await axios.get<AprovadosProps>(`${api.BASE_URL}/aprovados`, {
-       method: 'get',
+      const aprovados = await axios.get<AprovadosProps>(
+        `${api.BASE_URL}/aprovados`,
+        {
+          method: "get",
           headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }});
-      setAprovados(aprovados.data.results)
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setAprovados(aprovados.data.results);
     } catch (error) {
-      Alert.alert('Atenção', 'Tente novamente mais tarde!')
+      Alert.alert("Atenção", "Tente novamente em alguns instantes!");
     }
-  }
+  };
   useEffect(() => {
     try {
-     getSolicitations()
-    setTimeout(() => {
-      getAprovados()
-    },1500)
+      getSolicitations();
+      setTimeout(() => {
+        getAprovados();
+      }, 1500);
     } catch (error) {
-      Alert.alert("Sessão expirada", "Faça login novamente!")
-      AsyncStorage.removeItem("token");
-      navigate('Login');
+      if (error.response.status === 401) {
+        Alert.alert("Sessão expirada!", "Faça login novamente!");
+        AsyncStorage.removeItem("token");
+        navigate("Login");
+      }
     }
-  },[])
+  }, []);
 
   useEffect(() => {
     if (solicitations) {
-      setSolicitations(solicitations)
+      setSolicitations(solicitations);
     }
-  },[solicitations])
-  
-  var userSolicitations = solicitations?.filter((item) => String(item.cpf) === String(logged.cpf));
-  if(aprovados && aprovados.length > 0){
-    var userBeneficiets = aprovados?.filter((item) => String(item.cpf) === String(logged.cpf))
+  }, [solicitations]);
+
+  var userSolicitations = solicitations?.filter(
+    (item) => String(item.cpf) === String(logged.cpf)
+  );
+  if (aprovados && aprovados.length > 0) {
+    var userBeneficiets = aprovados?.filter(
+      (item) => String(item.cpf) === String(logged.cpf)
+    );
   }
 
   return (
@@ -134,14 +140,14 @@ export default function SolicitationsUser() {
           Meus benefícios
         </Text>
       </View>
-      
-        <FlatList
+
+      <FlatList
         className="w-80 h-28 "
         data={userBeneficiets}
         horizontal={false}
         renderItem={({ item }) => {
           return (
-            <View  className="w-72 my-4 px-2 self-center items-start justify-start py-5 rounded-xl shadow-md shadow-black bg-gray-600">
+            <View className="w-72 my-4 px-2 self-center items-start justify-start py-5 rounded-xl shadow-md shadow-black bg-gray-600">
               <Text className="font-default text-md text-gray-800">
                 Serviço: {item.service}
               </Text>
@@ -154,8 +160,7 @@ export default function SolicitationsUser() {
             </View>
           );
         }}
-      /> 
-      
+      />
     </View>
   );
 }
