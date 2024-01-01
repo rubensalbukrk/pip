@@ -112,7 +112,7 @@ export default function Services() {
       picture: require("../../../assets/imgs/pip-cursos.png"),
       labelTitulo: "PIP CURSOS",
       labelDesc:
-        "Aqui temos CURSOS DE VÁRIOS TIPOS",
+        "Promover a oferta de cursos gratuitos em parceria com empresas e setores públicos,  a fim de potencializar os núcleos familiares e aumentar a inserção no mercado de trabalho é o nosso alvo com essa pasta de atuação. E aqui abaixo você encontra os cursos disponíveis, sejam eles profissionalizantes, artísticos ou esportivos.",
       labelRequisite: [
         "Solicitar inscrição para Jiu-jítsu / crianças de 10 à 15",
         "Solicitar inscrição para Jiu-jítsu / crianças autistas"
@@ -125,7 +125,7 @@ export default function Services() {
       picture: require("../../../assets/imgs/pip-optometria.png"),
       labelTitulo: "PIP OPTOMETRIA",
       labelDesc:
-        "O exame de vista é essencial e direito garantido pela Lei 18.419/2015 para pessoas com deficiência que assegura a isenção das taxas nos transportes coletivos intermunicipais. O Projeto Inclusão Popular é credenciado na FUNAD para solicitar o PASSE LIVRE PCD.",
+        "Garantir a saúde ocular  para as famílias em situação de vulnerabilidade social é o que fazemos com oferta de exames de vista completos ( avaliação de reflexo, fundo de olho, exames computadorizados e diagnóstico ).",
       labelRequisite: [
         "Solicitar exame de vista",
         "Solicitar exame de vista de rotina"

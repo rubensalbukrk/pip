@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { View, Image, Text, TouchableOpacity, ScrollView } from "react-native";
+import { View, Image, Text, TouchableOpacity, ScrollView, Alert } from "react-native";
 import axios from "axios";
 import BackButton from "../../../../components/BackButton";
 import { UserContext } from "../../../contexts/UserContext";
@@ -35,6 +35,9 @@ export default function ViewService({ route }) {
     route?.params;
  
   function handleSolicitation(service: ServicesProps) {
+    if(service.requisite[0] === "Solicitar o PASSE LIVRE PCD"){
+      Alert.alert("ATENÇÃO!", "Você precisa preencher um formulário com os dados solicitados para levar a uma sede do PIP!")
+    }
     const myInfo = {
       nome: logged.nome,
       idade: logged.idade,

@@ -75,17 +75,25 @@ function deleteNotice(id: number, token: any) {
     })
     .catch((error) => console.error(error));
 }
-export function deleteSolicitation(id: number | string) {
+export function deleteSolicitation(id: number | string, token: any) {
   axios
     .delete(`${BASE_URL}/solicitations/${id}`, {
-      method: "delete",
+      method: 'delete',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
     })
     .catch((error) => console.error(error));
 }
-export function deleteAprovado(id: number) {
+export function deleteAprovado(id: number, token: any) {
   axios
     .delete(`${BASE_URL}/aprovados/${id}`, {
-      method: "delete"
+      method: 'delete',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
     })
     .then((response) => {
       alert(JSON.stringify(response.data));

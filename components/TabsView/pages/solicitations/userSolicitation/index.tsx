@@ -149,7 +149,7 @@ export default function SolicitationInfoUser({ route }) {
             <FontAwesome name="check-circle" size={72} color="white" />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => deleteSolicitation(route?.params?.id)}
+            onPress={() => deleteSolicitation(route?.params?.id, token)}
           >
             <FontAwesome name="times-circle" size={72} color="white" />
           </TouchableOpacity>

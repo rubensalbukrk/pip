@@ -125,7 +125,7 @@ export default function SolicitationsUser() {
               </Text>
               <TouchableOpacity
                 className="w-8 h-8 items-center justify-center opacity-80 absolute right-1 top-0"
-                onPress={() => api.deleteSolicitation(item.id)}
+                onPress={() => api.deleteSolicitation(item.id, token)}
               >
                 <FontAwesome name="remove" size={32} color="white" />
               </TouchableOpacity>
