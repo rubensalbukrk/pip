@@ -104,9 +104,7 @@ export default function EditUser({ route }) {
           'Content-Type': 'application/json'
         }
       })
-      .then(() => {
-        setParents([]);
-      });
+      console.log(UserUpdate)
     return Alert.alert("Atualização", "O usuário foi alterado!");
   }
   const UserParents = () => {

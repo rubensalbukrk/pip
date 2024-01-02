@@ -1,39 +1,48 @@
-import React from 'react';
-import {
-  Text,
-  View,
-  Dimensions
-} from 'react-native';
-import { PieChart } from 'react-native-svg-charts'
-import { UserContext } from '../../src/contexts/UserContext';
+import React from "react";
+import { Text, View, Dimensions } from "react-native";
+import { PieChart } from "react-native-svg-charts";
+import { UserContext } from "../../src/contexts/UserContext";
 
-import colors from 'tailwindcss/colors';
+import colors from "tailwindcss/colors";
 
 class PieChartWithDynamicSlices extends React.PureComponent {
-
   constructor(props) {
     super(props);
     this.state = {
       selectedSlice: {
-        label: '',
+        label: "",
         value: 0,
       },
-      labelWidth: 0
-    }
+      labelWidth: 0,
+    };
   }
   render() {
-
-    const {users} = this.context
+    const { users } = this.context;
     let voluntarios = users?.filter((item) => {
       if (item.isVolt == true) {
         return item;
       }
     });
-    let autistas = users?.filter((item) => {
-      if (item.isAutist == true) {
-        return item;
+
+    let autistas = users?.filter(item => {
+      if (item.parents && item.parents.isAutist === true) {
+        return item.parents
       }
-    });
+      return item.parents.length
+    }).reduce((acumulador, usuario) => {
+      return acumulador.parents + usuario
+    },0);
+
+    let pcds = users?.filter(item => {
+      if (item.parents && item.parents.isPcd === true) {
+        return item.parents
+      }
+      return item.parents.length
+    }).reduce((acumulador, usuario) => {
+      return acumulador.parents + usuario
+    },0);
+
+
     let coordenadores = users?.filter((item) => {
       if (item.isCoordAutist == true) {
         return item;
@@ -56,34 +65,60 @@ class PieChartWithDynamicSlices extends React.PureComponent {
       if (item.isCoordPasse == true) {
         return item;
       }
+      if (item.isCoordCursos == true) {
+        return item;
+      }
+      if (item.isCoordOptometria == true) {
+        return item;
+      }
     });
     
-   
-    let voluntariosCount = voluntarios?.length;
-    let pessoasCount = users?.length
-    let autistasCount = autistas?.length;
-    let coordenadoresCount = coordenadores?.length;
 
+    let voluntariosCount = voluntarios?.length;
+    let pessoasCount = users?.length;
+    let autistasCount = autistas?.length
+    let pcdsCount = pcds?.length
+    let coordenadoresCount = coordenadores?.length;
+    
     const { labelWidth, selectedSlice } = this.state;
     const { label, value } = selectedSlice;
-    const keys = ['Pessoas', 'Autistas', 'Voluntários', 'Coordenador'];
-    const values = [pessoasCount, autistasCount, voluntariosCount, coordenadoresCount];
-    const colors = ['#4f494a','#6a6162','#847a7b', '#9d9495']
+    const keys = ["Pessoas", "Autistas","PCDS", "Voluntários", "Coordenador"];
+    const values = [
+      pessoasCount,
+      autistasCount,
+      pcdsCount,
+      voluntariosCount,
+      coordenadoresCount,
+    ];
+    const colors = ["#4f494a", "#6a6162", "#907a7b", "#847a7b", "#9d9495"];
     const data = keys.map((key, index) => {
-        return {
-          key,
-          value: values[index],
-          svg: { fill: colors[index], opacity: 0.6},
-          arc: { outerRadius: (120 + (values[index] >= 120 ? 30 : values[index])), padAngle: label === key ? 0.1 : 0 },
-          onPress: () => this.setState({ selectedSlice: { label: key, value: values[index] } })
-        }
-      })
-    const deviceWidth = Dimensions.get('window').width
+      return {
+        key,
+        value: values[index],
+        svg: { fill: colors[index], opacity: 0.6 },
+        arc: {
+          outerRadius: 120 + (values[index] >= 120 ? 30 : values[index]),
+          padAngle: label === key ? 0.1 : 0,
+        },
+        onPress: () =>
+          this.setState({
+            selectedSlice: { label: key, value: values[index] },
+          }),
+      };
+    });
+    const deviceWidth = Dimensions.get("window").width;
 
     return (
-      <View style={{ justifyContent: 'center', flex: 1, width: '100%', height: 400 }}>
+      <View
+        style={{
+          justifyContent: "center",
+          flex: 1,
+          width: "100%",
+          height: 400,
+        }}
+      >
         <PieChart
-          style={{ width: '100%', height: 350, justifyContent: 'center' }}
+          style={{ width: "100%", height: 350, justifyContent: "center" }}
           xMax="90"
           yMax="100"
           xMin="30"
@@ -92,22 +127,27 @@ class PieChartWithDynamicSlices extends React.PureComponent {
           data={data}
         />
         <Text
-          onLayout={({ nativeEvent: { layout: { x,y } } }) => {
+          onLayout={({
+            nativeEvent: {
+              layout: { x, y },
+            },
+          }) => {
             this.setState({ labelWidth: x });
           }}
           style={{
-            position: 'absolute',
+            position: "absolute",
             left: deviceWidth / 2 - labelWidth / 2,
-            color: '#f2f2f2',
-            fontFamily: 'Doppio One',
+            color: "#f2f2f2",
+            fontFamily: "Doppio One",
             fontSize: 18,
-            textAlign: 'center'
-          }}>
-          {`${label} \n ${value === 0 ? '' : value}`}
+            textAlign: "center",
+          }}
+        >
+          {`${label} \n ${value === 0 ? "" : value}`}
         </Text>
       </View>
-    )
+    );
   }
 }
-PieChartWithDynamicSlices.contextType = UserContext
+PieChartWithDynamicSlices.contextType = UserContext;
 export default PieChartWithDynamicSlices;
