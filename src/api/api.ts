@@ -84,6 +84,7 @@ export function deleteSolicitation(id: number | string, token: any) {
           'Content-Type': 'application/json'
         }
     })
+    .then((response) => Alert.alert("Aviso",`${response.data}!`))
     .catch((error) => console.error(error));
 }
 export function deleteAprovado(id: number, token: any) {

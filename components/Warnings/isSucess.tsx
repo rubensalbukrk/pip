@@ -20,7 +20,7 @@ export const WarningSucess = (props: any) => {
         style={{ width: "100%" }}
         source={require("../../assets/animations/Animation - sucesso-ok.json")}
       />
-      <Button title="Voltar" onPress={goBack} />
+      <Button title="Voltar" onPress={goBack || props.onPress} />
 
       <StatusBar backgroundColor={'#fff'} />
     </View>

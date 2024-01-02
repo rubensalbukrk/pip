@@ -24,7 +24,8 @@
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.rubensoft.pipapp.com"
+      "package": "com.rubensoft.pipapp.com",
+      "permissions": ["READ_EXTERNAL_STORAGE"]
     },
     "web": {
       "favicon": "./assets/favicon.png"

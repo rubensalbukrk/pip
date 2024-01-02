@@ -1,5 +1,12 @@
 import React, { useContext, useState } from "react";
-import { View, Image, Text, TouchableOpacity, ScrollView, Alert } from "react-native";
+import {
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  Alert,
+} from "react-native";
 import axios from "axios";
 import BackButton from "../../../../components/BackButton";
 import { UserContext } from "../../../contexts/UserContext";
@@ -16,27 +23,28 @@ import {
 import { WarningSucess } from "../../../../components/Warnings/isSucess";
 import { WarningError } from "../../../../components/Warnings/isError";
 import data from "../../../utils/dateNow";
+import { Formulary } from "./Form";
 
 interface ServicesProps {
   title: string;
   picture: any;
   descrition: any;
   requisite: any;
-  pasta: string
+  pasta: string;
 }
-
 
 export default function ViewService({ route }) {
   const [isOk, setIsOk] = useState(false);
   const [isError, setIsError] = useState(false);
   const { token } = useContext(AuthContext);
   const { logged } = useContext<any>(UserContext);
+  const [viewPdf, setViewPdf] = useState(false);
   const { title, picture, descrition, requisite, pasta }: ServicesProps =
     route?.params;
- 
-  function handleSolicitation(service: ServicesProps) {
-    if(service.requisite[0] === "Solicitar o PASSE LIVRE PCD"){
-      Alert.alert("ATENÇÃO!", "Você precisa preencher um formulário com os dados solicitados para levar a uma sede do PIP!")
+
+  function handleSolicitation(service: string) {
+    if (service === "Solicitar o PASSE LIVRE PCD") {
+      setViewPdf(true);
     }
     const myInfo = {
       nome: logged.nome,
@@ -45,8 +53,8 @@ export default function ViewService({ route }) {
       address: logged.address,
       bairro: logged.bairro,
       cpf: logged.cpf,
-      password: "undefined"
-    }
+      password: "undefined",
+    };
     let newSolicitation = {
       nome: logged.nome,
       cpf: logged.cpf,
@@ -55,26 +63,62 @@ export default function ViewService({ route }) {
       pasta: `${pasta}`,
       date: `${data}`,
       userInfo: myInfo,
-    }
+    };
     axios
       .post(`${api.BASE_URL}/solicitations`, newSolicitation, {
         method: "post",
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       })
-      .then(() => {
-        setIsOk(true);
-      })
+      .then(() => setIsOk(true))
       .catch(() => setIsError(true));
   }
+  const renderButtons = () => {
+    return requisite.map((label, index) => {
+      return (
+        <TouchableOpacity
+          key={index}
+          className="w-80 h-10 shadow-lg shadow-black my-2 rounded-lg justify-center px-3 bg-blue-400"
+          onPress={() => handleSolicitation(label)}
+        >
+          <TextSmall text={label} />
+        </TouchableOpacity>
+      );
+    });
+  };
 
   return (
     <View className="flex-1 w-full h-full items-center bg-white">
+      {isOk && (
+        <View
+          style={{ zIndex: 20, height: "100%" }}
+          className="w-full absolute self-center bg-white"
+        >
+          <WarningSucess
+            title="Agora você pode acompanhar o andamento na aba 'Solicitações'"
+            onPress={setIsOk(false)}
+          />
+        </View>
+      )}
+      {isError && (
+        <View
+          style={{ zIndex: 20, height: "100%" }}
+          className="w-full absolute self-center bg-white"
+        >
+          <WarningError />
+        </View>
+      )}
+      {viewPdf && (
+        <View
+          style={{ zIndex: 20, height: "100%" }}
+          className="w-full absolute self-center bg-white"
+        >
+          <Formulary />
+        </View>
+      )}
       
-      {isOk && <View style={{zIndex: 20, height: '100%'}} className="w-full absolute self-center bg-white"><WarningSucess title="Agora você pode acompanhar o andamento na aba 'Solicitações'" /></View> }
-      {isError && <View style={{zIndex: 20, height: '100%'}} className="w-full absolute self-center bg-white"><WarningError/></View>}
 
       <BackgroundTop
         style={{ zIndex: 0, position: "absolute", top: -10 }}
@@ -93,7 +137,12 @@ export default function ViewService({ route }) {
       />
       <View style={{ zIndex: 2 }} className="w-full h-full px-3 bg-transparent">
         <ScrollView
-          style={{flex: 3,  maxHeight: 450, width: "100%", backgroundColor: "transparent" }}
+          style={{
+            flex: 3,
+            maxHeight: 450,
+            width: "100%",
+            backgroundColor: "transparent",
+          }}
         >
           <TextLarge text={descrition} className="text-black text-base" />
 
@@ -102,48 +151,7 @@ export default function ViewService({ route }) {
             className="self-start text-2xl mt-6 text-black"
           />
 
-          <View className="w-full h-full items-center">
-            {requisite[0] ? (
-              <TouchableOpacity
-                className="w-80 h-10 shadow-lg shadow-black my-2 rounded-lg justify-center px-3 bg-blue-400"
-                onPress={() => handleSolicitation(requisite[0])}
-              >
-                <TextSmall text={requisite[0]} />
-              </TouchableOpacity>
-            ) : null}
-            {requisite[1] ? (
-              <TouchableOpacity
-                className="w-80 h-10 shadow-md shadow-black my-3 rounded-md justify-center px-3 bg-blue-500"
-                onPress={() => handleSolicitation(requisite[1])}
-              >
-                <TextSmall text={requisite[1]} />
-              </TouchableOpacity>
-            ) : null}
-            {requisite[2] ? (
-              <TouchableOpacity
-                className="w-80 h-10 shadow-md shadow-black my-3 rounded-md justify-center px-3 bg-blue-400"
-                onPress={() => handleSolicitation(requisite[2])}
-              >
-                <TextSmall text={requisite[2]} />
-              </TouchableOpacity>
-            ) : null}
-            {requisite[3] ? (
-              <TouchableOpacity
-                className="w-80 h-10 shadow-md shadow-black my-3 rounded-md justify-center px-3 bg-blue-500"
-                onPress={() => handleSolicitation(requisite[3])}
-              >
-                <TextSmall text={requisite[3]} />
-              </TouchableOpacity>
-            ) : null}
-            {requisite[4] ? (
-              <TouchableOpacity
-                className="w-80 h-10 shadow-md shadow-black my-3 rounded-md justify-center px-3 bg-blue-500"
-                onPress={() => handleSolicitation(requisite[4])}
-              >
-                <TextSmall text={requisite[4]} />
-              </TouchableOpacity>
-            ) : null}
-          </View>
+          <View className="w-full h-80 items-center">{renderButtons()}</View>
         </ScrollView>
       </View>
       <BackgroundBottom

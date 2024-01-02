@@ -5,7 +5,7 @@ import { Button } from "../ButtonBlue/ButtonBlue";
 import { useNavigation } from "@react-navigation/native";
 import { TextExtra, TextLarge } from "../TextLg/Text";
 
-export const WarningError = () => {
+export const WarningError = (props) => {
   const { goBack } = useNavigation();
   return (
     <View
@@ -20,7 +20,7 @@ export const WarningError = () => {
       />
       <TextExtra text="Estamos em manutenção!" className="text-zinc-600" />
       <TextLarge text="Tente novamente mas tarde!" className="text-blue-800" />
-      <Button title="Voltar" onPress={goBack} />
+      <Button title="Voltar" onPress={goBack || props.onPress} />
     </View>
   );
 };
