@@ -3,9 +3,6 @@ import { Text, View, Dimensions } from "react-native";
 import { PieChart } from "react-native-svg-charts";
 import { UserContext } from "../../src/contexts/UserContext";
 
-import colors from "tailwindcss/colors";
-import { formToJSON } from "axios";
-
 class PieChartWithDynamicSlices extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -19,7 +16,7 @@ class PieChartWithDynamicSlices extends React.PureComponent {
   }
   render() {
     const { users } = this.context;
-    const xusers = [
+    const allUsers = [
       {
         id: 1,
         nome: "AAAAAAAAA",
@@ -48,6 +45,7 @@ class PieChartWithDynamicSlices extends React.PureComponent {
         ],
       },
     ];
+
     let voluntarios = users?.filter((item) => {
       if (item.isVolt == true) {
         return item;
@@ -55,12 +53,11 @@ class PieChartWithDynamicSlices extends React.PureComponent {
     });
     let allParents = users?.map((item) => {
       return item.parents
-    })
-    const flated = allParents.flat()
+    }).flat()
 
-    let autistas = flated.filter((item) => item.isAutist === true);
+    let autistas = allParents.filter((item) => item.isAutist === true);
 
-    let pcds = flated.filter((item) => item.isPcd === true);
+    let pcds = allParents.filter((item) => item.isPcd === true);
     
     let coordenadores = users?.filter((item) => {
       if (item.isCoordAutist == true) {

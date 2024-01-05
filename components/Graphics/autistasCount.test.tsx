@@ -1,44 +1,52 @@
-describe('TESTAR CONTAGEM', () => {
-    const xusers = [
+describe("Filtração de usuários", () => {
+  const users = [
+    {
+      id: 1,
+      nome: "Maria da Silva",
+      parents: [
         {
           id: 1,
-          nome: "rubens",
-          parents: [
-            {
-              id: 1,
-              isAutist: true,
-              isPcd: true,
-            },
-            {
-              id: 2,
-              isAutist: true,
-              isPcd: true,
-            }
-          ]
+          isAutist: false,
+          isPcd: true,
+          // ...others
         },
         {
+          id: 2,
+          isAutist: true,
+          isPcd: true,
+          // ...others
+        },
+      ],
+    },
+    {
+      id: 1,
+      nome: "BERNADETE",
+      parents: [
+        {
           id: 1,
-          nome: "rubens",
-          parents: [
-            {
-              id: 1,
-              isAutist: true,
-              isPcd: true,
-            }
-          ]
-        }
-      ]
-    it('autistas' , () => {
+          isAutist: true,
+          isPcd: true,
+        },
+      ],
+    },
+  ];
 
-        
-       let all = xusers?.map((item) => {
-        if(item.parents.length > 0){
-            return item.parents
-        }
-        return item.parents
-       })
-
-       let count = all[0].filter((item) => item.isPcd == true)
-       expect(count.length).toBe(2)
-    })
-  })
+  it("Filtrar autistas", () => {
+    let autistas = users
+      ?.map((items) => {
+        return items.parents.length > 0 && items.parents;
+      })
+      .flat()
+      .filter((autistas) => autistas.isAutist == true);
+    expect(autistas.length).toBe(2);
+  }),
+    it("Filtrar Pcds", () => {
+      let pcds = users
+        ?.map((items) => {
+          return items.parents.length > 0 && items.parents;
+        })
+        .flat()
+        .filter((item) => item.isPcd === true);
+      expect(pcds.length).toBe(3);
+    });
+});
