@@ -4,6 +4,7 @@ import { PieChart } from "react-native-svg-charts";
 import { UserContext } from "../../src/contexts/UserContext";
 
 import colors from "tailwindcss/colors";
+import { formToJSON } from "axios";
 
 class PieChartWithDynamicSlices extends React.PureComponent {
   constructor(props) {
@@ -18,31 +19,49 @@ class PieChartWithDynamicSlices extends React.PureComponent {
   }
   render() {
     const { users } = this.context;
+    const xusers = [
+      {
+        id: 1,
+        nome: "AAAAAAAAA",
+        parents: [
+          {
+            id: 1,
+            isAutist: true,
+            isPcd: true,
+          },
+          {
+            id: 2,
+            isAutist: true,
+            isPcd: true,
+          },
+        ],
+      },
+      {
+        id: 1,
+        nome: "BBBBBBBBBB",
+        parents: [
+          {
+            id: 1,
+            isAutist: false,
+            isPcd: true,
+          },
+        ],
+      },
+    ];
     let voluntarios = users?.filter((item) => {
       if (item.isVolt == true) {
         return item;
       }
     });
+    let allParents = users?.map((item) => {
+      return item.parents
+    })
+    const flated = allParents.flat()
 
-    let autistas = users?.filter(item => {
-      if (item.parents && item.parents.isAutist === true) {
-        return item.parents
-      }
-      return item.parents.length
-    }).reduce((acumulador, usuario) => {
-      return acumulador.parents + usuario
-    },0);
+    let autistas = flated.filter((item) => item.isAutist === true);
 
-    let pcds = users?.filter(item => {
-      if (item.parents && item.parents.isPcd === true) {
-        return item.parents
-      }
-      return item.parents.length
-    }).reduce((acumulador, usuario) => {
-      return acumulador.parents + usuario
-    },0);
-
-
+    let pcds = flated.filter((item) => item.isPcd === true);
+    
     let coordenadores = users?.filter((item) => {
       if (item.isCoordAutist == true) {
         return item;
@@ -72,17 +91,16 @@ class PieChartWithDynamicSlices extends React.PureComponent {
         return item;
       }
     });
-    
 
     let voluntariosCount = voluntarios?.length;
     let pessoasCount = users?.length;
-    let autistasCount = autistas?.length
-    let pcdsCount = pcds?.length
+    let autistasCount = autistas?.length;
+    let pcdsCount = pcds?.length;
     let coordenadoresCount = coordenadores?.length;
-    
+
     const { labelWidth, selectedSlice } = this.state;
     const { label, value } = selectedSlice;
-    const keys = ["Pessoas", "Autistas","PCDS", "Voluntários", "Coordenador"];
+    const keys = ["Pessoas", "Autistas", "PCDS", "Voluntários", "Coordenador"];
     const values = [
       pessoasCount,
       autistasCount,

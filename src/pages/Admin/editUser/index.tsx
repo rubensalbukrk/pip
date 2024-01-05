@@ -28,7 +28,7 @@ export default function EditUser({ route }) {
   const [bairro, setBairro] = useState<string>(route?.params?.bairro);
   const [voluntario, setVoluntario] = useState<boolean>(route?.params?.isVolt);
   const [estagiario, setEstagiario] = useState<boolean>(route?.params?.isEtg);
-  const [isBusiness, setBusiness] = useState<boolean>(route?.params?.isBusiness);
+  const [isBusiness, setBusiness] = useState<boolean>(route?.params?.isBusiness || false);
 
   const [isCoordAutist, setIsCoordAutist] = useState<boolean>(
     route?.params?.isCoordAutist
@@ -45,8 +45,8 @@ export default function EditUser({ route }) {
   const [isCoordSaude, setIsCoordSaude] = useState<boolean>(route?.params?.isCoordSaude);
   const [isCoordProtagonista, setIsCoordProtagonista] = useState<boolean>(route?.params?.isCoordProtagonista);
   const [isCoordPasse, setIsCoordPasse] = useState<boolean>(route?.params?.isCoordPasse);
-  const [isCoordCursos, setIsCoordCursos] = useState<boolean>(route?.params?.isCoordCursos);
-  const [isCoordOptometria, setIsCoordOptometria] = useState<boolean>(route?.params?.isCoordOptometria);
+  const [isCoordCursos, setIsCoordCursos] = useState<boolean>(route?.params?.isCoordCursos || null);
+  const [isCoordOptometria, setIsCoordOptometria] = useState<boolean>(route?.params?.isCoordOptometria || null);
   const [nome, setNome] = useState<string>(route?.params?.nome);
   const [avatar, setAvatar] = useState<string>(route?.params?.avatar)
   const [idade, setIdade] = useState<string>(route?.params?.idade);
@@ -541,13 +541,13 @@ export default function EditUser({ route }) {
                 <View className="items-center px-2">
                   <TextLarge text="Autista" />
                   <Switch
-                    value={dataParents && dataParents?.isAutist}
+                  value={dataParents?.isAutist}
                     trackColor={{ false: "#9f9f9f", true: "#767590" }}
                     onValueChange={toggleParentAutist}
                   />
                   <TextLarge text="PCD" />
                   <Switch
-                    value={dataParents && dataParents?.isPcd}
+                  value={dataParents?.isPcd}
                     trackColor={{ false: "#9f9f9f", true: "#767590" }}
                     onValueChange={toggleParentsPcd}
                   />

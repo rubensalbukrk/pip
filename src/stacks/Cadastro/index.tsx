@@ -400,7 +400,7 @@ export const Cadastro = () => {
                   <View>
                   <TextLarge text="Autista" className="text-black text-base" />
                   <Switch
-                    value={dataParents.isAutist}
+                    value={dataParents?.isAutist}
                     trackColor={{ false: "#cfcfcf", true: "#bebebe" }}
                     thumbColor={isAutistEnabled ? "#217aff" : "#cecece"}
                     onValueChange={toggleAutista}
@@ -409,7 +409,7 @@ export const Cadastro = () => {
                   <View>
                   <TextLarge text="PCD" className="text-black" />
                   <Switch
-                    value={dataParents && dataParents?.isPcd}
+                    value={dataParents?.isPcd}
                     trackColor={{ false: "#cfcfcf", true: "#bebebe" }}
                     thumbColor={isPcdEnabled ? "#217aff" : "#cecece"}
                     onValueChange={togglePcd}
