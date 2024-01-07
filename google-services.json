@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "186504689094",
+    "firebase_url": "https://mychat-900b3-default-rtdb.firebaseio.com",
+    "project_id": "mychat-900b3",
+    "storage_bucket": "mychat-900b3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:186504689094:android:423e7b5c0f0fa8b29baec7",
+        "android_client_info": {
+          "package_name": "com.rubensoft.pipapp.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "186504689094-hn0hp428vh5fjg3ts6oirng936mhd1bp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDysb1byw3SDqXhL__FxsjXBE9-08814VE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "186504689094-hn0hp428vh5fjg3ts6oirng936mhd1bp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

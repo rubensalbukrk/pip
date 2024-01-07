@@ -1,4 +1,4 @@
-package com.pipapp;
+package com.rubensoft.pipapp.com;
 
 import android.app.Application;
 import android.content.res.Configuration;

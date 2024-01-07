@@ -1,4 +1,4 @@
-package com.pipapp;
+package com.rubensoft.pipapp.com;
 
 import android.os.Build;
 import android.os.Bundle;
