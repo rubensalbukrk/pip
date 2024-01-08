@@ -2,14 +2,20 @@ import {ParentsProps} from "./Parents"
 
 export interface UserProps {
     id: number
-    date: string
+    isAdmin?: boolean
+    date?: string
     nome: string
     idade: string
-    email: string
-    nis: string
+    avatar: string
+    email?: string
+    phone: string
+    address: string
+    bairro: string
+    nis?: string
     cpf: string
+    password: string
     parents: Array<ParentsProps>
-    question1: string
-    question2: string
+    question1?: string
+    question2?: string
 
 }

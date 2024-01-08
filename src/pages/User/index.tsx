@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import React, { useContext, useState } from "react";
+import { View, Text, ScrollView, TouchableOpacity, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../contexts/UserContext";
 import * as ImagePicker from "expo-image-picker";
@@ -17,10 +17,36 @@ import Animated, {
   BounceInUp,
   FadeInUp,
 } from "react-native-reanimated";
+import storage from '@react-native-firebase/storage'
+import axios from "axios";
+import { api } from "../../api/api";
+import { AuthContext } from "../../contexts/AuthContext";
+import { UserProps } from "../../interfaces/User";
 
 export const User = () => {
-  const { logged, setAvatar } = useContext<any>(UserContext);
+  const {token} = useContext(AuthContext)
+  const { logged, setAvatar, avatar } = useContext<any>(UserContext);
   const { navigate, goBack } = useNavigation();
+  const [isUploadImage, setIsUpload] = useState<boolean>(false);
+
+  function copiarSemUserId(parents) {
+    const { userId, ...copiaParent } = parents;
+    return copiaParent;
+  }
+
+  const updateAvatar = async (userUpdated: UserProps) => {
+    try {
+      const response = await axios.put(`${api.BASE_URL}/users/${logged.id}`, userUpdated, {
+        method: 'put',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      } ).then(() => alert('Perfil atualizado com sucesso!'))
+    } catch (e) {
+      alert(`problema ao atulizar o profile no servidor: ${e}`)
+    }
+  }
 
   const pickImageAsync = async () => {
     const { assets, canceled } = await ImagePicker.launchImageLibraryAsync({
@@ -29,25 +55,53 @@ export const User = () => {
     });
 
     if (!canceled) {
-      const filename = assets[0].uri.substring(
-        assets[0].uri.lastIndexOf("/") + 1,
-        assets[0].uri.length
-      );
-      const extend = filename.split(".")[1];
-      const formData = new FormData();
-      formData.append(
-        "file",
-        JSON.parse(
-          JSON.stringify({
-            name: filename,
-            uri: assets[0].uri,
-            type: "image/" + extend,
-          })
-        )
-      );
-      if (formData) {
+ 
+      try {
+        const filename = assets[0].uri.substring(
+          assets[0].uri.lastIndexOf("/") + 1
+        );
         setAvatar(assets[0].uri);
-        AsyncStorage.setItem("picture", JSON.stringify(assets[0]));
+        if(avatar){
+          const uri = avatar.replace('file://', '');
+          let parentsWithID = logged?.parents?.map(copiarSemUserId);
+          const userProfileUpdate: UserProps = {
+            id: logged.id,
+            isAdmin: logged?.isAdmin, 
+            nome: logged.nome,
+            idade: logged.idade,
+            phone: logged.phone,
+            address: logged.address,
+            bairro: logged.bairro,
+            avatar: `https://firebasestorage.googleapis.com/v0/b/mychat-900b3.appspot.com/o/${filename}?alt=media`,
+            cpf: logged.cpf,
+            password: logged.password,
+            parents: parentsWithID
+          
+          }
+          const task = storage().ref(filename).putFile(uri);
+          task.snapshot?.metadata.fullPath
+          task.then(() => {
+            updateAvatar(userProfileUpdate);
+          });          
+        }
+
+        const extend = filename.split(".")[1]
+        const formData = new FormData();
+        formData.append(
+          "file",
+          JSON.parse(
+            JSON.stringify({
+              name: filename,
+              uri: assets[0].uri,
+              type: "image/" + extend,
+            })
+          )
+        );
+        if (formData) {
+          AsyncStorage.setItem("picture", JSON.stringify(assets[0]));
+        }
+      } catch (error) {
+        Alert.alert('STORAGE UPLOAD', `Erro encontrado: ${error}`)
       }
     } else {
       alert("O Perfil não foi alterado!");
@@ -190,6 +244,7 @@ export const User = () => {
                   cpf={item.cpf}
                   idade={item.idade}
                   isAutist={item.isAutist}
+                  isPcd={item.isPcd}
                 />
               </View>
             );
