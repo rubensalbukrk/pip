@@ -36,6 +36,7 @@ export default function AuthProvider({ children }) {
         })
         setLogged(response?.data?.user); 
         setToken(response?.data?.token);
+        setAvatar(response?.data?.user?.avatar)
         setAuth(true);
         if (signingAuto){
           saveMyLogin(response?.data?.user)

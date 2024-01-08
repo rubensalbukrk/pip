@@ -13,7 +13,7 @@ import {
 import BackButton from "../../../../components/BackButton";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { TextLarge } from "../../../../components/TextLg/Text";
+import { TextLarge, TextSmall } from "../../../../components/TextLg/Text";
 import { ParentsProps } from "../../../interfaces/Parents";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { citys, grauParents } from "../../../stacks/Cadastro";
@@ -22,13 +22,15 @@ import SelectDropdown from "react-native-select-dropdown";
 import { TextInputMask } from "react-native-masked-text";
 
 export default function EditUser({ route }) {
-  const {token} = useContext<any>(AuthContext)
+  const { token } = useContext<any>(AuthContext);
   const [updateList, setUpdateList] = useState(false);
   const [formData, setData] = useState({});
   const [bairro, setBairro] = useState<string>(route?.params?.bairro);
   const [voluntario, setVoluntario] = useState<boolean>(route?.params?.isVolt);
   const [estagiario, setEstagiario] = useState<boolean>(route?.params?.isEtg);
-  const [isBusiness, setBusiness] = useState<boolean>(route?.params?.isBusiness || false);
+  const [isBusiness, setBusiness] = useState<boolean>(
+    route?.params?.isBusiness || false
+  );
 
   const [isCoordAutist, setIsCoordAutist] = useState<boolean>(
     route?.params?.isCoordAutist
@@ -42,25 +44,37 @@ export default function EditUser({ route }) {
   const [isCoordAlimentar, setIsCoordAlimentar] = useState<boolean>(
     route?.params?.isCoordAlimentar
   );
-  const [isCoordSaude, setIsCoordSaude] = useState<boolean>(route?.params?.isCoordSaude);
-  const [isCoordProtagonista, setIsCoordProtagonista] = useState<boolean>(route?.params?.isCoordProtagonista);
-  const [isCoordPasse, setIsCoordPasse] = useState<boolean>(route?.params?.isCoordPasse);
-  const [isCoordCursos, setIsCoordCursos] = useState<boolean>(route?.params?.isCoordCursos || null);
-  const [isCoordOptometria, setIsCoordOptometria] = useState<boolean>(route?.params?.isCoordOptometria || null);
+  const [isCoordSaude, setIsCoordSaude] = useState<boolean>(
+    route?.params?.isCoordSaude
+  );
+  const [isCoordProtagonista, setIsCoordProtagonista] = useState<boolean>(
+    route?.params?.isCoordProtagonista
+  );
+  const [isCoordPasse, setIsCoordPasse] = useState<boolean>(
+    route?.params?.isCoordPasse
+  );
+  const [isCoordCursos, setIsCoordCursos] = useState<boolean>(
+    route?.params?.isCoordCursos || null
+  );
+  const [isCoordOptometria, setIsCoordOptometria] = useState<boolean>(
+    route?.params?.isCoordOptometria || null
+  );
   const [nome, setNome] = useState<string>(route?.params?.nome);
-  const [avatar, setAvatar] = useState<string>(route?.params?.avatar)
+  const [avatar, setAvatar] = useState<string>(route?.params?.avatar);
   const [idade, setIdade] = useState<string>(route?.params?.idade);
   const [address, setAddress] = useState<string>(route?.params?.address);
   const [cpf, setCpf] = useState<string>(route?.params?.cpf);
   const [nis, setNis] = useState<string>(route?.params?.nis);
   const [dataParents, setDataParents] = useState<ParentsProps>();
-  const [parents, setParents] = useState<ParentsProps[]>(route?.params?.parents);
+  const [parents, setParents] = useState<ParentsProps[]>(
+    route?.params?.parents
+  );
   const [phone, setPhone] = useState<string>(route?.params?.phone);
   const [email, setEmail] = useState<string>(route?.params?.email);
   const [opnion, setOpnion] = useState<string>(route?.params?.question2);
   const [pass, setPass] = useState<string>(route?.params?.password);
   const navigation = useNavigation();
-  
+
   function copiarSemUserId(parents) {
     const { userId, ...copiaParent } = parents;
     return copiaParent;
@@ -95,16 +109,14 @@ export default function EditUser({ route }) {
     password: pass,
   };
 
-  function updateUser() {
-    axios
-      .put(`${api.BASE_URL}/users/${route.params.id}`, UserUpdate, {
-        method: "put",
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      })
-    return Alert.alert("Atualização", "O usuário foi alterado!");
+  function updateUser(): void {
+    axios.put(`${api.BASE_URL}/users/${route.params.id}`, UserUpdate, {
+      method: "put",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
   }
   const UserParents = () => {
     try {
@@ -181,7 +193,7 @@ export default function EditUser({ route }) {
         idade: dataParents.idade,
         cpf: dataParents.cpf,
         isAutist: dataParents.isAutist,
-        isPcd: dataParents.isPcd
+        isPcd: dataParents.isPcd,
       });
       alert("Adicionado");
     } catch (error) {
@@ -200,7 +212,9 @@ export default function EditUser({ route }) {
       isAutist: !previus,
     }));
   };
-
+  const toggleBusiness = () => {
+    setBusiness((previous) => !previous);
+  };
   const toggleEstagio = () => {
     setEstagiario((previousState) => !previousState);
   };
@@ -228,6 +242,12 @@ export default function EditUser({ route }) {
   const toggleProtagonista = () => {
     setIsCoordProtagonista((previousState) => !previousState);
   };
+  const toggleOptometria = () => {
+    setIsCoordOptometria((previousState) => !previousState);
+  };
+  const toggleCursos = () => {
+    setIsCoordCursos((previousState) => !previousState);
+  };
 
   return (
     <View className="flex-1 w-full h-full items-center justify-center bg-zinc-500">
@@ -242,16 +262,13 @@ export default function EditUser({ route }) {
       </View>
 
       <ScrollView className="flex-1 w-full">
-
         <View className="w-full px-2 justify-center items-center py-10">
           <View className="flex-row w-full rounded-lg items-center">
             <Text className="font-default text-start px-2 mr-3 text-white text-md">
               Selecione o tipo do usuário
             </Text>
             <View className="w-18 items-center">
-              <Text className="font-default justify-start text-xs mb-2 text-white">
-                Estagiário
-              </Text>
+              <TextSmall text="Estagiário" className="text-xs mb-2" /> 
               <Switch
                 style={{ width: 30, height: 20, alignSelf: "center" }}
                 onValueChange={() => {
@@ -259,15 +276,17 @@ export default function EditUser({ route }) {
                 }}
                 value={estagiario}
               />
-            </View>
-            <View className="w-20 ml-1 items-center">
-              <Text className="font-default text-xs mb-2 text-white">
-                Voluntário
-              </Text>
+              <TextSmall text="Voluntário" className="text-xs mb-2" />
               <Switch
                 style={{ width: 30, height: 20, alignSelf: "center" }}
                 value={voluntario}
                 onValueChange={() => toggleVoluntario()}
+              />
+              <TextSmall text="Empresa" className="text-xs mb-2" />
+              <Switch
+                style={{ width: 30, height: 20, alignSelf: "center" }}
+                value={isBusiness}
+                onValueChange={() => toggleBusiness()}
               />
             </View>
           </View>
@@ -353,6 +372,27 @@ export default function EditUser({ route }) {
                   style={{ width: 30, height: 15, alignSelf: "center" }}
                   onValueChange={toggleAlimentar}
                   value={isCoordAlimentar}
+                />
+              </View>
+
+              <View className="items-center">
+                <Text className="font-default text-white text-xs mb-2">
+                  Optometria
+                </Text>
+                <Switch
+                  style={{ width: 30, height: 15, alignSelf: "center" }}
+                  onValueChange={toggleOptometria}
+                  value={isCoordOptometria}
+                />
+              </View>
+              <View className="items-center">
+                <Text className="font-default text-white text-xs mb-2">
+                  Cursos
+                </Text>
+                <Switch
+                  style={{ width: 30, height: 15, alignSelf: "center" }}
+                  onValueChange={toggleCursos}
+                  value={isCoordCursos}
                 />
               </View>
             </View>
@@ -485,26 +525,26 @@ export default function EditUser({ route }) {
             <View className="w-64 rounded-xl my-5 py-3 px-2 bg-white/20">
               <TextLarge text="Parentesco" />
               <SelectDropdown
-              defaultButtonText="Selecionar"
-              dropdownIconPosition="right"
-              renderDropdownIcon={() => (
-                <Feather name="arrow-down" size={28} color="black" />
-              )}
-              buttonStyle={{
-                borderRadius: 30,
-                backgroundColor: `${colors.blue[200]}`,
-              }}
-              data={grauParents}
-              onSelect={(selectedItem, index) => {
-                setDataParents({...dataParents, parentesco: selectedItem})
-              }}
-              buttonTextAfterSelection={(selectedItem, index) => {
-                return selectedItem;
-              }}
-              rowTextForSelection={(item, index) => {
-                return item;
-              }}
-            />
+                defaultButtonText="Selecionar"
+                dropdownIconPosition="right"
+                renderDropdownIcon={() => (
+                  <Feather name="arrow-down" size={28} color="black" />
+                )}
+                buttonStyle={{
+                  borderRadius: 30,
+                  backgroundColor: `${colors.blue[200]}`,
+                }}
+                data={grauParents}
+                onSelect={(selectedItem, index) => {
+                  setDataParents({ ...dataParents, parentesco: selectedItem });
+                }}
+                buttonTextAfterSelection={(selectedItem, index) => {
+                  return selectedItem;
+                }}
+                rowTextForSelection={(item, index) => {
+                  return item;
+                }}
+              />
               <TextLarge text="Nome" />
               <TextInput
                 className="w-full h-10 px-2 mb-1 font-default text-start text-white text-lg rounded-2xl bg-white/10 border-white/20"
@@ -519,7 +559,6 @@ export default function EditUser({ route }) {
                 type="cpf"
                 selectionColor={"#9f9f9f"}
                 placeholderTextColor={"#bdbdbd"}
-               
                 placeholder="000.000.000-00"
                 onChangeText={(value) =>
                   setDataParents({ ...dataParents, cpf: value })
@@ -540,13 +579,13 @@ export default function EditUser({ route }) {
                 <View className="items-center px-2">
                   <TextLarge text="Autista" />
                   <Switch
-                  value={dataParents?.isAutist}
+                    value={dataParents?.isAutist}
                     trackColor={{ false: "#9f9f9f", true: "#767590" }}
                     onValueChange={toggleParentAutist}
                   />
                   <TextLarge text="PCD" />
                   <Switch
-                  value={dataParents?.isPcd}
+                    value={dataParents?.isPcd}
                     trackColor={{ false: "#9f9f9f", true: "#767590" }}
                     onValueChange={toggleParentsPcd}
                   />
@@ -565,7 +604,7 @@ export default function EditUser({ route }) {
             className="flex-row w-48 h-20 mx-5 my-5 justify-evenly items-center bg-zinc-700 rounded-lg"
             onPress={() => updateUser()}
           >
-            <Feather name="save" size={32} color={"white"}/>
+            <Feather name="save" size={32} color={"white"} />
             <Text className="font-default text-white text-2xl">SALVAR</Text>
           </TouchableOpacity>
         </View>

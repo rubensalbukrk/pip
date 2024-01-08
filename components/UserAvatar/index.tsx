@@ -3,7 +3,7 @@ import { View, Image } from 'react-native';
 import { UserContext } from '../../src/contexts/UserContext';
 
 const UserAvatar = ({x,y}) => {
-  const {logged, avatar} = useContext<any>(UserContext)
+  const {avatar} = useContext<any>(UserContext)
   return (
     <View 
     className='rounded-full items-center justify-center border-white bg-slate-200'

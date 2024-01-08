@@ -22,11 +22,14 @@ import axios from "axios";
 import { api } from "../../api/api";
 import { AuthContext } from "../../contexts/AuthContext";
 import { UserProps } from "../../interfaces/User";
+import * as Progress from 'react-native-progress';
+import colors from "tailwindcss/colors";
 
 export const User = () => {
   const {token} = useContext(AuthContext)
   const { logged, setAvatar, avatar } = useContext<any>(UserContext);
   const { navigate, goBack } = useNavigation();
+  const [progress, setProgress] = useState<number>(0)
   const [isUploadImage, setIsUpload] = useState<boolean>(false);
 
   function copiarSemUserId(parents) {
@@ -79,9 +82,15 @@ export const User = () => {
           
           }
           const task = storage().ref(filename).putFile(uri);
-          task.snapshot?.metadata.fullPath
+          setIsUpload(true)
+          task.on('state_changed', (e) => {
+            const progress = (e.bytesTransferred / e.totalBytes)
+            setProgress(progress)
+          })
+          
           task.then(() => {
             updateAvatar(userProfileUpdate);
+            setIsUpload(false)
           });          
         }
 
@@ -101,10 +110,10 @@ export const User = () => {
           AsyncStorage.setItem("picture", JSON.stringify(assets[0]));
         }
       } catch (error) {
-        Alert.alert('STORAGE UPLOAD', `Erro encontrado: ${error}`)
+        Alert.alert('Ops', `Houve um problema com o servidor, tente mais tarde!`)
       }
     } else {
-      alert("O Perfil não foi alterado!");
+      alert("Nenhuma imagem foi selecionada!");
     }
   };
 
@@ -148,6 +157,7 @@ export const User = () => {
           entering={BounceInUp.duration(2000).delay(400)}
           style={{ zIndex: 2 }} className="w-40 h-40 mt-2 absolute">
             <View className="w-50 h-50  mt-4 items-center justify-center rounded-full">
+            {isUploadImage ? <Progress.Pie progress={progress} color={colors.blue[500]} unfilledColor={colors.zinc[300]} size={50} style={{zIndex: 20, width: 80, height: 80, position: 'absolute'}} /> : null}
               <UserAvatar x={130} y={130} />
             </View>
 
