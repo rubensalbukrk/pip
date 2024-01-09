@@ -4,7 +4,7 @@ export const UserContext = createContext({});
 
 export default function UserProvider({children}) {
     const [refreshing, setRefreshing] = useState(false);
-    const [avatar, setAvatar] = useState()
+    const [avatar, setAvatar] = useState('')
     const [notices, setNotices] = useState([])
     const [users, setUsers] = useState([])
     const [logged, setLogged ] = useState([]);

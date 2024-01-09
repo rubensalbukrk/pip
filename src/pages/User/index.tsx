@@ -13,23 +13,20 @@ import { width } from "../../utils/dimensions";
 import { TextSmall } from "../../../components/TextLg/Text";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ParentsProps } from "../../interfaces/Parents";
-import Animated, {
-  BounceInUp,
-  FadeInUp,
-} from "react-native-reanimated";
-import storage from '@react-native-firebase/storage'
+import Animated, { BounceInUp, FadeInUp } from "react-native-reanimated";
+import storage from "@react-native-firebase/storage";
 import axios from "axios";
 import { api } from "../../api/api";
 import { AuthContext } from "../../contexts/AuthContext";
 import { UserProps } from "../../interfaces/User";
-import * as Progress from 'react-native-progress';
+import * as Progress from "react-native-progress";
 import colors from "tailwindcss/colors";
 
 export const User = () => {
-  const {token} = useContext(AuthContext)
+  const { token } = useContext(AuthContext);
   const { logged, setAvatar, avatar } = useContext<any>(UserContext);
   const { navigate, goBack } = useNavigation();
-  const [progress, setProgress] = useState<number>(0)
+  const [progress, setProgress] = useState<number>(0);
   const [isUploadImage, setIsUpload] = useState<boolean>(false);
 
   function copiarSemUserId(parents) {
@@ -39,78 +36,74 @@ export const User = () => {
 
   const updateAvatar = async (userUpdated: UserProps) => {
     try {
-      const response = await axios.put(`${api.BASE_URL}/users/${logged.id}`, userUpdated, {
-        method: 'put',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      } ).then(() => alert('Perfil atualizado com sucesso!'))
+      const response = await axios
+        .put(`${api.BASE_URL}/users/${logged.id}`, userUpdated, {
+          method: "put",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        })
     } catch (e) {
-      alert(`problema ao atulizar o profile no servidor: ${e}`)
+      alert(`problema ao atulizar o profile no servidor: ${e}`);
     }
-  }
+  };
 
   const pickImageAsync = async () => {
     const { assets, canceled } = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       quality: 1,
     });
-
+    setAvatar(assets[0].uri);
     if (!canceled) {
- 
-      try {
-        const filename = assets[0].uri.substring(
-          assets[0].uri.lastIndexOf("/") + 1
-        );
-        setAvatar(assets[0].uri);
-        if(avatar){
-          const uri = avatar.replace('file://', '');
-          let parentsWithID = logged?.parents?.map(copiarSemUserId);
-          const userProfileUpdate: UserProps = {
-            id: logged.id,
-            isAdmin: logged?.isAdmin, 
-            nome: logged.nome,
-            idade: logged.idade,
-            phone: logged.phone,
-            address: logged.address,
-            bairro: logged.bairro,
-            avatar: `https://firebasestorage.googleapis.com/v0/b/mychat-900b3.appspot.com/o/${filename}?alt=media`,
-            cpf: logged.cpf,
-            password: logged.password,
-            parents: parentsWithID
-          
-          }
-          const task = storage().ref(filename).putFile(uri);
-          setIsUpload(true)
-          task.on('state_changed', (e) => {
-            const progress = (e.bytesTransferred / e.totalBytes)
-            setProgress(progress)
-          })
-          
-          task.then(() => {
-            updateAvatar(userProfileUpdate);
-            setIsUpload(false)
-          });          
-        }
+      const filename = assets[0].uri.substring(
+        assets[0].uri.lastIndexOf("/") + 1
+      )
+      if (avatar) {
+        const uri = avatar.replace("file://", "");
+        let parentsWithID = logged?.parents?.map(copiarSemUserId);
+        const userProfileUpdate: UserProps = {
+          id: logged.id,
+          isAdmin: logged?.isAdmin,
+          nome: logged.nome,
+          idade: logged.idade,
+          phone: logged.phone,
+          address: logged.address,
+          bairro: logged.bairro,
+          avatar: `https://firebasestorage.googleapis.com/v0/b/mychat-900b3.appspot.com/o/${filename}?alt=media`,
+          cpf: logged.cpf,
+          password: logged.password,
+          parents: parentsWithID,
+        };
+        const task = storage().ref(filename).putFile(uri);
+        setIsUpload(true);
+        task.on("state_changed", (event) => {
+          const progress = Math.round(
+            (event.bytesTransferred / event.totalBytes) * 100
+          );
+          setProgress(progress);
+        });
 
-        const extend = filename.split(".")[1]
-        const formData = new FormData();
-        formData.append(
-          "file",
-          JSON.parse(
-            JSON.stringify({
-              name: filename,
-              uri: assets[0].uri,
-              type: "image/" + extend,
-            })
-          )
-        );
-        if (formData) {
-          AsyncStorage.setItem("picture", JSON.stringify(assets[0]));
-        }
-      } catch (error) {
-        Alert.alert('Ops', `Houve um problema com o servidor, tente mais tarde!`)
+        task.then(() => {
+          updateAvatar(userProfileUpdate);
+          setIsUpload(false);
+        });
+      }
+
+      const extend = filename.split(".")[1];
+      const formData = new FormData();
+      formData.append(
+        "file",
+        JSON.parse(
+          JSON.stringify({
+            name: filename,
+            uri: assets[0].uri,
+            type: "image/" + extend,
+          })
+        )
+      );
+      if (formData) {
+        AsyncStorage.setItem("picture", JSON.stringify(assets[0]));
       }
     } else {
       alert("Nenhuma imagem foi selecionada!");
@@ -152,58 +145,75 @@ export const User = () => {
           </View>
         </Animated.View>
 
-        
-          <Animated.View 
+        <Animated.View
           entering={BounceInUp.duration(2000).delay(400)}
-          style={{ zIndex: 2 }} className="w-40 h-40 mt-2 absolute">
-            <View className="w-50 h-50  mt-4 items-center justify-center rounded-full">
-            {isUploadImage ? <Progress.Pie progress={progress} color={colors.blue[500]} unfilledColor={colors.zinc[300]} size={50} style={{zIndex: 20, width: 80, height: 80, position: 'absolute'}} /> : null}
-              <UserAvatar x={130} y={130} />
-            </View>
+          style={{ zIndex: 2 }}
+          className="w-40 h-40 mt-2 absolute"
+        >
+          <View className="w-50 h-50  mt-4 items-center justify-center rounded-full">
+            {isUploadImage ? (
+               <Progress.Circle 
+               progress={progress}
+               strokeCap="round"
+               thickness={4}
+               color={'#fff'}
+               textStyle={{color: '#fff', fontSize: 16}}
+               showsText={true}
+               size={50}
+               style={{
+                 zIndex: 20,
+                 width: 80,
+                 height: 80,
+                 alignSelf: 'center',
+                 position: "absolute",
+               }}
+             />
+            ) : null}
+            <UserAvatar x={130} y={130} />
+          </View>
 
-            <View className="w-52 h-7 absolute self-center bottom-0 items-center justify-center bg-blue-400 shadow-md shadow-black rounded-md">
-              <TextSmall
-                text={
-                  logged?.isAdmin == true
-                    ? "CEO Fundador"
-                    : "Membro" && logged?.isEtg == true
-                    ? "Estágiario"
-                    : "Membro" && logged?.isVolt == true
-                    ? "Voluntário"
-                    : "Membro" && logged?.isCoordCidadania == true
-                    ? "Coordenação da Cidadania"
-                    : "Membro" && logged?.isCoordAutist == true
-                    ? "Coordenação dos Autistas"
-                    : "Membro" && logged?.isCoordMulher == true
-                    ? "Coordenação das Mulheres"
-                    : "Membro" && logged?.isCoordSaude == true
-                    ? "Coordenação da Saúde"
-                    : "Membro" && logged?.isCoordAlimentar == true
-                    ? "Coordenação da Alimentação"
-                    : "Membro" && logged?.isCoordProtagonista == true
-                    ? "Coordenação dos Protagonistas"
-                    : "Membro" && logged?.isCoordPasse == true
-                    ? "Coordenação dos Passes"
-                    : "Membro" && logged?.isCoordCursos == true
-                    ? "Coordenação dos Cursos"
-                    : "Membro" && logged?.isCoordOptometria == true
-                    ? "Coordenação da Optometria"
-                    : "Membro" && logged?.isBusiness == true
-                    ? "Empresa"
-                    : "Membro"
-                }
-              />
-            </View>
-            <View className="right-6 self-end top-5 absolute">
-              <TouchableOpacity
-                className="h-5 w-5 items-center justify-center bg-blue-400 shadow-md shadow-black rounded-lg"
-                onPress={() => pickImageAsync()}
-              >
-                <Entypo name="camera" size={12} color="white" />
-              </TouchableOpacity>
-            </View>
-          </Animated.View>
-        
+          <View className="w-52 h-7 absolute self-center bottom-0 items-center justify-center bg-blue-400 shadow-md shadow-black rounded-md">
+            <TextSmall
+              text={
+                logged?.isAdmin == true
+                  ? "CEO Fundador"
+                  : "Membro" && logged?.isEtg == true
+                  ? "Estágiario"
+                  : "Membro" && logged?.isVolt == true
+                  ? "Voluntário"
+                  : "Membro" && logged?.isCoordCidadania == true
+                  ? "Coordenação da Cidadania"
+                  : "Membro" && logged?.isCoordAutist == true
+                  ? "Coordenação dos Autistas"
+                  : "Membro" && logged?.isCoordMulher == true
+                  ? "Coordenação das Mulheres"
+                  : "Membro" && logged?.isCoordSaude == true
+                  ? "Coordenação da Saúde"
+                  : "Membro" && logged?.isCoordAlimentar == true
+                  ? "Coordenação da Alimentação"
+                  : "Membro" && logged?.isCoordProtagonista == true
+                  ? "Coordenação dos Protagonistas"
+                  : "Membro" && logged?.isCoordPasse == true
+                  ? "Coordenação dos Passes"
+                  : "Membro" && logged?.isCoordCursos == true
+                  ? "Coordenação dos Cursos"
+                  : "Membro" && logged?.isCoordOptometria == true
+                  ? "Coordenação da Optometria"
+                  : "Membro" && logged?.isBusiness == true
+                  ? "Empresa"
+                  : "Membro"
+              }
+            />
+          </View>
+          <View className="right-6 self-end top-5 absolute">
+            <TouchableOpacity
+              className="h-5 w-5 items-center justify-center bg-blue-400 shadow-md shadow-black rounded-lg"
+              onPress={() => pickImageAsync()}
+            >
+              <Entypo name="camera" size={12} color="white" />
+            </TouchableOpacity>
+          </View>
+        </Animated.View>
       </View>
 
       <ScrollView

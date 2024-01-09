@@ -8,7 +8,7 @@ import { Alert } from "react-native";
 export const AuthContext = createContext();
 
 export default function AuthProvider({ children }) {
-  const { setLogged } = useContext(UserContext);
+  const { setLogged, setAvatar } = useContext(UserContext);
   const [auth, setAuth] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
   const [signingAuto, setSigningAuto] = useState(false);
@@ -36,7 +36,7 @@ export default function AuthProvider({ children }) {
         })
         setLogged(response?.data?.user); 
         setToken(response?.data?.token);
-        setAvatar(response?.data?.user?.avatar)
+        setAvatar(response?.data?.user?.avatar);
         setAuth(true);
         if (signingAuto){
           saveMyLogin(response?.data?.user)

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Carousel from "react-native-reanimated-carousel";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -6,17 +6,23 @@ import { width } from "../../src/utils/dimensions";
 import { useFetchData } from "../../src/hooks/useFetchData";
 import { api } from "../../src/api/api";
 import { UserContext } from "../../src/contexts/UserContext";
+import firestore from '@react-native-firebase/firestore'
+import firebase from '@react-native-firebase/app'
 
 export const CarouselHome = () => {
   const {refreshing,setRefreshing} = useContext<any>(UserContext)
-  const {list, getData} = useFetchData(api.getNotices)
   const navigation = useNavigation();
+  const [list, setList] = useState([]);
 
   useEffect(() => {
-    getData()
-    setRefreshing(false)
-  },[refreshing])
-  
+    const getNotices = firebase.firestore().collection('notices')
+    .onSnapshot((snapshot) => {
+      const data = snapshot.docs.map((doc) => ({...doc.data(), id: doc.id}))
+      setList(data);
+    })
+    return () => getNotices()
+ }, []);
+
   return (
     <View style={{zIndex: 99}} className='w-full items-center'>
       <Carousel

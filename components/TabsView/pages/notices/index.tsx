@@ -15,7 +15,7 @@ import {
   FontAwesome5,
 } from "@expo/vector-icons";
 import BackButton from "../../../BackButton";
-import { useFetchData } from "../../../../src/hooks/useFetchData";
+import * as Progress from "react-native-progress";
 import { TextLarge, TextMedium } from "../../../TextLg/Text";
 import { AuthContext } from "../../../../src/contexts/AuthContext";
 import data from "../../../../src/utils/dateNow";
@@ -23,6 +23,7 @@ import * as ImagePicker from "expo-image-picker";
 import firestore from "@react-native-firebase/firestore";
 import storage from "@react-native-firebase/storage";
 import firebase from "@react-native-firebase/app";
+import colors from "tailwindcss/colors";
 
 export default function NewNotice() {
   const { token } = useContext<any>(AuthContext);
@@ -30,7 +31,8 @@ export default function NewNotice() {
   const [image, setImage] = useState<string>("");
   const [progress, setProgress] = useState<number>(0);
   const [link, setLink] = useState<string>("ds");
-  const { list, getData } = useFetchData(api.getNotices);
+  const [list, setList] = useState([]);
+  const [isUploadImage, setIsUpload] = useState(false)
   const [dataNotice, setData] = useState({
     date: data,
     title: undefined,
@@ -38,15 +40,24 @@ export default function NewNotice() {
     img: `https://firebasestorage.googleapis.com/v0/b/mychat-900b3.appspot.com/o/${link}?alt=media`,
   });
 
-  const getNotices = firestore().collection("Users").get();
-  console.log(`image valor: ${image}, progress valor: ${progress}`);
-  console.log(getNotices);
+ useEffect(() => {
+    const getNotices = firebase.firestore().collection('notices')
+    .onSnapshot((snapshot) => {
+      const data = snapshot.docs.map((doc) => ({...doc.data(), id: doc.id}))
+      setList(data);
+    })
+    return () => getNotices()
+ }, []);
 
-  function addNotice() {
+  const addNotice = async () => {
     firestore()
       .collection("notices")
       .add(dataNotice)
       .then(() => alert("Notícia adicionada!"));
+  }
+  const deleteNotice = (id) => {
+    firebase.firestore().collection('notices').doc(id).delete()
+    .then(() => alert('Notícia deletada com sucesso!'))
   }
 
   const pickImageAsync = async () => {
@@ -56,27 +67,27 @@ export default function NewNotice() {
     });
 
     if (!canceled) {
-      try {
         const filename = assets[0].uri.substring(
           assets[0].uri.lastIndexOf("/") + 1
         );
         setImage(assets[0].uri);
+        setIsUpload(true);
+        setLink(filename);
         const uri = image.replace("file://", "");
         const task = storage().ref(filename).putFile(uri);
-        task.on("state_changed", (e) => {
-          const progress = e.bytesTransferred / e.totalBytes;
+        
+        task.on("state_changed", (event) => {
+          const progress = Math.round(
+            (event.bytesTransferred / event.totalBytes) * 100
+          );
           setProgress(progress);
         });
+
         task.then((e) => {
           Alert.alert("Pronto", "Upload de imagem conclúido!");
-          setLink(filename);
+          setIsUpload(false)
         });
-      } catch (error) {
-        Alert.alert(
-          "Ops",
-          `Houve um problema com o servidor, tente mais tarde!`
-        );
-      }
+
     } else {
       alert("Nenhuma imagem foi selecionada!");
     }
@@ -108,7 +119,7 @@ export default function NewNotice() {
               <TextLarge text={`Data: ${item.date}`} />
               <TouchableOpacity
                 className="absolute top-1 right-1 w-8 h-8 opacity-80"
-                onPress={() => api.deleteNotice(item.id, token)}
+                onPress={() => deleteNotice(item.id)}
               >
                 <MaterialIcons name="delete-forever" size={32} color="white" />
               </TouchableOpacity>
@@ -125,18 +136,36 @@ export default function NewNotice() {
         />
         <TextLarge text="Descrição" />
         <TextInput
-          className="w-full h-32 mb-4 text-inherit text-white font-default px-2 rounded-md bg-white/20 opacity-80"
+          className="w-full h-32 text-left text-ellipsis text text-white font-default px-2 rounded-md bg-white/20 opacity-80"
           onChangeText={(value) => setData({ ...dataNotice, mensagem: value })}
         />
 
         <View className="flex-row w-full h-36">
           <TouchableOpacity
-            className="w-44 h-10 justify-center items-center rounded-lg bg-white/25"
+            className="w-12 h-10 justify-between items-center rounded-lg bg-white/25"
             onPress={() => pickImageAsync()}
           >
             <FontAwesome5 name="images" size={24} color="white" />
           </TouchableOpacity>
-        
+          {isUploadImage ? (
+              <Progress.Circle 
+                progress={progress}
+                strokeCap="round"
+                thickness={4}
+                color={'#fff'}
+                textStyle={{color: '#fff', fontSize: 16}}
+                showsText={true}
+                size={50}
+                style={{
+                  zIndex: 20,
+                  width: 40,
+                  height: 40,
+                  alignSelf: 'center',
+                  position: "absolute",
+                }}
+              />
+            ) : null}
+            {progress === 100 && <FontAwesome5 name="check-circle" size={26} color="white" />}
         <TouchableOpacity
           className="w-44 h-10 justify-center items-center rounded-lg bg-white/25"
           onPress={() => addNotice()}

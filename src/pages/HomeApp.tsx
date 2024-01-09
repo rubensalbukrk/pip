@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   View,
   Text,
@@ -20,19 +20,20 @@ import UserAvatar from "../../components/UserAvatar";
 import { LottieView } from "../utils/LottieView";
 import { TextLarge, TextMedium, TextSmall } from "../../components/TextLg/Text";
 import Animated, { Easing, FadeInDown, FadeInUp, ZoomIn } from "react-native-reanimated";
+import firestore from '@react-native-firebase/firestore'
 
 export const HomeApp = () => {
   const { logged, solicitations, refreshing, setRefreshing } =
     useContext<any>(UserContext);
   const { navigate } = useNavigation();
   const countSolicitations = solicitations?.length;
-
-  const firstName = (): String => {
+const firstName = (): String => {
     const { nome } = logged;
     const tmpName = nome?.split(" ");
     const myName = tmpName[0];
     return myName;
   };
+
 
   return (
     <View className="flex-1 w-full bg-slate-200">
