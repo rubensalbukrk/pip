@@ -45,7 +45,7 @@ export function TabViewAdmin() {
   }]);
 
   const renderTabBar = props => (
-    <TabBar {...props} indicatorStyle={{backgroundColor: 'white'}} style={{backgroundColor: '#979797'}} />
+    <TabBar {...props} activeColor="#1f86ff" inactiveColor='#c2c2c2' indicatorStyle={{backgroundColor: '#1f96ff'}} style={{backgroundColor: '#f0f0f0'}} />
   )
 
   return (

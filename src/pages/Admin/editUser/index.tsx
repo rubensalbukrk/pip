@@ -20,6 +20,7 @@ import { citys, grauParents } from "../../../stacks/Cadastro";
 import colors from "tailwindcss/colors";
 import SelectDropdown from "react-native-select-dropdown";
 import { TextInputMask } from "react-native-masked-text";
+import firestore from "@react-native-firebase/firestore";
 
 export default function EditUser({ route }) {
   const { token } = useContext<any>(AuthContext);
@@ -75,49 +76,55 @@ export default function EditUser({ route }) {
   const [pass, setPass] = useState<string>(route?.params?.password);
   const navigation = useNavigation();
 
-  function copiarSemUserId(parents) {
-    const { userId, ...copiaParent } = parents;
-    return copiaParent;
-  }
-  let parentsWithID = parents.map(copiarSemUserId);
 
-  let UserUpdate = {
-    isVolt: voluntario,
-    isEtg: estagiario,
-    isCoordMulher: isCoordMulher,
-    isCoordAutist: isCoordAutist,
-    isCoordSaude: isCoordSaude,
-    isCoordAlimentar: isCoordAlimentar,
-    isCoordPasse: isCoordPasse,
-    isCoordCidadania: isCoordCidadania,
-    isCoordProtagonista: isCoordProtagonista,
-    isCoordOptometria: isCoordOptometria,
-    isCoordCursos: isCoordCursos,
-    isBusiness: isBusiness,
-    nome: nome,
-    idade: idade,
-    avatar: avatar,
-    address: address,
-    bairro: bairro,
-    cpf: cpf,
-    nis: nis,
-    parents: parentsWithID,
-    phone: phone,
-    email: email,
-    question1: true,
-    question2: opnion,
-    password: pass,
+  const atualizarUsuarioPorCPF = async (cpf: string) => {
+    try {
+
+    const usuariosCollection = firestore().collection('usuarios');
+
+    const querySnapshot = await usuariosCollection.where('cpf', '==', cpf).get();
+    if (querySnapshot.size > 0) {
+      // Obtém o primeiro documento (assumindo que o CPF é único)
+      const usuarioDoc = querySnapshot.docs[0];
+
+      var idDoc = usuarioDoc.id.toString();
+      const usuarioRef = firestore().collection('usuarios').doc(idDoc);
+
+      await usuarioRef.update({
+        isVolt: voluntario || false,
+        isEtg: estagiario || false,
+        isCoordMulher: isCoordMulher || false,
+        isCoordAutist: isCoordAutist || false,
+        isCoordSaude: isCoordSaude || false,
+        isCoordAlimentar: isCoordAlimentar || false,
+        isCoordPasse: isCoordPasse || false,
+        isCoordCidadania: isCoordCidadania || false,
+        isCoordProtagonista: isCoordProtagonista || false,
+        isCoordOptometria: isCoordOptometria || false,
+        isCoordCursos: isCoordCursos || false,
+        isBusiness: isBusiness || false,
+        nome: nome,
+        idade: idade,
+        avatar: avatar,
+        address: address,
+        bairro: bairro,
+        cpf: cpf,
+        nis: nis,
+        parents: parents,
+        phone: phone,
+        email: email,
+    
+        password: pass,
+      });
+      alert(`Usuário de CPF: ${cpf} ATUALIZADO COM SUCESSO!`);
+    } 
+
+    } catch (error) {
+      
+      console.error(`Erro ao atualizar usuário por CPF:`, error );
+    }
   };
 
-  function updateUser(): void {
-    axios.put(`${api.BASE_URL}/users/${route.params.id}`, UserUpdate, {
-      method: "put",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
-  }
   const UserParents = () => {
     try {
       return (
@@ -602,7 +609,7 @@ export default function EditUser({ route }) {
 
           <TouchableOpacity
             className="flex-row w-48 h-20 mx-5 my-5 justify-evenly items-center bg-zinc-700 rounded-lg"
-            onPress={() => updateUser()}
+            onPress={() => atualizarUsuarioPorCPF(cpf)}
           >
             <Feather name="save" size={32} color={"white"} />
             <Text className="font-default text-white text-2xl">SALVAR</Text>

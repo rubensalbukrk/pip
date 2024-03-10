@@ -125,7 +125,7 @@ export default function TabCadastros() {
     className='flex-1 w-full mb-5'
     horizontal={false}>
        <PieChartWithDynamicSlices />
-      <TextMedium text="Famílias por bairro" />
+      <TextMedium className="text-blue-500" text="Famílias por bairro" />
     
       <View className='flex-row w-full mb-4 items-center justify-center flex-wrap'
       >

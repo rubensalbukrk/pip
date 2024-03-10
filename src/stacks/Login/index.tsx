@@ -22,7 +22,6 @@ import Animated, {
   ZoomOut,
   FadeInLeft,
   BounceInUp,
-  FadeOut,
   FadeIn,
 } from "react-native-reanimated";
 import { LottieView } from "../../utils/LottieView";
@@ -86,7 +85,7 @@ export const Login = () => {
       </Animated.View>
       
       <Animated.View
-        entering={StretchInX.delay(2000).duration(1400).easing(Easing.bounce)}
+        entering={FadeIn.delay(300).duration(600).easing(Easing.bounce)}
         exiting={FadeInLeft.delay(100)}
         layout={Layout}
         className="w-72 shadow-lg my-5 pt-3 shadow-black justify-between items-center rounded-2xl bg-gray-200"

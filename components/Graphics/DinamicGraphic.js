@@ -129,7 +129,7 @@ class PieChartWithDynamicSlices extends React.PureComponent {
           style={{
             position: "absolute",
             left: deviceWidth / 2 - labelWidth / 2,
-            color: "#f2f2f2",
+            color: "#1f96ff",
             fontFamily: "Doppio One",
             fontSize: 18,
             textAlign: "center",

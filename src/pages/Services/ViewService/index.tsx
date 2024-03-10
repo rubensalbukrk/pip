@@ -40,6 +40,7 @@ export default function ViewService({ route }) {
   const [viewPdf, setViewPdf] = useState(false);
   const [asAnexo, setAsAnexo] = useState(false);
   const [showWhats, setShowWhats] = useState<boolean>(false);
+  const [NumeroWhats, setNumeroWhats] = useState(String);
   const myInfo = {
     nome: logged.nome,
     idade: logged.idade,
@@ -57,7 +58,7 @@ export default function ViewService({ route }) {
     status: "Aguardando analise...",
     pasta: `${pasta}`,
     docs: docs,
-    phone: undefined,
+    phone: NumeroWhats || logged.phone,
     date: `${data}`,
     userInfo: myInfo,
   });
@@ -85,7 +86,6 @@ export default function ViewService({ route }) {
         alert("Houve um problema com o servidor, tente novamente mas tarde!");
       }
     };
-
 
     const pickDocument = async () => {
       
@@ -194,7 +194,6 @@ export default function ViewService({ route }) {
   };
 
   const FormWhats = () => {
-    const [NumeroWhats, setNumeroWhats] = useState<string>();
     return (
       <View
         style={{ zIndex: 20, height: "100%" }}
@@ -208,7 +207,7 @@ export default function ViewService({ route }) {
          value={NumeroWhats}
          onChangeText={(text)=> setNumeroWhats(text)}
          className="w-80 h-12 m-3 bg-slate-300 rounded-lg" 
-        
+
          />
           <Button
           className="self-center"
@@ -224,6 +223,8 @@ export default function ViewService({ route }) {
       </View>
     );
   };
+
+
   const sendSolicitation = () => {
     const task = firestore()
       .collection("Solicitations")

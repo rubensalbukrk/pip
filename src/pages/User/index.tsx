@@ -142,6 +142,8 @@ export const User = () => {
                 ? "Estágiario"
                 : "Membro" && logged?.isVolt == true
                 ? "Voluntário"
+                : "Membro" && logged?.isBusiness == true
+                ? "Empresa"
                 : "Membro" && logged?.isCoordCidadania == true
                 ? "Coordenação da Cidadania"
                 : "Membro" && logged?.isCoordAutist == true
@@ -160,8 +162,6 @@ export const User = () => {
                 ? "Coordenação dos Cursos"
                 : "Membro" && logged?.isCoordOptometria == true
                 ? "Coordenação da Optometria"
-                : "Membro" && logged?.isBusiness == true
-                ? "Empresa"
                 : "Membro"
             }
           />
