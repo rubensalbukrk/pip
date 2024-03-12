@@ -2,7 +2,7 @@
   "expo": {
     "name": "PIP",
     "slug": "pip-app",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -20,15 +20,18 @@
       "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
+      "versionCode": 2,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.rubensoft.pipapp.com",
+      
       "permissions": [
         "READ_EXTERNAL_STORAGE"
       ],
       "googleServicesFile": "./google-services.json"
+
     },
     "web": {
       "favicon": "./assets/favicon.png"
