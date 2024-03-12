@@ -193,36 +193,7 @@ export default function ViewService({ route }) {
     );
   };
 
-  const FormWhats = () => {
-    return (
-      <View
-        style={{ zIndex: 20, height: "100%" }}
-        className="absolute w-full items-center justify-center bg-black/60"
-      >
-        <View className="w-92 h-200 self-center p-4 bg-white rounded-md">
-          <TextLarge className="text-2xl align-left text-red-500" text="Informe seu WhatsApp," />
-          <TextLarge className="text-slate-950" text="Vamos entrar em contato com você!" />
-         <TextInputMask
-         type="cel-phone"
-         value={NumeroWhats}
-         onChangeText={(text)=> setNumeroWhats(text)}
-         className="w-80 h-12 m-3 bg-slate-300 rounded-lg" 
-
-         />
-          <Button
-          className="self-center"
-            title="CONCLUIR SOLICITAÇÃO"
-            onPress={() => {
-              setSolicitation({ ...solicitation, phone: NumeroWhats })
-              VerificarServiço()
-              setShowWhats(false);
-            }}
-          />
-
-        </View>
-      </View>
-    );
-  };
+  
 
 
   const sendSolicitation = () => {
@@ -284,7 +255,32 @@ export default function ViewService({ route }) {
       )}
       {asAnexo && <FormAnexo />}
 
-      {showWhats && <FormWhats />}
+      {showWhats &&  <View
+        style={{width: "100%",height: "100%" }}
+        className="self-center items-center justify-center bg-black/60"
+      >
+        <View className="w-92 h-200 self-center p-4 bg-white rounded-md">
+          <TextLarge className="text-2xl align-left text-red-500" text="Informe seu WhatsApp," />
+          <TextLarge className="text-slate-950" text="Vamos entrar em contato com você!" />
+         <TextInputMask
+         type="cel-phone"
+         value={NumeroWhats}
+         onChangeText={(text)=> setNumeroWhats(text)}
+         className="w-80 h-12 m-3 bg-slate-300 rounded-lg" 
+
+         />
+          <Button
+          className="self-center"
+            title="CONCLUIR SOLICITAÇÃO"
+            onPress={() => {
+              setSolicitation({ ...solicitation, phone: NumeroWhats })
+              VerificarServiço()
+              setShowWhats(false);
+            }}
+          />
+
+        </View>
+      </View>}
 
 
 
