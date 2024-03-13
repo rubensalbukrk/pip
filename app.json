@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "PIP",
-    "slug": "pip-app",
-    "version": "1.0.1",
+    "name": "PIP APP",
+    "slug": "pip",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -16,7 +16,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.rubensoft.pipapp.com",
+      "bundleIdentifier": "com.rubensoft.pip.com",
       "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
@@ -25,7 +25,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.rubensoft.pipapp.com",
+      "package": "com.rubensoft.pip.com",
       
       "permissions": [
         "READ_EXTERNAL_STORAGE"

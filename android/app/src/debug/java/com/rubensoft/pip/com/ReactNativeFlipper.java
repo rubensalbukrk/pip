@@ -4,7 +4,7 @@
  * <p>This source code is licensed under the MIT license found in the LICENSE file in the root
  * directory of this source tree.
  */
-package com.rubensoft.pipapp.com;
+package com.rubensoft.pip.com;
 
 import android.content.Context;
 import com.facebook.flipper.android.AndroidFlipperClient;
