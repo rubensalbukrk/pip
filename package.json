@@ -31,7 +31,6 @@
     ]
   },
   "dependencies": {
-    "@babel/types": "^7.24.8",
     "@expo/html-elements": "latest",
     "@react-native-async-storage/async-storage": "1.18.2",
     "@react-native-community/checkbox": "^0.5.16",

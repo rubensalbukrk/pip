@@ -11,12 +11,10 @@ import TopBackground from "../../../assets/svgs/User-top-waves.svg";
 import BottomBackground from "../../../assets/svgs/User-bottom-wave.svg";
 import { width } from "../../utils/dimensions";
 import { TextSmall } from "../../../components/TextLg/Text";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ParentsProps } from "../../interfaces/Parents";
 import Animated, { BounceInUp, FadeInUp } from "react-native-reanimated";
 import storage from "@react-native-firebase/storage";
 import { AuthContext } from "../../contexts/AuthContext";
-import { UserProps } from "../../interfaces/User";
 import * as Progress from "react-native-progress";
 import colors from "tailwindcss/colors";
 import firestore from '@react-native-firebase/firestore'
@@ -197,10 +195,7 @@ export const User = () => {
         horizontal={false}
       >
         <View className="w-full mb-10 rounded-lg">
-          <InputInfoUser
-            infoLabel="Data de inscrição"
-            infoValue={logged?.createAt}
-          />
+          
           <InputInfoUser infoLabel="Nome Civil" infoValue={logged?.nome} />
           <InputInfoUser infoLabel="Idade" infoValue={logged?.idade} />
           <InputInfoUser infoLabel="Endereço" infoValue={logged?.address} />

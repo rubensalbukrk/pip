@@ -7,7 +7,6 @@ import {
   TextInput,
   Switch,
   StatusBar,
-  Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import BackgroundLogin from "../../../assets/svgs/login-center.svg";
@@ -15,7 +14,6 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { TextInputMask } from "react-native-masked-text";
 import { AuthContext } from "../../contexts/AuthContext";
 import Animated, {
-  StretchInX,
   Easing,
   BounceInDown,
   Layout,
@@ -67,38 +65,45 @@ export const Login = () => {
         opacity={1}
       />
       
+      <View className="flex-row w-screen h-52">
       <Animated.Image
       entering={BounceInUp.duration(2000)}
       exiting={BounceInDown}
       layout={Layout}
       
       fadeDuration={2000}
-        resizeMode="contain"
-        style={{ width: "50%", height: "20%"}}
+        resizeMode="stretch"
+        style={{ width: "50%", height: "100%", marginLeft: 5}}
         source={require("../../../assets/pip-icon.png")}
       />
+
+
       <Animated.View 
-      className={"w-full items-center justify-center self-center"}
+      className={"w-full justify-center pt-14"}
       entering={FadeIn.delay(1000).duration(2000)}>
-        <TextExtra text="PIP" className="text-black text-5xl" />
-      <Text className="font-default text-blue-400 text-lg">ÁREA DE ACESSO</Text>
+        <TextExtra text="PIP" className="text-black" />
+        <TextSmall text="PROJETO INCLUSÃO POPULAR" className="text-black text-xl right-20" />
       </Animated.View>
       
+      </View>
+
       <Animated.View
         entering={FadeIn.delay(300).duration(600).easing(Easing.bounce)}
         exiting={FadeInLeft.delay(100)}
         layout={Layout}
-        className="w-72 shadow-lg my-5 pt-3 shadow-black justify-between items-center rounded-2xl bg-gray-200"
+        className="w-72 shadow-lg my-4 mt-28 pt-3 shadow-black justify-between items-center rounded-2xl bg-white"
       >
+        <Text className="font-default text-blue-400 text-lg mb-6">ÁREA DE ACESSO</Text>
+
         <View className="flex-row w-64 gap-x-3 h-12 mb-5 self-center items-center rounded-2xl border-2 border-gray-600/30">
           <FontAwesome5 name="user-alt" size={28} color={"#c5c5c5"} />
           <TextInputMask
             style={{
               width: "100%",
-              color: "#bdbdbd",
+              color: "#8f8f8f",
               height: 50,
               textAlign: "left",
-              fontSize: 22,
+              fontSize: 20,
               fontFamily: "Doppio One",
             }}
             type="cpf"
@@ -113,7 +118,7 @@ export const Login = () => {
         <View className="flex-row w-64 h-12 gap-x-3 items-center rounded-2xl border-2 border-gray-600/30">
           <PasswordIcon />
           <TextInput
-            className="font-default text-start text-gray-600 text-2xl"
+            className="font-default text-start text-gray-700 text-2xl"
             onChangeText={(pass) => setPassword(pass)}
             placeholderTextColor={"#bdbdbd"}
             selectionColor={"#9f9f9f"}

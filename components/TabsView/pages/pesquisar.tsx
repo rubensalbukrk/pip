@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
 import {
   View,
   Text,
@@ -10,10 +9,6 @@ import {
 } from "react-native";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { api } from "../../../src/api/api";
-import { useFetchData } from "../../../src/hooks/useFetchData";
-import { AuthContext } from "../../../src/contexts/AuthContext";
-import { UserProps } from "../../../src/interfaces/User";
 import { UserContext } from "../../../src/contexts/UserContext";
 import firestore from '@react-native-firebase/firestore'
 
@@ -76,10 +71,15 @@ export default function TabSearch() {
         renderItem={({ item }) => {
           return (
             <View className="flex-row w-80 h-22 py-2 my-2 self-center items-center rounded-lg bg-blue-400/20">
+              {item.avatar ? <Image
+                className="w-12 h-12 rounded-full mx-3 bg-gray-600"
+                source={{uri : item.avatar}}
+              />
+              :
               <Image
                 className="w-12 h-12 rounded-full mx-3 bg-gray-600"
-                source={{ uri: item.avatar }}
-              />
+                source={require('../../../assets/user.png')}
+              />}
 
               <View className="w-80 rounded-lg">
                 <Text numberOfLines={1} className="font-default text-blue-500">
@@ -106,7 +106,7 @@ export default function TabSearch() {
                     isCoordPasse: item.isCoordPasse,
                     isCoordCidadania: item.isCoordCidadania,
                     isCoordProtagonista: item.isCoordProtagonista,
-                    avatar: item?.avatar,
+                    avatar: item.avatar,
                     nome: item.nome,
                     idade: item.idade,
                     address: item.address,

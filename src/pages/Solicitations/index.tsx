@@ -1,21 +1,16 @@
 import React, { useContext, useEffect } from "react";
-import axios from "axios";
 import { View, Text, TouchableOpacity, FlatList, Alert } from "react-native";
-import { FontAwesome, Octicons } from "@expo/vector-icons";
-import { api } from "../../api/api";
+import { MaterialIcons, Octicons } from "@expo/vector-icons";
 import UserAvatar from "../../../components/UserAvatar";
-import { SolicitationsProps } from "../../interfaces/Solicitations";
 import { UserContext } from "../../contexts/UserContext";
 import BackButton from "../../../components/BackButton";
 import BackgroundSolicitation from "../../../assets/svgs/Home-waves.svg";
 import { height, width } from "../../utils/dimensions";
-
 import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthContext } from "../../contexts/AuthContext";
-import { AprovadosProps } from "../../interfaces/Aprovados";
 
 import firebase from '@react-native-firebase/app'
+import { Button } from "../../../components/ButtonBlue/ButtonBlue";
 
 export default function SolicitationsUser() {
   const { token } = useContext(AuthContext);
@@ -55,23 +50,35 @@ export default function SolicitationsUser() {
     };
   }, []);
 
+  const showAlert = (collect, id) => {
+    Alert.alert(
+      'Aviso',
+      'Você deseja cancelar a sua solicitação? você poderá refazer novamente!',
+      [
+        {
+          text: 'Cancelar',
+          onPress: () => null,
+          style: 'cancel',
+        },
+        { 
+          text: 'Confirmar', 
+          onPress: () => removeItem(collect, id) ,
+          style: 'destructive'
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
+
   const removeItem = (collect, id) => {
     firebase
       .firestore()
       .collection(collect)
       .doc(id)
       .delete()
-      .then(() => alert("Operação concluída!"));
+      .then(() => Alert.alert('Aviso', 'A sua solicitação foi cancelada!'));
   };
-
-  // var userSolicitations = solicitations?.filter(
-  //   (item) => String(item.cpf) === String(logged.cpf)
-  // );
-  // if (aprovados && aprovados.length > 0) {
-  //   var userBeneficiets = aprovados?.filter(
-  //     (item) => String(item.cpf) === String(logged.cpf)
-  //   );
-  // }
 
   return (
     <View className="w-full h-full items-center justify-center bg-slate-200">
@@ -95,12 +102,12 @@ export default function SolicitationsUser() {
       </View>
 
       <FlatList
-        className="w-80 h-28"
+        className="w-screen h-28"
         data={solicitations}
         horizontal={false}
         renderItem={({ item }) => {
           return (
-            <View className="w-72 px-3 my-2 self-center items-start justify-start py-5 rounded-xl shadow-md shadow-black bg-gray-600">
+            <View className="w-96 px-3 my-2  bg-gray-200 self-center items-start justify-start py-5 rounded-xl shadow-md shadow-black">
               <Text className="font-default text-md text-gray-800">
                 Serviço: {item.service}
               </Text>
@@ -111,10 +118,10 @@ export default function SolicitationsUser() {
                 Data: {item.date}
               </Text>
               <TouchableOpacity
-                className="w-8 h-8 items-center justify-center opacity-80 absolute right-1 top-0"
-                onPress={() => removeItem("Solicitations", item.id)}
+                className="w-8 h-8 items-center justify-center opacity-70 absolute right-4 top-7"
+                onPress={() => showAlert("Solicitations", item.id)}
               >
-                <FontAwesome name="remove" size={32} color="white" />
+                <MaterialIcons name="delete-forever" size={32} color="#393939" />
               </TouchableOpacity>
             </View>
           );
@@ -124,17 +131,17 @@ export default function SolicitationsUser() {
       <View className="flex-row w-full mt-3 px-4 h-12 justify-start items-start">
         <Octicons name="checklist" size={32} color="#3C3C3C" />
         <Text className="font-default text-xl ml-3 text-gray-900">
-          Meus benefícios
+          Seus benefícios
         </Text>
       </View>
 
       <FlatList
-        className="w-80 h-28 "
+        className="w-screen h-28 "
         data={aprovados}
         horizontal={false}
         renderItem={({ item }) => {
           return (
-            <View className="w-72 my-4 px-2 self-center items-start justify-start py-5 rounded-xl shadow-md shadow-black bg-gray-600">
+            <View className="w-80 my-4 px-4 bg-gray-200 self-center items-start justify-start py-5 rounded-xl shadow-md shadow-black ">
               <Text className="font-default text-md text-gray-800">
                 Serviço: {item.service}
               </Text>

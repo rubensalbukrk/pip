@@ -6,18 +6,18 @@ import { useNavigation } from "@react-navigation/native";
 export default function BackButton(props) {
   const navigation = useNavigation();
   return (
-    <View style={{width: 70, height: 70}}>
+    
       <TouchableOpacity
         style={{
-          width: 60,
-          height: 60,
+          width: 70,
+          height: 70,
           justifyContent: "center",
           alignItems: "center",
         }}
         onPress={() => navigation.goBack()}
       >
-        <Feather  name="arrow-left-circle" color={"white" || (props.color)} size={28} />
+        <Feather  name="arrow-left-circle" color={"white" || (props.color)} size={32} />
       </TouchableOpacity>
-    </View>
+    
   );
 }

@@ -256,7 +256,7 @@ export default function ViewService({ route }) {
       {asAnexo && <FormAnexo />}
 
       {showWhats &&  <View
-        style={{width: "100%",height: "100%" }}
+        style={{zIndex:20, width: "100%",height: "100%" }}
         className="self-center items-center justify-center bg-black/60"
       >
         <View className="w-92 h-200 self-center p-4 bg-white rounded-md">
@@ -266,8 +266,7 @@ export default function ViewService({ route }) {
          type="cel-phone"
          value={NumeroWhats}
          onChangeText={(text)=> setNumeroWhats(text)}
-         className="w-80 h-12 m-3 bg-slate-300 rounded-lg" 
-
+         className="w-80 h-12 px-2 m-3 text-2xl font-bold bg-slate-300 rounded-lg" 
          />
           <Button
           className="self-center"

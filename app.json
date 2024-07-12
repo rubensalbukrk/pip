@@ -26,17 +26,14 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.rubensoft.pip.com",
-      
       "permissions": [
-        "READ_EXTERNAL_STORAGE"
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.RECORD_AUDIO"
       ],
       "googleServicesFile": "./google-services.json"
-
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    
-
     },
     "plugins": [
       "@react-native-firebase/app",
@@ -55,10 +52,15 @@
         {
           "photosPermission": "O aplicativo precisa acessar suas fotos."
         }
-        
       ],
-      ["expo-document-picker"]
-
-    ]
+      [
+        "expo-document-picker"
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "9be865d4-5b79-48a0-9df2-7982d8efaf7a"
+      }
+    }
   }
 }

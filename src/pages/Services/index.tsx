@@ -141,21 +141,11 @@ export default function Services() {
         width={width}
         height={height + 50}
       />
-      <View className="flex-row absolute w-full pl-3 top-0 justify-between">
+      <View className="flex-row w-full pl-3 justify-between">
         <TextExtra text="Serviços" />
         <BackButton />
       </View>
-      <View className="flex-row mt-20 w-full">
-        <Image
-          className="absolute w-24 h-24 ml-3"
-          alt="pip-logo"
-          resizeMode="cover"
-          source={require("../../../assets/pip-icon.png")}
-        />
-        <Text className="font-default ml-20 bottom-3 text-md mt-20 text-gray-800">
-          PROJETO INCLUSÃO POPULAR
-        </Text>
-      </View>
+     
 
       <FlatList
         className="flex-1 w-full mb-3"

@@ -12,6 +12,7 @@ import { UserContext } from "../contexts/UserContext";
 import {
   MaterialCommunityIcons,
   Ionicons,
+  Feather,
   FontAwesome,
 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -52,19 +53,19 @@ export const HomeApp = () => {
           style={{ zIndex: 0, width: "100%" }}
           source={require("../../assets/animations/teste/Animation - WAVE BLUE 2 TESTA HOJE.json")}
         />
-        <View className="flex-row w-full my-2 h-40">
-          <TextSmall
-            text={`Olá ${firstName()}`}
-            className="absolute top-0 left-4"
-          />
+        <View className="flex-row w-full h-40">
+          
           <TouchableOpacity
             style={{ zIndex: 10 }}
-            className="absolute top-10 shadow-xl shadow-black left-5 w-32 h-32 items-center justify-center bg-slate-300/70 rounded-full"
+            className="absolute top-6 shadow-xl shadow-black left-5 w-32 h-32 items-center justify-center bg-slate-300/70 rounded-full"
             onPress={() => navigate("User")}
           >
             <UserAvatar x={124} y={124} />
           </TouchableOpacity>
-
+          <TextSmall
+            text={`Olá ${firstName()}`}
+            className="absolute top-12 right-48 text-lg"
+          />
           <View className="w-full bottom-3 right-2 h-38 justify-center">
             <TextMedium
               className="absolute top-1 text-3xl right-1"
@@ -95,7 +96,10 @@ export const HomeApp = () => {
           />
         }
       >
-        <TextLarge text="Notícias" className="px-6 mt-3 mb-1 text-zinc-400" />
+        <View className="left-4 my-5 flex-row items-center">
+        <Feather name="info" color="black" size={32} />
+        <TextLarge text="Notícias" className="text-2xl text-zinc-600" />
+        </View>
         <CarouselHome />
       </ScrollView>
 
