@@ -43,7 +43,6 @@ export const Login = () => {
   } = useContext(AuthContext);
   const [cpf, setCpf] = useState(String);
   const [password, setPassword] = useState(String);
-  const [show, setShow] = useState(false);
   const { navigate } = useNavigation();
 
   useEffect(() => {
@@ -72,17 +71,16 @@ export const Login = () => {
       layout={Layout}
       
       fadeDuration={2000}
-        resizeMode="stretch"
+        resizeMode="contain"
         style={{ width: "50%", height: "100%", marginLeft: 5}}
         source={require("../../../assets/pip-icon.png")}
       />
-
 
       <Animated.View 
       className={"w-full justify-center pt-14"}
       entering={FadeIn.delay(1000).duration(2000)}>
         <TextExtra text="PIP" className="text-black" />
-        <TextSmall text="PROJETO INCLUSÃO POPULAR" className="text-black text-xl right-20" />
+        <TextSmall text="PROJETO INCLUSÃO POPULAR" className="text-black text-lg right-20" />
       </Animated.View>
       
       </View>
@@ -91,7 +89,7 @@ export const Login = () => {
         entering={FadeIn.delay(300).duration(600).easing(Easing.bounce)}
         exiting={FadeInLeft.delay(100)}
         layout={Layout}
-        className="w-72 shadow-lg my-4 mt-28 pt-3 shadow-black justify-between items-center rounded-2xl bg-white"
+        className="w-72 shadow-lg my-4 mt-18 pt-3 shadow-black justify-between items-center rounded-2xl bg-white"
       >
         <Text className="font-default text-blue-400 text-lg mb-6">ÁREA DE ACESSO</Text>
 
@@ -118,7 +116,7 @@ export const Login = () => {
         <View className="flex-row w-64 h-12 gap-x-3 items-center rounded-2xl border-2 border-gray-600/30">
           <PasswordIcon />
           <TextInput
-            className="font-default text-start text-gray-700 text-2xl"
+            className="font-default text-start text-gray-7.00 text-2xl"
             onChangeText={(pass) => setPassword(pass)}
             placeholderTextColor={"#bdbdbd"}
             selectionColor={"#9f9f9f"}
@@ -143,7 +141,7 @@ export const Login = () => {
 
           {isLoading ? (
             <Animated.View
-              exiting={ZoomOut.delay(2000)}
+              exiting={ZoomOut.delay(100)}
               layout={Layout}
               className="w-24 h-24 items-center justify-center"
             >

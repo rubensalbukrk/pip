@@ -212,9 +212,9 @@ export const User = () => {
           <InputInfoUser
             infoLabel="Parentes"
             infoValue={
-              logged?.parents?.length == 0
-                ? "Não tem parents"
-                : `${logged?.parents?.length}`
+              logged?.parents?.length > 0
+                ? `${logged?.parents?.length}`
+                : "Sem registros"
             }
           />
         </View>
