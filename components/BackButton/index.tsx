@@ -16,7 +16,7 @@ export default function BackButton(props) {
         }}
         onPress={() => navigation.goBack()}
       >
-        <Feather  name="arrow-left-circle" color={"white" || (props.color)} size={32} />
+        <Feather  name="arrow-left-circle" color={"white" || props.color} size={32} />
       </TouchableOpacity>
     
   );

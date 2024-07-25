@@ -24,6 +24,7 @@ import firestore from "@react-native-firebase/firestore";
 import storage from "@react-native-firebase/storage";
 import firebase from "@react-native-firebase/app";
 import colors from "tailwindcss/colors";
+import { useNavigation } from "@react-navigation/native";
 
 export default function NewNotice() {
   const { token } = useContext<any>(AuthContext);
@@ -37,6 +38,8 @@ export default function NewNotice() {
     img: undefined
   });
 
+  const navigation = useNavigation();
+  
   useEffect(() => {
     const getNotices = firebase
       .firestore()
@@ -106,37 +109,47 @@ export default function NewNotice() {
   };
 
   return (
-    <View className="flex-1 w-full pt-2 justify-center bg-zinc-500">
+    <View className="flex-1 w-full pt-2 justify-center bg-slate-200">
       <View className="flex-row ml-4 mb-5 top-2">
-        <FontAwesome name="newspaper-o" size={40} color="white" />
-        <TextMedium text="Gerênciador de Notícias" />
+        <FontAwesome name="newspaper-o" size={40} color={colors['blue'][500]} />
+        <TextMedium className="text-blue-500 text-xl" text="Gerênciador de Notícias" />
       </View>
       <View className="absolute top-12 right-3">
-        <BackButton />
+      <TouchableOpacity
+        style={{
+          width: 70,
+          height: 70,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        onPress={() => navigation.goBack()}
+      >
+        <Feather  name="arrow-left-circle" color={colors['blue'][500]} size={32} />
+      </TouchableOpacity>
       </View>
 
-      <TextMedium text="Nova notícia" />
-      <View className="py-2 px-5 rounded-xl mb-2 bg-white/20">
-        <TextLarge text="Título" />
+      <TextMedium className="text-blue-500" text="Nova notícia" />
+      <View className="py-2 px-5 rounded-xl mb-2 bg-white">
+        <TextLarge className="text-blue-500" text="Título" />
         <TextInput
-          className="w-full h-8 text-lg text-white font-default px-2 bg-white/20 rounded-md opacity-80"
+          className="w-full h-8 text-lg text-black font-default px-2 bg-gray-50/40 rounded-md"
           onChangeText={(value) => setData({ ...dataNotice, title: value })}
         />
-        <TextLarge text="Descrição" />
+        <TextLarge className="text-blue-500" text="Descrição" />
         <TextInput
-          className="w-full h-32 text-left text-ellipsis text text-white font-default px-2 rounded-md bg-white/20 opacity-80"
+          className="w-full h-32 text-left text-ellipsis text text-black font-default px-2 rounded-md bg-gray-50/40"
           onChangeText={(value) => setData({ ...dataNotice, mensagem: value })}
         />
 
         <View className="flex-row w-full h-20 justify-between items-center">
           <TouchableOpacity
-            className="w-12 h-10 justify-center items-center rounded-lg bg-white/25"
+            className="w-12 h-10 justify-center items-center rounded-lg bg-slate-100 shadow-lg shadow-blue-800"
             onPress={() => pickImageAsync()}
           >{isUploadImage ? (
             <Progress.Pie
               progress={progress}
               unfilledColor="#e5f3ff"
-              color={colors.zinc[500]}
+              color={colors.blue[500]}
               size={30}
               style={{
                 zIndex: 20,
@@ -144,38 +157,38 @@ export default function NewNotice() {
               }}
             />
           ) :
-            <FontAwesome5 name="images" size={24} color="white" />}
+            <FontAwesome5 name="images" size={24} color={colors['blue'][500]} />}
           </TouchableOpacity>
       
           <TouchableOpacity
-            className="w-44 h-10 justify-center items-center rounded-lg bg-white/25"
+            className="w-44 h-10 justify-center items-center rounded-lg border-2 bg-green-600 border-green-600 shadow-lg shadow-green-600 opacity-100"
             onPress={() => addNotice()}
           >
-            <View className="flex-row">
-              <FontAwesome5 name="check" size={24} color="white" />
-              <TextLarge text="Adicionar" />
+            <View className="flex-row justify-center items-center">
+              <FontAwesome5 name="check" size={18} color={"white"} />
+              <TextLarge className="text-white" text="Adicionar" />
             </View>
           </TouchableOpacity>
         </View>
       </View>
 
-      <TextMedium text="Atuais" />
+      <TextMedium className="text-blue-500" text="Atuais" />
 
       <FlatList
         className="w-full h-64 mb-3 rounded-xl"
         data={list}
         renderItem={({ item }) => {
           return (
-            <View className="w-80 my-2 px-2 py-4 self-center justify-center rounded-xl bg-white/20 ">
+            <View className="w-80 my-2 px-2 py-4 self-center justify-center rounded-xl bg-white shadow-lg shadow-blue-300">
               <View>
-              <TextSmall className="text-base" text="Titulo" />
-              <TextSmall className="text-zinc-300" text={`${item.title}`} />
+              <TextSmall className="text-base text-blue-400" text="Titulo" />
+              <TextSmall className="text-gray-600" text={`${item.title}`} />
               </View>
               <View>
-              <TextSmall className="text-base" text="Descrição" />
+              <TextSmall className="text-base text-blue-400" text="Descrição" />
               <TextSmall
                 text={`Mensagem: ${item.mensagem}`}
-                className="text-zinc-300"
+                className="text-gray-600"
                 numberOfLines={1}
                 ellipsizeMode="tail"
               />
