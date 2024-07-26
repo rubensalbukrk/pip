@@ -102,12 +102,12 @@ export default function SolicitationsUser() {
       </View>
 
       <FlatList
-        className="w-screen h-28"
+        className="w-full h-28"
         data={solicitations}
         horizontal={false}
         renderItem={({ item }) => {
           return (
-            <View className="w-96 px-3 my-2  bg-gray-200 self-center items-start justify-start py-5 rounded-xl shadow-md shadow-black">
+            <View className="w-80 px-3 my-2  bg-gray-200 self-center items-start justify-start py-5 rounded-xl shadow-md shadow-black">
               <Text className="font-default text-md text-gray-800">
                 Serviço: {item.service}
               </Text>

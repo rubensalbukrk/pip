@@ -10,6 +10,7 @@ import Animated, {
   BounceInUp,
   FadeIn,
   FadeOut,
+  ZoomInDown,
 } from "react-native-reanimated";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../contexts/UserContext";
@@ -21,9 +22,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { UserProps } from "../../interfaces/User";
 import { TextExtra, TextXl } from "../../../components/TextLg/Text";
 
+
 export default function Welcome() {
   const { auth, setAuth } = useContext(AuthContext);
-  const { setLogged, setAvatar } = useContext<any>(UserContext);
+  const {logged, setLogged, setAvatar } = useContext<any>(UserContext);
   const { navigate } = useNavigation();
   const [fogos, setFogos] = useState(false);
 
@@ -32,13 +34,14 @@ export default function Welcome() {
   useEffect(() => {
     auth && navigate("HomeApp");
   }, [auth]);
+  
   useEffect(() => {
     if (fogos) {
       animation.current?.play(0, 36);
       setTimeout(() => {
         setFogos(false);
         navigate("Login");
-      }, 1000);
+      }, 200);
     } else {
       animation.current?.play(0, 0);
     }
@@ -118,11 +121,11 @@ export default function Welcome() {
       </Animated.View>
 
       <Animated.View
-        entering={BounceInDown.delay(1700).duration(2000)}
-        exiting={ZoomOutDown.delay(1000)}
+        entering={ZoomInDown.delay(500).duration(400)}
+        exiting={ZoomOutDown.delay(100)}
         layout={Layout}
         style={{ zIndex: 9 }}
-        className="w-100 rounded-full"
+        className="w-full rounded-full justify-center items-center"
       >
         <TouchableOpacity
           style={{ zIndex: 9, width: 80, height: 80 }}
@@ -133,7 +136,7 @@ export default function Welcome() {
             style={{ width: 80, height: 80 }}
             autoPlay={true}
             loop
-            duration={1700}
+            duration={2400}
             source={require("../../../assets/animations/animated-button-next.json")}
           />
         </TouchableOpacity>
@@ -147,7 +150,7 @@ export default function Welcome() {
           width: "100%",
           height: 240,
         }}
-        duration={1600}
+        duration={1000}
         ref={animation}
         source={require("../../../assets/animations/fogos-animation.json")}
       />
