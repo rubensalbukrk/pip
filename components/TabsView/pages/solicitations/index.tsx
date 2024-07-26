@@ -6,16 +6,17 @@ import {
   RefreshControl,
   Alert,
 } from "react-native";
-import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
+import { Feather, FontAwesome, FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
 import { UserContext } from "../../../../src/contexts/UserContext";
 import { useNavigation } from "@react-navigation/native";
 import BackButton from "../../../BackButton";
 import { TextMedium, TextSmall } from "../../../TextLg/Text";
 import firebase from "@react-native-firebase/app";
-
+import colors from "tailwindcss/colors";
 
 export default function Solicitation() {
-  const { users, setAprovados, setSolicitations, solicitations, aprovados } = useContext<any>(UserContext);
+  const { users, setAprovados, setSolicitations, solicitations, aprovados } =
+    useContext<any>(UserContext);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -30,7 +31,7 @@ export default function Solicitation() {
         setSolicitations(dataSolicitations);
       });
 
-      const getAprovados = firebase
+    const getAprovados = firebase
       .firestore()
       .collection("Aprovados")
       .onSnapshot((snapshot) => {
@@ -57,16 +58,25 @@ export default function Solicitation() {
   };
 
   return (
-    <View className="flex-1 w-full justify-around px-4 py-10 bg-zinc-500">
-      <View className="flex-row w-full top-2">
-        <FontAwesome5 name="user-clock" size={40} color="white" />
-        <TextMedium text="Solicitações" />
+    <View className="flex-1 w-full justify-around px-4 py-5 bg-slate-200">
+      <View className="flex-row w-full top-1">
+        <FontAwesome5 name="user-clock" size={40} color={colors["blue"][500]} />
+        <TextMedium className="text-blue-500" text="Solicitações" />
         <View className="h-14 absolute right-0 bottom-1 items-center">
-          <BackButton />
+        <TouchableOpacity
+        style={{
+          width: 70,
+          height: 70,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        onPress={() => navigation.goBack()}
+      >
+        <Feather  name="arrow-left-circle" color={colors['blue'][500]} size={32} />
+      </TouchableOpacity>
         </View>
       </View>
       <FlatList
-
         data={solicitations}
         horizontal={false}
         className="flex-1 mt-4 py-3 w-full h-40"
@@ -75,22 +85,76 @@ export default function Solicitation() {
             (user) => String(user?.cpf) === String(item?.cpf)
           );
           return (
-            <View className="w-full py-2 my-2 px-2 self-center bg-zinc-400/30 rounded-xl">
-              <TextSmall text={`Nome: ${item?.nome}`} />
-              <TextSmall text={`CPF: ${item?.cpf}`} />
-              <TextSmall text={`Serviço: ${item?.service}`} />
-              <TextSmall text={`Pasta: ${item?.pasta}`} />
-              <TextSmall text={`STATUS: ${item?.status}`} />
-              <TextSmall text={`Data: ${item?.date}`} />
+            <View className="w-full py-2 my-2 px-2 self-center bg-white shadow-blue-800 shadow-lg rounded-xl">
+              <View className="w-full flex-row gap-x-2">
+              <TextSmall
+                className="text-blue-400"
+                text='Nome:'
+              /> 
+              <TextSmall
+                className="text-gray-600"
+                text={`${item?.nome}`}
+              /> 
+              </View>
+              <View className="w-full flex-row gap-x-2">
+              <TextSmall
+                className="text-blue-400"
+                text='CPF:'
+              /> 
+              <TextSmall
+                className="text-gray-600"
+                text={`${item?.cpf}`}
+              /> 
+              </View>
+              <View className="w-full flex-row gap-x-2">
+              <TextSmall
+                className="text-blue-400"
+                text='Serviço:'
+              /> 
+              <TextSmall
+                className="text-gray-600"
+                text={`${item?.service}`}
+              /> 
+              </View>
+              <View className="w-full flex-row gap-x-2">
+              <TextSmall
+                className="text-blue-400"
+                text='Pasta:'
+              /> 
+              <TextSmall
+                className="text-gray-600"
+                text={`${item?.pasta}`}
+              /> 
+              </View>
+              <View className="w-full flex-row gap-x-2">
+              <TextSmall
+                className="text-blue-400"
+                text='Status:'
+              /> 
+              <TextSmall
+                className="text-gray-600"
+                text={`${item?.status}`}
+              /> 
+              </View>
+              <View className="w-full flex-row gap-x-2">
+              <TextSmall
+                className="text-blue-400"
+                text='Data:'
+              /> 
+              <TextSmall
+                className="text-gray-600"
+                text={`${item?.date}`}
+              /> 
+              </View>
               <TouchableOpacity
-                className="w-8 h-8 absolute right-1 top-2"
-                onPress={() => removeItem("Solicitations",item?.id)}
+                className="w-8 h-8 absolute right-0 top-3 bg-white shadow-blue-500 shadow-lg"
+                onPress={() => removeItem("Solicitations", item?.id)}
               >
                 <FontAwesome
-                  name="remove"
-                  size={32}
-                  opacity={0.5}
-                  color="white"
+                  name="trash-o"
+                  size={20}
+                  opacity={0.7}
+                  color={colors["red"][600]}
                 />
               </TouchableOpacity>
               <TouchableOpacity
@@ -107,15 +171,13 @@ export default function Solicitation() {
                     pasta: item?.pasta,
                     status: item?.status,
                     date: item?.date,
-
                   })
                 }
               >
-                <FontAwesome5
-                  name="info-circle"
+                <MaterialCommunityIcons
+                  name="account-arrow-right"
                   size={30}
-                  opacity={0.5}
-                  color="white"
+                  color={colors["blue"][500]}
                 />
               </TouchableOpacity>
             </View>
@@ -123,30 +185,44 @@ export default function Solicitation() {
         }}
       />
 
-      <View className="flex-row top-2">
-        <FontAwesome5 name="user-check" size={40} color="white" />
-        <TextMedium text="Aprovações" />
+      <View className="flex-row mt-4">
+        <FontAwesome5 name="user-check" size={40} color={colors["blue"][500]} />
+        <TextMedium className="text-blue-500" text="Aprovações" />
       </View>
       <FlatList
         data={aprovados}
         horizontal={false}
-        className="flex-1 py-3 w-full h-40"
+        className="flex-1 mt-4 py-1 px-2 w-full h-56"
         renderItem={({ item }) => {
           return (
-            <View className="w-full py-2 my-2 px-2 self-center bg-zinc-400/30 rounded-xl">
-              <TextSmall text={`Nome: ${item?.nome}`} />
-              <TextSmall text={`Serviço: ${item?.service}`} />
-              <TextSmall text={`STATUS: ${item?.status}`} />
-              <TextSmall text={`Data: ${item?.date}`} />
+            <View className="w-full flex-row justify-between pl-2 self-center bg-white shadow-blue-800 shadow-lg rounded-xl">
+              <View>
+              <TextSmall
+                className="text-blue-400"
+                text={`Nome: ${item?.nome}`}
+              />
+              <TextSmall
+                className="text-blue-400"
+                text={`Serviço: ${item?.service}`}
+              />
+              <TextSmall
+                className="text-blue-400"
+                text={`STATUS: ${item?.status}`}
+              />
+              <TextSmall
+                className="text-blue-400"
+                text={`Data: ${item?.date}`}
+              />
+              </View>
               <TouchableOpacity
-                className="w-8 h-8 absolute right-1 top-2"
-                onPress={() =>  removeItem("Aprovados",item?.id)}
+                className="w-12 h-full justify-center items-center bg-red-500 shadow-blue-500 shadow-lg rounded-br-lg rounded-tr-lg"
+                onPress={() => removeItem("Aprovados", item?.id)}
               >
                 <FontAwesome
-                  name="remove"
-                  size={32}
-                  opacity={0.5}
-                  color="white"
+                  name="trash-o"
+                  size={22}
+                  opacity={0.7}
+                  color={'white'}
                 />
               </TouchableOpacity>
             </View>
