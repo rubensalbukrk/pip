@@ -4,17 +4,15 @@ import {
   Text,
   TextInput,
   FlatList,
-  TouchableOpacity,
-  Alert,
+  TouchableOpacity
 } from "react-native";
 import { api } from "../../../../src/api/api";
 import {
-  MaterialIcons,
+  MaterialCommunityIcons,
   Feather,
   FontAwesome,
   FontAwesome5,
 } from "@expo/vector-icons";
-import BackButton from "../../../BackButton";
 import * as Progress from "react-native-progress";
 import { TextLarge, TextMedium, TextSmall } from "../../../TextLg/Text";
 import { AuthContext } from "../../../../src/contexts/AuthContext";
@@ -195,10 +193,11 @@ export default function NewNotice() {
               </View>
               <TextSmall text={`Data: ${item.date}`} />
               <TouchableOpacity
-                className="absolute top-1 right-1 w-8 h-8 opacity-80"
+                className="absolute top-0 right-0 w-9 h-9 justify-center items-center bg-red-500 rounded-tr-lg rounded-bl-lg"
                 onPress={() => deleteNotice(item.id)}
               >
-                <MaterialIcons name="delete-forever" size={32} color="white" />
+                <FontAwesome
+                  name="trash-o" size={26} color={'white'} />
               </TouchableOpacity>
             </View>
           );

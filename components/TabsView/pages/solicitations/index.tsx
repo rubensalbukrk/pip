@@ -195,24 +195,48 @@ export default function Solicitation() {
         className="flex-1 mt-4 py-1 px-2 w-full h-56"
         renderItem={({ item }) => {
           return (
-            <View className="w-full flex-row justify-between pl-2 self-center bg-white shadow-blue-800 shadow-lg rounded-xl">
-              <View>
+            <View className="w-full h-24 my-2 flex-row justify-between pl-2 self-center bg-white shadow-blue-800 shadow-lg rounded-xl">
+              <View className="mt-2 pl-2">
+              <View className="w-full flex-row gap-x-2">
               <TextSmall
                 className="text-blue-400"
-                text={`Nome: ${item?.nome}`}
-              />
+                text='Nome:'
+              /> 
+              <TextSmall
+                className="text-gray-600"
+                text={`${item?.nome}`}
+              /> 
+              </View>
+              <View className="w-full flex-row gap-x-2">
               <TextSmall
                 className="text-blue-400"
-                text={`Serviço: ${item?.service}`}
-              />
+                text='Serviço:'
+              /> 
+              <TextSmall
+                className="text-gray-600"
+                text={`${item?.service}`}
+              /> 
+              </View>
+              <View className="w-full flex-row gap-x-2">
               <TextSmall
                 className="text-blue-400"
-                text={`STATUS: ${item?.status}`}
-              />
+                text='Status:'
+              /> 
+              <TextSmall
+                className="text-gray-700"
+                text={`${item?.status}`}
+              /> 
+              </View>
+              <View className="w-full flex-row gap-x-2">
               <TextSmall
                 className="text-blue-400"
-                text={`Data: ${item?.date}`}
-              />
+                text='Data:'
+              /> 
+              <TextSmall
+                className="text-gray-600"
+                text={`${item?.date}`}
+              /> 
+              </View>
               </View>
               <TouchableOpacity
                 className="w-12 h-full justify-center items-center bg-red-500 shadow-blue-500 shadow-lg rounded-br-lg rounded-tr-lg"

@@ -62,10 +62,7 @@ export const HomeApp = () => {
           >
             <UserAvatar x={124} y={124} />
           </TouchableOpacity>
-          <TextSmall
-            text={`Olá ${firstName()}`}
-            className="absolute top-12 right-48 text-lg"
-          />
+         
           <View className="w-full bottom-3 right-2 h-38 justify-center">
             <TextMedium
               className="absolute top-1 text-3xl right-1"
@@ -83,7 +80,7 @@ export const HomeApp = () => {
       <ScrollView
         style={{
           width: "100%",
-          minHeight: 240,
+          minHeight: 270,
           backgroundColor: "transparent",
         }}
         onScrollBeginDrag={() => setRefreshing(true)}
