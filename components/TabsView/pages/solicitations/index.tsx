@@ -239,7 +239,7 @@ export default function Solicitation() {
               </View>
               </View>
               <TouchableOpacity
-                className="w-12 h-full justify-center items-center bg-red-500 shadow-blue-500 shadow-lg rounded-br-lg rounded-tr-lg"
+                className="w-12 h-full justify-center items-center bg-red-500 rounded-br-lg rounded-tr-lg"
                 onPress={() => removeItem("Aprovados", item?.id)}
               >
                 <FontAwesome
