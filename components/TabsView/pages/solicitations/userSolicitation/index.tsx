@@ -11,10 +11,11 @@ import BackButton from "../../../../BackButton";
 import InputInfoUser from "../../../../UserLayout/inputUser";
 import MyParents from "../../../../UserLayout/userParents";
 import { FontAwesome } from "@expo/vector-icons";
-import { TextLarge } from "../../../../TextLg/Text";
+import { TextLarge, TextSmall } from "../../../../TextLg/Text";
 import { AuthContext } from "../../../../../src/contexts/AuthContext";
 import firestore from "@react-native-firebase/firestore";
 import { Button } from "../../../../ButtonBlue/ButtonBlue";
+import colors from "tailwindcss/colors";
 
 export default function SolicitationInfoUser({ route }) {
   const { token } = useContext(AuthContext);
@@ -92,9 +93,9 @@ export default function SolicitationInfoUser({ route }) {
   }
 
   return (
-    <View className="w-full h-full bg-zinc-500">
+    <View className="w-full h-full bg-slate-50">
       {showWebView && <WebPage />}
-      <View className="flex-row bg-zinc-500 mt-8 px-2 pt-4 my-5 justify-between items-center">
+      <View className="flex-row bg-blue-500 px-2 rounded-bl-lg rounded-br-lg shadow-xl shadow-black justify-between items-center">
         <TextLarge text="Informações de Solicitação" />
         <BackButton />
       </View>
@@ -118,32 +119,35 @@ export default function SolicitationInfoUser({ route }) {
             infoLabel="Data de entrada"
             infoValue={route?.params?.date}
           />
-          <TextLarge text="Status" />
+          <TextLarge text="Status" className="text-gray-700" />
           <View className="flex-row w-full gap-3 justify-center items-center">
             <TextInput
-              className="w-72 px-2 bg-zinc-500 rounded-lg"
+              className="w-72 px-2 bg-gray-50/40 rounded-lg"
               value={status}
               onChangeText={(text) => setStatus(text)}
               placeholderTextColor={"#fff"}
               placeholder={route?.params?.status}
             />
             <TouchableOpacity onPress={() => handleUpdateStatus()}>
-              <FontAwesome name="edit" size={28} color="white" />
+              <FontAwesome name="edit" size={28} color={colors.blue[500]} />
             </TouchableOpacity>
           </View>
 
-          <TextLarge text="Anexos" />
-          <View className="flex-row items-center w-full h-22">
-            {docs?.map((item, index) => {
+          <TextLarge text="Anexos" className="text-gray-700 mt-2" />
+          <View className="flex-row items-center w-full h-22 mt-1">
+            {docs > 0 ? docs?.map((item, index) => {
               return (
                 <Button
                   key={index}
                   title={`${index + 1}`}
                   onPress={() => openWebView(item)}
-                  className="w-12 mx-1"
+                  className="w-12 mx-1 bg-blue-800 rounded-lg"
                 />
               );
-            })}
+            })
+          :
+            <TextSmall title="Não ah anexos" className="text-gray-500" />
+          }
           </View>
 
           <InputInfoUser
@@ -175,13 +179,16 @@ export default function SolicitationInfoUser({ route }) {
           </ScrollView>
         </View>
         <View className="flex-row w-full self-center gap-x-12 mt-3 my-4 items-center justify-center">
-          <TouchableOpacity onPress={() => handleConfirmSolicitation()}>
-            <FontAwesome name="check-circle" size={72} color="white" />
+          <TouchableOpacity 
+          className="items-center justify-center rounded-full shadow-lg shadow-green-400"
+          onPress={() => handleConfirmSolicitation()}>
+            <FontAwesome name="check-circle" size={72} color={colors.green[400]} />
           </TouchableOpacity>
           <TouchableOpacity
+          className="items-center justify-center rounded-full shadow-lg shadow-red-400"
             onPress={() => handleCancelSolicitation(route?.params?.id)}
           >
-            <FontAwesome name="times-circle" size={72} color="white" />
+            <FontAwesome name="times-circle" size={72} color={colors.red[500]} />
           </TouchableOpacity>
         </View>
       </ScrollView>
