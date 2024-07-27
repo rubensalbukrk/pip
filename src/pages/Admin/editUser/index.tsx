@@ -10,17 +10,17 @@ import {
   ScrollView,
   Alert,
 } from "react-native";
-import BackButton from "../../../../components/BackButton";
-import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-import { TextLarge, TextSmall } from "../../../../components/TextLg/Text";
-import { ParentsProps } from "../../../interfaces/Parents";
-import { AuthContext } from "../../../contexts/AuthContext";
-import { citys, grauParents } from "../../../stacks/Cadastro";
 import colors from "tailwindcss/colors";
-import SelectDropdown from "react-native-select-dropdown";
 import { TextInputMask } from "react-native-masked-text";
 import firestore from "@react-native-firebase/firestore";
+import { useNavigation } from "@react-navigation/native";
+import SelectDropdown from "react-native-select-dropdown";
+import { ParentsProps } from "../../../interfaces/Parents";
+import BackButton from "../../../../components/BackButton";
+import { AuthContext } from "../../../contexts/AuthContext";
+import { citys, grauParents } from "../../../stacks/Cadastro";
+import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
+import { TextLarge, TextSmall } from "../../../../components/TextLg/Text";
 
 export default function EditUser({ route }) {
   const { token } = useContext<any>(AuthContext);
@@ -61,7 +61,7 @@ export default function EditUser({ route }) {
     route?.params?.isCoordOptometria || null
   );
   const [nome, setNome] = useState<string>(route?.params?.nome);
-  const [avatar, setAvatar] = useState<string>(route?.params?.avatar);
+  const [avatar] = useState<string>(route?.params?.avatar);
   const [idade, setIdade] = useState<string>(route?.params?.idade);
   const [address, setAddress] = useState<string>(route?.params?.address);
   const [cpf, setCpf] = useState<string>(route?.params?.cpf);
@@ -74,8 +74,8 @@ export default function EditUser({ route }) {
   const [email, setEmail] = useState<string>(route?.params?.email);
   const [opnion, setOpnion] = useState<string>(route?.params?.question2);
   const [pass, setPass] = useState<string>(route?.params?.password);
-  const navigation = useNavigation();
 
+  const navigation = useNavigation();
 
   const atualizarUsuarioPorCPF = async (cpf: string) => {
     try {
@@ -128,51 +128,63 @@ export default function EditUser({ route }) {
   const UserParents = () => {
     try {
       return (
-        <View className="w-full">
+        <View className="w-full bg-slate-50 ">
           {parents &&
             parents.map((item, index) => {
               return (
                 <View
                   key={index}
-                  className="w-80 py-3 px-3 my-2 rounded-2xl bg-white/20"
+                  className="w-80 py-3 px-3 my-2 rounded-2xl bg-white  shadow-xl shadow-black overflow-hidden"
                 >
-                  <TextLarge text={`Parentesco: ${item.parentesco}`} />
-                  <TextLarge text={`Nome: ${item.nome}`} />
-                  <TextLarge text={`CPF: ${item.cpf}`} />
-                  <TextLarge text={`Idade: ${item.idade}`} />
+                  <View>
+                  <TextLarge text="Parentesco: " className="text-blue-400" />
+                  <TextLarge text={`${item.parentesco}`}  className="text-gray-600" />
+                  </View>
+                  <View>
+                  <TextLarge text="nome: " className="text-blue-400" />
+                  <TextLarge text={`${item.nome}`}  className="text-gray-600" />
+                  </View>
+                  <View>
+                  <TextLarge text="CPF: " className="text-blue-400" />
+                  <TextLarge text={`${item.cpf}`}  className="text-gray-600" />
+                  </View>
+                  <View>
+                  <TextLarge text="Idade: " className="text-blue-400" />
+                  <TextLarge text={`${item.idade}`}  className="text-gray-600" />
+                  </View>
                   <View className="w-full flex-row gap-x-2 items-center">
-                    <TextLarge text={"Autista"} />
+                    <TextLarge text={"Autista"} className="text-blue-400" />
                     {item.isAutist ? (
                       <MaterialCommunityIcons
                         name="check-circle"
                         size={16}
-                        color={"green"}
+                        color={colors.green[500]}
                       />
                     ) : (
                       <MaterialCommunityIcons
                         name="close-circle"
                         size={16}
-                        color={"white"}
+                        color={colors.gray[300]}
                       />
                     )}
                   </View>
                   <View className="w-full flex-row gap-x-2 items-center">
-                    <TextLarge text={"PCD"} />
+                    <TextLarge text={"PCD"} className="text-blue-400" />
                     {item.isPcd ? (
                       <MaterialCommunityIcons
                         name="check-circle"
                         size={16}
-                        color={"green"}
+                        color={colors.green[400]}
                       />
                     ) : (
                       <MaterialCommunityIcons
                         name="close-circle"
                         size={16}
-                        color={"white"}
+                        color={colors.gray[300]}
                       />
                     )}
                   </View>
-
+                
                   <TouchableOpacity
                     className="w-10 h-10 opacity-60 absolute bottom-0 right-0"
                     onPress={() => {
@@ -257,25 +269,22 @@ export default function EditUser({ route }) {
   };
 
   return (
-    <View className="flex-1 w-full h-full items-center justify-center bg-zinc-500">
-      <View className="w-full h-100 items-center justify-center rounded-lg">
-        <View className="absolute top-10 right-1">
-          <BackButton />
-        </View>
-
-        <Text className="w-full font-default px-3 text-start mt-14 text-2xl text-white">
+    <View className="flex-1 w-full h-full items-center justify-center bg-white">
+      <View className="w-full h-20 bg-blue-500 shadow-lg shadow-black flex-row items-center justify-between rounded-bl-lg rounded-br-lg">
+        <Text style={{fontFamily: 'Doppio One'}} className="text-2xl px-4 text-white">
           ALTERAR DADOS
         </Text>
+        <BackButton />
       </View>
 
-      <ScrollView className="flex-1 w-full">
+      <ScrollView className="flex-1 mt-3 w-full bg-white">
         <View className="w-full px-2 justify-center items-center py-10">
           <View className="flex-row w-full rounded-lg items-center">
-            <Text className="font-default text-start px-2 mr-3 text-white text-md">
+            <Text className="font-default text-start px-2 mr-3 text-blue-400 text-md">
               Selecione o tipo do usuário
             </Text>
             <View className="w-18 items-center">
-              <TextSmall text="Estagiário" className="text-xs mb-2" /> 
+              <TextSmall text="Estagiário" className={estagiario ? "text-xs mb-2 text-blue-400" : "text-xs mb-2 text-gray-600"} /> 
               <Switch
                 style={{ width: 30, height: 20, alignSelf: "center" }}
                 onValueChange={() => {
@@ -283,13 +292,13 @@ export default function EditUser({ route }) {
                 }}
                 value={estagiario}
               />
-              <TextSmall text="Voluntário" className="text-xs mb-2" />
+              <TextSmall text="Voluntário" className={voluntario ? "text-xs mb-2 text-blue-400" : "text-xs mb-2 text-gray-600"} />
               <Switch
                 style={{ width: 30, height: 20, alignSelf: "center" }}
                 value={voluntario}
                 onValueChange={() => toggleVoluntario()}
               />
-              <TextSmall text="Empresa" className="text-xs mb-2" />
+              <TextSmall text="Empresa" className={isBusiness ? "text-xs mb-2 text-blue-400" : "text-xs mb-2 text-gray-600"} />
               <Switch
                 style={{ width: 30, height: 20, alignSelf: "center" }}
                 value={isBusiness}
@@ -298,17 +307,17 @@ export default function EditUser({ route }) {
             </View>
           </View>
 
-          <Text className="font-default w-full mt-7 text-start px-4 text-white text-2xl">
+          <Text className="font-default w-full mt-7 text-start ml-2 text-blue-500 text-2xl">
             Coordenação
           </Text>
-          <Text className="font-default w-full text-start px-3 text-white/50 text-sm">
+          <Text className="font-default w-full text-start px-3 text-gray-600 text-sm">
             Escolha a pasta pela qual ficará responsável
           </Text>
 
-          <View className="w-96 px-5 py-2 my-2 rounded-2xl items-start bg-zinc-700/10">
+          <View className="w-96 px-5 py-2 my-2 rounded-2xl items-start bg-white">
             <View className="flex-row w-full flex-wrap gap-y-3 gap-x-4">
               <View className="">
-                <Text className="font-default text-white text-xs mb-2">
+                <Text className="font-default text-gray-500 text-xs mb-2">
                   Cidadania
                 </Text>
                 <Switch
@@ -318,7 +327,7 @@ export default function EditUser({ route }) {
                 />
               </View>
               <View className="items-center">
-                <Text className="font-default text-white text-xs mb-2">
+                <Text className="font-default text-gray-500 text-xs mb-2">
                   Autistas
                 </Text>
                 <Switch
@@ -329,7 +338,7 @@ export default function EditUser({ route }) {
               </View>
 
               <View className="items-center">
-                <Text className="font-default text-white text-xs mb-2">
+                <Text className="font-default text-gray-500 text-xs mb-2">
                   Mulher
                 </Text>
                 <Switch
@@ -339,7 +348,7 @@ export default function EditUser({ route }) {
                 />
               </View>
               <View className="items-center">
-                <Text className="font-default text-white text-xs mb-2">
+                <Text className="font-default text-gray-500 text-xs mb-2">
                   Saúde
                 </Text>
                 <Switch
@@ -349,7 +358,7 @@ export default function EditUser({ route }) {
                 />
               </View>
               <View className="items-center">
-                <Text className="font-default text-white text-xs mb-2">
+                <Text className="font-default text-gray-500 text-xs mb-2">
                   Protagonista
                 </Text>
                 <Switch
@@ -360,7 +369,7 @@ export default function EditUser({ route }) {
               </View>
 
               <View className="items-center">
-                <Text className="font-default text-white text-xs mb-2">
+                <Text className="font-default text-gray-500 text-xs mb-2">
                   Passe Livre
                 </Text>
 
@@ -372,7 +381,7 @@ export default function EditUser({ route }) {
               </View>
 
               <View className="items-center">
-                <Text className="font-default text-white text-xs mb-2">
+                <Text className="font-default text-gray-500 text-xs mb-2">
                   Alimentar
                 </Text>
                 <Switch
@@ -383,7 +392,7 @@ export default function EditUser({ route }) {
               </View>
 
               <View className="items-center">
-                <Text className="font-default text-white text-xs mb-2">
+                <Text className="font-default text-gray-500 text-xs mb-2">
                   Optometria
                 </Text>
                 <Switch
@@ -393,7 +402,7 @@ export default function EditUser({ route }) {
                 />
               </View>
               <View className="items-center">
-                <Text className="font-default text-white text-xs mb-2">
+                <Text className="font-default text-gray-500 text-xs mb-2">
                   Cursos
                 </Text>
                 <Switch
@@ -404,52 +413,55 @@ export default function EditUser({ route }) {
               </View>
             </View>
           </View>
-          <Text className="font-default w-full mt-7 text-start px-4 text-white text-2xl">
+          <Text className="font-default w-full mt-7 text-start px-4 text-blue-500 text-2xl">
             Informações do usuário
           </Text>
-          <Text className="font-default w-full px-3 text-md text-white/50">
+          <Text className="font-default w-full px-3 text-md text-gray-600">
             Altere as informações do usuário
           </Text>
 
-          <View className="w-96 px-5 my-2 bg-zinc-700/10 rounded-xl">
-            <Text className="font-default text-lg text-white/60">Nome</Text>
+          <View className="w-96 px-5 my-2 bg-white rounded-xl">
+            <Text className="font-default text-lg text-blue-400">Nome</Text>
             <TextInput
-              className="font-default text-lg px-2 mb-2 rounded-lg text-white bg-zinc-400/20"
+              className="font-default text-lg px-2 mb-2 rounded-lg text-gray-600 bg-gray-50/40"
               value={nome}
               onChangeText={(text) => setNome(text)}
               placeholder={`${nome ? nome : ""}`}
-              placeholderTextColor="#fff"
+              placeholderTextColor={colors.gray[500]}
             />
 
-            <Text className="font-default text-lg text-white/60">Idade</Text>
+            <Text className="font-default text-lg text-blue-400">Idade</Text>
             <TextInput
-              className="font-default w-10 text-lg px-2 mb-2 rounded-lg text-white bg-zinc-400/20"
+              className="font-default w-10 text-lg px-2 mb-2 rounded-lg text-gray-600 bg-gray-50/40"
               value={idade.toString()}
               onChangeText={(text) => setIdade(text)}
               placeholder={`${idade ? idade : ""}`}
-              placeholderTextColor="#fff"
+              placeholderTextColor={colors.gray[500]}
             />
 
-            <Text className="font-default text-lg text-white/60">Endereço</Text>
+            <Text className="font-default text-lg text-blue-400">Endereço</Text>
             <TextInput
-              className="font-default w-68 text-lg px-2 mb-2 rounded-lg text-white bg-zinc-400/20"
+              className="font-default w-68 text-lg px-2 mb-2 rounded-lg text-gray-600 bg-gray-50/40"
               value={address}
               onChangeText={(text) => setAddress(text)}
               placeholder={`${address ? address : ""}`}
-              placeholderTextColor="#fff"
+              placeholderTextColor={colors.gray[500]}
             />
 
-            <Text className="font-default text-lg text-white/60">Bairro</Text>
+            <Text className="font-default text-lg text-blue-400">Bairro</Text>
             <SelectDropdown
+            buttonStyle={{
+              borderRadius: 10,
+              backgroundColor: `${colors.gray[200]}`,
+            }}
+            buttonTextStyle={{color: colors.gray[400]}}
+            rowTextStyle={{color: '#000'}}
               defaultButtonText="Selecionar"
               dropdownIconPosition="right"
+              
               renderDropdownIcon={() => (
-                <Feather name="arrow-down" size={28} color="black"></Feather>
+                <Feather name="arrow-down" size={22} color={colors.blue[400]} />
               )}
-              buttonStyle={{
-                borderRadius: 30,
-                backgroundColor: `${colors.blue[200]}`,
-              }}
               data={citys}
               defaultValue={bairro}
               onSelect={(selectedItem, index) => {
@@ -462,85 +474,88 @@ export default function EditUser({ route }) {
                 return item;
               }}
             />
-            <Text className="font-default text-lg text-white/60">NIS</Text>
+            <Text className="font-default text-lg text-blue-400">NIS</Text>
             <TextInput
-              className="font-default w-36 text-lg px-2 mb-2 rounded-lg text-white bg-zinc-400/20"
+              className="font-default w-36 text-lg px-2 mb-2 rounded-lg text-gray-600 bg-gray-50/40"
               value={nis}
               onChangeText={(text) => setNis(text)}
               placeholder={`${nis ? nis : ""}`}
-              placeholderTextColor="#fff"
+              placeholderTextColor={colors.gray[500]}
             />
 
-            <Text className="font-default text-lg text-white/60">CPF</Text>
+            <Text className="font-default text-lg text-blue-400">CPF</Text>
             <TextInputMask
-              className="w-56 h-10 px-2 font-default text-start text-lg rounded-2xl bg-blue-500/10"
+              className="w-56 h-10 px-2 font-default text-start text-gray-600 text-lg rounded-2xl bg-gray-50/40"
               type="cpf"
+              value={cpf}
               selectionColor={"#9f9f9f"}
-              placeholderTextColor={"#bdbdbd"}
+              placeholderTextColor={colors.gray[500]}
               placeholder={`${cpf ? cpf : "000.000.000-00"}`}
               onChangeText={(text) => setCpf(text)}
             />
 
-            <Text className="font-default text-lg text-white/60">Contato</Text>
+            <Text className="font-default text-lg text-blue-400">Contato</Text>
             <TextInput
-              className="font-default w-36 text-lg px-2 mb-2 rounded-lg text-white bg-zinc-400/20"
+              className="font-default w-36 text-lg px-2 mb-2 rounded-lg text-gray-600 bg-gray-50/40"
               value={phone}
               onChangeText={(text) => setPhone(text)}
               placeholder={`${phone ? phone : ""}`}
-              placeholderTextColor="#fff"
+              placeholderTextColor={colors.gray[500]}
             />
 
-            <Text className="font-default text-lg text-white/60">Email</Text>
+            <Text className="font-default text-lg text-blue-400">Email</Text>
             <TextInput
-              className="font-default text-lg px-2 mb-2 rounded-lg text-white bg-zinc-400/20"
+              className="font-default text-lg px-2 mb-2 rounded-lg text-gray-600 bg-gray-50/40"
               value={email}
               onChangeText={(text) => setEmail(text)}
               placeholder={`${email ? email : ""}`}
-              placeholderTextColor="#000"
+              placeholderTextColor={colors.gray[500]}
             />
 
-            <Text className="font-default text-lg text-white/60">Senha</Text>
+            <Text className="font-default text-lg text-blue-400">Senha</Text>
             <TextInput
-              className="font-default w-32 text-lg px-2 mb-2 rounded-lg text-white bg-zinc-400/20"
+              className="font-default w-32 text-lg px-2 mb-2 rounded-lg text-gray-600 bg-gray-50/40"
               value={pass}
               onChangeText={(text) => setPass(text)}
               placeholder={`${pass ? pass : ""}`}
-              placeholderTextColor="#000"
+              placeholderTextColor={colors.gray[500]}
             />
 
-            <Text className="font-default text-lg text-white/60">Opinião</Text>
+            <Text className="font-default text-lg text-blue-400">Opinião</Text>
             <TextInput
-              className="font-default w-full text-lg px-2 mb-2 rounded-lg text-white bg-zinc-400/20"
+              className="font-default w-full text-lg px-2 mb-2 rounded-lg text-gray-600 bg-gray-50/40"
               value={opnion}
               onChangeText={(text) => setOpnion(text)}
               placeholder={`${opnion ? opnion : ""}`}
-              placeholderTextColor="#000"
+              placeholderTextColor={colors.gray[500]}
             />
 
             <View className="w-full py-2">
               <View className="my-3">
-                <Text className="font-default text-lg text-white/60">
+                <Text className="font-default text-lg text-blue-400">
                   Parentes
                 </Text>
-                <Text className="font-default text-white text-lg">
-                  {setParents ? setParents.length : "Não tem"}
+                <Text className="font-default text-gray-600 text-lg">
+                  {parents ? parents.length : "Sem registros"}
                 </Text>
               </View>
               {setParents?.length === 0 ? "" : <UserParents />}
             </View>
 
-            <View className="w-64 rounded-xl my-5 py-3 px-2 bg-white/20">
-              <TextLarge text="Parentesco" />
+            <View className="w-64 rounded-xl my-5 py-3 px-2 bg-slate-100 shadow-black shadow-lg">
+              <TextLarge text="Parentesco" className="text-blue-400" />
               <SelectDropdown
+              buttonStyle={{
+                borderRadius: 10,
+                backgroundColor: `${colors.gray[200]}`,
+              }}
+              buttonTextStyle={{color: colors.gray[400]}}
                 defaultButtonText="Selecionar"
                 dropdownIconPosition="right"
                 renderDropdownIcon={() => (
-                  <Feather name="arrow-down" size={28} color="black" />
+                  <Feather name="arrow-down" size={28} color={colors.blue[400]} />
                 )}
-                buttonStyle={{
-                  borderRadius: 30,
-                  backgroundColor: `${colors.blue[200]}`,
-                }}
+              
                 data={grauParents}
                 onSelect={(selectedItem, index) => {
                   setDataParents({ ...dataParents, parentesco: selectedItem });
@@ -552,20 +567,21 @@ export default function EditUser({ route }) {
                   return item;
                 }}
               />
-              <TextLarge text="Nome" />
+              <TextLarge text="Nome" className="text-blue-400" />
               <TextInput
-                className="w-full h-10 px-2 mb-1 font-default text-start text-white text-lg rounded-2xl bg-white/10 border-white/20"
+                className="w-full h-10 px-2 mb-1 font-default text-start text-gray-800 text-lg rounded-2xl bg-gray-50/40 border-white/20"
                 onChangeText={(value) =>
                   setDataParents({ ...dataParents, nome: value })
                 }
+                
               />
 
-              <TextLarge text="CPF" />
+              <TextLarge text="CPF" className="text-blue-400" />
               <TextInputMask
-                className="w-56 h-10 px-2 font-default text-start text-lg rounded-2xl bg-blue-500/10"
+                className="w-56 h-10 px-2 font-default text-start text-lg rounded-2xl text-gray-800 bg-gray-50/40"
                 type="cpf"
                 selectionColor={"#9f9f9f"}
-                placeholderTextColor={"#bdbdbd"}
+                placeholderTextColor={colors.gray[500]}
                 placeholder="000.000.000-00"
                 onChangeText={(value) =>
                   setDataParents({ ...dataParents, cpf: value })
@@ -574,9 +590,9 @@ export default function EditUser({ route }) {
 
               <View className="flex-row w-full items-center justify-between">
                 <View className="mb-3">
-                  <TextLarge text="Idade" />
+                  <TextLarge text="Idade" className="text-blue-400" />
                   <TextInput
-                    className="w-14 h-10 px-2 font-default text-center text-white text-lg rounded-2xl bg-white/10 border-white/20"
+                    className="w-14 h-10 px-2 font-default text-center text-gray-800 text-lg rounded-2xl bg-gray-50/40"
                     keyboardType="number-pad"
                     onChangeText={(value) =>
                       setDataParents({ ...dataParents, idade: value })
@@ -584,16 +600,18 @@ export default function EditUser({ route }) {
                   />
                 </View>
                 <View className="items-center px-2">
-                  <TextLarge text="Autista" />
+                  <TextLarge text="Autista" className="text-blue-400" />
                   <Switch
                     value={dataParents?.isAutist}
-                    trackColor={{ false: "#9f9f9f", true: "#767590" }}
+                    trackColor={{ false: "#9f9f9f", true: "#37a5ff" }}
+                    thumbColor={colors.blue[100]}
                     onValueChange={toggleParentAutist}
                   />
-                  <TextLarge text="PCD" />
+                  <TextLarge text="PCD" className="text-blue-400" />
                   <Switch
                     value={dataParents?.isPcd}
-                    trackColor={{ false: "#9f9f9f", true: "#767590" }}
+                    trackColor={{ false: "#9f9f9f", true: "#37a5ff" }}
+                    thumbColor={colors.blue[100]}
                     onValueChange={toggleParentsPcd}
                   />
                 </View>
@@ -606,14 +624,15 @@ export default function EditUser({ route }) {
               </TouchableOpacity>
             </View>
           </View>
-
-          <TouchableOpacity
-            className="flex-row w-48 h-20 mx-5 my-5 justify-evenly items-center bg-zinc-700 rounded-lg"
-            onPress={() => atualizarUsuarioPorCPF(cpf)}
-          >
-            <Feather name="save" size={32} color={"white"} />
-            <Text className="font-default text-white text-2xl">SALVAR</Text>
-          </TouchableOpacity>
+          <View className="flex-row w-48 h-14 mx-5 my-1 justify-evenly items-center bg-blue-500 shadow-xl shadow-blue-700 rounded-lg">
+            <TouchableOpacity
+              className="flex-row w-48 h-14 mx-5 my-1 justify-evenly items-center bg-blue-500 shadow-xl shadow-blue-700 rounded-lg"
+              onPress={() => atualizarUsuarioPorCPF(cpf)}
+            >
+              <Feather name="save" size={28} color={"white"} />
+              <Text className="font-default text-white text-2xl">SALVAR</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </View>

@@ -44,9 +44,7 @@ export const Login = () => {
   const [cpf, setCpf] = useState(String);
   const [password, setPassword] = useState(String);
   const { navigate } = useNavigation();
-
-
-
+  
   useEffect(() => {
     if (auth) {
       navigate("HomeApp");
