@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text } from "react-native";
 import { TextLarge } from "../TextLg/Text";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import colors from "tailwindcss/colors";
 
 export default function MyParents(props) {
   return (
@@ -39,13 +40,13 @@ export default function MyParents(props) {
           <MaterialCommunityIcons
             name="check-circle"
             size={14}
-            color={"green"}
+            color={colors.green[400]}
           />
         ) : (
           <MaterialCommunityIcons
             name="close-circle"
             size={14}
-            color={"gray"}
+            color={colors.red[400]}
           />
         )}
         <TextLarge text={"PCD"} className="px-2 text-xs text-zinc-700/70" />
@@ -53,13 +54,13 @@ export default function MyParents(props) {
           <MaterialCommunityIcons
             name="check-circle"
             size={14}
-            color={"green"}
+            color={colors.green[400]}
           />
         ) : (
           <MaterialCommunityIcons
             name="close-circle"
             size={14}
-            color={"gray"}
+            color={colors.red[400]}
           />
         )}
       </View>

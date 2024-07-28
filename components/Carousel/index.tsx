@@ -24,7 +24,8 @@ export const CarouselHome = () => {
  }, []);
 
   return (
-    <View style={{zIndex: 99}} className='w-full items-center'>
+    <View style={{zIndex: 20}} className='w-full h-64 items-center'>
+
       <Carousel
         loop
         width={width}
@@ -35,7 +36,7 @@ export const CarouselHome = () => {
         scrollAnimationDuration={2000}
         autoPlayInterval={4000}
         renderItem={({ index, item }) => (
-          <View className='w-80 h-48 self-center'>
+          <View className='w-80 h-44 self-center'>
               <TouchableOpacity
               className='w-80 items-center justify-center shadow-md shadow-black bg-blue-600 rounded-lg'
               onPress={() => navigation.navigate('ViewNotice', {

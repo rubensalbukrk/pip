@@ -27,6 +27,8 @@ import Animated, {
   ZoomIn,
 } from "react-native-reanimated";
 import firestore from "@react-native-firebase/firestore";
+import { height } from "../utils/dimensions";
+import colors from "tailwindcss/colors";
 
 export const HomeApp = () => {
   const { logged, solicitations, refreshing, setRefreshing } =
@@ -94,8 +96,8 @@ export const HomeApp = () => {
         }
       >
         <View className="left-4 my-5 flex-row items-center">
-        <Feather name="info" color="black" size={32} />
-        <TextLarge text="Notícias" className="text-2xl text-zinc-600" />
+        <Feather name="info" color={colors.blue[500]} size={32} />
+        <TextLarge text="Notícias" className="text-2xl text-blue-500" />
         </View>
         <CarouselHome />
       </ScrollView>
@@ -103,49 +105,52 @@ export const HomeApp = () => {
       <Animated.View
         entering={ZoomIn.delay(1400).duration(1000)}
         style={{ zIndex: 20 }}
-        className="absolute bottom-2 flex-row w-full px-3 h-14 rounded-lg justify-between"
+        className="absolute bottom-0 flex-row w-full px-3 h-20 items-center
+        bg-blue-400 rounded-tl-lg rounded-tr-lg border-t-2 border-slate-400/20 
+        "
       >
-        <TouchableOpacity className="w-16 h-10 items-center justify-center">
-          <Ionicons color={"white"} size={38} name={"home"} />
-          <Text className="font-default text-white text-center text-xs">
-            Inicio
-          </Text>
-        </TouchableOpacity>
-
         <TouchableOpacity
-          className="w-17 h-10 items-center justify-center"
+          className="w-20 h-10 border-r-2 border-blue-300/30 items-center justify-center"
           onPress={() => navigate("Sobre")}
         >
-          <FontAwesome color={"white"} size={38} name="group" />
-          <Text className="font-default text-white text-center text-xs">
+          <FontAwesome color={colors.slate[100]} size={38} name="group" />
+          <Text className="font-default text-slate-200 text-center text-xs">
             Nós
           </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          className="w-16 h-10 items-center justify-center"
+          className="w-20 h-10 border-r-2 border-blue-300/30 items-center justify-center"
           onPress={() => navigate("Services")}
         >
           <MaterialCommunityIcons
-            color={"white"}
+            color={colors.slate[100]}
             size={40}
             name={"hand-heart"}
           />
 
-          <Text className="font-default text-white text-center text-xs">
+          <Text className="font-default text-slate-200 text-center text-xs">
             Serviços
           </Text>
         </TouchableOpacity>
 
+
+        <TouchableOpacity className="w-20 h-10 items-center justify-center border-r-2 border-blue-300/30 ">
+          <FontAwesome color={colors.slate[100]} size={38} name={"user"} />
+          <Text className="font-default text-slate-200 text-center text-xs">
+            Eu
+          </Text>
+        </TouchableOpacity>
+
         <TouchableOpacity
-          className="w-20 h-10 right-2 items-center justify-center"
+          className="w-20 h-10 left-6 items-center justify-center  self-center"
           onPress={() => navigate("SolicitationUser")}
         >
           <View
             style={{ zIndex: 10 }}
             className="absolute w-4 h-4 items-center justify-center bottom-2 right-4 mb-2 bg-red-600/100 rounded-full"
           >
-            <Text className="font-default text-center self-center text-white text-xs">
+            <Text className="font-default text-center self-center text-slate-200 text-xs">
               {countSolicitations ? countSolicitations : "0"}
             </Text>
           </View>
@@ -156,19 +161,12 @@ export const HomeApp = () => {
             style={{ width: 45, marginBottom: 10, height: 70 }}
             source={require("../../assets/animations/notify2.json")}
           />
-          <Text className="absolute top-8 font-default text-white text-center text-xs">
+          <Text className="absolute top-8 font-default text-slate-200 text-center text-xs">
             Solicitações
           </Text>
         </TouchableOpacity>
-      </Animated.View>
 
-      <Animated.View style={{ zIndex: 0 }} entering={FadeInDown.duration(2000)}>
-        <LottieView
-          autoPlay={true}
-          loop
-          style={{ zIndex: 0, width: "100%" }}
-          source={require("../../assets/animations/teste/Animation - WAVE BLUE 2 TESTA HOJE.json")}
-        />
+
       </Animated.View>
 
       <StatusBar

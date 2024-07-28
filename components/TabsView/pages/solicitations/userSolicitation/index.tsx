@@ -162,7 +162,7 @@ export default function SolicitationInfoUser({ route }) {
             {parents ? (
               parents?.map((item) => {
                 return (
-                  <View key={item.cpf} className="mx-2">
+                  <View key={item.cpf} className="mx-2 mb-2">
                     <MyParents
                       id={item.id}
                       nome={item?.nome}
