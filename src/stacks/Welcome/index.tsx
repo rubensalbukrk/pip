@@ -11,6 +11,7 @@ import Animated, {
   FadeIn,
   FadeOut,
   ZoomInDown,
+  ZoomInUp,
 } from "react-native-reanimated";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../contexts/UserContext";
@@ -75,17 +76,11 @@ export default function Welcome() {
   return (
     <View className="flex-1 w-full items-center bg-white">
       <BackgroundWave
-        style={{ position: "absolute" }}
+        style={{ zIndex: 0, position: "absolute" }}
         width={width}
         height={height + 50}
       />
-      <Animated.View
-        entering={FadeInUp.delay(1000).duration(2000)}
-        style={{ zIndex: 4 }}
-        className="w-full mt-8"
-      >
-
-      </Animated.View>
+  
       <Animated.Image
       entering={BounceInUp.duration(2000)}
         alt="pip-logo"
@@ -103,7 +98,7 @@ export default function Welcome() {
       </Animated.Text>
       <Animated.View
         entering={FadeInLeft.delay(1800).duration(2000)}
-        style={{ zIndex: 4 }}
+        style={{ zIndex: 10 }}
         className="w-full ml-4"
       >
         <TextExtra text="Bem vindo(a)!" className="text-zinc-800" />
@@ -121,14 +116,13 @@ export default function Welcome() {
       </Animated.View>
 
       <Animated.View
-        entering={ZoomInDown.delay(500).duration(400)}
-        exiting={ZoomOutDown.delay(100)}
+        entering={ZoomInUp.delay(800).duration(100)}
         layout={Layout}
-        style={{ zIndex: 9 }}
+        style={{ zIndex: 10 }}
         className="w-full rounded-full justify-center items-center"
       >
         <TouchableOpacity
-          style={{ zIndex: 9, width: 80, height: 80 }}
+          style={{ zIndex: 10, width: 80, height: 80 }}
           className="items-center justify-center"
           onPress={() => setFogos(true)}
         >

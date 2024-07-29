@@ -5,8 +5,9 @@
   "scripts": {
     "upgrade:all": "ncu -i -u",
     "local:build-android": "eas build --profile preview",
-    "build:dev": "eas build --profile development --platform android",
-    "local:prebuild": "npx expo prebuild --skip-dependency-update react-native,react,expo",
+    "build-production": "eas build --profile production --platform android",
+    "build-dev": "eas build --profile development --platform android",
+    "local-prebuild": "npx expo prebuild --skip-dependency-update react-native,react,expo",
     "start": "npx expo start --dev-client",
     "start-local": "npx expo start",
     "android": "expo run:android",

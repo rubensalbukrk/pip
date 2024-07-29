@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import {
   View,
   Text,
@@ -11,7 +11,6 @@ import {
 import { UserContext } from "../contexts/UserContext";
 import {
   MaterialCommunityIcons,
-  Ionicons,
   Feather,
   FontAwesome,
 } from "@expo/vector-icons";
@@ -21,26 +20,16 @@ import UserAvatar from "../../components/UserAvatar";
 import { LottieView } from "../utils/LottieView";
 import { TextLarge, TextMedium, TextSmall } from "../../components/TextLg/Text";
 import Animated, {
-  Easing,
-  FadeInDown,
   FadeInUp,
   ZoomIn,
 } from "react-native-reanimated";
-import firestore from "@react-native-firebase/firestore";
-import { height } from "../utils/dimensions";
 import colors from "tailwindcss/colors";
 
 export const HomeApp = () => {
-  const { logged, solicitations, refreshing, setRefreshing } =
+  const { solicitations, refreshing, setRefreshing } =
     useContext<any>(UserContext);
   const { navigate } = useNavigation();
   const countSolicitations = solicitations?.length;
-  const firstName = (): String => {
-    const { nome } = logged;
-    const tmpName = nome?.split(" ");
-    const myName = tmpName[0];
-    return myName;
-  };
 
   return (
     <View className="flex-1 w-full bg-slate-200">
@@ -53,7 +42,7 @@ export const HomeApp = () => {
           autoPlay={true}
           loop
           style={{ zIndex: 0, width: "100%" }}
-          source={require("../../assets/animations/teste/Animation - WAVE BLUE 2 TESTA HOJE.json")}
+          source={require("../../assets/animations/teste/AnimationHomeApp.json")}
         />
         <View className="flex-row w-full h-40">
           
@@ -135,10 +124,12 @@ export const HomeApp = () => {
         </TouchableOpacity>
 
 
-        <TouchableOpacity className="w-20 h-10 items-center justify-center border-r-2 border-blue-300/30 ">
+        <TouchableOpacity className="w-20 h-10 items-center justify-center border-r-2 border-blue-300/30 "
+        onPress={() => navigate("User")}
+        >
           <FontAwesome color={colors.slate[100]} size={38} name={"user"} />
           <Text className="font-default text-slate-200 text-center text-xs">
-            Eu
+            Você
           </Text>
         </TouchableOpacity>
 
