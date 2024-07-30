@@ -34,6 +34,6 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 .env
-.google-services.json
-.GoogleService-Info.plist
-.pipdev-client.apk
+google-services.json
+GoogleService-Info.plist
+pipdev-client.apk
