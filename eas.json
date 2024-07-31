@@ -16,6 +16,11 @@
       },
       "node": "18.18.0"
     },
+    "preview2": {
+      "android": {
+        "gradleCommand": ":app:assembleRelease"
+      }
+    },
     "production": {
       "node": "18.18.0"
     }
