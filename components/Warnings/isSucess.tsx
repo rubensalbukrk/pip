@@ -1,6 +1,6 @@
 import React from "react";
 import { StatusBar, View } from "react-native";
-import { LottieView } from "../../src/utils/LottieView";
+import LottieView from 'lottie-react-native'
 import { Button } from "../ButtonBlue/ButtonBlue";
 import { useNavigation } from "@react-navigation/native";
 import { TextExtra, TextLarge } from "../TextLg/Text";
@@ -10,14 +10,14 @@ export const WarningSucess = (props: any) => {
   return (
     <View
       className="w-full items-center justify-center"
-      style={{ zIndex: 20, height: "100%" }}
+      style={{ zIndex: 20, width: '100%', height: "100%" }}
     >
       <TextExtra text="Parabéns!" className="text-blue-800" />
       <TextLarge text={props.title} className="text-blue-800" />
       <LottieView
         loop
         autoPlay={true}
-        style={{ width: "100%" }}
+        style={{ width: "100%", height: 300 }}
         source={require("../../assets/animations/Animation - sucesso-ok.json")}
       />
       <Button title="Voltar" onPress={goBack || props.onPress} />

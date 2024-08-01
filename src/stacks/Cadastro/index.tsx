@@ -15,7 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import { TextInputMask } from "react-native-masked-text";
 import { ParentsProps } from "../../interfaces/Parents";
 import { TextLarge, TextSmall } from "../../../components/TextLg/Text";
-import { LottieView } from "../../utils/LottieView";
+import LottieView from 'lottie-react-native'
 import colors from "tailwindcss/colors";
 import { WarningError } from "../../../components/Warnings/isError";
 import { WarningSucess } from "../../../components/Warnings/isSucess";

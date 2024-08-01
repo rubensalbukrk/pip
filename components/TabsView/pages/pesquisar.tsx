@@ -53,7 +53,7 @@ export default function TabSearch() {
   return (
     <View className="flex-1 w-full justify-center items-center">
       <View className="flex-row w-80 h-14 px-2 self-center items-center rounded-lg border-2 border-blue-300/60 ">
-        <Ionicons name="ios-search" size={32} color="#1f86ff" />
+        <Ionicons name="search-circle" size={32} color="#1f86ff" />
         <TextInput
           className="w-80 h-12 px-2 font-default text-blue-500 rounded-xl text-lg"
           onChangeText={(text) => searchFilter(text)}

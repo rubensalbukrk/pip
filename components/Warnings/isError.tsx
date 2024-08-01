@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import { LottieView } from "../../src/utils/LottieView";
+import LottieView from 'lottie-react-native'
 import { Button } from "../ButtonBlue/ButtonBlue";
 import { useNavigation } from "@react-navigation/native";
 import { TextExtra, TextLarge } from "../TextLg/Text";
@@ -15,7 +15,7 @@ export const WarningError = (props) => {
       <LottieView
         loop
         autoPlay={true}
-        style={{ width: "100%" }}
+        style={{ width: "100%", height: 300 }}
         source={require("../../assets/animations/Animation - Error message.json")}
       />
       <TextExtra text="Estamos em manutenção!" className="text-zinc-600" />

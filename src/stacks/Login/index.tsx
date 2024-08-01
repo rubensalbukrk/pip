@@ -21,8 +21,9 @@ import Animated, {
   FadeInLeft,
   BounceInUp,
   FadeIn,
+  LinearTransition,
 } from "react-native-reanimated";
-import { LottieView } from "../../utils/LottieView";
+import LottieView from 'lottie-react-native'
 import PasswordIcon from "../../../assets/svgs/password.svg";
 import {
   TextExtra,
@@ -143,11 +144,12 @@ export const Login = () => {
           {isLoading ? (
             <Animated.View
               exiting={ZoomOut.delay(100)}
-              layout={Layout}
+              layout={LinearTransition}
               className="w-24 h-24 items-center justify-center"
             >
               <LottieView
                 autoPlay
+                style={{width: 120, height: 120}}
                 resizeMode="contain"
                 source={require("../../../assets/animations/animation-load-balls-colors.json")}
               />

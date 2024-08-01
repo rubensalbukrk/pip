@@ -134,14 +134,14 @@ export default function SolicitationInfoUser({ route }) {
           </View>
 
           <TextLarge text="Anexos" className="text-gray-700 mt-2" />
-          <View className="flex-row items-center w-full h-22 mt-1">
-            {docs > 0 ? docs?.map((item, index) => {
+          <View className="flex-row items-center w-full h-20 mt-1">
+            {docs ? docs?.map((item, index) => {
               return (
                 <Button
                   key={index}
                   title={`${index + 1}`}
                   onPress={() => openWebView(item)}
-                  className="w-12 mx-1 bg-blue-800 rounded-lg"
+                  className="w-14 h-14 mx-1 bg-blue-800 rounded-lg"
                 />
               );
             })

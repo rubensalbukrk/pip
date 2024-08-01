@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Image, ScrollView, Touchable, TouchableOpacity } from "react-native";
 import { width, height } from "../../utils/dimensions";
-import { LottieView } from "../../utils/LottieView";
+import LottieView from "lottie-react-native";
 import { TextExtra, TextLarge } from "../../../components/TextLg/Text";
 import { useNavigation } from "@react-navigation/native";
 
@@ -12,7 +12,7 @@ export default function Sobre() {
       <LottieView
         autoPlay={true}
         loop
-        style={{ width: "100%" }}
+        style={{ width: "100%", height: 300 }}
         source={require("../../../assets/animations/Animation - About.json")}
       />
       <TextExtra text="PIP" className="text-black" />

@@ -17,7 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../../contexts/UserContext";
 import BackgroundWave from "../../../assets/svgs/Welcome-wave.svg";
 import { height, width } from "../../utils/dimensions";
-import { LottieView } from "../../utils/LottieView";
+import LottieView from 'lottie-react-native'
 import { AuthContext } from "../../contexts/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { UserProps } from "../../interfaces/User";

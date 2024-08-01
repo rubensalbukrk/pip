@@ -96,7 +96,7 @@ export default function ViewService({ route }) {
 
         let filename = result.assets[0].name;
         let uri = result.assets[0].uri.replace("file://", "");
-        alert(`Filename: ${filename} URI: ${uri}`);
+       
 
         uploadFile(filename, uri);
       } catch (err) {
@@ -185,7 +185,8 @@ export default function ViewService({ route }) {
             title="ENVIAR SOLICITAÇÃO"
             onPress={() => 
               {setSolicitation({ ...solicitation, docs: docs }),
-              setShowWhats(true);}
+              sendSolicitation();
+              }
             }
           />
         </View>
@@ -274,6 +275,7 @@ export default function ViewService({ route }) {
             onPress={() => {
               setSolicitation({ ...solicitation, phone: NumeroWhats })
               VerificarServiço()
+              
               setShowWhats(false);
             }}
           />

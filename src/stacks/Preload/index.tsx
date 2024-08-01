@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import { LottieView } from "../../utils/LottieView";
+import LottieView from 'lottie-react-native'
 
 export default function Preload() {
   return (
@@ -8,6 +8,7 @@ export default function Preload() {
       <LottieView
         autoPlay
         loop
+        style={{width: '100%', height: 500}}
         duration={2000}
         source={require("../../../assets/animations/animation-pip-balls-286f.json")}
       />
