@@ -1,4 +1,3 @@
-import React, { useContext } from "react";
 import {
   View,
   Text,
@@ -8,25 +7,25 @@ import {
   RefreshControl,
   StatusBar,
 } from "react-native";
-import { UserContext } from "../contexts/UserContext";
 import {
   MaterialCommunityIcons,
   Feather,
   FontAwesome,
 } from "@expo/vector-icons";
+import colors from "tailwindcss/colors";
+import React, { useContext } from "react";
+import LottieView from "lottie-react-native";
+import UserAvatar from "../../components/UserAvatar";
+import { UserContext } from "../contexts/UserContext";
 import { useNavigation } from "@react-navigation/native";
 import { CarouselHome } from "../../components/Carousel";
-import UserAvatar from "../../components/UserAvatar";
-import LottieView from "lottie-react-native";
-import { TextLarge, TextMedium, TextSmall } from "../../components/TextLg/Text";
-import Animated, { FadeInUp, ZoomIn } from "react-native-reanimated";
-import colors from "tailwindcss/colors";
+import Animated, { ZoomIn } from "react-native-reanimated";
+import { TextLarge, TextMedium } from "../../components/TextLg/Text";
+import UserContextType from "../interfaces/UserContextType";
 
 export const HomeApp = () => {
-  const { solicitations, refreshing, setRefreshing } =
-    useContext<any>(UserContext);
+  const { solicitations, refreshing, setRefreshing } = useContext<UserContextType>(UserContext);
   const { navigate } = useNavigation();
-  const countSolicitations = solicitations?.length;
 
   return (
     <View className="flex-1 w-full bg-slate-200">
@@ -136,7 +135,7 @@ export const HomeApp = () => {
             className="absolute w-4 h-4 items-center justify-center bottom-2 right-4 mb-2 bg-red-600/100 rounded-full"
           >
             <Text className="font-default text-center self-center text-slate-200 text-xs">
-              {countSolicitations ? countSolicitations : "0"}
+              {solicitations ? solicitations?.length : "0"}
             </Text>
           </View>
           <LottieView
